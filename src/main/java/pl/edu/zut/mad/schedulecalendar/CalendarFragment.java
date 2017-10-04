@@ -20,7 +20,6 @@ import java.util.Map;
 
 import hirondelle.date4j.DateTime;
 import pl.edu.zut.mad.schedulecalendar.adapter.CalendarGridAdapter;
-import pl.edu.zut.mad.schedulecalendar.DateUtils;
 
 public class CalendarFragment extends CaldroidFragment {
 
@@ -65,7 +64,7 @@ public class CalendarFragment extends CaldroidFragment {
     };
 
     /**
-     * This method will be also called from {@link ScheduleFragment} by
+     * This method will be also called from {@link SchedulePagerFragment} by
      * {@link android.support.v4.view.ViewPager.OnPageChangeListener}
      */
     @Override

@@ -23,7 +23,7 @@ import pl.edu.zut.mad.schedulecalendar.network.BaseDataLoader;
 import pl.edu.zut.mad.schedulecalendar.network.DataLoadingManager;
 import pl.edu.zut.mad.schedulecalendar.network.ScheduleEdzLoader;
 
-public class ScheduleFragment extends Fragment
+public class SchedulePagerFragment extends Fragment
         implements BaseDataLoader.DataLoadedListener<Schedule>, CalendarFragment.CalendarListener,
                    AppBarLayout.OnOffsetChangedListener {
 
@@ -162,15 +162,15 @@ public class ScheduleFragment extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initAppBarLayout();
-        toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar);
-        toolbar = getActivity().findViewById(R.id.toolbar);
+//        toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar);
+//        toolbar = getActivity().findViewById(R.id.toolbar);
     }
 
     private void initAppBarLayout() {
-        AppBarLayout appBarLayout = getActivity().findViewById(R.id.app_bar_layout);
-        if (appBarLayout != null) {
-            appBarLayout.addOnOffsetChangedListener(this);
-        }
+//        AppBarLayout appBarLayout = getActivity().findViewById(R.id.app_bar_layout);
+//        if (appBarLayout != null) {
+//            appBarLayout.addOnOffsetChangedListener(this);
+//        }
     }
 
     @Override
