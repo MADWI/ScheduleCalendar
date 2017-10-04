@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar;
+package pl.edu.zut.mad.schedulecalendar.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +8,8 @@ import com.tobishiba.circularviewpager.library.BaseCircularViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import pl.edu.zut.mad.schedulecalendar.ScheduleDayFragment;
 
 public class SchedulePagerAdapter extends BaseCircularViewPagerAdapter<Date> {
 

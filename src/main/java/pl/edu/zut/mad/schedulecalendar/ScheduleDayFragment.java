@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import pl.edu.zut.mad.schedulecalendar.adapter.ScheduleDayAdapter;
 import pl.edu.zut.mad.schedulecalendar.network.BaseDataLoader;
 import pl.edu.zut.mad.schedulecalendar.network.DataLoadingManager;
 import pl.edu.zut.mad.schedulecalendar.network.ScheduleEdzLoader;

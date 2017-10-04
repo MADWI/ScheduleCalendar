@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar;
+package pl.edu.zut.mad.schedulecalendar.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+
+import pl.edu.zut.mad.schedulecalendar.R;
+import pl.edu.zut.mad.schedulecalendar.Schedule;
 
 public class ScheduleDayAdapter extends RecyclerView.Adapter<ScheduleDayAdapter.ClassViewHolder> {
 
