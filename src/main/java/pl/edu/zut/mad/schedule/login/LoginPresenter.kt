@@ -55,8 +55,8 @@ internal class LoginPresenter(private val view: LoginMvp.View, private val repos
     }
 
     private fun onError(error: Throwable) {
-        val errorMessageId = messageProvider.getIdByHttpError(error)
-        view.showError(errorMessageId)
+        val errorResId = messageProvider.getResIdByError(error)
+        view.showError(errorResId)
         view.hideLoading()
     }
 
