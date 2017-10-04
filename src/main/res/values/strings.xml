@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ScheduleCalendar</string>
+    <string name="no_classes">No classes</string>
 </resources>

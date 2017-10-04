@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scheduleTaskItemView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/timeGroupView"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/timeStartView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_class_start_white_18dp"
+            android:maxLength="5"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toTopOf="@+id/timeEndView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="12:15" />
+
+        <TextView
+            android:id="@+id/timeEndView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:drawablePadding="5dp"
+            android:drawableStart="@drawable/ic_class_end_white_18dp"
+            android:maxLength="5"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/timeStartView"
+            tools:text="14:00" />
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/subjectView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_school_accent_24dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/textScheduleTask"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/lecturerAndRoomView"
+        app:layout_constraintLeft_toRightOf="@+id/timeGroupView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Budowanie aplikacji w (wykład)" />
+
+    <TextView
+        android:id="@+id/lecturerAndRoomView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/ic_lecturer_accent_24dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/textScheduleTask"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/subjectView"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subjectView"
+        tools:text="dr. inż. Radosław Maciaszczyk WI WI2-14" />
+
+</android.support.constraint.ConstraintLayout>
