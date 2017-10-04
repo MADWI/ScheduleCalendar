@@ -10,6 +10,19 @@
         <activity
             android:name="pl.edu.zut.mad.schedule.login.LoginActivity"
             android:theme="@style/Login" />
+
+        <receiver android:name=".widget.ScheduleWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
