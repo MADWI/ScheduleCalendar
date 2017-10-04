@@ -18,18 +18,19 @@
         tools:listitem="@layout/schedule_task_item" />
 
     <ImageView
-        android:id="@+id/noClassesView"
+        android:id="@+id/noClassesImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:src="@drawable/ic_no_classes_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_no_classes_accent_48dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
     <TextView
+        android:id="@+id/noClassesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -37,6 +38,6 @@
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/noClassesView" />
+        app:layout_constraintTop_toBottomOf="@id/noClassesImageView" />
 
 </android.support.constraint.ConstraintLayout>

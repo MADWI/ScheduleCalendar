@@ -5,7 +5,7 @@
     android:id="@+id/scheduleTaskItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    tools:background="@android:color/white">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/timeGroupView"
