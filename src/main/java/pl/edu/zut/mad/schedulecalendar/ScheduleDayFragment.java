@@ -93,10 +93,10 @@ public class ScheduleDayFragment extends Fragment implements BaseDataLoader.Data
         if (scheduleDay == null) {
             noClassesMessageView.setVisibility(View.VISIBLE);
             noClassesImageView.setVisibility(View.VISIBLE);
-            adapter.setHoursInDay(null);
+            adapter.setDayTasks(null);
         } else {
             List<Schedule.Hour> hoursInDay = Arrays.asList(scheduleDay.getTasks());
-            adapter.setHoursInDay(hoursInDay);
+            adapter.setDayTasks(hoursInDay);
             noClassesMessageView.setVisibility(View.GONE);
             noClassesImageView.setVisibility(View.GONE);
         }
