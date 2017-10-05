@@ -103,7 +103,7 @@ public class SchedulePagerFragment extends Fragment
 
     private void updateCurrentWeekDatesForPrevWeek(@NonNull Date date) {
         currentWeekDates = DateUtils.getPrevWeekDatesFromDate(date);
-        pagerAdapter.setWeekDates(currentWeekDates);
+        pagerAdapter.setItems(currentWeekDates);
     }
 
     private void moveToPrevMonthPageIfNeeded(@NonNull Date date) {
@@ -114,7 +114,7 @@ public class SchedulePagerFragment extends Fragment
 
     private void updateCurrentWeekDatesForNextWeek(@NonNull Date date) {
         currentWeekDates = DateUtils.getNextWeekDatesFromDate(date);
-        pagerAdapter.setWeekDates(currentWeekDates);
+        pagerAdapter.setItems(currentWeekDates);
     }
 
     private void moveToNextMonthPageIfNeeded(@NonNull Date date) {
@@ -130,7 +130,7 @@ public class SchedulePagerFragment extends Fragment
 
     private void updateCurrentWeekDates(@Nullable Date dayDate) {
         currentWeekDates = DateUtils.getWeekDates(dayDate);
-        pagerAdapter.setWeekDates(currentWeekDates);
+        pagerAdapter.setItems(currentWeekDates);
     }
 
     private void initLoader() {
