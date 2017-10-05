@@ -11,7 +11,7 @@ import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.Schedule
 
 
-class ScheduleDayAdapter(private val context: Context)
+internal class ScheduleDayAdapter(private val context: Context)
     : RecyclerView.Adapter<ScheduleDayAdapter.ClassViewHolder>() {
 
     private val dayTasks: MutableList<Schedule.Hour> = ArrayList()

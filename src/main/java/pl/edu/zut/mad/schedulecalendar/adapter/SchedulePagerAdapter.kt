@@ -8,7 +8,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SchedulePagerAdapter(fragmentManager: FragmentManager)
+internal class SchedulePagerAdapter(fragmentManager: FragmentManager)
     : BaseCircularViewPagerAdapter<Date>(fragmentManager, ArrayList<Date>()) {
 
     override fun getFragmentForItem(date: Date?): ScheduleDayFragment =
