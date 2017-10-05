@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.joda.time.LocalDate;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -89,7 +91,7 @@ public class ScheduleDayFragment extends Fragment implements BaseDataLoader.Data
             return;
         }
 
-        Schedule.Day scheduleDay = schedule.getScheduleForDate(date);
+        Schedule.Day scheduleDay = schedule.getScheduleForDate(LocalDate.fromDateFields(date));
         if (scheduleDay == null) {
             noClassesMessageView.setVisibility(View.VISIBLE);
             noClassesImageView.setVisibility(View.VISIBLE);

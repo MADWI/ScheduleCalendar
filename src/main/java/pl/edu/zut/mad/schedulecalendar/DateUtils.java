@@ -1,16 +1,14 @@
 package pl.edu.zut.mad.schedulecalendar;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.roomorama.caldroid.CalendarHelper;
+
+import org.joda.time.LocalDate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,16 +19,6 @@ public class DateUtils {
     private static final String DATE_FORMAT = "dd.MM.yyyy";
     private static final SimpleDateFormat DATE_FORMATTER
             = new SimpleDateFormat(DATE_FORMAT, LOCALE);
-
-    /**
-     * Clear time from given Calendar, leaving only date information
-     */
-    public static void stripTime(GregorianCalendar calendar) {
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-    }
 
     public static void stripTime(Date date) {
         Calendar calendar = Calendar.getInstance();

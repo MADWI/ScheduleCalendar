@@ -2,15 +2,13 @@ package pl.edu.zut.mad.schedulecalendar.network;
 
 import android.util.Log;
 
+import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,16 +20,12 @@ import pl.edu.zut.mad.schedulecalendar.Schedule;
  */
 public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoader.RawData> {
 
-    /** Log tag */
+    /**
+     * Log tag
+     */
     private static final String TAG = "ScheduleEdzLoader";
 
-    /**
-     * Date format in which are dates stored in calendar
-     */
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yy-MM-dd",java.util.Locale.US);
-
     private static final Pattern HOUR_PATTERN = Pattern.compile("(\\d\\d):(\\d\\d)");
-
 
     ScheduleEdzLoader(DataLoadingManager loadingManager) {
         super(loadingManager);
@@ -51,7 +45,7 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
     protected Schedule parseData(RawData rawData) throws JSONException {
         JSONArray table = new JSONArray(rawData.mJsonScheduleAsString);
 
-        GregorianCalendar forDay = null;
+        LocalDate forDay = null;
         List<Schedule.Hour> hoursInDay = new ArrayList<>();
         List<Schedule.Day> days = new ArrayList<>();
 
@@ -69,12 +63,7 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
                 }
 
                 // Start next day
-                try {
-                    forDay = new GregorianCalendar();
-                    forDay.setTime(DATE_FORMAT.parse(row.getString(0)));
-                } catch (ParseException e) {
-                    throw new JSONException(e.toString());
-                }
+                forDay = LocalDate.parse(row.getString(0).split(",")[0]);
             } else if (row.length() == 10 && forDay != null) {
                 // Actual row
                 Matcher startHour = HOUR_PATTERN.matcher(row.getString(2));

@@ -1,9 +1,9 @@
 package pl.edu.zut.mad.schedulecalendar;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -108,20 +108,16 @@ public class Schedule {
     }
 
     public static class Day {
-        private final GregorianCalendar date;
+        private final LocalDate date;
         private final Hour[] tasks;
 
-        public Day(GregorianCalendar date, Hour[] tasks) {
+        public Day(LocalDate date, Hour[] tasks) {
             this.date = date;
             this.tasks = tasks;
         }
 
-        public GregorianCalendar getDateGregorian() {
-            return date;
-        }
-
         Date getDate() {
-            return date.getTime();
+            return date.toDate();
         }
 
         public Hour[] getTasks() {
@@ -129,67 +125,66 @@ public class Schedule {
         }
     }
 
-    public Day getScheduleForDate(Date date) {
+    public Day getScheduleForDate(LocalDate date) {
         if (date == null) {
             return null;
         }
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        DateUtils.stripTime(calendar);
-
         for (Day day : days) {
-            if (calendar.getTimeInMillis() == day.date.getTimeInMillis()) {
+            if (day.date.equals(date)) {
                 return day;
             }
+//            if (calendar.getTimeInMillis() == day.date.getTimeInMillis()) {
+//                return day;
+//            }
         }
         return null;
     }
 
-    public Hour getUpcomingHour() {
-        GregorianCalendar today = new GregorianCalendar();
-
-        // Get current minute in day
-        int currentMinute = today.get(Calendar.HOUR_OF_DAY) * 60 + today.get(Calendar.MINUTE);
-
-        // Strip time off date
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-
-        for (Day day : days) {
-            // Day that passed
-            if (day.getDateGregorian().before(today)) {
-                continue;
-            }
-
-            // Today
-            if (day.getDateGregorian().equals(today)) {
-                // Choose first with non-expired date
-                for (Hour hour : day.getTasks()) {
-                    TimeRange time = hour.getTime();
-                    int activityMinute = (
-                            time.fromHour * 60 +
-                                    time.toHour * 60 +
-                                    time.fromMinute +
-                                    time.toMinute) / 2;
-
-                    if (activityMinute > currentMinute) {
-                        return hour;
-                    }
-                }
-
-                continue;
-            }
-
-            // Next day
-            if (day.getTasks().length != 0) {
-                return day.getTasks()[0];
-            }
-        }
-
-        return null;
-    }
+//    public Hour getUpcomingHour() {
+//        GregorianCalendar today = new GregorianCalendar();
+//
+//        // Get current minute in day
+//        int currentMinute = today.get(Calendar.HOUR_OF_DAY) * 60 + today.get(Calendar.MINUTE);
+//
+//        // Strip time off date
+//        today.set(Calendar.HOUR_OF_DAY, 0);
+//        today.set(Calendar.MINUTE, 0);
+//        today.set(Calendar.SECOND, 0);
+//        today.set(Calendar.MILLISECOND, 0);
+//
+//        for (Day day : days) {
+//            // Day that passed
+//            if (day.getDateGregorian().before(today)) {
+//                continue;
+//            }
+//
+//            // Today
+//            if (day.getDateGregorian().equals(today)) {
+//                // Choose first with non-expired date
+//                for (Hour hour : day.getTasks()) {
+//                    TimeRange time = hour.getTime();
+//                    int activityMinute = (
+//                            time.fromHour * 60 +
+//                                    time.toHour * 60 +
+//                                    time.fromMinute +
+//                                    time.toMinute) / 2;
+//
+//                    if (activityMinute > currentMinute) {
+//                        return hour;
+//                    }
+//                }
+//
+//                continue;
+//            }
+//
+//            // Next day
+//            if (day.getTasks().length != 0) {
+//                return day.getTasks()[0];
+//            }
+//        }
+//
+//        return null;
+//    }
 
     public List<Date> getClassesDates() {
         List<Date> classesDates = new ArrayList<>();
