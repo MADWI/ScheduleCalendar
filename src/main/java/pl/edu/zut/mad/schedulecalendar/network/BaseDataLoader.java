@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import pl.edu.zut.mad.schedulecalendar.IoUtils;
+import pl.edu.zut.mad.schedulecalendar.NetworkUtils;
 
 /**
  * Helper class for loading data from network and caching it
@@ -38,6 +39,7 @@ import pl.edu.zut.mad.schedulecalendar.IoUtils;
  */
 public abstract class BaseDataLoader<Data, RawData extends Serializable> {
     private static final String TAG = "BaseDataLoader";
+    private static final NetworkUtils NETWORK_UTILS = new NetworkUtils();
     private final DataLoadingManager mLoadingManager;
 
     /**
@@ -274,7 +276,7 @@ public abstract class BaseDataLoader<Data, RawData extends Serializable> {
             // Download from network
             RawData downloadedData = null;
 
-            if (HttpConnect.isOnline(getContext())) {
+            if (NETWORK_UTILS.isAvailable(getContext())) {
                 try {
                     downloadedData = doDownload(mRawData);
                 } catch (IOException e) {
