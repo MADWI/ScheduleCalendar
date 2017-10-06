@@ -27,24 +27,16 @@ class ScheduleFragment : Fragment() {
 
     private fun initScheduleFragments(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            calendarFragment = CalendarFragment()
-            schedulePagerFragment = SchedulePagerFragment()
-            startScheduleFragments()
+            initAndStartScheduleFragments()
         } else {
             initScheduleFragmentsFromStack()
         }
-        registerCalendarForScheduleFragment()
+        schedulePagerFragment.registerCalendar(calendarFragment)
     }
 
-    private fun initScheduleFragmentsFromStack() {
-        calendarFragment = getFragmentFromStackWithTag(CALENDAR_TAG) as CalendarFragment
-        schedulePagerFragment = getFragmentFromStackWithTag(SCHEDULE_TAG) as SchedulePagerFragment
-    }
-
-    private fun getFragmentFromStackWithTag(tag: String): Fragment =
-            fragmentManager.findFragmentByTag(tag)
-
-    private fun startScheduleFragments() {
+    private fun initAndStartScheduleFragments() {
+        calendarFragment = CalendarFragment()
+        schedulePagerFragment = SchedulePagerFragment()
         replaceFragmentInViewContainer(calendarFragment, R.id.calendar_container, CALENDAR_TAG)
         replaceFragmentInViewContainer(schedulePagerFragment, R.id.schedule_container, SCHEDULE_TAG)
     }
@@ -55,7 +47,11 @@ class ScheduleFragment : Fragment() {
                 .commit()
     }
 
-    private fun registerCalendarForScheduleFragment() {
-        schedulePagerFragment.registerCalendar(calendarFragment)
+    private fun initScheduleFragmentsFromStack() {
+        calendarFragment = getFragmentFromStackWithTag(CALENDAR_TAG) as CalendarFragment
+        schedulePagerFragment = getFragmentFromStackWithTag(SCHEDULE_TAG) as SchedulePagerFragment
     }
+
+    private fun getFragmentFromStackWithTag(tag: String): Fragment =
+            fragmentManager.findFragmentByTag(tag)
 }
