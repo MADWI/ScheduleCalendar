@@ -28,6 +28,6 @@ class ScheduleRepository {
 
     fun getSchedule(): List<Day> = database.where(Day::class.java).findAll() // change to async
 
-    fun getDayScheduleByDate(date: LocalDate): Day? =// change to async
+    fun getDayByDate(date: LocalDate): Day? =// change to async
             database.where(Day::class.java).equalTo("time", date.toString()).findFirst()
 }

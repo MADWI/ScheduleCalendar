@@ -7,7 +7,7 @@
     android:background="@android:color/white">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/classesListView"
+        android:id="@+id/lessonsListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layoutManager="LinearLayoutManager"
@@ -18,7 +18,7 @@
         tools:listitem="@layout/schedule_task_item" />
 
     <ImageView
-        android:id="@+id/noClassesImageView"
+        android:id="@+id/noLessonsImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -30,7 +30,7 @@
         tools:ignore="ContentDescription" />
 
     <TextView
-        android:id="@+id/noClassesTextView"
+        android:id="@+id/noLessonsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -38,6 +38,6 @@
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/noClassesImageView" />
+        app:layout_constraintTop_toBottomOf="@id/noLessonsImageView" />
 
 </android.support.constraint.ConstraintLayout>

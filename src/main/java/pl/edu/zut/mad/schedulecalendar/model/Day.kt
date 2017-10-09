@@ -16,8 +16,8 @@ open class Day(date: LocalDate = LocalDate.now(),
         get() = LocalDate.parse(time)
         private set
 
-    var lessons: RealmList<Lesson> = RealmList()
-        private set
+    private var lessons: RealmList<Lesson> = RealmList()
+    fun getLessons() = lessons
 
     init {
         this.lessons.addAll(lessons)
