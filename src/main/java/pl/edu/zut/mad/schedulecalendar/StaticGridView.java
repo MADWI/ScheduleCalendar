@@ -16,7 +16,7 @@ import java.util.List;
  * - Assumes all cells have same type and size
  * - Never scrolls
  */
-public class StaticGridView extends GridView {
+class StaticGridView extends GridView {
 
     /**
      * True when {@link #layoutChildren()} is executing

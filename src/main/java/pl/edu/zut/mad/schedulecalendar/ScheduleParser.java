@@ -15,7 +15,7 @@ import pl.edu.zut.mad.schedulecalendar.model.Day;
 import pl.edu.zut.mad.schedulecalendar.model.Lesson;
 import pl.edu.zut.mad.schedulecalendar.model.TimeRange;
 
-public class ScheduleParser {
+class ScheduleParser {
 
     private static final String TAG = "ScheduleParser";
     private static final Pattern HOUR_PATTERN = Pattern.compile("(\\d\\d):(\\d\\d)");

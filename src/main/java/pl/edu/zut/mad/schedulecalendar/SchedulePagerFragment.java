@@ -24,7 +24,7 @@ import java.util.List;
 import pl.edu.zut.mad.schedulecalendar.adapter.SchedulePagerAdapter;
 import pl.edu.zut.mad.schedulecalendar.model.Day;
 
-public class SchedulePagerFragment extends Fragment
+class SchedulePagerFragment extends Fragment
         implements CalendarFragment.CalendarListener, AppBarLayout.OnOffsetChangedListener {
 
     private static final String SELECTED_DATE = "selected_date";

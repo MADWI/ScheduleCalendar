@@ -5,7 +5,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.model.Day
 
 
-class ScheduleRepository {
+internal class ScheduleRepository {
 
     companion object {
         private val database = Realm.getDefaultInstance()
