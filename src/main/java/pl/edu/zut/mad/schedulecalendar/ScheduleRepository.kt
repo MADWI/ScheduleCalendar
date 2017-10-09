@@ -22,7 +22,7 @@ class ScheduleRepository {
     }
 
     fun saveSchedule(content: String) {
-        val loader = ScheduleEdzLoader(null)
+        val loader = ScheduleEdzLoader()
         val schedule = loader.parseData(content)
         saveSchedule(schedule)
     }

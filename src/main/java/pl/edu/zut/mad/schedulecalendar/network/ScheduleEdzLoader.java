@@ -21,43 +21,13 @@ import pl.edu.zut.mad.schedulecalendar.model.TimeRange;
 /**
  * Helper class for loading schedule
  */
-public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoader.RawData> {
+public class ScheduleEdzLoader {
 
-    /**
-     * Log tag
-     */
     private static final String TAG = "ScheduleEdzLoader";
-
     private static final Pattern HOUR_PATTERN = Pattern.compile("(\\d\\d):(\\d\\d)");
 
-    public ScheduleEdzLoader(DataLoadingManager loadingManager) {
-        super(loadingManager);
-    }
-
-    @Override
-    protected String getCacheName() {
-        return "ScheduleEdziekanat";
-    }
-
-    @Override
-    protected RawData doDownload(RawData cachedData) throws IOException {
-        return cachedData;
-    }
-
-    public Schedule parseData(String content) {
-        RawData rawData = new RawData();
-        rawData.mJsonScheduleAsString = content;
-        try {
-            return parseData(rawData);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    protected Schedule parseData(RawData rawData) throws JSONException {
-        JSONArray table = new JSONArray(rawData.mJsonScheduleAsString);
+    public Schedule parseData(String data) throws JSONException {
+        JSONArray table = new JSONArray(data);
 
         LocalDate forDay = null;
         List<Hour> hoursInDay = new ArrayList<>();
@@ -112,18 +82,6 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
         return new Schedule(days.toArray(new Day[days.size()]));
     }
 
-    public void setSourceTableJson(String tableJson) {
-        RawData newData = new RawData();
-        newData.mJsonScheduleAsString = tableJson;
-        manuallySetCachedData(newData);
+    public void setSourceTableJson() {
     }
-
-
-    static class RawData implements Serializable {
-        /**
-         * Schedule that we currently have
-         */
-        String mJsonScheduleAsString;
-    }
-
 }
