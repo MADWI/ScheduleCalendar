@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.view.PagerAdapter
 import com.tobishiba.circularviewpager.library.BaseCircularViewPagerAdapter
 import org.joda.time.LocalDate
-import pl.edu.zut.mad.schedulecalendar.LessonsFragment
+import pl.edu.zut.mad.schedulecalendar.ui.LessonsFragment
 
 
 internal class SchedulePagerAdapter(fragmentManager: FragmentManager)

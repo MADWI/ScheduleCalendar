@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import hirondelle.date4j.DateTime;
 
-class DateUtils {
+public class DateUtils {
     private static final Locale LOCALE = Locale.US;
     private static final String DATE_FORMAT = "dd.MM.yyyy";
     private static final SimpleDateFormat DATE_FORMATTER

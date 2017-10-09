@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar;
+package pl.edu.zut.mad.schedulecalendar.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,8 +21,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pl.edu.zut.mad.schedulecalendar.DateUtils;
+import pl.edu.zut.mad.schedulecalendar.R;
+import pl.edu.zut.mad.schedulecalendar.ScheduleRepository;
 import pl.edu.zut.mad.schedulecalendar.adapter.SchedulePagerAdapter;
 import pl.edu.zut.mad.schedulecalendar.model.Day;
+import pl.edu.zut.mad.schedulecalendar.ui.CalendarFragment;
 
 class SchedulePagerFragment extends Fragment
         implements CalendarFragment.CalendarListener, AppBarLayout.OnOffsetChangedListener {

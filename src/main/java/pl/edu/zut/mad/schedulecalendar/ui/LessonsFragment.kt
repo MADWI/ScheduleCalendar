@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar
+package pl.edu.zut.mad.schedulecalendar.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_lessons.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedulecalendar.R
+import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.adapter.LessonsAdapter
 
 

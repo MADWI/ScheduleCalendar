@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar;
+package pl.edu.zut.mad.schedulecalendar.ui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import hirondelle.date4j.DateTime;
+import pl.edu.zut.mad.schedulecalendar.DateUtils;
 import pl.edu.zut.mad.schedulecalendar.adapter.CalendarGridAdapter;
 
 public class CalendarFragment extends CaldroidFragment {
