@@ -15,11 +15,12 @@ import android.widget.ProgressBar;
 
 import com.tobishiba.circularviewpager.library.CircularViewPagerHandler;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import pl.edu.zut.mad.schedulecalendar.adapter.SchedulePagerAdapter;
-import pl.edu.zut.mad.schedulecalendar.model.Schedule;
+import pl.edu.zut.mad.schedulecalendar.model.Day;
 
 public class SchedulePagerFragment extends Fragment
         implements CalendarFragment.CalendarListener, AppBarLayout.OnOffsetChangedListener {
@@ -130,12 +131,20 @@ public class SchedulePagerFragment extends Fragment
     }
 
     private void initLoader() {
-        Schedule schedule = new ScheduleRepository().getSchedule();
-        if (schedule != null) {
-            calendarFragment.setClassesDates(schedule.getClassesDates());
+        List<Day> scheduleDays = new ScheduleRepository().getSchedule();
+        if (!scheduleDays.isEmpty()) {
+            calendarFragment.setClassesDates(getClassesDates(scheduleDays));
             selectCurrentDayPage();
             showSchedule();
         }
+    }
+
+    public List<Date> getClassesDates(List<Day> days) { // TODO: replace with repository method
+        List<Date> classesDates = new ArrayList<>();
+        for (Day day : days) {
+            classesDates.add(day.getDate());
+        }
+        return classesDates;
     }
 
     private void selectCurrentDayPage() {

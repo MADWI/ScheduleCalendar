@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.schedule_task_item.view.*
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.Schedule
+import pl.edu.zut.mad.schedulecalendar.model.Lesson
 
 
-internal class ScheduleDayAdapter(private val context: Context)
-    : RecyclerView.Adapter<ScheduleDayAdapter.ClassViewHolder>() {
+internal class LessonsAdapter(private val context: Context)
+    : RecyclerView.Adapter<LessonsAdapter.ClassViewHolder>() {
 
-    private val dayTasks: MutableList<Schedule.Hour> = ArrayList()
+    private val lessons: MutableList<Lesson> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -23,7 +23,7 @@ internal class ScheduleDayAdapter(private val context: Context)
     }
 
     override fun onBindViewHolder(holder: ClassViewHolder, position: Int) {
-        holder.bindDayTasks(dayTasks[position])
+        holder.bindLesson(lessons[position])
         if (position % 2 != 0) {
             colorItemToDark(holder)
         }
@@ -38,23 +38,21 @@ internal class ScheduleDayAdapter(private val context: Context)
         }
     }
 
-    override fun getItemCount() = dayTasks.size
+    override fun getItemCount() = lessons.size
 
-    fun setDayTasks(dayTasks: List<Schedule.Hour>?) {
-        this.dayTasks.clear()
-        if (dayTasks != null) {
-            this.dayTasks.addAll(dayTasks)
-        }
+    fun setLessons(lessons: List<Lesson>) {
+        this.lessons.clear()
+        this.lessons.addAll(lessons)
     }
 
     inner class ClassViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bindDayTasks(hour: Schedule.Hour) =
+        fun bindLesson(lesson: Lesson) =
                 with(itemView) {
-                    timeStartView.text = hour.startTime
-                    timeEndView.text = hour.endTime
-                    subjectView.text = hour.subjectNameWithType
-                    lecturerAndRoomView.text = hour.lecturerWithRoom
+                    timeStartView.text = lesson.startTime
+                    timeEndView.text = lesson.endTime
+                    subjectView.text = lesson.subjectNameWithType
+                    lecturerAndRoomView.text = lesson.lecturerWithRoom
                 }
     }
 }

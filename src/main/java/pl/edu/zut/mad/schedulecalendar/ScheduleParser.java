@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.network;
+package pl.edu.zut.mad.schedulecalendar;
 
 import android.util.Log;
 
@@ -6,31 +6,25 @@ import org.joda.time.LocalDate;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import pl.edu.zut.mad.schedulecalendar.model.Day;
-import pl.edu.zut.mad.schedulecalendar.model.Hour;
-import pl.edu.zut.mad.schedulecalendar.model.Schedule;
+import pl.edu.zut.mad.schedulecalendar.model.Lesson;
 import pl.edu.zut.mad.schedulecalendar.model.TimeRange;
 
-/**
- * Helper class for loading schedule
- */
-public class ScheduleEdzLoader {
+public class ScheduleParser {
 
-    private static final String TAG = "ScheduleEdzLoader";
+    private static final String TAG = "ScheduleParser";
     private static final Pattern HOUR_PATTERN = Pattern.compile("(\\d\\d):(\\d\\d)");
 
-    public Schedule parseData(String data) throws JSONException {
+    public List<Day> parseData(String data) throws JSONException {
         JSONArray table = new JSONArray(data);
 
         LocalDate forDay = null;
-        List<Hour> hoursInDay = new ArrayList<>();
+        List<Lesson> dayLessons = new ArrayList<>();
         List<Day> days = new ArrayList<>();
 
         // Start from 1 - skip header
@@ -40,10 +34,8 @@ public class ScheduleEdzLoader {
                 // Header
                 // Finish currently built day
                 if (forDay != null) {
-                    days.add(new Day(
-                            forDay, hoursInDay.toArray(new Hour[hoursInDay.size()])
-                    ));
-                    hoursInDay.clear();
+                    days.add(new Day(forDay, dayLessons));
+                    dayLessons.clear();
                 }
 
                 // Start next day
@@ -53,9 +45,9 @@ public class ScheduleEdzLoader {
                 Matcher startHour = HOUR_PATTERN.matcher(row.getString(2));
                 Matcher endHour = HOUR_PATTERN.matcher(row.getString(3));
                 if (!startHour.find() || !endHour.find()) {
-                    throw new JSONException("Unable to match hour");
+                    throw new JSONException("Unable to match lesson");
                 }
-                Hour hour = new Hour(
+                Lesson lesson = new Lesson(
                         row.getString(4), // name
                         row.getString(8), // type
                         row.getString(6), // room
@@ -67,21 +59,15 @@ public class ScheduleEdzLoader {
                                 Integer.parseInt(endHour.group(2))
                         )
                 );
-                hoursInDay.add(hour);
+                dayLessons.add(lesson);
             } else {
                 Log.e(TAG, "Unrecognized row");
             }
         }
 
         // Add last day to days
-        days.add(new Day(
-                forDay, hoursInDay.toArray(new Hour[hoursInDay.size()])
-        ));
+        days.add(new Day(forDay, dayLessons));
 
-        // Build the Timetable object
-        return new Schedule(days.toArray(new Day[days.size()]));
-    }
-
-    public void setSourceTableJson() {
+        return days;
     }
 }

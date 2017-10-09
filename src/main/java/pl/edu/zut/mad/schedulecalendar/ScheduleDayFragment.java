@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import java.util.Date;
 import java.util.List;
 
-import pl.edu.zut.mad.schedulecalendar.adapter.ScheduleDayAdapter;
+import pl.edu.zut.mad.schedulecalendar.adapter.LessonsAdapter;
 import pl.edu.zut.mad.schedulecalendar.model.Day;
-import pl.edu.zut.mad.schedulecalendar.model.Hour;
+import pl.edu.zut.mad.schedulecalendar.model.Lesson;
 
 public class ScheduleDayFragment extends Fragment {
 
     private static final String DATE_KEY = "date";
-    private ScheduleDayAdapter adapter;
+    private LessonsAdapter adapter;
     private Date date;
     private RecyclerView classesListView;
     private View noClassesImageView;
@@ -61,7 +61,7 @@ public class ScheduleDayFragment extends Fragment {
     }
 
     private void initListViewWithAdapter() {
-        adapter = new ScheduleDayAdapter(getContext());
+        adapter = new LessonsAdapter(getContext());
         classesListView.setAdapter(adapter);
     }
 
@@ -70,10 +70,9 @@ public class ScheduleDayFragment extends Fragment {
         if (scheduleDay == null) {
             noClassesMessageView.setVisibility(View.VISIBLE);
             noClassesImageView.setVisibility(View.VISIBLE);
-            adapter.setDayTasks(null);
         } else {
-            List<Hour> hoursInDay = scheduleDay.getTasks();
-            adapter.setDayTasks(hoursInDay);
+            List<Lesson> hoursInDay = scheduleDay.getLessons();
+            adapter.setLessons(hoursInDay);
             noClassesMessageView.setVisibility(View.GONE);
             noClassesImageView.setVisibility(View.GONE);
         }

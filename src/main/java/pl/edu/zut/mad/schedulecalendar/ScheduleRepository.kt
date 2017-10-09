@@ -3,8 +3,6 @@ package pl.edu.zut.mad.schedulecalendar
 import io.realm.Realm
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.model.Day
-import pl.edu.zut.mad.schedulecalendar.model.Schedule
-import pl.edu.zut.mad.schedulecalendar.network.ScheduleEdzLoader
 import java.util.*
 
 
@@ -14,20 +12,22 @@ class ScheduleRepository {
         private val database = Realm.getDefaultInstance()
     }
 
-    // TODO: prevent from multiple Schedule in db
-    fun saveSchedule(schedule: Schedule) {
+    // TODO: change to async
+    fun saveSchedule(scheduleDays: List<Day>) {
         database.beginTransaction()
-        database.copyToRealm(schedule)
+        database.copyToRealm(scheduleDays)
         database.commitTransaction()
     }
 
     fun saveSchedule(content: String) {
-        val loader = ScheduleEdzLoader()
-        val schedule = loader.parseData(content)
-        saveSchedule(schedule)
+        database.beginTransaction()
+        database.deleteAll()
+        database.commitTransaction()
+        val scheduleDays = ScheduleParser().parseData(content)
+        saveSchedule(scheduleDays)
     }
 
-    fun getSchedule(): Schedule? = database.where(Schedule::class.java).findFirst() // change to async
+    fun getSchedule(): List<Day> = database.where(Day::class.java).findAll() // change to async
 
     fun getDayScheduleByDate(date: Date): Day? { // change to async
         val dateTime = LocalDate.fromDateFields(date).toString()
