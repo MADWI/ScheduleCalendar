@@ -101,8 +101,8 @@ public class DateUtils {
      * @param date if null, method generates dates for current week,
      *             otherwise for week which belongs to given date
      */
-    public static List<Date> getWeekDates(Date date) {
-        List<Date> weekDates = new ArrayList<>();
+    public static List<LocalDate> getWeekDates(Date date) {
+        List<LocalDate> weekDates = new ArrayList<>();
         Calendar calendar = Calendar.getInstance(Locale.GERMAN);
         if (date != null) {
             calendar.setTime(date);
@@ -110,18 +110,18 @@ public class DateUtils {
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
         for (int i = 0; i < 7; i++) {
             Date dayDate = calendar.getTime();
-            weekDates.add(dayDate);
+            weekDates.add(LocalDate.fromDateFields(dayDate));
             calendar.add(Calendar.DAY_OF_WEEK, 1);
         }
         return weekDates;
     }
 
-    public static List<Date> getNextWeekDatesFromDate(Date date) {
+    public static List<LocalDate> getNextWeekDatesFromDate(Date date) {
         Date nextWeekDate = new Date(date.getTime() + getWeekTimeMillis());
         return getWeekDates(nextWeekDate);
     }
 
-    public static List<Date> getPrevWeekDatesFromDate(Date date) {
+    public static List<LocalDate> getPrevWeekDatesFromDate(Date date) {
         Date prevWeekDate = new Date(date.getTime() - getWeekTimeMillis());
         return getWeekDates(prevWeekDate);
     }

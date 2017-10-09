@@ -40,7 +40,7 @@ public class SchedulePagerFragment extends Fragment
     private CollapsingToolbarLayout toolbarLayout;
     private CalendarFragment calendarFragment;
     private SchedulePagerAdapter pagerAdapter;
-    private List<Date> currentWeekDates;
+    private List<LocalDate> currentWeekDates;
     private String selectedDateString;
     private boolean isBarTitleShow = false;
     private int barShowHeight = -1;
@@ -85,17 +85,17 @@ public class SchedulePagerFragment extends Fragment
         @Override
         public void onPageSelected(int position) {
             if (position < FIRST_DAY_INDEX) {
-                Date date = currentWeekDates.get(FIRST_DAY_INDEX);
-                updateCurrentWeekDatesForPrevWeek(date);
-                moveToPrevMonthPageIfNeeded(date);
+                LocalDate date = currentWeekDates.get(FIRST_DAY_INDEX);
+                updateCurrentWeekDatesForPrevWeek(date.toDate());
+                moveToPrevMonthPageIfNeeded(date.toDate());
             } else if (position > LAST_DAY_INDEX) {
-                Date date = currentWeekDates.get(LAST_DAY_INDEX);
-                updateCurrentWeekDatesForNextWeek(date);
-                moveToNextMonthPageIfNeeded(date);
+                LocalDate date = currentWeekDates.get(LAST_DAY_INDEX);
+                updateCurrentWeekDatesForNextWeek(date.toDate());
+                moveToNextMonthPageIfNeeded(date.toDate());
             } else {
-                Date currentDate = currentWeekDates.get(position);
-                calendarFragment.setSelectedDate(currentDate);
-                selectedDateString = DateUtils.convertDateToShortString(currentDate);
+                LocalDate date = currentWeekDates.get(position);
+                calendarFragment.setSelectedDate(date.toDate());
+                selectedDateString = DateUtils.convertDateToShortString(date.toDate());
             }
         }
     };
@@ -247,8 +247,8 @@ public class SchedulePagerFragment extends Fragment
     }
 
     private boolean isDayDateInCurrentWeek(@NonNull Date dayDate) {
-        for (Date date : currentWeekDates) {
-            if (date.compareTo(dayDate) == 0) {
+        for (LocalDate date : currentWeekDates) {
+            if (date.compareTo(LocalDate.fromDateFields(dayDate)) == 0) {
                 return true;
             }
         }

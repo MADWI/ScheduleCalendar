@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
+
 import java.util.List;
 
 import pl.edu.zut.mad.schedulecalendar.adapter.LessonsAdapter;
@@ -18,15 +19,14 @@ public class ScheduleDayFragment extends Fragment {
 
     private static final String DATE_KEY = "date";
     private LessonsAdapter adapter;
-    private Date date;
+    private LocalDate date;
     private RecyclerView classesListView;
     private View noClassesImageView;
     private View noClassesMessageView;
 
-    public static ScheduleDayFragment newInstance(Date date) {
+    public static ScheduleDayFragment newInstance(LocalDate date) {
         Bundle args = new Bundle();
-        args.putLong(DATE_KEY, date.getTime());
-
+        args.putSerializable(DATE_KEY, date);
         ScheduleDayFragment fragment = new ScheduleDayFragment();
         fragment.setArguments(args);
         return fragment;
@@ -37,7 +37,7 @@ public class ScheduleDayFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle retainedArguments = getArguments();
         if (retainedArguments != null) {
-            date = new Date(retainedArguments.getLong(DATE_KEY));
+            date = (LocalDate) retainedArguments.getSerializable(DATE_KEY);
         }
     }
 
@@ -82,7 +82,7 @@ public class ScheduleDayFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (date != null) {
-            outState.putLong(DATE_KEY, date.getTime());
+            outState.putSerializable(DATE_KEY, date);
         }
     }
 }

@@ -3,7 +3,6 @@ package pl.edu.zut.mad.schedulecalendar
 import io.realm.Realm
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.model.Day
-import java.util.*
 
 
 class ScheduleRepository {
@@ -29,8 +28,6 @@ class ScheduleRepository {
 
     fun getSchedule(): List<Day> = database.where(Day::class.java).findAll() // change to async
 
-    fun getDayScheduleByDate(date: Date): Day? { // change to async
-        val dateTime = LocalDate.fromDateFields(date).toString()
-        return database.where(Day::class.java).equalTo("time", dateTime).findFirst()
-    }
+    fun getDayScheduleByDate(date: LocalDate): Day? =// change to async
+            database.where(Day::class.java).equalTo("time", date.toString()).findFirst()
 }
