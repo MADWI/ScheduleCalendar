@@ -15,6 +15,8 @@ import android.widget.ProgressBar;
 
 import com.tobishiba.circularviewpager.library.CircularViewPagerHandler;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -139,8 +141,8 @@ public class SchedulePagerFragment extends Fragment
         }
     }
 
-    public List<Date> getClassesDates(List<Day> days) { // TODO: replace with repository method
-        List<Date> classesDates = new ArrayList<>();
+    public List<LocalDate> getClassesDates(List<Day> days) { // TODO: replace with repository method
+        List<LocalDate> classesDates = new ArrayList<>();
         for (Day day : days) {
             classesDates.add(day.getDate());
         }

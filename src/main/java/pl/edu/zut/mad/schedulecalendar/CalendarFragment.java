@@ -13,6 +13,8 @@ import com.roomorama.caldroid.CaldroidGridAdapter;
 import com.roomorama.caldroid.CaldroidListener;
 import com.roomorama.caldroid.DateGridFragment;
 
+import org.joda.time.LocalDate;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -87,13 +89,13 @@ public class CalendarFragment extends CaldroidFragment {
         }
     }
 
-    public void setClassesDates(List<Date> classesDates) {
+    public void setClassesDates(List<LocalDate> classesDates) {
         putClassesDatesToMap(classesDates);
         updateAdapters();
         refreshView();
     }
 
-    private void putClassesDatesToMap(List<Date> classesDates) {
+    private void putClassesDatesToMap(List<LocalDate> classesDates) {
         Map<Date, Drawable> dateMap = convertClassesListToDateMap(classesDates);
         setBackgroundDrawableForDates(dateMap);
     }
@@ -103,10 +105,10 @@ public class CalendarFragment extends CaldroidFragment {
      * {@link CalendarGridAdapter#getBackgroundForDateTime(DateTime)} for getting
      * proper background drawable (e.g. it could have a border for current day or be selected)
      */
-    private Map<Date, Drawable> convertClassesListToDateMap(List<Date> classesDates) {
+    private Map<Date, Drawable> convertClassesListToDateMap(List<LocalDate> classesDates) {
         Map<Date, Drawable> dateMap = new HashMap<>();
-        for (Date date : classesDates) {
-            dateMap.put(date, null);
+        for (LocalDate date : classesDates) {
+            dateMap.put(date.toDate(), null);
         }
         return dateMap;
     }
