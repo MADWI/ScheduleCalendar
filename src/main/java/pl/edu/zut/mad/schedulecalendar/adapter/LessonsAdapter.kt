@@ -14,7 +14,11 @@ import pl.edu.zut.mad.schedulecalendar.model.Lesson
 internal class LessonsAdapter(private val context: Context)
     : RecyclerView.Adapter<LessonsAdapter.ClassViewHolder>() {
 
-    private val lessons: MutableList<Lesson> = ArrayList()
+    var lessons: MutableList<Lesson> = ArrayList()
+        set(value) {
+            field.clear()
+            lessons.addAll(value)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -39,11 +43,6 @@ internal class LessonsAdapter(private val context: Context)
     }
 
     override fun getItemCount() = lessons.size
-
-    fun setLessons(lessons: List<Lesson>) {
-        this.lessons.clear()
-        this.lessons.addAll(lessons)
-    }
 
     inner class ClassViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 

@@ -52,7 +52,7 @@ internal class LessonsFragment : Fragment() {
             noLessonsTextView.visibility = View.VISIBLE
             noLessonsImageView.visibility = View.VISIBLE
         } else {
-            lessonsAdapter.setLessons(day.getLessons())
+            lessonsAdapter.lessons = day.getLessons()
             noLessonsTextView.visibility = View.GONE
             noLessonsImageView.visibility = View.GONE
         }

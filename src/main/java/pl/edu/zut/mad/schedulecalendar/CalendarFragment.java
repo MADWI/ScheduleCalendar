@@ -23,7 +23,7 @@ import java.util.Map;
 import hirondelle.date4j.DateTime;
 import pl.edu.zut.mad.schedulecalendar.adapter.CalendarGridAdapter;
 
-class CalendarFragment extends CaldroidFragment {
+public class CalendarFragment extends CaldroidFragment {
 
     private CalendarListener calendarListener;
 
