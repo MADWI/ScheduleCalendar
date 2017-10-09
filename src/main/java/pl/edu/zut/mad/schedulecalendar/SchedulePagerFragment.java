@@ -19,13 +19,10 @@ import java.util.Date;
 import java.util.List;
 
 import pl.edu.zut.mad.schedulecalendar.adapter.SchedulePagerAdapter;
-import pl.edu.zut.mad.schedulecalendar.network.BaseDataLoader;
-import pl.edu.zut.mad.schedulecalendar.network.DataLoadingManager;
-import pl.edu.zut.mad.schedulecalendar.network.ScheduleEdzLoader;
+import pl.edu.zut.mad.schedulecalendar.model.Schedule;
 
 public class SchedulePagerFragment extends Fragment
-        implements BaseDataLoader.DataLoadedListener<Schedule>, CalendarFragment.CalendarListener,
-                   AppBarLayout.OnOffsetChangedListener {
+        implements CalendarFragment.CalendarListener, AppBarLayout.OnOffsetChangedListener {
 
     private static final String SELECTED_DATE = "selected_date";
     private static final String EMPTY_TOOLBAR_TITLE = " ";
@@ -39,7 +36,6 @@ public class SchedulePagerFragment extends Fragment
     private Toolbar toolbar;
     private CollapsingToolbarLayout toolbarLayout;
     private CalendarFragment calendarFragment;
-    private ScheduleEdzLoader scheduleLoader;
     private SchedulePagerAdapter pagerAdapter;
     private List<Date> currentWeekDates;
     private String selectedDateString;
@@ -134,13 +130,7 @@ public class SchedulePagerFragment extends Fragment
     }
 
     private void initLoader() {
-        scheduleLoader = DataLoadingManager.getInstance(getActivity())
-                .getLoader(ScheduleEdzLoader.class);
-        scheduleLoader.registerAndLoad(this);
-    }
-
-    @Override
-    public void onDataLoaded(Schedule schedule) {
+        Schedule schedule = new ScheduleRepository().getSchedule();
         if (schedule != null) {
             calendarFragment.setClassesDates(schedule.getClassesDates());
             selectCurrentDayPage();
@@ -252,12 +242,6 @@ public class SchedulePagerFragment extends Fragment
             }
         }
         return false;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        scheduleLoader.unregister(this);
     }
 
     @Override

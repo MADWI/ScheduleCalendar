@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import pl.edu.zut.mad.schedulecalendar.Schedule;
+import pl.edu.zut.mad.schedulecalendar.model.Day;
+import pl.edu.zut.mad.schedulecalendar.model.Hour;
+import pl.edu.zut.mad.schedulecalendar.model.Schedule;
+import pl.edu.zut.mad.schedulecalendar.model.TimeRange;
 
 /**
  * Helper class for loading schedule
@@ -27,7 +30,7 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
 
     private static final Pattern HOUR_PATTERN = Pattern.compile("(\\d\\d):(\\d\\d)");
 
-    ScheduleEdzLoader(DataLoadingManager loadingManager) {
+    public ScheduleEdzLoader(DataLoadingManager loadingManager) {
         super(loadingManager);
     }
 
@@ -41,13 +44,24 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
         return cachedData;
     }
 
+    public Schedule parseData(String content) {
+        RawData rawData = new RawData();
+        rawData.mJsonScheduleAsString = content;
+        try {
+            return parseData(rawData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     protected Schedule parseData(RawData rawData) throws JSONException {
         JSONArray table = new JSONArray(rawData.mJsonScheduleAsString);
 
         LocalDate forDay = null;
-        List<Schedule.Hour> hoursInDay = new ArrayList<>();
-        List<Schedule.Day> days = new ArrayList<>();
+        List<Hour> hoursInDay = new ArrayList<>();
+        List<Day> days = new ArrayList<>();
 
         // Start from 1 - skip header
         for (int i = 1; i < table.length(); i++) {
@@ -56,8 +70,8 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
                 // Header
                 // Finish currently built day
                 if (forDay != null) {
-                    days.add(new Schedule.Day(
-                            forDay, hoursInDay.toArray(new Schedule.Hour[hoursInDay.size()])
+                    days.add(new Day(
+                            forDay, hoursInDay.toArray(new Hour[hoursInDay.size()])
                     ));
                     hoursInDay.clear();
                 }
@@ -71,12 +85,12 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
                 if (!startHour.find() || !endHour.find()) {
                     throw new JSONException("Unable to match hour");
                 }
-                Schedule.Hour hour = new Schedule.Hour(
+                Hour hour = new Hour(
                         row.getString(4), // name
                         row.getString(8), // type
                         row.getString(6), // room
                         row.getString(5), // teacher
-                        new Schedule.TimeRange(
+                        new TimeRange(
                                 Integer.parseInt(startHour.group(1)),
                                 Integer.parseInt(startHour.group(2)),
                                 Integer.parseInt(endHour.group(1)),
@@ -90,12 +104,12 @@ public class ScheduleEdzLoader extends BaseDataLoader<Schedule, ScheduleEdzLoade
         }
 
         // Add last day to days
-        days.add(new Schedule.Day(
-                forDay, hoursInDay.toArray(new Schedule.Hour[hoursInDay.size()])
+        days.add(new Day(
+                forDay, hoursInDay.toArray(new Hour[hoursInDay.size()])
         ));
 
         // Build the Timetable object
-        return new Schedule(days.toArray(new Schedule.Day[days.size()]));
+        return new Schedule(days.toArray(new Day[days.size()]));
     }
 
     public void setSourceTableJson(String tableJson) {

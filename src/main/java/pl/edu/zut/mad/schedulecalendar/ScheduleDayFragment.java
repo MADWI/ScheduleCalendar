@@ -7,24 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.joda.time.LocalDate;
-
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import pl.edu.zut.mad.schedulecalendar.adapter.ScheduleDayAdapter;
-import pl.edu.zut.mad.schedulecalendar.network.BaseDataLoader;
-import pl.edu.zut.mad.schedulecalendar.network.DataLoadingManager;
-import pl.edu.zut.mad.schedulecalendar.network.ScheduleEdzLoader;
+import pl.edu.zut.mad.schedulecalendar.model.Day;
+import pl.edu.zut.mad.schedulecalendar.model.Hour;
 
-public class ScheduleDayFragment extends Fragment implements BaseDataLoader.DataLoadedListener<Schedule> {
+public class ScheduleDayFragment extends Fragment {
 
     private static final String DATE_KEY = "date";
     private ScheduleDayAdapter adapter;
     private Date date;
-    private Schedule schedule;
-    private BaseDataLoader<Schedule, ?> loader;
     private RecyclerView classesListView;
     private View noClassesImageView;
     private View noClassesMessageView;
@@ -57,12 +51,12 @@ public class ScheduleDayFragment extends Fragment implements BaseDataLoader.Data
     private void init(View view) {
         initViews(view);
         initListViewWithAdapter();
-        initLoader();
+        initDaySchedule();
     }
 
     private void initViews(View view) {
         classesListView = view.findViewById(R.id.classesListView);
-        noClassesImageView =view.findViewById(R.id.noClassesImageView);
+        noClassesImageView = view.findViewById(R.id.noClassesImageView);
         noClassesMessageView = view.findViewById(R.id.noClassesTextView);
     }
 
@@ -71,33 +65,14 @@ public class ScheduleDayFragment extends Fragment implements BaseDataLoader.Data
         classesListView.setAdapter(adapter);
     }
 
-    private void initLoader() {
-        loader = DataLoadingManager
-                .getInstance(getContext())
-                .getLoader(ScheduleEdzLoader.class);
-        loader.registerAndLoad(this);
-    }
-
-    @Override
-    public void onDataLoaded(Schedule schedule) {
-        this.schedule = schedule;
-        if (schedule != null) {
-            putDataInView();
-        }
-    }
-
-    private void putDataInView() {
-        if (schedule == null) {
-            return;
-        }
-
-        Schedule.Day scheduleDay = schedule.getScheduleForDate(LocalDate.fromDateFields(date));
+    private void initDaySchedule() {
+        Day scheduleDay = new ScheduleRepository().getDayScheduleByDate(date);
         if (scheduleDay == null) {
             noClassesMessageView.setVisibility(View.VISIBLE);
             noClassesImageView.setVisibility(View.VISIBLE);
             adapter.setDayTasks(null);
         } else {
-            List<Schedule.Hour> hoursInDay = Arrays.asList(scheduleDay.getTasks());
+            List<Hour> hoursInDay = scheduleDay.getTasks();
             adapter.setDayTasks(hoursInDay);
             noClassesMessageView.setVisibility(View.GONE);
             noClassesImageView.setVisibility(View.GONE);
@@ -110,11 +85,5 @@ public class ScheduleDayFragment extends Fragment implements BaseDataLoader.Data
         if (date != null) {
             outState.putLong(DATE_KEY, date.getTime());
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        loader.unregister(this);
     }
 }
