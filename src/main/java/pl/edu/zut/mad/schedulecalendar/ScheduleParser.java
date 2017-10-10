@@ -8,6 +8,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +18,7 @@ import pl.edu.zut.mad.schedulecalendar.model.TimeRange;
 
 class ScheduleParser {
 
+    private static final String TIME_FORMAT = "%02d:%02d";
     private static final String TAG = "ScheduleParser";
     private static final Pattern HOUR_PATTERN = Pattern.compile("(\\d\\d):(\\d\\d)");
 
@@ -53,11 +55,8 @@ class ScheduleParser {
                         row.getString(6), // room
                         row.getString(5), // teacher
                         new TimeRange(
-                                Integer.parseInt(startHour.group(1)),
-                                Integer.parseInt(startHour.group(2)),
-                                Integer.parseInt(endHour.group(1)),
-                                Integer.parseInt(endHour.group(2))
-                        )
+                                getFormattedTime(startHour.group(1), startHour.group(2)),
+                                getFormattedTime(endHour.group(1), endHour.group(2)))
                 );
                 dayLessons.add(lesson);
             } else {
@@ -69,5 +68,9 @@ class ScheduleParser {
         days.add(new Day(forDay, dayLessons));
 
         return days;
+    }
+
+    private String getFormattedTime(String hour, String minute) {
+        return String.format(Locale.getDefault(), TIME_FORMAT, Integer.parseInt(hour), Integer.parseInt(minute));
     }
 }
