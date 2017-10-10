@@ -47,22 +47,22 @@ internal class LessonsFragment : Fragment() {
         date = arguments.getSerializable(DATE_KEY) as LocalDate
     }
 
+    private fun initListViewWithAdapter() {
+        lessonsAdapter = LessonsAdapter(context)
+        lessonsListView.adapter = lessonsAdapter
+    }
+
     private fun initLessons() {
         val day = ScheduleRepository().getDayByDate(date)
-        val lessons = day?.getLessons()
+        val lessons = day?.lessons
         if (lessons?.isNotEmpty() != true) { // TODO: clear
             noLessonsTextView.visibility = View.VISIBLE
             noLessonsImageView.visibility = View.VISIBLE
         } else {
-            lessonsAdapter.lessons = day.getLessons()
+            lessonsAdapter.lessons = day.lessons
             noLessonsTextView.visibility = View.GONE
             noLessonsImageView.visibility = View.GONE
         }
-    }
-
-    private fun initListViewWithAdapter() {
-        lessonsAdapter = LessonsAdapter(context)
-        lessonsListView.adapter = lessonsAdapter
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
