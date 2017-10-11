@@ -23,9 +23,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import pl.edu.zut.mad.schedulecalendar.DaggerScheduleCalendarComponent;
 import pl.edu.zut.mad.schedulecalendar.DateUtils;
 import pl.edu.zut.mad.schedulecalendar.R;
+import pl.edu.zut.mad.schedulecalendar.ScheduleApp;
+import pl.edu.zut.mad.schedulecalendar.ScheduleCalendarModule;
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository;
 import pl.edu.zut.mad.schedulecalendar.adapter.SchedulePagerAdapter;
 import pl.edu.zut.mad.schedulecalendar.model.Day;
@@ -57,8 +58,9 @@ public class SchedulePagerFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DaggerScheduleCalendarComponent.builder()
-                .build()
+        ScheduleApp app = (ScheduleApp)getActivity().getApplication();
+        app.getComponent()
+                .plus(new ScheduleCalendarModule())
                 .inject(this);
     }
 
