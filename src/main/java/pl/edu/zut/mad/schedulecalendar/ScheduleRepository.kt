@@ -5,11 +5,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.model.Day
 
 
-internal class ScheduleRepository {
-
-    companion object {
-        private val database = Realm.getDefaultInstance()
-    }
+class ScheduleRepository(private val database: Realm) {
 
     // TODO: change to async
     fun saveSchedule(scheduleDays: List<Day>) {
@@ -26,8 +22,8 @@ internal class ScheduleRepository {
         saveSchedule(scheduleDays)
     }
 
-    fun getSchedule(): List<Day> = database.where(Day::class.java).findAll() // change to async
+    fun getSchedule(): List<Day> = database.where(Day::class.java).findAll() // TODO change to async
 
-    fun getDayByDate(date: LocalDate): Day? =// change to async
+    fun getDayByDate(date: LocalDate): Day? =// TODO change to async
             database.where(Day::class.java).equalTo("time", date.toString()).findFirst()
 }

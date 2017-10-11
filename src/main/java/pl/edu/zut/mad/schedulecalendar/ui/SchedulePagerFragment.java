@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import pl.edu.zut.mad.schedulecalendar.DaggerScheduleCalendarComponent;
 import pl.edu.zut.mad.schedulecalendar.DateUtils;
 import pl.edu.zut.mad.schedulecalendar.R;
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository;
@@ -47,6 +50,17 @@ public class SchedulePagerFragment extends Fragment
     private String selectedDateString;
     private boolean isBarTitleShow = false;
     private int barShowHeight = -1;
+
+    @Inject
+    ScheduleRepository scheduleRepository;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DaggerScheduleCalendarComponent.builder()
+                .build()
+                .inject(this);
+    }
 
     @Nullable
     @Override
@@ -136,7 +150,7 @@ public class SchedulePagerFragment extends Fragment
     }
 
     private void initLoader() {
-        List<Day> scheduleDays = new ScheduleRepository().getSchedule();
+        List<Day> scheduleDays = scheduleRepository.getSchedule();
         if (!scheduleDays.isEmpty()) {
             calendarFragment.setClassesDates(getClassesDates(scheduleDays));
             selectCurrentDayPage();

@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_lessons.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedulecalendar.DaggerScheduleCalendarComponent
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.adapter.LessonsAdapter
+import javax.inject.Inject
 
 
-internal class LessonsFragment : Fragment() {
+class LessonsFragment : Fragment() {
 
     companion object {
         private const val DATE_KEY = "schedule_calendar_date_key"
@@ -28,6 +30,18 @@ internal class LessonsFragment : Fragment() {
 
     private lateinit var lessonsAdapter: LessonsAdapter
     private lateinit var date: LocalDate
+    @Inject lateinit var scheduleRepository: ScheduleRepository
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initInjections()
+    }
+
+    private fun initInjections() {
+        DaggerScheduleCalendarComponent.builder()
+                .build()
+                .inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_lessons, container, false)
@@ -53,7 +67,7 @@ internal class LessonsFragment : Fragment() {
     }
 
     private fun initLessons() {
-        val day = ScheduleRepository().getDayByDate(date)
+        val day = scheduleRepository.getDayByDate(date)
         val lessons = day?.lessons
         if (lessons?.isNotEmpty() != true) { // TODO: clear
             noLessonsTextView.visibility = View.VISIBLE
