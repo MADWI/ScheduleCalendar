@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar
+package pl.edu.zut.mad.schedulecalendar.module
 
 import android.app.Application
 import dagger.Component

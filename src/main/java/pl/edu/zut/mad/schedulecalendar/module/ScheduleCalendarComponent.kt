@@ -1,6 +1,7 @@
-package pl.edu.zut.mad.schedulecalendar
+package pl.edu.zut.mad.schedulecalendar.module
 
 import dagger.Subcomponent
+import pl.edu.zut.mad.schedulecalendar.module.ScheduleCalendarModule
 import pl.edu.zut.mad.schedulecalendar.ui.LessonsFragment
 import pl.edu.zut.mad.schedulecalendar.ui.LessonsPagerFragment
 import javax.inject.Singleton

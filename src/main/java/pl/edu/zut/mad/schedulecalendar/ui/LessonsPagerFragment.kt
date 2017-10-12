@@ -15,6 +15,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.*
 import pl.edu.zut.mad.schedulecalendar.adapter.LessonsPagerAdapter
 import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.module.ScheduleCalendarModule
 import java.util.*
 import javax.inject.Inject
 

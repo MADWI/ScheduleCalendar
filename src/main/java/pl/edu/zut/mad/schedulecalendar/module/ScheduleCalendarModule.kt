@@ -1,8 +1,9 @@
-package pl.edu.zut.mad.schedulecalendar
+package pl.edu.zut.mad.schedulecalendar.module
 
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
+import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import javax.inject.Singleton
 
 
