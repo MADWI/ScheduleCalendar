@@ -16,7 +16,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private lateinit var calendarFragment: CalendarFragment
-    private lateinit var schedulePagerFragment: SchedulePagerFragment
+    private lateinit var lessonsPagerFragment: LessonsPagerFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_schedule, container, false)
@@ -32,14 +32,14 @@ class ScheduleFragment : Fragment() {
         } else {
             initScheduleFragmentsFromStack()
         }
-        schedulePagerFragment.registerCalendar(calendarFragment)
+        lessonsPagerFragment.registerCalendar(calendarFragment)
     }
 
     private fun initAndStartScheduleFragments() {
         calendarFragment = CalendarFragment()
-        schedulePagerFragment = SchedulePagerFragment()
+        lessonsPagerFragment = LessonsPagerFragment()
         replaceFragmentInViewContainer(calendarFragment, R.id.calendar_container, CALENDAR_TAG)
-        replaceFragmentInViewContainer(schedulePagerFragment, R.id.schedule_container, SCHEDULE_TAG)
+        replaceFragmentInViewContainer(lessonsPagerFragment, R.id.schedule_container, SCHEDULE_TAG)
     }
 
     private fun replaceFragmentInViewContainer(fragment: Fragment, containerId: Int, tag: String) {
@@ -50,7 +50,7 @@ class ScheduleFragment : Fragment() {
 
     private fun initScheduleFragmentsFromStack() {
         calendarFragment = getFragmentFromStackWithTag(CALENDAR_TAG) as CalendarFragment
-        schedulePagerFragment = getFragmentFromStackWithTag(SCHEDULE_TAG) as SchedulePagerFragment
+        lessonsPagerFragment = getFragmentFromStackWithTag(SCHEDULE_TAG) as LessonsPagerFragment
     }
 
     private fun getFragmentFromStackWithTag(tag: String): Fragment =

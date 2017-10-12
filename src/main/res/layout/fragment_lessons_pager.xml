@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/schedule_main"
+        android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -13,7 +13,7 @@
         tools:visibility="visible">
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
+            android:id="@+id/pagerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -21,7 +21,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/loading_indicator"
+        android:id="@+id/loadingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

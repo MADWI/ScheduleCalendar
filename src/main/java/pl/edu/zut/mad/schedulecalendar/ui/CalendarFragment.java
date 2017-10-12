@@ -67,7 +67,7 @@ public class CalendarFragment extends CaldroidFragment {
     };
 
     /**
-     * This method will be also called from {@link SchedulePagerFragment} by
+     * This method will be also called from {@link LessonsPagerFragment} by
      * {@link android.support.v4.view.ViewPager.OnPageChangeListener}
      */
     @Override
