@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.ui.LessonsFragment
 
 
-internal class SchedulePagerAdapter(fragmentManager: FragmentManager)
+internal class LessonsPagerAdapter(fragmentManager: FragmentManager)
     : BaseCircularViewPagerAdapter<LocalDate>(fragmentManager, ArrayList<LocalDate>()) {
 
     override fun getFragmentForItem(date: LocalDate): LessonsFragment =

@@ -13,7 +13,7 @@ import com.tobishiba.circularviewpager.library.CircularViewPagerHandler
 import kotlinx.android.synthetic.main.fragment_lessons_pager.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.*
-import pl.edu.zut.mad.schedulecalendar.adapter.SchedulePagerAdapter
+import pl.edu.zut.mad.schedulecalendar.adapter.LessonsPagerAdapter
 import pl.edu.zut.mad.schedulecalendar.model.Day
 import java.util.*
 import javax.inject.Inject
@@ -35,7 +35,7 @@ class LessonsPagerFragment : Fragment(),
     private var weekDaysNames: Array<String>? = null
     private var toolbar: Toolbar? = null
     private var calendarFragment: CalendarFragment? = null
-    private var pagerAdapter: SchedulePagerAdapter? = null
+    private var pagerAdapter: LessonsPagerAdapter? = null
     private var selectedDateString: String? = null
     private var isBarTitleShow = false
     private var barShowHeight = -1
@@ -69,7 +69,7 @@ class LessonsPagerFragment : Fragment(),
     }
 
     private fun initPager() {
-        pagerAdapter = SchedulePagerAdapter(childFragmentManager)
+        pagerAdapter = LessonsPagerAdapter(childFragmentManager)
         pagerView.adapter = pagerAdapter
         val pagerHandler = CircularViewPagerHandler(pagerView)
         pagerHandler.setOnPageChangeListener(onPageChangeListener)
