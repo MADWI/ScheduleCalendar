@@ -6,9 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import pl.edu.zut.mad.schedulecalendar.R
+import pl.edu.zut.mad.schedulecalendar.ScheduleMvp
+import pl.edu.zut.mad.schedulecalendar.SchedulePresenter
+import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
+import javax.inject.Inject
 
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     companion object {
         private const val CALENDAR_TAG = "calendar_fragment"
@@ -18,11 +24,15 @@ class ScheduleFragment : Fragment() {
     private lateinit var calendarFragment: CalendarFragment
     private lateinit var lessonsPagerFragment: LessonsPagerFragment
 
+    @Inject
+    lateinit var schedulePresenter: SchedulePresenter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_schedule, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity.app.component.plus(ScheduleModule(this)).inject(this) // TODO: duplicated this with view injection
         initScheduleFragments(savedInstanceState)
     }
 
@@ -55,4 +65,20 @@ class ScheduleFragment : Fragment() {
 
     private fun getFragmentFromStackWithTag(tag: String): Fragment =
             fragmentManager.findFragmentByTag(tag)
+
+    override fun showLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setLessonsDays(lessonsDays: List<Day>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

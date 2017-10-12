@@ -1,12 +1,16 @@
 package pl.edu.zut.mad.schedulecalendar
 
+import pl.edu.zut.mad.schedulecalendar.model.Day
 
-internal interface ScheduleMvp {
+
+interface ScheduleMvp {
 
     interface View {
         fun showLoading()
 
-        fun hiderLoading()
+        fun hideLoading()
+
+        fun setLessonsDays(lessonsDays: List<Day>)
 
         fun showError()
     }
