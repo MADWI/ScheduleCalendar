@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ScheduleCalendar</string>
     <string name="no_classes">Brak zajęć</string>
     <string-array name="week_days">
         <item>Poniedziałek</item>

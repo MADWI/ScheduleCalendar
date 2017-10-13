@@ -1,16 +1,25 @@
 package pl.edu.zut.mad.schedulecalendar.module
 
+import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
-import pl.edu.zut.mad.schedulecalendar.ScheduleMvp
-import pl.edu.zut.mad.schedulecalendar.SchedulePresenter
-import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
+import pl.edu.zut.mad.schedulecalendar.*
 import javax.inject.Singleton
 
 
 @Module
 class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
+
+    @Provides
+    @Singleton
+    fun provideUserPreferences(context: Context) =
+            context.getSharedPreferences(UserKt.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun provideUser(preferences: SharedPreferences) = UserKt(preferences)
 
     @Provides
     @Singleton

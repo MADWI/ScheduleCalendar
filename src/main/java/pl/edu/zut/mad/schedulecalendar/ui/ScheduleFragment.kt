@@ -2,6 +2,7 @@ package pl.edu.zut.mad.schedulecalendar.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,16 +24,15 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     private lateinit var calendarFragment: CalendarFragment
     private lateinit var lessonsPagerFragment: LessonsPagerFragment
-
-    @Inject
-    lateinit var schedulePresenter: SchedulePresenter
+    @Inject lateinit var schedulePresenter: SchedulePresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_schedule, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity.app.component.plus(ScheduleModule(this)).inject(this) // TODO: duplicated this with view injection
+        app.component.plus(ScheduleModule(this)).inject(this) // TODO: duplicated this with view injection
+        schedulePresenter.fetchLessons()
         initScheduleFragments(savedInstanceState)
     }
 
@@ -67,18 +67,20 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
             fragmentManager.findFragmentByTag(tag)
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        log("showLoading")
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        log("hideLoading")
     }
 
     override fun setLessonsDays(lessonsDays: List<Day>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        log("setLessonsDays")
     }
 
     override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        log("showError")
     }
+
+    private fun log(message: String) = Log.d("ScheduleFragment", message)
 }

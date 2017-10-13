@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.schedule_task_item.view.*
+import kotlinx.android.synthetic.main.lesssons_item.view.*
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.model.Lesson
 
@@ -22,7 +22,7 @@ internal class LessonsAdapter(private val context: Context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.schedule_task_item, parent, false)
+                .inflate(R.layout.lesssons_item, parent, false)
         return ClassViewHolder(view)
     }
 
