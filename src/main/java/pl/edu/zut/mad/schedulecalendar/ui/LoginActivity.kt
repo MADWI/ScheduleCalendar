@@ -2,21 +2,29 @@ package pl.edu.zut.mad.schedulecalendar.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login_calendar.*
 import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.login.LoginModule
+import pl.edu.zut.mad.schedulecalendar.login.LoginMvp
+import pl.edu.zut.mad.schedulecalendar.login.LoginPresenter
+import javax.inject.Inject
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
+    @Inject lateinit var loginPresenter: LoginPresenter
     private val NETWORK_UTILS = NetworkUtils()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_calendar)
+        app.component
+                .plus(LoginModule(this))
+                .inject(this)
+
         loginButtonView.setOnClickListener { onLoginClick() }
     }
 
@@ -30,14 +38,31 @@ class LoginActivity : AppCompatActivity() {
         }
         val login = loginTextView.text.toString()
         val password = passwordTextView.text.toString()
+        loginPresenter.fetchScheduleForAlbumNumber(32190)
     }
 
-    private fun showError(error: String?) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+    override fun showLoading() {
+        log("showLoading")
     }
 
-    private fun saveData(days: List<Day>) {
-        Log.d("LoginActivity", "data fetched successfully")
+    override fun hideLoading() {
+        log("hiderLoading")
+    }
+
+    override fun onDataSaved() {
+        log("onDataSaved")
+    }
+
+    override fun showError(message: String?) {
+        log(message?: "No message")
+    }
+
+    override fun hideError() {
+        log("hideError")
+    }
+
+    private fun log(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     private fun fieldIsInvalid(): Boolean {

@@ -2,6 +2,8 @@ package pl.edu.zut.mad.schedulecalendar.module
 
 import android.app.Application
 import dagger.Component
+import pl.edu.zut.mad.schedulecalendar.login.LoginComponent
+import pl.edu.zut.mad.schedulecalendar.login.LoginModule
 import javax.inject.Singleton
 
 
@@ -14,4 +16,6 @@ interface ScheduleAppComponent {
     fun plus(scheduleCalendarModule: ScheduleCalendarModule): ScheduleCalendarComponent
 
     fun plus(scheduleModule: ScheduleModule): ScheduleComponent
+
+    fun plus(loginModule: LoginModule): LoginComponent
 }

@@ -8,7 +8,7 @@ import pl.edu.zut.mad.schedulecalendar.api.ScheduleService
 import pl.edu.zut.mad.schedulecalendar.model.Day
 
 
-internal class LoginPresenter(private val view: LoginMvp.View,
+class LoginPresenter(private val view: LoginMvp.View,
                               private val service: ScheduleService,
                               private val repository: ScheduleRepository) : LoginMvp.Presenter {
     private val compositeDisposable = CompositeDisposable()

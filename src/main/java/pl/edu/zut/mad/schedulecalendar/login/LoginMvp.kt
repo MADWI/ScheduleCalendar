@@ -1,7 +1,7 @@
 package pl.edu.zut.mad.schedulecalendar.login
 
 
-internal interface LoginMvp {
+interface LoginMvp {
 
     interface View {
         fun showLoading()
