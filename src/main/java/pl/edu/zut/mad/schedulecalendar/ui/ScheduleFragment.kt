@@ -1,15 +1,13 @@
 package pl.edu.zut.mad.schedulecalendar.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.ScheduleMvp
-import pl.edu.zut.mad.schedulecalendar.SchedulePresenter
-import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.*
 import pl.edu.zut.mad.schedulecalendar.model.Day
 import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
 import javax.inject.Inject
@@ -25,6 +23,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     private lateinit var calendarFragment: CalendarFragment
     private lateinit var lessonsPagerFragment: LessonsPagerFragment
     @Inject lateinit var schedulePresenter: SchedulePresenter
+    @Inject lateinit var user: User
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_schedule, container, false)
@@ -33,7 +32,11 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
         super.onViewCreated(view, savedInstanceState)
         app.component.plus(ScheduleModule(this)).inject(this) // TODO: duplicated this with view injection
         schedulePresenter.fetchLessons()
-        initScheduleFragments(savedInstanceState)
+        if (user.isSaved()) {
+            initScheduleFragments(savedInstanceState)
+        } else {
+            startActivity(Intent(activity, LoginActivity::class.java))
+        }
     }
 
     private fun initScheduleFragments(savedInstanceState: Bundle?) {

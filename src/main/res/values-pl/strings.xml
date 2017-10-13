@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_classes">Brak zajęć</string>
+    <string name="login">Zaloguj się</string>
+    <string name="password">Hasło</string>
     <string-array name="week_days">
         <item>Poniedziałek</item>
         <item>Wtorek</item>
@@ -10,4 +12,6 @@
         <item>Sobota</item>
         <item>Niedziela</item>
     </string-array>
+    <string name="error_field_cannot_be_empty">Pole nie może być puste</string>
+    <string name="error_no_internet">Brak połączenia z internetem</string>
 </resources>

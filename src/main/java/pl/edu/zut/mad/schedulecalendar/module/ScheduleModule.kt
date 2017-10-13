@@ -1,5 +1,6 @@
 package pl.edu.zut.mad.schedulecalendar.module
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
@@ -14,8 +15,8 @@ class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
 
     @Provides
     @Singleton
-    fun provideUserPreferences(context: Context): SharedPreferences =
-            context.getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)
+    fun provideUserPreferences(application: Application): SharedPreferences =
+            application.getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)
 
     @Provides
     @Singleton

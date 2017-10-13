@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">ScheduleCalendar</string>
     <string name="no_classes">No classes</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="identifier">ID</string>
+    <string name="error_field_cannot_be_empty">Field cannot be empty</string>
+    <string name="error_no_internet">No Internet connection</string>
     <string-array name="week_days">
         <item>Monday</item>
         <item>Tuesday</item>
