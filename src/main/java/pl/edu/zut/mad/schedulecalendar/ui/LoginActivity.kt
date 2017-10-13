@@ -2,10 +2,12 @@ package pl.edu.zut.mad.schedulecalendar.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login_calendar.*
 import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
+import pl.edu.zut.mad.schedulecalendar.model.Day
 
 
 class LoginActivity : AppCompatActivity() {
@@ -15,17 +17,27 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_calendar)
-        loginButtonView.setOnClickListener {
-            if (fieldIsInvalid()) {
-                return@setOnClickListener
-            }
-            if (!NETWORK_UTILS.isAvailable(this)) {
-                Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val login = loginTextView.text.toString()
-            val password = passwordTextView.text.toString()
+        loginButtonView.setOnClickListener { onLoginClick() }
+    }
+
+    private fun onLoginClick() {
+        if (fieldIsInvalid()) {
+            return
         }
+        if (!NETWORK_UTILS.isAvailable(this)) {
+            Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val login = loginTextView.text.toString()
+        val password = passwordTextView.text.toString()
+    }
+
+    private fun showError(error: String?) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun saveData(days: List<Day>) {
+        Log.d("LoginActivity", "data fetched successfully")
     }
 
     private fun fieldIsInvalid(): Boolean {
