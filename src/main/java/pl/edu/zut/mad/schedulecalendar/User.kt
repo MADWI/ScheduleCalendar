@@ -2,7 +2,7 @@ package pl.edu.zut.mad.schedulecalendar
 
 import android.content.SharedPreferences
 
-class UserKt(private val preferences: SharedPreferences) {
+class User(private val preferences: SharedPreferences) {
 
     companion object {
         const val LOGIN_KEY = "login_key"
@@ -25,7 +25,7 @@ class UserKt(private val preferences: SharedPreferences) {
         contains(LOGIN_KEY) && contains(PASSWORD_KEY)
     }
 
-    fun getLogin() = preferences.getString(LOGIN_KEY, null)
+    fun getLogin(): String = preferences.getString(LOGIN_KEY, null)
 
-    fun getPassword() = preferences.getString(PASSWORD_KEY, null)
+    fun getPassword(): String = preferences.getString(PASSWORD_KEY, null)
 }

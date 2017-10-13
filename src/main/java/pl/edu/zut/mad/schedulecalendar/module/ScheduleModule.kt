@@ -14,12 +14,12 @@ class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
 
     @Provides
     @Singleton
-    fun provideUserPreferences(context: Context) =
-            context.getSharedPreferences(UserKt.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)
+    fun provideUserPreferences(context: Context): SharedPreferences =
+            context.getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)
 
     @Provides
     @Singleton
-    fun provideUser(preferences: SharedPreferences) = UserKt(preferences)
+    fun provideUser(preferences: SharedPreferences) = User(preferences)
 
     @Provides
     @Singleton
