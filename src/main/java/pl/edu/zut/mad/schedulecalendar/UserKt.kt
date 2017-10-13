@@ -6,7 +6,7 @@ class UserKt(private val preferences: SharedPreferences) {
 
     companion object {
         const val LOGIN_KEY = "login_key"
-        const val PASSWORD_KEY = "login_key"
+        const val PASSWORD_KEY = "password_key"
         const val PREFERENCES_FILE_KEY = "pl.edu.zut.mad.schedulecalendar"
     }
 
