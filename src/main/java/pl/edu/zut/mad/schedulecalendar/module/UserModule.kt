@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 
 @Module
-class ScheduleModule { // TODO: rename to UserModule
+class UserModule {
 
     @Provides
     @Singleton

@@ -15,7 +15,7 @@ interface ScheduleAppComponent {
 
     fun plus(scheduleCalendarModule: ScheduleCalendarModule): ScheduleCalendarComponent
 
-    fun plus(scheduleModule: ScheduleModule): ScheduleComponent
+    fun plus(userModule: UserModule): ScheduleComponent
 
     fun plus(loginModule: LoginModule): LoginComponent
 }

@@ -13,7 +13,10 @@ class LoginPresenter(private val view: LoginMvp.View,
                      private val repository: ScheduleRepository) : LoginMvp.Presenter {
     private val compositeDisposable = CompositeDisposable()
 
+    private var albumNumber = 0
+
     override fun fetchScheduleForAlbumNumber(albumNumber: Int) {
+        this.albumNumber = albumNumber
         val disposable = service.fetchScheduleByAlbumNumber(albumNumber)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -27,7 +30,7 @@ class LoginPresenter(private val view: LoginMvp.View,
 
     private fun saveSchedule(days: List<Day>) {
         repository.saveSchedule(days)
-        view.onDataSaved()
+        view.onDataSaved(albumNumber)
     }
 
     override fun cancelFetch() {

@@ -12,7 +12,7 @@ import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.app
 import pl.edu.zut.mad.schedulecalendar.lesson.LessonsPagerFragment
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
-import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
+import pl.edu.zut.mad.schedulecalendar.module.UserModule
 import javax.inject.Inject
 
 
@@ -43,7 +43,7 @@ class ScheduleFragment : Fragment() {
 
     private fun initInjections() {
         app.component
-                .plus(ScheduleModule())
+                .plus(UserModule())
                 .inject(this)
     }
 

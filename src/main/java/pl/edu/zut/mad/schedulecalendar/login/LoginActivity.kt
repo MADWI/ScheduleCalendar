@@ -48,8 +48,8 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
         log("hideLoading")
     }
 
-    override fun onDataSaved() {
-        User(getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)).save("23", "23") // TODO: move to presenter
+    override fun onDataSaved(albumNumber: Int) {
+        User(getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)).save(albumNumber) // TODO: move to presenter
         log("onDataSaved")
         setResult(Activity.RESULT_OK)
         finish()

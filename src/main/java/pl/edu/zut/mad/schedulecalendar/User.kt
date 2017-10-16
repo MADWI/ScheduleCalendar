@@ -8,24 +8,18 @@ class User(private val preferences: SharedPreferences) {
         const val LOGIN_KEY = "login_key"
         const val PASSWORD_KEY = "password_key"
         const val PREFERENCES_FILE_KEY = "pl.edu.zut.mad.schedulecalendar"
+        const val ALBUM_NUMBER_KEY = "album_number_key"
     }
 
-    fun save(login: String, password: String) {
+    fun save(albumNumber: Int) {
         val editor = preferences.edit()
-        editor.putString(LOGIN_KEY, login)
-        editor.putString(PASSWORD_KEY, password)
+        editor.putInt(ALBUM_NUMBER_KEY, albumNumber)
         editor.apply()
     }
 
     fun remove() = preferences.edit().clear().apply()
 
-    fun isSaved() = preferences.contains(LOGIN_KEY) && preferences.contains(PASSWORD_KEY)
+    fun isSaved() = preferences.contains(ALBUM_NUMBER_KEY)
 
-    fun isSavedWith() = with(preferences) {
-        contains(LOGIN_KEY) && contains(PASSWORD_KEY)
-    }
-
-    fun getLogin(): String = preferences.getString(LOGIN_KEY, null)
-
-    fun getPassword(): String = preferences.getString(PASSWORD_KEY, null)
+    fun getAlbumNumber() = preferences.getInt(ALBUM_NUMBER_KEY, -1)
 }
