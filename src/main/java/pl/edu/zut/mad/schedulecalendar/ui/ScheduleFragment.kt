@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import io.realm.Realm
+import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.app
@@ -19,6 +22,7 @@ import javax.inject.Inject
 class ScheduleFragment : Fragment() {
 
     companion object {
+        private val NETWORK_UTILS = NetworkUtils()
         private const val CALENDAR_TAG = "calendar_fragment"
         private const val SCHEDULE_TAG = "schedule_fragment"
         private const val REQUEST_CODE = 123
@@ -33,6 +37,7 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Realm.init(activity)
         init(savedInstanceState)
     }
 
@@ -51,9 +56,13 @@ class ScheduleFragment : Fragment() {
         if (user.isSaved()) {
             initScheduleFragments(savedInstanceState)
         } else {
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE)
+            startLoginActivity()
         }
+    }
+
+    private fun startLoginActivity() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -91,4 +100,24 @@ class ScheduleFragment : Fragment() {
 
     private fun getFragmentFromStackWithTag(tag: String): Fragment =
             fragmentManager.findFragmentByTag(tag)
+
+    fun logout() {
+        user.remove()
+        startLoginActivity()
+    }
+
+    fun refreshSchedule() {
+        if (NETWORK_UTILS.isAvailable(activity)) {
+            startLoginActivityWithSavedAlbumNumber()
+        } else {
+            Toast.makeText(activity, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun startLoginActivityWithSavedAlbumNumber() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        intent.putExtra(User.ALBUM_NUMBER_KEY, user.getAlbumNumber())
+        startActivity(intent)
+    }
+
 }
