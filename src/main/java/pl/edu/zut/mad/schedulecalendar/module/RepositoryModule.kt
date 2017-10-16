@@ -3,8 +3,8 @@ package pl.edu.zut.mad.schedulecalendar.module
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
-import pl.edu.zut.mad.schedulecalendar.ModelMapper
-import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
+import pl.edu.zut.mad.schedulecalendar.util.ModelMapper
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import javax.inject.Singleton
 
 

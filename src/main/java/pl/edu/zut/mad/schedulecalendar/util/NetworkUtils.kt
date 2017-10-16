@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar
+package pl.edu.zut.mad.schedulecalendar.util
 
 import android.content.Context
 import android.net.ConnectivityManager

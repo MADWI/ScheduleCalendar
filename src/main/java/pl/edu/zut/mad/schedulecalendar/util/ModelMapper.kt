@@ -1,13 +1,13 @@
-package pl.edu.zut.mad.schedulecalendar
+package pl.edu.zut.mad.schedulecalendar.util
 
 import io.realm.RealmList
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import pl.edu.zut.mad.schedulecalendar.model.TimeRange
-import pl.edu.zut.mad.schedulecalendar.model.db.Day as DayDb
-import pl.edu.zut.mad.schedulecalendar.model.db.Lesson as LessonDb
-import pl.edu.zut.mad.schedulecalendar.model.ui.Day as DayUi
-import pl.edu.zut.mad.schedulecalendar.model.ui.Lesson as LessonUi
+import pl.edu.zut.mad.schedulecalendar.data.model.TimeRange
+import pl.edu.zut.mad.schedulecalendar.data.model.db.Day as DayDb
+import pl.edu.zut.mad.schedulecalendar.data.model.db.Lesson as LessonDb
+import pl.edu.zut.mad.schedulecalendar.data.model.ui.Day as DayUi
+import pl.edu.zut.mad.schedulecalendar.data.model.ui.Lesson as LessonUi
 
 
 class ModelMapper {

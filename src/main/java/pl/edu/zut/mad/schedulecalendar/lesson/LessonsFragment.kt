@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.fragment_lessons.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.module.RepositoryModule
-import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
-import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
+import pl.edu.zut.mad.schedulecalendar.util.app
 import javax.inject.Inject
 
 

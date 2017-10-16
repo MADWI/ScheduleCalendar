@@ -2,7 +2,7 @@ package pl.edu.zut.mad.schedulecalendar.module
 
 import dagger.Module
 import dagger.Provides
-import pl.edu.zut.mad.schedulecalendar.api.ScheduleService
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory

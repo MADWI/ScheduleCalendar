@@ -3,9 +3,9 @@ package pl.edu.zut.mad.schedulecalendar.login
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
-import pl.edu.zut.mad.schedulecalendar.api.ScheduleService
-import pl.edu.zut.mad.schedulecalendar.model.db.Day
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
+import pl.edu.zut.mad.schedulecalendar.data.model.db.Day
 
 
 class LoginPresenter(private val view: LoginMvp.View,

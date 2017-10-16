@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import pl.edu.zut.mad.schedulecalendar.NetworkUtils
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
-import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.util.app
 import pl.edu.zut.mad.schedulecalendar.lesson.LessonsPagerFragment
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
 import pl.edu.zut.mad.schedulecalendar.module.UserModule

@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.model.db
+package pl.edu.zut.mad.schedulecalendar.data.model.db
 
 import io.realm.RealmList
 import io.realm.RealmObject

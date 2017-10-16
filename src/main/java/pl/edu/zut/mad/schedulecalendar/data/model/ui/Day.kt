@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.model.ui
+package pl.edu.zut.mad.schedulecalendar.data.model.ui
 
 import org.joda.time.LocalDate
 

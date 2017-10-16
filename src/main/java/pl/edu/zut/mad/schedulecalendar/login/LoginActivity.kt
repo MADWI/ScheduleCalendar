@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
-import pl.edu.zut.mad.schedulecalendar.NetworkUtils
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
-import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.util.app
 import javax.inject.Inject
 
 

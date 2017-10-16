@@ -1,6 +1,6 @@
-package pl.edu.zut.mad.schedulecalendar.model.ui
+package pl.edu.zut.mad.schedulecalendar.data.model.ui
 
-import pl.edu.zut.mad.schedulecalendar.model.TimeRange
+import pl.edu.zut.mad.schedulecalendar.data.model.TimeRange
 
 
 data class Lesson(val teacherWithRoom: String, val subjectWithType: String,

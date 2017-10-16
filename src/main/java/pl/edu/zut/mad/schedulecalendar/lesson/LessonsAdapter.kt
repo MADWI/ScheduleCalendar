@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.lesson_item.view.*
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.model.ui.Lesson
+import pl.edu.zut.mad.schedulecalendar.data.model.ui.Lesson
 
 
 internal class LessonsAdapter(private val context: Context)
