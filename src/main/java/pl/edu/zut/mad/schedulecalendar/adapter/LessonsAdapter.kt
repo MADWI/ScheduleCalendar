@@ -48,8 +48,8 @@ internal class LessonsAdapter(private val context: Context)
 
         fun bindLesson(lesson: Lesson) =
                 with(itemView) {
-                    timeStartView.text = lesson.timeRange?.start
-                    timeEndView.text = lesson.timeRange?.end
+                    timeStartView.text = lesson.timeRange?.from
+                    timeEndView.text = lesson.timeRange?.to
                     subjectView.text = lesson.subjectNameWithType
                     lecturerAndRoomView.text = lesson.lecturerWithRoom
                 }

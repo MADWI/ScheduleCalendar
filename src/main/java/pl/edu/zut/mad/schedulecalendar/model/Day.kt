@@ -5,7 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.Ignore
 import org.joda.time.LocalDate
 
-
+// TODO: create api and ui model
 open class Day(date: LocalDate = LocalDate.now(),
                lessons: List<Lesson> = ArrayList()) : RealmObject() {
 

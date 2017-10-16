@@ -51,10 +51,11 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     override fun onDataSaved() {
         log("onDataSaved")
+        finish()
     }
 
     override fun showError(message: String?) {
-        log(message?: "No message")
+        log(message ?: "No message")
     }
 
     override fun hideError() {
