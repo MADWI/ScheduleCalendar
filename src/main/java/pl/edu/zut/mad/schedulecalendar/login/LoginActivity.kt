@@ -1,5 +1,6 @@
 package pl.edu.zut.mad.schedulecalendar.login
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -35,7 +36,8 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
             Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
             return
         }
-        loginPresenter.fetchScheduleForAlbumNumber(32190)
+        val albumNumber = Integer.valueOf(albumNumberTextView.text.toString())
+        loginPresenter.fetchScheduleForAlbumNumber(albumNumber)
     }
 
     override fun showLoading() {
@@ -49,6 +51,7 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     override fun onDataSaved() {
         User(getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)).save("23", "23") // TODO: move to presenter
         log("onDataSaved")
+        setResult(Activity.RESULT_OK)
         finish()
     }
 
@@ -65,19 +68,12 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     private fun fieldIsInvalid(): Boolean {
-        var valid = true
-        if (loginTextView.text.toString().isEmpty()) {
-            valid = false
-            loginLayoutView.error = resources.getString(R.string.error_field_cannot_be_empty)
+        if (albumNumberTextView.text.toString().isEmpty()) {
+            albumNumberLayoutView.error = resources.getString(R.string.error_field_cannot_be_empty)
+            return true
         } else {
-            loginLayoutView.error = null
+            albumNumberLayoutView.error = null
         }
-        if (passwordTextView.text.toString().isEmpty()) {
-            valid = false
-            passwordLayoutView.error = resources.getString(R.string.error_field_cannot_be_empty)
-        } else {
-            passwordLayoutView.error = null
-        }
-        return valid
+        return false
     }
 }

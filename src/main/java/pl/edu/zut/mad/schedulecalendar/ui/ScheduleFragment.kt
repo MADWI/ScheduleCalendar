@@ -1,5 +1,6 @@
 package pl.edu.zut.mad.schedulecalendar.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -20,6 +21,7 @@ class ScheduleFragment : Fragment() {
     companion object {
         private const val CALENDAR_TAG = "calendar_fragment"
         private const val SCHEDULE_TAG = "schedule_fragment"
+        private const val REQUEST_CODE = 123
     }
 
     private lateinit var calendarFragment: CalendarFragment
@@ -31,11 +33,32 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        app.component.plus(ScheduleModule()).inject(this) // TODO: duplicated this with view injection
+        init(savedInstanceState)
+    }
+
+    private fun init(savedInstanceState: Bundle?) {
+        initInjections()
+        initView(savedInstanceState)
+    }
+
+    private fun initInjections() {
+        app.component
+                .plus(ScheduleModule())
+                .inject(this)
+    }
+
+    private fun initView(savedInstanceState: Bundle?) {
         if (user.isSaved()) {
             initScheduleFragments(savedInstanceState)
         } else {
-            startActivity(Intent(activity, LoginActivity::class.java))
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+            initAndStartScheduleFragments()
         }
     }
 
