@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.app
+import pl.edu.zut.mad.schedulecalendar.lesson.LessonsPagerFragment
+import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
 import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
 import javax.inject.Inject
 

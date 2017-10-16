@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.ui
+package pl.edu.zut.mad.schedulecalendar.login
 
 import android.content.Context
 import android.os.Bundle
@@ -9,9 +9,6 @@ import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.app
-import pl.edu.zut.mad.schedulecalendar.login.LoginModule
-import pl.edu.zut.mad.schedulecalendar.login.LoginMvp
-import pl.edu.zut.mad.schedulecalendar.login.LoginPresenter
 import javax.inject.Inject
 
 

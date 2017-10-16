@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.ui
+package pl.edu.zut.mad.schedulecalendar.lesson
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,7 +10,6 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.module.ScheduleCalendarModule
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
-import pl.edu.zut.mad.schedulecalendar.adapter.LessonsAdapter
 import pl.edu.zut.mad.schedulecalendar.app
 import javax.inject.Inject
 

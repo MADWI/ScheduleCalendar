@@ -1,7 +1,6 @@
 package pl.edu.zut.mad.schedulecalendar.login
 
 import dagger.Subcomponent
-import pl.edu.zut.mad.schedulecalendar.ui.LoginActivity
 import javax.inject.Singleton
 
 
