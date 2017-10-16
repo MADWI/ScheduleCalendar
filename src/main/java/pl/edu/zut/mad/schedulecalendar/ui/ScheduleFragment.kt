@@ -3,17 +3,17 @@ package pl.edu.zut.mad.schedulecalendar.ui
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import pl.edu.zut.mad.schedulecalendar.*
-import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.R
+import pl.edu.zut.mad.schedulecalendar.User
+import pl.edu.zut.mad.schedulecalendar.app
 import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
 import javax.inject.Inject
 
 
-class ScheduleFragment : Fragment(), ScheduleMvp.View {
+class ScheduleFragment : Fragment() {
 
     companion object {
         private const val CALENDAR_TAG = "calendar_fragment"
@@ -22,7 +22,6 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     private lateinit var calendarFragment: CalendarFragment
     private lateinit var lessonsPagerFragment: LessonsPagerFragment
-    @Inject lateinit var schedulePresenter: SchedulePresenter
     @Inject lateinit var user: User
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -30,8 +29,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        app.component.plus(ScheduleModule(this)).inject(this) // TODO: duplicated this with view injection
-        schedulePresenter.fetchLessons()
+        app.component.plus(ScheduleModule()).inject(this) // TODO: duplicated this with view injection
         if (user.isSaved()) {
             initScheduleFragments(savedInstanceState)
         } else {
@@ -68,22 +66,4 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     private fun getFragmentFromStackWithTag(tag: String): Fragment =
             fragmentManager.findFragmentByTag(tag)
-
-    override fun showLoading() {
-        log("showLoading")
-    }
-
-    override fun hideLoading() {
-        log("hideLoading")
-    }
-
-    override fun setLessonsDays(lessonsDays: List<Day>) {
-        log("setLessonsDays")
-    }
-
-    override fun showError() {
-        log("showError")
-    }
-
-    private fun log(message: String) = Log.d("ScheduleFragment", message)
 }

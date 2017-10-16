@@ -5,12 +5,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.api.ScheduleService
-import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.model.db.Day
 
 
 class LoginPresenter(private val view: LoginMvp.View,
-                              private val service: ScheduleService,
-                              private val repository: ScheduleRepository) : LoginMvp.Presenter {
+                     private val service: ScheduleService,
+                     private val repository: ScheduleRepository) : LoginMvp.Presenter {
     private val compositeDisposable = CompositeDisposable()
 
     override fun fetchScheduleForAlbumNumber(albumNumber: Int) {

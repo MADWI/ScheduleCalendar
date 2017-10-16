@@ -1,11 +1,13 @@
 package pl.edu.zut.mad.schedulecalendar.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login_calendar.*
 import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
+import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.app
 import pl.edu.zut.mad.schedulecalendar.login.LoginModule
 import pl.edu.zut.mad.schedulecalendar.login.LoginMvp
@@ -36,8 +38,6 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
             Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
             return
         }
-        val login = loginTextView.text.toString()
-        val password = passwordTextView.text.toString()
         loginPresenter.fetchScheduleForAlbumNumber(32190)
     }
 
@@ -46,10 +46,11 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     override fun hideLoading() {
-        log("hiderLoading")
+        log("hideLoading")
     }
 
     override fun onDataSaved() {
+        User(getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)).save("23", "23") // TODO: move to presenter
         log("onDataSaved")
         finish()
     }

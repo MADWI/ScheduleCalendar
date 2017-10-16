@@ -66,11 +66,11 @@ class LessonsFragment : Fragment() {
     private fun initLessons() {
         val day = scheduleRepository.getDayByDate(date)
         val lessons = day?.lessons
-        if (lessons?.isNotEmpty() != true) { // TODO: clear
+        if (lessons == null || lessons.isEmpty()) { // TODO: clear
             noLessonsTextView.visibility = View.VISIBLE
             noLessonsImageView.visibility = View.VISIBLE
         } else {
-            lessonsAdapter.lessons = day.lessons
+            lessonsAdapter.lessons = day.lessons.toMutableList() // TODO: change conversion
             noLessonsTextView.visibility = View.GONE
             noLessonsImageView.visibility = View.GONE
         }

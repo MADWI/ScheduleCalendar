@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.lesssons_item.view.*
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.model.Lesson
+import pl.edu.zut.mad.schedulecalendar.model.ui.Lesson
 
 
 internal class LessonsAdapter(private val context: Context)
@@ -48,10 +48,10 @@ internal class LessonsAdapter(private val context: Context)
 
         fun bindLesson(lesson: Lesson) =
                 with(itemView) {
-                    timeStartView.text = lesson.timeRange?.from
-                    timeEndView.text = lesson.timeRange?.to
-                    subjectView.text = lesson.subjectNameWithType
-                    lecturerAndRoomView.text = lesson.lecturerWithRoom
+                    timeStartView.text = lesson.timeRange.from
+                    timeEndView.text = lesson.timeRange.to
+                    subjectView.text = lesson.subjectWithType
+                    lecturerAndRoomView.text = lesson.teacherWithRoom
                 }
     }
 }

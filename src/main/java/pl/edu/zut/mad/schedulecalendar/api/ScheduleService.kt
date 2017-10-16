@@ -7,7 +7,7 @@ import com.google.gson.JsonElement
 import io.reactivex.Observable
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.model.db.Day
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,7 +23,7 @@ interface ScheduleService {
 
     companion object { // TODO: move to dagger module
         private const val BASE_URL = "http://uxplan.wi.zut.edu.pl/api/schedule/"
-        fun create(): ScheduleService { // TODO: remove due to separate model for api and ui
+        fun create(): ScheduleService { // TODO: remove due to separate model for api and ui\
             val gSon = GsonBuilder()
                     .setDateFormat("dd-MM-yyyy")
                     .registerTypeAdapter(LocalDate::class.java, LocalDateTypeConverter())

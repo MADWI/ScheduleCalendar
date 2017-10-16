@@ -13,7 +13,7 @@ class LoginModule(val view: LoginMvp.View) {
 
     @Provides
     @Singleton
-    fun provideDatabase() = Realm.getDefaultInstance()
+    fun provideDatabase(): Realm = Realm.getDefaultInstance()
 
     @Provides
     @Singleton

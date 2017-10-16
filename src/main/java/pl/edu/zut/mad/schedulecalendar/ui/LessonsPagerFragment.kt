@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import com.tobishiba.circularviewpager.library.CircularViewPagerHandler
 import kotlinx.android.synthetic.main.fragment_lessons_pager.*
 import org.joda.time.LocalDate
-import pl.edu.zut.mad.schedulecalendar.*
+import pl.edu.zut.mad.schedulecalendar.DateUtils
+import pl.edu.zut.mad.schedulecalendar.R
+import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.adapter.LessonsPagerAdapter
-import pl.edu.zut.mad.schedulecalendar.model.Day
+import pl.edu.zut.mad.schedulecalendar.app
 import pl.edu.zut.mad.schedulecalendar.module.ScheduleCalendarModule
 import java.util.*
 import javax.inject.Inject
@@ -128,16 +130,13 @@ class LessonsPagerFragment : Fragment(),
     }
 
     private fun initLoader() {
-        val scheduleDays = scheduleRepository.getSchedule()
-        if (!scheduleDays.isEmpty()) {
-            calendarFragment!!.setClassesDates(getClassesDates(scheduleDays))
+        val scheduleDaysDates = scheduleRepository.getScheduleDayDates()
+        if (scheduleDaysDates.isNotEmpty()) {
+            calendarFragment?.setClassesDates(scheduleDaysDates)
             selectCurrentDayPage()
             showSchedule()
         }
     }
-
-    private fun getClassesDates(days: List<Day>): List<LocalDate> =// TODO: replace with repository method
-            days.map { it.date!! }
 
     private fun selectCurrentDayPage() {
         val dayIndex = DateUtils.getDateDayIndex(selectedDateString)

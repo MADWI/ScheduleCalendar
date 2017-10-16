@@ -5,13 +5,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import io.realm.Realm
-import pl.edu.zut.mad.schedulecalendar.*
+import pl.edu.zut.mad.schedulecalendar.User
 import javax.inject.Singleton
 
 
 @Module
-class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
+class ScheduleModule { // TODO: rename to UserModule
 
     @Provides
     @Singleton
@@ -21,17 +20,4 @@ class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
     @Provides
     @Singleton
     fun provideUser(preferences: SharedPreferences) = User(preferences)
-
-    @Provides
-    @Singleton
-    fun provideDatabase(): Realm = Realm.getDefaultInstance()
-
-    @Provides
-    @Singleton
-    fun provideRepository(database: Realm) = ScheduleRepository(database)
-
-    @Provides
-    @Singleton
-    fun provideSchedulePresenter(scheduleRepository: ScheduleRepository) =
-            SchedulePresenter(scheduleRepository, scheduleView)
 }
