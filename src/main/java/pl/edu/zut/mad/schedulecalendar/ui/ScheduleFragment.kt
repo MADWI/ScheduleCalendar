@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import io.realm.Realm
 import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
@@ -37,7 +36,6 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Realm.init(activity)
         init(savedInstanceState)
     }
 

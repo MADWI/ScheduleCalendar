@@ -176,10 +176,10 @@ class LessonsPagerFragment : Fragment(),
 
     private fun enableOrDisableClickEventsOnCalendar(verticalOffset: Int, totalScrollRange: Int) {
         if (verticalOffset == 0) {
-            toolbar!!.visibility = View.GONE
-            calendarFragment!!.setEnabledForClickEvents(true)
+            toolbar?.visibility = View.GONE
+            calendarFragment?.setEnabledForClickEvents(true)
         } else if (Math.abs(verticalOffset) >= totalScrollRange) {
-            calendarFragment!!.setEnabledForClickEvents(false)
+            calendarFragment?.setEnabledForClickEvents(false)
         }
     }
 
