@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.lesssons_item.view.*
+import kotlinx.android.synthetic.main.lesson_item.view.*
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.model.ui.Lesson
 

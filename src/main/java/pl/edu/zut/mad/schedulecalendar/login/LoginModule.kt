@@ -3,6 +3,7 @@ package pl.edu.zut.mad.schedulecalendar.login
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
+import pl.edu.zut.mad.schedulecalendar.ModelMapper
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.api.ScheduleService
 import javax.inject.Singleton
@@ -21,10 +22,15 @@ class LoginModule(val view: LoginMvp.View) {
 
     @Provides
     @Singleton
-    fun provideScheduleRepository(database: Realm) = ScheduleRepository(database)
+    fun provideScheduleRepository(database: Realm, mapper: ModelMapper) =
+            ScheduleRepository(database, mapper)
 
     @Provides
     @Singleton
     fun provideLoginPresenter(service: ScheduleService, repository: ScheduleRepository) =
             LoginPresenter(view, service, repository)
+
+    @Provides
+    @Singleton
+    fun provideMapper() = ModelMapper()
 }
