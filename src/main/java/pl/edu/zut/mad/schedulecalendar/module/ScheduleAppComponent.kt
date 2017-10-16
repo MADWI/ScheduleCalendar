@@ -13,9 +13,9 @@ interface ScheduleAppComponent {
 
     fun inject(app: Application)
 
-    fun plus(scheduleCalendarModule: ScheduleCalendarModule): ScheduleCalendarComponent
-
     fun plus(userModule: UserModule): UserComponent
 
     fun plus(loginModule: LoginModule): LoginComponent
+
+    fun plus(repositoryModule: RepositoryModule): RepositoryComponent
 }

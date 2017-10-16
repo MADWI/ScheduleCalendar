@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 
 @Module
-class ScheduleCalendarModule {
+class RepositoryModule {
 
     @Provides
     @Singleton

@@ -7,8 +7,8 @@ import javax.inject.Singleton
 
 
 @Singleton
-@Subcomponent(modules = arrayOf(ScheduleCalendarModule::class))
-interface ScheduleCalendarComponent {
+@Subcomponent(modules = arrayOf(RepositoryModule::class))
+interface RepositoryComponent {
 
     fun inject(lessonsFragment: LessonsFragment)
 

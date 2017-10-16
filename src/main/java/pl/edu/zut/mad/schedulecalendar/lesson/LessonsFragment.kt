@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_lessons.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.module.ScheduleCalendarModule
+import pl.edu.zut.mad.schedulecalendar.module.RepositoryModule
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.app
 import javax.inject.Inject
@@ -47,10 +47,9 @@ class LessonsFragment : Fragment() {
         initLessons()
     }
 
-    private fun initInjections() =
-        activity.app.component
-                .plus(ScheduleCalendarModule())
-                .inject(this)
+    private fun initInjections() = app.component
+            .plus(RepositoryModule())
+            .inject(this)
 
     private fun readArguments() {
         date = arguments.getSerializable(DATE_KEY) as LocalDate

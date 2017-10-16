@@ -16,7 +16,7 @@ import pl.edu.zut.mad.schedulecalendar.DateUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.app
-import pl.edu.zut.mad.schedulecalendar.module.ScheduleCalendarModule
+import pl.edu.zut.mad.schedulecalendar.module.RepositoryModule
 import pl.edu.zut.mad.schedulecalendar.ui.CalendarFragment
 import java.util.*
 import javax.inject.Inject
@@ -48,7 +48,7 @@ class LessonsPagerFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity.app.component.plus(ScheduleCalendarModule()).inject(this)
+        activity.app.component.plus(RepositoryModule()).inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
