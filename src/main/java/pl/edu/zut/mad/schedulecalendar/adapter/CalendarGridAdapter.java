@@ -21,9 +21,9 @@ import pl.edu.zut.mad.schedulecalendar.R;
 public class CalendarGridAdapter extends CaldroidGridAdapter {
 
     private static final String BACKGROUND_FOR_DATETIME_MAP = CaldroidFragment._BACKGROUND_FOR_DATETIME_MAP;
-    private Drawable mSelectedCellBackground;
-    private Drawable mClassesCellBackground;
-    private Drawable mDefaultCellBackground;
+    private final Drawable mSelectedCellBackground;
+    private final Drawable mClassesCellBackground;
+    private final Drawable mDefaultCellBackground;
 
     public CalendarGridAdapter(Context context, int month, int year,
                                Map<String, Object> caldroidData,

@@ -47,11 +47,10 @@ class LessonsFragment : Fragment() {
         initLessons()
     }
 
-    private fun initInjections() {
+    private fun initInjections() =
         activity.app.component
                 .plus(ScheduleCalendarModule())
                 .inject(this)
-    }
 
     private fun readArguments() {
         date = arguments.getSerializable(DATE_KEY) as LocalDate

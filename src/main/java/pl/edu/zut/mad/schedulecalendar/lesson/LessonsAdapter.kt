@@ -22,7 +22,7 @@ internal class LessonsAdapter(private val context: Context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClassViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.lesssons_item, parent, false)
+                .inflate(R.layout.lesson_item, parent, false)
         return ClassViewHolder(view)
     }
 

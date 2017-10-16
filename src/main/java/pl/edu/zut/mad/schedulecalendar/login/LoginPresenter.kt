@@ -33,7 +33,5 @@ class LoginPresenter(private val view: LoginMvp.View,
         view.onDataSaved(albumNumber)
     }
 
-    override fun cancelFetch() {
-        compositeDisposable.clear()
-    }
+    override fun cancelFetch() = compositeDisposable.clear()
 }

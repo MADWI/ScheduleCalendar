@@ -46,19 +46,16 @@ class ScheduleFragment : Fragment() {
         initView(savedInstanceState)
     }
 
-    private fun initInjections() {
-        app.component
-                .plus(UserModule())
-                .inject(this)
-    }
+    private fun initInjections() = app.component
+            .plus(UserModule())
+            .inject(this)
 
-    private fun initView(savedInstanceState: Bundle?) {
+    private fun initView(savedInstanceState: Bundle?) =
         if (user.isSaved()) {
             initScheduleFragments(savedInstanceState)
         } else {
             startLoginActivity()
         }
-    }
 
     private fun startLoginActivity() {
         val intent = Intent(activity, LoginActivity::class.java)
