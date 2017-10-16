@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 class User(private val preferences: SharedPreferences) {
 
     companion object {
-        const val PREFERENCES_FILE_KEY = "pl.edu.zut.mad.schedulecalendar"
-        const val ALBUM_NUMBER_KEY = "album_number_key"
+        const val PREFERENCES_FILE_KEY = "pl.edu.zut.mad.user.preferences"
+        private const val ALBUM_NUMBER_KEY = "album_number_key"
     }
 
     fun save(albumNumber: Int) {

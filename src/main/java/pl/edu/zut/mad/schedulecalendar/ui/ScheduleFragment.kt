@@ -113,7 +113,7 @@ class ScheduleFragment : Fragment() {
 
     private fun startLoginActivityWithSavedAlbumNumber() {
         val intent = Intent(activity, LoginActivity::class.java)
-        intent.putExtra(User.ALBUM_NUMBER_KEY, user.getAlbumNumber())
+        // TODO: send action to refresh
         startActivity(intent)
     }
 

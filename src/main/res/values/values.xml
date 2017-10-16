@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MainButton" parent="Base.Widget.AppCompat.Button">
+    <style name="LoginButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="colorButtonNormal">@color/scheduleColorAccent</item>
     </style>

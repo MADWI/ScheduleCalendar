@@ -1,11 +1,10 @@
 package pl.edu.zut.mad.schedulecalendar.login
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_login_calendar.*
+import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedulecalendar.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
@@ -16,55 +15,36 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     @Inject lateinit var loginPresenter: LoginPresenter
-    private val NETWORK_UTILS = NetworkUtils()
+    @Inject lateinit var user: User
+    @Inject lateinit var networkUtils: NetworkUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_calendar)
-        app.component
-                .plus(LoginModule(this))
-                .inject(this)
-
-        loginButtonView.setOnClickListener { onLoginClick() }
+        setContentView(R.layout.activity_login)
+        init()
     }
+
+    private fun init() {
+        initInjections()
+        initViews()
+    }
+
+    private fun initInjections() = app.component
+            .plus(LoginModule(this))
+            .inject(this)
+
+    private fun initViews() = loginButtonView.setOnClickListener { onLoginClick() }
 
     private fun onLoginClick() {
         if (fieldIsInvalid()) {
             return
         }
-        if (!NETWORK_UTILS.isAvailable(this)) {
+        if (!networkUtils.isAvailable(this)) {
             Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
             return
         }
-        val albumNumber = Integer.valueOf(albumNumberTextView.text.toString())
+        val albumNumber = getAlbumNumberFromInput()
         loginPresenter.fetchScheduleForAlbumNumber(albumNumber)
-    }
-
-    override fun showLoading() {
-        log("showLoading")
-    }
-
-    override fun hideLoading() {
-        log("hideLoading")
-    }
-
-    override fun onDataSaved(albumNumber: Int) {
-        User(getSharedPreferences(User.PREFERENCES_FILE_KEY, Context.MODE_PRIVATE)).save(albumNumber) // TODO: move to presenter
-        log("onDataSaved")
-        setResult(Activity.RESULT_OK)
-        finish()
-    }
-
-    override fun showError(message: String?) {
-        log(message ?: "No message")
-    }
-
-    override fun hideError() {
-        log("hideError")
-    }
-
-    private fun log(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     private fun fieldIsInvalid(): Boolean {
@@ -75,5 +55,25 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
             albumNumberLayoutView.error = null
         }
         return false
+    }
+
+    private fun getAlbumNumberFromInput() = Integer.valueOf(albumNumberTextView.text.toString())
+
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
+    }
+
+    override fun onDataSaved(albumNumber: Int) {
+        user.save(getAlbumNumberFromInput())
+        setResult(Activity.RESULT_OK)
+        finish()
+    }
+
+    override fun showError(message: String?) {
+    }
+
+    override fun hideError() {
     }
 }

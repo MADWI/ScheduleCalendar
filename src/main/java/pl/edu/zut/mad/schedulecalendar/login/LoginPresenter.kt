@@ -11,8 +11,8 @@ import pl.edu.zut.mad.schedulecalendar.model.db.Day
 class LoginPresenter(private val view: LoginMvp.View,
                      private val service: ScheduleService,
                      private val repository: ScheduleRepository) : LoginMvp.Presenter {
-    private val compositeDisposable = CompositeDisposable()
 
+    private val compositeDisposable = CompositeDisposable()
     private var albumNumber = 0
 
     override fun fetchScheduleForAlbumNumber(albumNumber: Int) {
