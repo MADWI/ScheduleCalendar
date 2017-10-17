@@ -21,16 +21,21 @@ class LoginPresenter(private val view: LoginMvp.View,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { view.showLoading() }
-                .doOnNext { saveSchedule(it) }
                 .doOnComplete { view.hideLoading() }
-                .doOnError { view.showError(it.message) }
-                .subscribe()
+                .subscribe(
+                        { saveSchedule(it) },
+                        { onError(it) }
+                )
         compositeDisposable.add(disposable)
     }
 
     private fun saveSchedule(days: List<Day>) {
         repository.saveSchedule(days)
         view.onDataSaved(albumNumber)
+    }
+
+    private fun onError(it: Throwable) {
+        view.showError(it.message)
     }
 
     override fun cancelFetch() = compositeDisposable.clear()
