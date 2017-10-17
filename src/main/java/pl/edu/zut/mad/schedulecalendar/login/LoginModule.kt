@@ -6,6 +6,7 @@ import dagger.Provides
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
 import pl.edu.zut.mad.schedulecalendar.module.*
+import pl.edu.zut.mad.schedulecalendar.util.TextProvider
 import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import javax.inject.Singleton
 

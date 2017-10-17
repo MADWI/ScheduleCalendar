@@ -6,7 +6,7 @@ import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
 import pl.edu.zut.mad.schedulecalendar.data.model.db.Day
-import pl.edu.zut.mad.schedulecalendar.module.TextProvider
+import pl.edu.zut.mad.schedulecalendar.util.TextProvider
 
 
 class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,

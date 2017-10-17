@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.module
+package pl.edu.zut.mad.schedulecalendar.util
 
 import android.content.Context
 import pl.edu.zut.mad.schedulecalendar.R
