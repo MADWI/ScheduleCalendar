@@ -1,18 +1,21 @@
 package pl.edu.zut.mad.schedulecalendar.login
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
-import pl.edu.zut.mad.schedulecalendar.module.RepositoryModule
-import pl.edu.zut.mad.schedulecalendar.module.ServiceModule
-import pl.edu.zut.mad.schedulecalendar.module.UserModule
+import pl.edu.zut.mad.schedulecalendar.module.*
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import javax.inject.Singleton
 
 
-@Module(includes = arrayOf(RepositoryModule::class, ServiceModule::class, UserModule::class))
-class LoginModule(val view: LoginMvp.View) {
+@Module(includes = arrayOf(
+        UserModule::class,
+        ServiceModule::class,
+        RepositoryModule::class
+))
+class LoginModule(private val view: LoginMvp.View, private val context: Context) {
 
     @Provides
     @Singleton
@@ -20,6 +23,11 @@ class LoginModule(val view: LoginMvp.View) {
 
     @Provides
     @Singleton
-    fun provideLoginPresenter(service: ScheduleService, repository: ScheduleRepository) =
-            LoginPresenter(view, service, repository)
+    fun provideTextProvider() = TextProvider(context)
+
+    @Provides
+    @Singleton
+    fun provideLoginPresenter(service: ScheduleService, repository: ScheduleRepository,
+                              textProvider: TextProvider) =
+            LoginPresenter(view, repository, service, textProvider)
 }

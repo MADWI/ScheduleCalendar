@@ -3,11 +3,12 @@ package pl.edu.zut.mad.schedulecalendar.login
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.util.app
 import javax.inject.Inject
 
@@ -30,7 +31,7 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     private fun initInjections() = app.component
-            .plus(LoginModule(this))
+            .plus(LoginModule(this, this))
             .inject(this)
 
     private fun initViews() = loginButtonView.setOnClickListener { onLoginClick() }
@@ -60,9 +61,11 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     private fun getAlbumNumberFromInput() = Integer.valueOf(albumNumberTextView.text.toString())
 
     override fun showLoading() {
+        loadingView.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
+        loadingView.visibility = View.GONE
     }
 
     override fun onDataSaved(albumNumber: Int) {
@@ -72,8 +75,10 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     override fun showError(message: String?) {
+        albumNumberLayoutView.error = message
     }
 
     override fun hideError() {
+        albumNumberLayoutView.error = null
     }
 }
