@@ -48,8 +48,12 @@ class LessonsPagerFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity.app.component.plus(RepositoryModule()).inject(this)
+       initInjections()
     }
+
+    private fun initInjections() = app.component
+            .plus(RepositoryModule())
+            .inject(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_lessons_pager, container, false)
@@ -134,7 +138,7 @@ class LessonsPagerFragment : Fragment(),
         if (scheduleDaysDates.isNotEmpty()) {
             calendarFragment?.setClassesDates(scheduleDaysDates)
             selectCurrentDayPage()
-            showSchedule()
+            showContent()
         }
     }
 
@@ -143,7 +147,7 @@ class LessonsPagerFragment : Fragment(),
         pagerView.currentItem = dayIndex + 1
     }
 
-    private fun showSchedule() {
+    private fun showContent() {
         contentView.visibility = View.VISIBLE
         loadingView.visibility = View.GONE
     }
