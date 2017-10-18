@@ -8,31 +8,38 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
+import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
+import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
+import com.ognev.kotlin.agendacalendarview.models.DayItem
+import io.realm.Realm
+import kotlinx.android.synthetic.main.fragment_schedule_agenda.*
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
-import pl.edu.zut.mad.schedulecalendar.util.app
-import pl.edu.zut.mad.schedulecalendar.lesson.LessonsPagerFragment
+import pl.edu.zut.mad.schedulecalendar.calendar.CalendarAdapter
+import pl.edu.zut.mad.schedulecalendar.calendar.CalendarController
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
+import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
 import pl.edu.zut.mad.schedulecalendar.module.UserModule
+import pl.edu.zut.mad.schedulecalendar.util.ModelMapper
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
+import pl.edu.zut.mad.schedulecalendar.util.app
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class ScheduleFragment : Fragment() {
 
     companion object {
         private val NETWORK_UTILS = NetworkUtils()
-        private const val CALENDAR_TAG = "calendar_fragment"
-        private const val SCHEDULE_TAG = "schedule_fragment"
         private const val REQUEST_CODE = 123
     }
 
-    private lateinit var calendarFragment: CalendarFragment
-    private lateinit var lessonsPagerFragment: LessonsPagerFragment
     @Inject lateinit var user: User
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_schedule, container, false)
+            inflater.inflate(R.layout.fragment_schedule_agenda, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +57,7 @@ class ScheduleFragment : Fragment() {
 
     private fun initView(savedInstanceState: Bundle?) =
             if (user.isSaved()) {
-                initScheduleFragments(savedInstanceState)
+                initCalendar(savedInstanceState)
             } else {
                 startLoginActivity()
             }
@@ -66,35 +73,31 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private fun initScheduleFragments(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            initAndStartScheduleFragments()
-        } else {
-            initScheduleFragmentsFromStack()
+    // TODO: move to presenter, module
+    private fun initCalendar(savedInstanceState: Bundle?) {
+        val calendarManager = CalendarContentManager(CalendarController(), scheduleCalendarView, CalendarAdapter(activity))
+        val minDate = Calendar.getInstance()
+        minDate.add(Calendar.MONTH, -6)
+        val maxDate = Calendar.getInstance()
+        maxDate.add(Calendar.MONTH, 6)
+        calendarManager.setDateRange(minDate, maxDate)
+
+        val events: MutableList<CalendarEvent> = ArrayList()
+        val repository = ScheduleRepository(Realm.getDefaultInstance(), ModelMapper())
+        val days = repository.getSchedule()
+        (days).forEach {
+            val day = it.date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+            it.lessons.forEach {
+                val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), it).setEventInstanceDay(day)
+                events.add(event)
+            }
         }
-        lessonsPagerFragment.registerCalendar(calendarFragment)
+        calendarManager.loadItemsFromStart(events)
     }
 
     private fun initAndStartScheduleFragments() {
-        calendarFragment = CalendarFragment()
-        lessonsPagerFragment = LessonsPagerFragment()
-        replaceFragmentInViewContainer(calendarFragment, R.id.calendar_container, CALENDAR_TAG)
-        replaceFragmentInViewContainer(lessonsPagerFragment, R.id.schedule_container, SCHEDULE_TAG)
-    }
 
-    private fun replaceFragmentInViewContainer(fragment: Fragment, containerId: Int, tag: String) {
-        fragmentManager.beginTransaction()
-                .replace(containerId, fragment, tag)
-                .commit()
     }
-
-    private fun initScheduleFragmentsFromStack() {
-        calendarFragment = getFragmentFromStackWithTag(CALENDAR_TAG) as CalendarFragment
-        lessonsPagerFragment = getFragmentFromStackWithTag(SCHEDULE_TAG) as LessonsPagerFragment
-    }
-
-    private fun getFragmentFromStackWithTag(tag: String): Fragment =
-            fragmentManager.findFragmentByTag(tag)
 
     fun logout() {
         user.remove()
@@ -114,5 +117,4 @@ class ScheduleFragment : Fragment() {
         // TODO: send action to refresh
         startActivity(intent)
     }
-
 }

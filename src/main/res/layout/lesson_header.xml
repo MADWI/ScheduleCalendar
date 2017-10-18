@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/azure"
+    android:background="@color/scheduleColorAccent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/view_agenda_day_of_month"
+        android:id="@+id/lessonDayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="8dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="17dp"
-        android:text="Вторник, 29 августа"
+        android:padding="5dp"
         android:textAllCaps="true"
-        android:textColor="@color/text_light_color"
-        android:textSize="12sp" />
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        tools:text="Środa, 18 października" />
 
     <View
         android:layout_width="match_parent"
