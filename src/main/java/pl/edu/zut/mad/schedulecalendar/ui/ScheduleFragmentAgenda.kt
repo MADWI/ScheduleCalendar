@@ -9,13 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
+import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
+import com.ognev.kotlin.agendacalendarview.models.DayItem
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_schedule_agenda.*
 import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.calendar.CalendarAdapter
 import pl.edu.zut.mad.schedulecalendar.calendar.CalendarController
+import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
+import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
 import pl.edu.zut.mad.schedulecalendar.module.UserModule
+import pl.edu.zut.mad.schedulecalendar.util.ModelMapper
 import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.util.app
 import java.util.*
@@ -67,6 +73,7 @@ class ScheduleFragmentAgenda : Fragment() {
         }
     }
 
+    // TODO: move to presenter, module
     private fun initCalendar(savedInstanceState: Bundle?) {
         val calendarManager = CalendarContentManager(CalendarController(), scheduleCalendarView, CalendarAdapter())
         val minDate = Calendar.getInstance()
@@ -74,7 +81,18 @@ class ScheduleFragmentAgenda : Fragment() {
         val maxDate = Calendar.getInstance()
         maxDate.add(Calendar.MONTH, 6)
         calendarManager.setDateRange(minDate, maxDate)
-        calendarManager.loadItemsFromStart(ArrayList())
+
+        val events: MutableList<CalendarEvent> = ArrayList()
+        val repository = ScheduleRepository(Realm.getDefaultInstance(), ModelMapper())
+        val days = repository.getSchedule()
+        (days).forEach {
+            val day = it.date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+            it.lessons.forEach {
+                val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), it).setEventInstanceDay(day)
+                events.add(event)
+            }
+        }
+        calendarManager.loadItemsFromStart(events)
     }
 
     private fun initAndStartScheduleFragments() {

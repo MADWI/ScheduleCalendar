@@ -2,7 +2,6 @@ package pl.edu.zut.mad.schedulecalendar.data.model.db
 
 import io.realm.RealmObject
 import pl.edu.zut.mad.schedulecalendar.data.model.Teacher
-import pl.edu.zut.mad.schedulecalendar.data.model.TimeRange
 
 
 open class Lesson(var subject: String = "", var courseType: String = "",

@@ -3,7 +3,7 @@ package pl.edu.zut.mad.schedulecalendar.util
 import io.realm.RealmList
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
-import pl.edu.zut.mad.schedulecalendar.data.model.TimeRange
+import pl.edu.zut.mad.schedulecalendar.data.model.db.TimeRange
 import pl.edu.zut.mad.schedulecalendar.data.model.db.Day as DayDb
 import pl.edu.zut.mad.schedulecalendar.data.model.db.Lesson as LessonDb
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.Day as DayUi

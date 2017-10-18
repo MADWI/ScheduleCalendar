@@ -50,8 +50,8 @@ internal class LessonsAdapter(private val context: Context)
                 with(itemView) {
                     timeStartView.text = lesson.timeRange.from
                     timeEndView.text = lesson.timeRange.to
-                    subjectView.text = lesson.subjectWithType
-                    lecturerAndRoomView.text = lesson.teacherWithRoom
+                    subjectWithTypeView.text = lesson.subjectWithType
+                    teacherWithRoomView.text = lesson.teacherWithRoom
                 }
     }
 }

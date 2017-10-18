@@ -48,7 +48,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/subjectView"
+        android:id="@+id/subjectWithTypeView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
@@ -59,14 +59,14 @@
         android:gravity="center_vertical"
         android:textColor="@color/textScheduleTask"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/lecturerAndRoomView"
+        app:layout_constraintBottom_toTopOf="@+id/teacherWithRoomView"
         app:layout_constraintLeft_toRightOf="@+id/timeGroupView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Budowanie aplikacji w systemach mobilnych (wykład)" />
 
     <TextView
-        android:id="@+id/lecturerAndRoomView"
+        android:id="@+id/teacherWithRoomView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -77,9 +77,9 @@
         android:textColor="@color/textScheduleTask"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/subjectView"
+        app:layout_constraintLeft_toLeftOf="@+id/subjectWithTypeView"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subjectView"
+        app:layout_constraintTop_toBottomOf="@+id/subjectWithTypeView"
         tools:text="dr. inż. Radosław Maciaszczyk WI WI2-14" />
 
 </android.support.constraint.ConstraintLayout>

@@ -31,4 +31,6 @@ class ScheduleRepository(private val database: Realm, private val mapper: ModelM
                 .findFirst() ?: return null
         return mapper.dayFromDbToUi(dayDb)
     }
+
+    fun getSchedule() = database.where(DayDb::class.java).findAll().map { mapper.dayFromDbToUi(it) }
 }
