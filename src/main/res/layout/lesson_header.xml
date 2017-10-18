@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/azure"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/view_agenda_day_of_month"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="8dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="17dp"
+        android:text="Вторник, 29 августа"
+        android:textAllCaps="true"
+        android:textColor="@color/text_light_color"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@color/divider_light_color" />
+
+</LinearLayout>
