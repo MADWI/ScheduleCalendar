@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.ui
+package pl.edu.zut.mad.schedulecalendar
 
 import android.app.Activity
 import android.content.Intent
@@ -12,11 +12,7 @@ import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.models.DayItem
 import io.realm.Realm
-import kotlinx.android.synthetic.main.fragment_schedule_agenda.*
-import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.User
-import pl.edu.zut.mad.schedulecalendar.calendar.CalendarAdapter
-import pl.edu.zut.mad.schedulecalendar.calendar.CalendarController
+import kotlinx.android.synthetic.main.fragment_schedule.*
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
@@ -39,7 +35,7 @@ class ScheduleFragment : Fragment() {
     @Inject lateinit var user: User
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_schedule_agenda, container, false)
+            inflater.inflate(R.layout.fragment_schedule, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,7 +53,7 @@ class ScheduleFragment : Fragment() {
 
     private fun initView(savedInstanceState: Bundle?) =
             if (user.isSaved()) {
-                initCalendar(savedInstanceState)
+                initCalendarContent(savedInstanceState)
             } else {
                 startLoginActivity()
             }
@@ -74,8 +70,9 @@ class ScheduleFragment : Fragment() {
     }
 
     // TODO: move to presenter, module
-    private fun initCalendar(savedInstanceState: Bundle?) {
-        val calendarManager = CalendarContentManager(CalendarController(), scheduleCalendarView, CalendarAdapter(activity))
+    private fun initCalendarContent(savedInstanceState: Bundle?) {
+        val calendarManager = CalendarContentManager(CalendarController(), scheduleCalendarView, LessonsAdapter(activity))
+        calendarManager.locale = Locale.getDefault()
         val minDate = Calendar.getInstance()
         minDate.add(Calendar.MONTH, -6)
         val maxDate = Calendar.getInstance()
@@ -96,7 +93,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun initAndStartScheduleFragments() {
-
+        initCalendarContent(null)
     }
 
     fun logout() {

@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.calendar
+package pl.edu.zut.mad.schedulecalendar
 
 import android.util.Log
 import com.ognev.kotlin.agendacalendarview.CalendarController

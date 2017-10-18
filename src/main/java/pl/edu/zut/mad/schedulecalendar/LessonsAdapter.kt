@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedulecalendar.calendar
+package pl.edu.zut.mad.schedulecalendar
 
 import android.content.Context
 import android.support.v4.content.ContextCompat
@@ -6,14 +6,13 @@ import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
-import pl.edu.zut.mad.schedulecalendar.R
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.Lesson
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-internal class CalendarAdapter(private val context: Context) : DefaultEventAdapter() {
+internal class LessonsAdapter(private val context: Context) : DefaultEventAdapter() {
 
     companion object {
         private val dateFormat = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
@@ -29,7 +28,7 @@ internal class CalendarAdapter(private val context: Context) : DefaultEventAdapt
 
     override fun getEventItemView(view: View, event: CalendarEvent, position: Int) {
         if (position % 2 == 0) {
-            colorBackground(view)
+            colorBackgroundToGray(view)
         }
 
         val lessonEvent = event as LessonEvent
@@ -40,7 +39,7 @@ internal class CalendarAdapter(private val context: Context) : DefaultEventAdapt
         view.findViewById<TextView>(R.id.teacherWithRoomView).text = lesson.teacherWithRoom
     }
 
-    private fun colorBackground(view: View) {
+    private fun colorBackgroundToGray(view: View) {
         val itemViewColor = ContextCompat.getColor(context, R.color.scheduleLightGray)
         val timeViewColor = ContextCompat.getColor(context, R.color.scheduleColorPrimaryDark)
         val scheduleTaskItemView = view.findViewById<View>(R.id.scheduleTaskItemView)
@@ -48,5 +47,4 @@ internal class CalendarAdapter(private val context: Context) : DefaultEventAdapt
         scheduleTaskItemView.setBackgroundColor(itemViewColor)
         timeGroupView.setBackgroundColor(timeViewColor)
     }
-
 }
