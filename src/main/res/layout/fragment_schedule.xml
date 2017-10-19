@@ -3,6 +3,8 @@
     xmlns:agendaCalendar="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scheduleCalendarView"
     agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
+    agendaCalendar:circleBackgroundColor="@android:color/holo_red_dark"
     agendaCalendar:calendarMonthTextColor="@color/azure"
+    agendaCalendar:calendarSelectedDayTextColor="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

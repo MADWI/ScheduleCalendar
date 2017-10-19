@@ -16,7 +16,7 @@ class LessonEvent : BaseCalendarEvent {
     constructor(startTime: Calendar,
                 endTime: Calendar,
                 dayItem: DayItem,
-                lesson: Lesson)  {
+                lesson: Lesson?) {
         this.startTime = startTime
         this.endTime = endTime
         this.dayReference = dayItem
@@ -26,4 +26,6 @@ class LessonEvent : BaseCalendarEvent {
     override fun copy(): LessonEvent = LessonEvent(this)
 
     constructor(lessonEvent: LessonEvent)
+
+    override fun hasEvent() = event != null
 }

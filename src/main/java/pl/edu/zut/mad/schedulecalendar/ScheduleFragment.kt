@@ -13,6 +13,7 @@ import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.models.DayItem
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
@@ -81,11 +82,22 @@ class ScheduleFragment : Fragment() {
 
         val events: MutableList<CalendarEvent> = ArrayList()
         val repository = ScheduleRepository(Realm.getDefaultInstance(), ModelMapper())
-        val days = repository.getSchedule()
-        (days).forEach {
-            val day = it.date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
-            it.lessons.forEach {
-                val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), it).setEventInstanceDay(day)
+        val minDay = LocalDate.fromCalendarFields(minDate)
+        val firstDay = minDay.withDayOfMonth(1)
+        var nextDay = LocalDate(firstDay)
+        val lastDay = LocalDate.fromCalendarFields(maxDate).withDayOfMonth(1)
+        while (!nextDay.isEqual(lastDay)) {
+            nextDay = nextDay.plusDays(1)
+            val day = nextDay.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+            val lessonDay = repository.getLessonsForDay(nextDay)
+            if (lessonDay != null) {
+                lessonDay.lessons.forEach {
+                    lessonDay.date
+                    val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), it).setEventInstanceDay(day)
+                    events.add(event)
+                }
+            } else {
+                val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), null)
                 events.add(event)
             }
         }

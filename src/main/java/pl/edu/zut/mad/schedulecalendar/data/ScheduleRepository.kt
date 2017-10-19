@@ -12,6 +12,7 @@ import pl.edu.zut.mad.schedulecalendar.data.model.ui.Lesson as LessonUi
 class ScheduleRepository(private val database: Realm, private val mapper: ModelMapper) {
 
     fun saveSchedule(scheduleDays: List<DayDb>) {
+        // TODO: clear database
         database.beginTransaction()
         database.copyToRealm(scheduleDays)
         database.commitTransaction()
@@ -19,15 +20,9 @@ class ScheduleRepository(private val database: Realm, private val mapper: ModelM
     }
 
     // TODO change to async
-    fun getScheduleDayDates(): List<LocalDate> =
-            database.where(DayDb::class.java)
-                    .findAll()
-                    .map { mapper.toDateFromString(it.date) }
-
-    // TODO change to async
-    fun getDayByDate(date: LocalDate): DayUi? {
+    fun getLessonsForDay(dayDate: LocalDate): DayUi? {
         val dayDb = database.where(DayDb::class.java)
-                .equalTo("date", mapper.toStringFromDate(date))
+                .equalTo("date", mapper.toStringFromDate(dayDate))
                 .findFirst() ?: return null
         return mapper.dayFromDbToUi(dayDb)
     }
