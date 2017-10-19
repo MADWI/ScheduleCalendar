@@ -30,7 +30,7 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
     }
 
     private fun saveSchedule(days: List<Day>, albumNumber: Int) {
-        repository.saveSchedule(days,
+        repository.save(days,
                 { onScheduleSaved(albumNumber) },
                 { onError(it) }
         )

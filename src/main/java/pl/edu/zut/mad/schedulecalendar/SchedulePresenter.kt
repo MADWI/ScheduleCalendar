@@ -12,35 +12,35 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
                         private val view: ScheduleMvp.View) : ScheduleMvp.Presenter {
 
     override fun loadLessons() {
-        val minDate = Calendar.getInstance()
-        minDate.add(Calendar.MONTH, -6) // TODO: get max and min date from schedule
-        val maxDate = Calendar.getInstance()
-        maxDate.add(Calendar.MONTH, 6)
+        val days = repository.getSchedule()
+        val minDate = days.minBy { it.date }?.date?.withDayOfMonth(1) ?: LocalDate.now().minusMonths(3)
+        val maxDate = days.maxBy { it.date }?.date?.withDayOfMonth(31) ?: LocalDate.now().plusMonths(3)
 
-        view.onDateIntervalCalculated(minDate, maxDate)
+        val maxDateCal = dateToCalendar(minDate)
+        val minDateCal = dateToCalendar(maxDate)
+        view.onDateIntervalCalculated(maxDateCal, minDateCal)
 
         val events: MutableList<CalendarEvent> = ArrayList()
-        val minDay = LocalDate.fromCalendarFields(minDate)
-        val firstDay = minDay.withDayOfMonth(1)
-        var nextDay = LocalDate(firstDay)
-        val lastDay = LocalDate.fromCalendarFields(maxDate).withDayOfMonth(1)
-        while (!nextDay.isEqual(lastDay)) {
+        var nextDay = minDate
+        while (!nextDay.isEqual(maxDate)) {
             events.addAll(getLessonEventsForDayDate(nextDay))
             nextDay = nextDay.plusDays(1)
         }
         view.onLessonsEventLoad(events)
     }
 
+    private fun dateToCalendar(date: LocalDate) = date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+
     private fun getLessonEventsForDayDate(dayDate: LocalDate): MutableList<CalendarEvent> {
         val events: MutableList<CalendarEvent> = ArrayList()
         repository.getLessonsForDay(dayDate)?.lessons?.forEach {
             events.add(LessonEvent(dayDate, it))
-        }  ?: events.add(LessonEvent(dayDate, null))
+        } ?: events.add(LessonEvent(dayDate, null))
         return events
     }
 
     override fun deleteScheduleWithUser() {
-        repository.deleteSchedule()
+        repository.delete()
         user.delete()
     }
 }
