@@ -10,23 +10,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
-import com.ognev.kotlin.agendacalendarview.models.DayItem
-import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import org.joda.time.LocalDate
-import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
-import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
-import pl.edu.zut.mad.schedulecalendar.module.UserModule
-import pl.edu.zut.mad.schedulecalendar.util.ModelMapper
+import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
 import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.util.app
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     companion object {
         private val NETWORK_UTILS = NetworkUtils()
@@ -34,27 +27,31 @@ class ScheduleFragment : Fragment() {
     }
 
     @Inject lateinit var user: User
+    @Inject lateinit var presenter: SchedulePresenter
+    private val calendarContentManager: CalendarContentManager by lazy {
+        CalendarContentManager(CalendarController(), scheduleCalendarView, LessonsAdapter(activity))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_schedule, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init(savedInstanceState)
+        init()
     }
 
-    private fun init(savedInstanceState: Bundle?) {
+    private fun init() {
         initInjections()
-        initView(savedInstanceState)
+        initView()
     }
 
     private fun initInjections() = app.component
-            .plus(UserModule())
+            .plus(ScheduleModule(this))
             .inject(this)
 
-    private fun initView(savedInstanceState: Bundle?) =
+    private fun initView() =
             if (user.isSaved()) {
-                initCalendarContent(savedInstanceState)
+                presenter.loadLessons()
             } else {
                 startLoginActivity()
             }
@@ -66,46 +63,17 @@ class ScheduleFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            initAndStartScheduleFragments()
+            presenter.loadLessons()
         }
     }
 
-    // TODO: move to presenter, module
-    private fun initCalendarContent(savedInstanceState: Bundle?) {
-        val calendarManager = CalendarContentManager(CalendarController(), scheduleCalendarView, LessonsAdapter(activity))
-        calendarManager.locale = Locale.getDefault()
-        val minDate = Calendar.getInstance()
-        minDate.add(Calendar.MONTH, -6)
-        val maxDate = Calendar.getInstance()
-        maxDate.add(Calendar.MONTH, 6)
-        calendarManager.setDateRange(minDate, maxDate)
-
-        val events: MutableList<CalendarEvent> = ArrayList()
-        val repository = ScheduleRepository(Realm.getDefaultInstance(), ModelMapper())
-        val minDay = LocalDate.fromCalendarFields(minDate)
-        val firstDay = minDay.withDayOfMonth(1)
-        var nextDay = LocalDate(firstDay)
-        val lastDay = LocalDate.fromCalendarFields(maxDate).withDayOfMonth(1)
-        while (!nextDay.isEqual(lastDay)) {
-            nextDay = nextDay.plusDays(1)
-            val day = nextDay.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
-            val lessonDay = repository.getLessonsForDay(nextDay)
-            if (lessonDay != null) {
-                lessonDay.lessons.forEach {
-                    lessonDay.date
-                    val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), it).setEventInstanceDay(day)
-                    events.add(event)
-                }
-            } else {
-                val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), null)
-                events.add(event)
-            }
-        }
-        calendarManager.loadItemsFromStart(events)
+    override fun onDateIntervalCalculated(minDate: Calendar, maxDate: Calendar) {
+        calendarContentManager.locale = Locale.getDefault()
+        calendarContentManager.setDateRange(minDate, maxDate)
     }
 
-    private fun initAndStartScheduleFragments() {
-        initCalendarContent(null)
+    override fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>) {
+        calendarContentManager.loadItemsFromStart(lessonsEvents)
     }
 
     fun logout() {
