@@ -1,26 +1,19 @@
 package pl.edu.zut.mad.schedulecalendar.data.model.ui
 
 import com.ognev.kotlin.agendacalendarview.models.*
+import org.joda.time.LocalDate
 import java.util.*
 
 
 class LessonEvent : BaseCalendarEvent {
 
-    override lateinit var endTime: Calendar
-    override lateinit var startTime: Calendar
-    override lateinit var instanceDay: Calendar
-    override lateinit var dayReference: IDayItem
-    override lateinit var weekReference: IWeekItem
-    override var event: Any? = null
-
-    constructor(startTime: Calendar,
-                endTime: Calendar,
-                dayItem: DayItem,
-                lesson: Lesson?) {
-        this.startTime = startTime
-        this.endTime = endTime
-        this.dayReference = dayItem
+    constructor(date: LocalDate, lesson: Lesson?) {
+        val day = date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+        this.startTime = day
+        this.endTime = day
+        this.dayReference = DayItem.buildDayItemFromCal(day)
         this.event = lesson
+        setEventInstanceDay(day)
     }
 
     override fun copy(): LessonEvent = LessonEvent(this)

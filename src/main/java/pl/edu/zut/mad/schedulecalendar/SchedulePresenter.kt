@@ -34,17 +34,15 @@ class SchedulePresenter(private val repository: ScheduleRepository,
 
     private fun getLessonEventsForDayDate(dayDate: LocalDate): MutableList<CalendarEvent> {
         val events: MutableList<CalendarEvent> = ArrayList()
-        val day = dayDate.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
-        val lessonDay = repository.getLessonsForDay(dayDate)
+        val lessonDay = repository.getLessonsForDay(dayDate) // TODO: .let
         if (lessonDay != null) {
             lessonDay.lessons.forEach {
                 lessonDay.date
-                val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), it).setEventInstanceDay(day) // TODO: casting from "setEventInstanceDay" !!!
+                val event = LessonEvent(lessonDay.date, it) // TODO: casting from "setEventInstanceDay" !!!
                 events.add(event)
             }
         } else {
-            val event = LessonEvent(day, day, DayItem.buildDayItemFromCal(day), null)
-            events.add(event)
+            events.add(LessonEvent(dayDate, null))
         }
         return events
     }
