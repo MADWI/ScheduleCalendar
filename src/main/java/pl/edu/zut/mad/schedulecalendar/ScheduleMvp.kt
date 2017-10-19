@@ -14,5 +14,7 @@ interface ScheduleMvp {
 
     interface Presenter {
         fun loadLessons()
+
+        fun deleteScheduleWithUser()
     }
 }

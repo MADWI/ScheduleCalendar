@@ -15,7 +15,7 @@ class User(private val preferences: SharedPreferences) {
         editor.apply()
     }
 
-    fun remove() = preferences.edit().clear().apply()
+    fun delete() = preferences.edit().clear().apply()
 
     fun isSaved() = preferences.contains(ALBUM_NUMBER_KEY)
 

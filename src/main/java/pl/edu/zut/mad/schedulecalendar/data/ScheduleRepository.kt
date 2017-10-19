@@ -11,12 +11,16 @@ import pl.edu.zut.mad.schedulecalendar.data.model.ui.Lesson as LessonUi
 
 class ScheduleRepository(private val database: Realm, private val mapper: ModelMapper) {
 
-    fun saveSchedule(scheduleDays: List<DayDb>) {
-        // TODO: clear database
-        database.beginTransaction()
-        database.copyToRealm(scheduleDays)
-        database.commitTransaction()
-//        database.executeTransactionAsync({ it.copyToRealm(scheduleDays) }, )
+    fun saveSchedule(scheduleDays: List<DayDb>, onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
+        database.executeTransactionAsync(
+                { it.copyToRealm(scheduleDays) },
+                { onSuccess() },
+                { onError(it) }
+        )
+    }
+
+    fun deleteSchedule() {
+        database.executeTransaction { database.deleteAll() }
     }
 
     // TODO change to async

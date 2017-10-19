@@ -8,7 +8,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SchedulePresenter(private val repository: ScheduleRepository,
+class SchedulePresenter(private val repository: ScheduleRepository, private val user: User,
                         private val view: ScheduleMvp.View) : ScheduleMvp.Presenter {
 
     override fun loadLessons() {
@@ -37,5 +37,10 @@ class SchedulePresenter(private val repository: ScheduleRepository,
             events.add(LessonEvent(dayDate, it))
         }  ?: events.add(LessonEvent(dayDate, null))
         return events
+    }
+
+    override fun deleteScheduleWithUser() {
+        repository.deleteSchedule()
+        user.delete()
     }
 }

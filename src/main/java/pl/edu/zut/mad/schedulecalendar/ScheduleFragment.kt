@@ -77,7 +77,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
     fun logout() {
-        user.remove()
+        presenter.deleteScheduleWithUser()
         startLoginActivity()
     }
 

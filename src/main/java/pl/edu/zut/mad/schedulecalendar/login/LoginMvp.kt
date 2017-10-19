@@ -8,7 +8,7 @@ interface LoginMvp {
 
         fun hideLoading()
 
-        fun onDataSaved(albumNumber: Int)
+        fun onDataSaved()
 
         fun showError(message: String?)
 

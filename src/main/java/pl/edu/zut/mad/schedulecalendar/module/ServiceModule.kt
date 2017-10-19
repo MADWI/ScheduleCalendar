@@ -3,6 +3,7 @@ package pl.edu.zut.mad.schedulecalendar.module
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,4 +23,8 @@ class ServiceModule {
                 .build()
                 .create(ScheduleService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideNetworkUtils() = NetworkUtils()
 }

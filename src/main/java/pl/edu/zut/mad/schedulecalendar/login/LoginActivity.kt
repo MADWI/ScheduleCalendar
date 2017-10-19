@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.util.app
 import javax.inject.Inject
@@ -16,7 +15,6 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     @Inject lateinit var loginPresenter: LoginPresenter
-    @Inject lateinit var user: User
     @Inject lateinit var networkUtils: NetworkUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,8 +66,7 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
         loadingView.visibility = View.GONE
     }
 
-    override fun onDataSaved(albumNumber: Int) {
-        user.save(getAlbumNumberFromInput())
+    override fun onDataSaved() {
         setResult(Activity.RESULT_OK)
         finish()
     }
