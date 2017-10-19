@@ -8,6 +8,7 @@ import javax.inject.Singleton
 @Singleton
 @Subcomponent(modules = arrayOf(
         UserModule::class,
+        ServiceModule::class,
         ScheduleModule::class,
         RepositoryModule::class)
 )

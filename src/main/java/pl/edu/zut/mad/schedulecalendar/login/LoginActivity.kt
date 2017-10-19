@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
         if (fieldIsInvalid()) {
             return
         }
-        if (!networkUtils.isAvailable(this)) {
+        if (!networkUtils.isAvailable()) {
             Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
             return
         }

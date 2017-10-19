@@ -3,17 +3,16 @@ package pl.edu.zut.mad.schedulecalendar
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import pl.edu.zut.mad.schedulecalendar.login.LoginActivity
 import pl.edu.zut.mad.schedulecalendar.module.ScheduleModule
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.util.app
 import java.util.*
 import javax.inject.Inject
@@ -22,11 +21,9 @@ import javax.inject.Inject
 class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     companion object {
-        private val NETWORK_UTILS = NetworkUtils()
         private const val REQUEST_CODE = 123
     }
 
-    @Inject lateinit var user: User
     @Inject lateinit var presenter: SchedulePresenter
     private val calendarContentManager: CalendarContentManager by lazy {
         CalendarContentManager(CalendarController(), scheduleCalendarView, LessonsAdapter(activity))
@@ -42,28 +39,21 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     private fun init() {
         initInjections()
-        initView()
+        presenter.loadData()
     }
 
     private fun initInjections() = app.component
             .plus(ScheduleModule(this))
             .inject(this)
 
-    private fun initView() =
-            if (user.isSaved()) {
-                presenter.loadLessons()
-            } else {
-                startLoginActivity()
-            }
-
-    private fun startLoginActivity() {
+    override fun showLoginView() {
         val intent = Intent(activity, LoginActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            presenter.loadLessons()
+            presenter.loadData()
         }
     }
 
@@ -77,21 +67,15 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
     fun logout() {
-        presenter.deleteScheduleWithUser()
-        startLoginActivity()
+        presenter.logout()
     }
 
     fun refreshSchedule() {
-        if (NETWORK_UTILS.isAvailable(activity)) {
-            startLoginActivityWithSavedAlbumNumber()
-        } else {
-            Toast.makeText(activity, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
-        }
+        presenter.refresh()
     }
 
-    private fun startLoginActivityWithSavedAlbumNumber() {
-        val intent = Intent(activity, LoginActivity::class.java)
-        // TODO: send action to refresh
-        startActivity(intent)
+    override fun showError() {
+        val contentView = activity.findViewById<View>(android.R.id.content)
+        Snackbar.make(contentView, R.string.error_no_internet, Snackbar.LENGTH_SHORT).show()
     }
 }

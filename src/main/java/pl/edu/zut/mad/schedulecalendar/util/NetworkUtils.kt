@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 
 
-class NetworkUtils {
+class NetworkUtils(private val context: Context) {
 
-    fun isAvailable(context: Context): Boolean {
+    fun isAvailable(): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connectivityManager.activeNetworkInfo
         return networkInfo?.isAvailable == true

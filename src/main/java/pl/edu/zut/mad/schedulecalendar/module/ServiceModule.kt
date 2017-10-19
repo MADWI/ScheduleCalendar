@@ -1,5 +1,6 @@
 package pl.edu.zut.mad.schedulecalendar.module
 
+import android.app.Application
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
@@ -26,5 +27,5 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideNetworkUtils() = NetworkUtils()
+    fun provideNetworkUtils(app: Application) = NetworkUtils(app)
 }

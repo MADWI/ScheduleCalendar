@@ -10,11 +10,17 @@ interface ScheduleMvp {
         fun onDateIntervalCalculated(minDate: Calendar, maxDate: Calendar)
 
         fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>)
+
+        fun showLoginView()
+
+        fun showError()
     }
 
     interface Presenter {
-        fun loadLessons()
+        fun loadData()
 
-        fun deleteScheduleWithUser()
+        fun logout()
+
+        fun refresh()
     }
 }

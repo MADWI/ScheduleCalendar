@@ -4,14 +4,23 @@ import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
+import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class SchedulePresenter(private val repository: ScheduleRepository, private val user: User,
-                        private val view: ScheduleMvp.View) : ScheduleMvp.Presenter {
+                        private val view: ScheduleMvp.View, private val networkUtils: NetworkUtils) : ScheduleMvp.Presenter {
 
-    override fun loadLessons() {
+    override fun loadData() {
+        if (user.isSaved()) {
+            loadLessons()
+        } else {
+            view.showLoginView()
+        }
+    }
+
+    private fun loadLessons() {
         val days = repository.getSchedule()
         val minDate = days.minBy { it.date }?.date?.withDayOfMonth(1) ?: LocalDate.now().minusMonths(3)
         val maxDate = days.maxBy { it.date }?.date?.withDayOfMonth(31) ?: LocalDate.now().plusMonths(3)
@@ -39,8 +48,17 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
         return events
     }
 
-    override fun deleteScheduleWithUser() {
-        repository.delete()
+    override fun logout() {
         user.delete()
+        repository.delete()
+        view.showLoginView()
+    }
+
+    override fun refresh() {
+        if (networkUtils.isAvailable()) {
+            view.showLoginView()
+        } else {
+            view.showError()
+        }
     }
 }
