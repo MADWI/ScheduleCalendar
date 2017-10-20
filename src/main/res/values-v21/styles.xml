@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Login" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorAccent">@color/scheduleColorAccent</item>
+        <item name="android:colorPrimary">@color/scheduleColorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/scheduleColorPrimaryDark</item>
+    </style>
+</resources>

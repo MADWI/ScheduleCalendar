@@ -10,7 +10,7 @@ import pl.edu.zut.mad.schedulecalendar.util.app
 import javax.inject.Inject
 
 
-class LoginActivity : AppCompatActivity(), LoginMvp.View { // TODO: disable action bar in styles
+class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     @Inject lateinit var presenter: LoginMvp.Presenter
 
