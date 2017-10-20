@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     private fun initInjections() = app.component
-            .plus(LoginModule(this, this))
+            .plus(LoginModule(this))
             .inject(this)
 
     private fun initViews() = loginButtonView.setOnClickListener { presenter.onLoginClick() }

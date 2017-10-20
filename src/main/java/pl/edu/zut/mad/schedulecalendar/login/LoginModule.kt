@@ -1,6 +1,5 @@
 package pl.edu.zut.mad.schedulecalendar.login
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedulecalendar.User
@@ -10,7 +9,7 @@ import pl.edu.zut.mad.schedulecalendar.module.RepositoryModule
 import pl.edu.zut.mad.schedulecalendar.module.ServiceModule
 import pl.edu.zut.mad.schedulecalendar.module.UserModule
 import pl.edu.zut.mad.schedulecalendar.util.NetworkConnection
-import pl.edu.zut.mad.schedulecalendar.util.TextProvider
+import pl.edu.zut.mad.schedulecalendar.util.MessageProvider
 import javax.inject.Singleton
 
 
@@ -19,16 +18,16 @@ import javax.inject.Singleton
         ServiceModule::class,
         RepositoryModule::class
 ))
-class LoginModule(private val view: LoginMvp.View, private val context: Context) {
+class LoginModule(private val view: LoginMvp.View) {
 
     @Provides
     @Singleton
-    fun provideTextProvider() = TextProvider()
+    fun provideTextProvider() = MessageProvider()
 
     @Provides
     @Singleton
     fun provideLoginPresenter(service: ScheduleService, repository: ScheduleRepository,
-                              textProvider: TextProvider, networkConnection: NetworkConnection,
+                              messageProvider: MessageProvider, connection: NetworkConnection,
                               user: User): LoginMvp.Presenter =
-            LoginPresenter(view, repository, service, textProvider, user, networkConnection)
+            LoginPresenter(view, repository, service, connection, messageProvider, user)
 }

@@ -9,12 +9,12 @@ import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
 import pl.edu.zut.mad.schedulecalendar.data.model.db.Day
 import pl.edu.zut.mad.schedulecalendar.util.NetworkConnection
-import pl.edu.zut.mad.schedulecalendar.util.TextProvider
+import pl.edu.zut.mad.schedulecalendar.util.MessageProvider
 
 
 class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
-                     private val service: ScheduleService, private val textProvider: TextProvider,
-                     private val user: User, private val networkConnection: NetworkConnection)
+                     private val service: ScheduleService, private val network: NetworkConnection,
+                     private val messageProvider: MessageProvider, private val user: User)
     : LoginMvp.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
@@ -24,7 +24,7 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
         if (!validateAlbumNumber(albumNumber)) {
             return
         }
-        if (!networkConnection.isAvailable()) {
+        if (!network.isAvailable()) {
             view.showError(R.string.error_no_internet)
             return
         }
@@ -63,8 +63,8 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
     }
 
     private fun onError(error: Throwable) {
-        val errorMessage = textProvider.getErrorMessageIdRes(error)
-        view.showError(errorMessage)
+        val errorMessageId = messageProvider.getIdByHttpError(error)
+        view.showError(errorMessageId)
         view.hideLoading()
     }
 

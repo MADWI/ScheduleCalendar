@@ -4,9 +4,9 @@ import pl.edu.zut.mad.schedulecalendar.R
 import retrofit2.HttpException
 
 
-class TextProvider {
+class MessageProvider {
 
-    fun getErrorMessageIdRes(error: Throwable): Int { // TODO: move to presenter or better place
+    fun getIdByHttpError(error: Throwable): Int {
         if (error is HttpException) {
             when (error.code()) {
                 500 -> return R.string.error_service_internal
