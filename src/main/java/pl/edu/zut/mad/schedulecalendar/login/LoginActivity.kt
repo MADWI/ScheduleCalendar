@@ -40,10 +40,14 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     override fun showLoading() {
         loadingView.visibility = View.VISIBLE
         albumNumberLayoutView.error = null
+        albumNumberTextView.isEnabled = false
+        loginButtonView.isEnabled = false
     }
 
     override fun hideLoading() {
         loadingView.visibility = View.GONE
+        albumNumberTextView.isEnabled = true
+        loginButtonView.isEnabled = true
     }
 
     override fun onDataSaved() {
