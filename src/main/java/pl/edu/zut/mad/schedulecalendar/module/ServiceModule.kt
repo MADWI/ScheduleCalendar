@@ -4,7 +4,7 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
+import pl.edu.zut.mad.schedulecalendar.util.NetworkConnection
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,5 +27,5 @@ class ServiceModule {
 
     @Provides
     @Singleton
-    fun provideNetworkUtils(app: Application) = NetworkUtils(app)
+    fun provideNetworkUtils(app: Application) = NetworkConnection(app)
 }

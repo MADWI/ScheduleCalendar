@@ -8,25 +8,23 @@ import pl.edu.zut.mad.schedulecalendar.User
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleService
 import pl.edu.zut.mad.schedulecalendar.data.model.db.Day
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
+import pl.edu.zut.mad.schedulecalendar.util.NetworkConnection
 import pl.edu.zut.mad.schedulecalendar.util.TextProvider
 
 
 class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
                      private val service: ScheduleService, private val textProvider: TextProvider,
-                     private val user: User, private val networkUtils: NetworkUtils)
+                     private val user: User, private val networkConnection: NetworkConnection)
     : LoginMvp.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
-
-    override fun cancelFetch() = compositeDisposable.clear()
 
     override fun onLoginClick() {
         val albumNumber = view.getAlbumNumberText()
         if (!validateAlbumNumber(albumNumber)) {
             return
         }
-        if (!networkUtils.isAvailable()) {
+        if (!networkConnection.isAvailable()) {
             view.showError(R.string.error_no_internet)
             return
         }
@@ -54,21 +52,21 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
         compositeDisposable.add(disposable)
     }
 
+    private fun saveSchedule(days: List<Day>, albumNumber: Int) {
+        repository.save(days,
+                {
+                    user.save(albumNumber)
+                    view.onDataSaved()
+                },
+                { onError(it) }
+        )
+    }
+
     private fun onError(error: Throwable) {
         val errorMessage = textProvider.getErrorMessageIdRes(error)
         view.showError(errorMessage)
         view.hideLoading()
     }
 
-    private fun saveSchedule(days: List<Day>, albumNumber: Int) {
-        repository.save(days,
-                { onScheduleSaved(albumNumber) },
-                { onError(it) }
-        )
-    }
-
-    private fun onScheduleSaved(albumNumber: Int) {
-        user.save(albumNumber)
-        view.onDataSaved()
-    }
+    override fun cancelFetch() = compositeDisposable.clear()
 }

@@ -4,13 +4,13 @@ import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedulecalendar.data.ScheduleRepository
 import pl.edu.zut.mad.schedulecalendar.data.model.ui.LessonEvent
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
+import pl.edu.zut.mad.schedulecalendar.util.NetworkConnection
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class SchedulePresenter(private val repository: ScheduleRepository, private val user: User,
-                        private val view: ScheduleMvp.View, private val networkUtils: NetworkUtils)
+                        private val view: ScheduleMvp.View, private val networkConnection: NetworkConnection)
     : ScheduleMvp.Presenter {
 
     override fun logout() {
@@ -20,7 +20,7 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
     }
 
     override fun refresh() {
-        if (networkUtils.isAvailable()) {
+        if (networkConnection.isAvailable()) {
             view.showLoginView()
         } else {
             view.showError()
