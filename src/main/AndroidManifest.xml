@@ -2,6 +2,7 @@
 
     package="pl.edu.zut.mad.schedulecalendar">
     <!-- TODO: rename package to schedule -->
+    <!-- TODO: options for not showing free days in list -->
     <application
         android:name=".ScheduleApp"
         android:allowBackup="true"

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="no_lessons_layout_height">56dp</dimen>
+    <dimen name="no_lessons_text_padding_horizontal">16dp</dimen>
+    <dimen name="no_lessons_text_padding_drawable">16dp</dimen>
+</resources>
