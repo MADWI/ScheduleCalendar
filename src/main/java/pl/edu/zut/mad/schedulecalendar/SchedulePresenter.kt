@@ -10,7 +10,22 @@ import kotlin.collections.ArrayList
 
 
 class SchedulePresenter(private val repository: ScheduleRepository, private val user: User,
-                        private val view: ScheduleMvp.View, private val networkUtils: NetworkUtils) : ScheduleMvp.Presenter {
+                        private val view: ScheduleMvp.View, private val networkUtils: NetworkUtils)
+    : ScheduleMvp.Presenter {
+
+    override fun logout() {
+        user.delete()
+        repository.delete()
+        view.showLoginView()
+    }
+
+    override fun refresh() {
+        if (networkUtils.isAvailable()) {
+            view.showLoginView()
+        } else {
+            view.showError()
+        }
+    }
 
     override fun loadData() {
         if (user.isSaved()) {
@@ -46,19 +61,5 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
             events.add(LessonEvent(dayDate, it))
         } ?: events.add(LessonEvent(dayDate, null))
         return events
-    }
-
-    override fun logout() {
-        user.delete()
-        repository.delete()
-        view.showLoginView()
-    }
-
-    override fun refresh() {
-        if (networkUtils.isAvailable()) {
-            view.showLoginView()
-        } else {
-            view.showError()
-        }
     }
 }

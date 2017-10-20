@@ -4,18 +4,15 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedulecalendar.R
-import pl.edu.zut.mad.schedulecalendar.util.NetworkUtils
 import pl.edu.zut.mad.schedulecalendar.util.app
 import javax.inject.Inject
 
 
-class LoginActivity : AppCompatActivity(), LoginMvp.View {
+class LoginActivity : AppCompatActivity(), LoginMvp.View { // TODO: disable action bar in styles
 
-    @Inject lateinit var loginPresenter: LoginPresenter
-    @Inject lateinit var networkUtils: NetworkUtils
+    @Inject lateinit var presenter: LoginMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,34 +29,17 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
             .plus(LoginModule(this, this))
             .inject(this)
 
-    private fun initViews() = loginButtonView.setOnClickListener { onLoginClick() }
+    private fun initViews() = loginButtonView.setOnClickListener { presenter.onLoginClick() }
 
-    private fun onLoginClick() {
-        if (fieldIsInvalid()) {
-            return
-        }
-        if (!networkUtils.isAvailable()) {
-            Toast.makeText(this, R.string.error_no_internet, Toast.LENGTH_SHORT).show()
-            return
-        }
-        val albumNumber = getAlbumNumberFromInput()
-        loginPresenter.fetchScheduleForAlbumNumber(albumNumber)
+    override fun getAlbumNumberText() = albumNumberTextView.text.toString()
+
+    override fun showError(errorResId: Int) {
+        albumNumberLayoutView.error = resources.getString(errorResId)
     }
-
-    private fun fieldIsInvalid(): Boolean {
-        if (albumNumberTextView.text.toString().isEmpty()) {
-            albumNumberLayoutView.error = resources.getString(R.string.error_field_cannot_be_empty)
-            return true
-        } else {
-            albumNumberLayoutView.error = null
-        }
-        return false
-    }
-
-    private fun getAlbumNumberFromInput() = Integer.valueOf(albumNumberTextView.text.toString())
 
     override fun showLoading() {
         loadingView.visibility = View.VISIBLE
+        albumNumberLayoutView.error = null
     }
 
     override fun hideLoading() {
@@ -69,13 +49,5 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     override fun onDataSaved() {
         setResult(Activity.RESULT_OK)
         finish()
-    }
-
-    override fun showError(message: String?) {
-        albumNumberLayoutView.error = message
-    }
-
-    override fun hideError() {
-        albumNumberLayoutView.error = null
     }
 }

@@ -66,13 +66,9 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
         calendarContentManager.loadItemsFromStart(lessonsEvents)
     }
 
-    fun logout() {
-        presenter.logout()
-    }
+    fun logout() = presenter.logout()
 
-    fun refreshSchedule() {
-        presenter.refresh()
-    }
+    fun refreshSchedule() = presenter.refresh()
 
     override fun showError() {
         val contentView = activity.findViewById<View>(android.R.id.content)
