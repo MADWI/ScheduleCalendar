@@ -1,0 +1,35 @@
+package pl.edu.zut.mad.schedule.data
+
+import io.realm.Realm
+import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.util.ModelMapper
+import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
+import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
+import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
+import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
+
+
+class ScheduleRepository(private val database: Realm, private val mapper: ModelMapper) {
+
+    fun save(days: List<DayDb>, onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
+        database.executeTransactionAsync(
+                { it.copyToRealm(days) },
+                { onSuccess() },
+                { onError(it) }
+        )
+    }
+
+    fun delete() {
+        database.executeTransaction { database.deleteAll() }
+    }
+
+    // TODO change to async
+    fun getLessonsForDay(dayDate: LocalDate): DayUi? {
+        val dayDb = database.where(DayDb::class.java)
+                .equalTo("date", mapper.toStringFromDate(dayDate))
+                .findFirst() ?: return null
+        return mapper.dayFromDbToUi(dayDb)
+    }
+
+    fun getSchedule() = database.where(DayDb::class.java).findAll().map { mapper.dayFromDbToUi(it) }
+}
