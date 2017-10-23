@@ -1,28 +1,32 @@
 package pl.edu.zut.mad.schedulecalendar
 
-import android.util.Log
 import com.ognev.kotlin.agendacalendarview.CalendarController
 import com.ognev.kotlin.agendacalendarview.models.IDayItem
+import org.joda.time.LocalDate
 import java.util.*
 
 
-internal class CalendarController : CalendarController {
+internal class CalendarController(private val dateListener: DateListener?) : CalendarController {
 
-    override fun getEmptyEventLayout(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getEventLayout(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private var previousDate: LocalDate? = null
 
     override fun onDaySelected(dayItem: IDayItem) {
-        log("onDaySelected $dayItem")
+        val selectedDate = LocalDate.fromDateFields(dayItem.date)
+        if (selectedDate != previousDate) {
+            previousDate = selectedDate
+            dateListener?.onDateChanged(selectedDate)
+        }
     }
 
     override fun onScrollToDate(calendar: Calendar) {
-        log("onScrollToDate")
+        val selectedDate = LocalDate.fromCalendarFields(calendar)
+        if (selectedDate != previousDate) {
+            previousDate = selectedDate
+            dateListener?.onDateChanged(selectedDate)
+        }
     }
 
-    private fun log(message: String) = Log.d("CALENDAR", message)
+    override fun getEmptyEventLayout() = 0
+
+    override fun getEventLayout() = 0
 }
