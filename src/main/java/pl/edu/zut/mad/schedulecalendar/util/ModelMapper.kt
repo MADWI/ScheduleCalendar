@@ -13,10 +13,9 @@ import pl.edu.zut.mad.schedulecalendar.data.model.ui.Lesson as LessonUi
 class ModelMapper {
 
     companion object {
+        private const val CANCELED_LESSON_TEXT = "odwołane"
         private val dateFormatter = DateTimeFormat.forPattern("dd-MM-yyyy")
     }
-
-    fun toDateFromString(date: String): LocalDate = LocalDate.parse(date, dateFormatter)
 
     fun toStringFromDate(date: LocalDate): String = date.toString(dateFormatter)
 
@@ -26,12 +25,15 @@ class ModelMapper {
         return DayUi(localDate, lessonsUi)
     }
 
+    private fun toDateFromString(date: String): LocalDate = LocalDate.parse(date, dateFormatter)
+
     private fun toUiLessonsFromDb(lessons: RealmList<LessonDb>): List<LessonUi> =
             lessons.map {
                 with(it) {
                     val subjectWithCourseType = "$subject ($courseType)"
                     val teacherFullNameWithRoom = "${teacher?.academicTitle} ${teacher?.name} ${teacher?.surname} $room"
-                    LessonUi(teacherFullNameWithRoom, subjectWithCourseType, timeRange ?: TimeRange())
+                    val isCancelled = reservationStatus.equals(CANCELED_LESSON_TEXT, true)
+                    LessonUi(teacherFullNameWithRoom, subjectWithCourseType, isCancelled, timeRange ?: TimeRange())
                 }
             }
 }

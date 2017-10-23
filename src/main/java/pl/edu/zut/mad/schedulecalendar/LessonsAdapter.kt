@@ -18,6 +18,16 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         private val DATE_FORMAT = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
     }
 
+    private val itemViewColor by lazy {
+        ContextCompat.getColor(context, R.color.scheduleLightGray)
+    }
+    private val timeViewColor by lazy {
+        ContextCompat.getColor(context, R.color.scheduleColorPrimaryDark)
+    }
+    private val cancelledBackground by lazy {
+        ContextCompat.getDrawable(context, R.drawable.border_red)
+    }
+
     override fun getHeaderLayout() = R.layout.lesson_header
 
     override fun getHeaderItemView(view: View, day: Calendar) {
@@ -36,7 +46,7 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         if (!lessonEvent.hasEvent()) {
             return
         }
-        if (position % 2 == 0) {
+        if (position.rem(2) == 0) {
             colorBackgroundToGray(view)
         }
         val lesson = lessonEvent.event as Lesson
@@ -46,14 +56,14 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
             view.findViewById<TextView>(R.id.subjectWithTypeView).text = subjectWithType
             view.findViewById<TextView>(R.id.teacherWithRoomView).text = teacherWithRoom
         }
+        if (lesson.isCancelled) {
+            view.findViewById<View>(R.id.cancelledTextView).visibility = View.VISIBLE
+            view.findViewById<View>(R.id.scheduleTaskItemView).foreground = cancelledBackground
+        }
     }
 
     private fun colorBackgroundToGray(view: View) {
-        val itemViewColor = ContextCompat.getColor(context, R.color.scheduleLightGray)
-        val timeViewColor = ContextCompat.getColor(context, R.color.scheduleColorPrimaryDark)
-        val scheduleTaskItemView = view.findViewById<View>(R.id.scheduleTaskItemView)
-        val timeGroupView = view.findViewById<View>(R.id.timeGroupView)
-        scheduleTaskItemView.setBackgroundColor(itemViewColor)
-        timeGroupView.setBackgroundColor(timeViewColor)
+        view.findViewById<View>(R.id.timeGroupView).setBackgroundColor(timeViewColor)
+        view.findViewById<View>(R.id.scheduleTaskItemView).setBackgroundColor(itemViewColor)
     }
 }

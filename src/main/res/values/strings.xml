@@ -9,6 +9,7 @@
     <string name="error_service_internal">Internal server error, try again within few minutes</string>
     <string name="error_service_database_update">Server database is updating, try again within few minutes</string>
     <string name="error_service_unrecognized">Unrecognized error, try again within few minutes</string>
+    <string name="lesson_cancelled">Cancelled</string>
     <string-array name="week_days">
         <item>Monday</item>
         <item>Tuesday</item>

@@ -18,4 +18,5 @@
     <string name="error_service_database_update">Baza danych serwera jest w trakcie aktualizacji, spróbuj ponownie za kilka minut</string>
     <string name="error_service_internal">Błąd serwera, spróbuj ponownie za kilka minut</string>
     <string name="error_service_unrecognized">Nieznany błąd, spróbuj ponownie za kilka minut</string>
+    <string name="lesson_cancelled">Odwołane</string>
 </resources>
