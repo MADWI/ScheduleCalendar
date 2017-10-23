@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_lessons">Brak zajęć</string>
     <string name="login">Zaloguj się</string>
     <string name="password">Hasło</string>
+    <string name="album_number">Number albumu</string>
+    <string name="no_lessons">Brak zajęć</string>
+    <string name="lesson_cancelled">Odwołane</string>
+    <string name="error_no_internet">Brak połączenia z internetem</string>
+    <string name="error_field_cannot_be_empty">Pole nie może być puste</string>
+    <string name="error_album_number_not_found">Podany numer albumu nie istnieje</string>
+    <string name="error_service_database_update">Baza danych serwera jest w trakcie aktualizacji, spróbuj ponownie za kilka minut</string>
+    <string name="error_service_internal">Błąd serwera, spróbuj ponownie za kilka minut</string>
+    <string name="error_service_unrecognized">Nieznany błąd, spróbuj ponownie za kilka minut</string>
     <string-array name="week_days">
         <item>Poniedziałek</item>
         <item>Wtorek</item>
@@ -12,11 +20,4 @@
         <item>Sobota</item>
         <item>Niedziela</item>
     </string-array>
-    <string name="error_field_cannot_be_empty">Pole nie może być puste</string>
-    <string name="error_no_internet">Brak połączenia z internetem</string>
-    <string name="album_number">Number albumu</string>
-    <string name="error_service_database_update">Baza danych serwera jest w trakcie aktualizacji, spróbuj ponownie za kilka minut</string>
-    <string name="error_service_internal">Błąd serwera, spróbuj ponownie za kilka minut</string>
-    <string name="error_service_unrecognized">Nieznany błąd, spróbuj ponownie za kilka minut</string>
-    <string name="lesson_cancelled">Odwołane</string>
 </resources>

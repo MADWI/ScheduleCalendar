@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">ScheduleCalendar</string>
-    <string name="no_lessons">No lessons</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="album_number">Album number</string>
-    <string name="error_field_cannot_be_empty">Field cannot be empty</string>
-    <string name="error_no_internet">No Internet connection</string>
-    <string name="error_service_internal">Internal server error, try again within few minutes</string>
-    <string name="error_service_database_update">Server database is updating, try again within few minutes</string>
-    <string name="error_service_unrecognized">Unrecognized error, try again within few minutes</string>
+    <string name="no_lessons">No lessons</string>
     <string name="lesson_cancelled">Cancelled</string>
+    <string name="error_no_internet">No Internet connection</string>
+    <string name="error_field_cannot_be_empty">Field cannot be empty</string>
+    <string name="error_album_number_not_found">Given album number not exists</string>
+    <string name="error_service_database_update">Server database is updating, try again within few minutes</string>
+    <string name="error_service_internal">Internal server error, try again within few minutes</string>
+    <string name="error_service_unrecognized">Unrecognized error, try again within few minutes</string>
     <string-array name="week_days">
         <item>Monday</item>
         <item>Tuesday</item>
