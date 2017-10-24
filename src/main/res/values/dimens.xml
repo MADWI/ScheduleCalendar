@@ -3,4 +3,6 @@
     <dimen name="no_lessons_layout_height">56dp</dimen>
     <dimen name="no_lessons_text_padding_horizontal">16dp</dimen>
     <dimen name="no_lessons_text_padding_drawable">16dp</dimen>
+    <dimen name="login_layout_padding">32dp</dimen>
+    <dimen name="login_image_zut_size">200dp</dimen>
 </resources>

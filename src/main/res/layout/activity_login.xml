@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@android:color/white"
     tools:context=".login.LoginActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:orientation="vertical"
+        android:padding="@dimen/login_layout_padding">
 
         <ImageView
             android:id="@+id/zutImage"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_width="@dimen/login_image_zut_size"
+            android:layout_height="@dimen/login_image_zut_size"
+            android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
             android:src="@drawable/zut"
-            app:layout_constraintBottom_toTopOf="@+id/albumNumberLayoutView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/albumNumberLayoutView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/loginButtonView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/zutImage">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/albumNumberTextView"
@@ -45,28 +36,19 @@
 
         <Button
             android:id="@+id/loginButtonView"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
             android:text="@string/login"
-            android:theme="@style/LoginButton"
-            app:layout_constraintBottom_toBottomOf="@+id/loadingView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/albumNumberLayoutView" />
+            android:theme="@style/LoginButton" />
 
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/loadingView"
             style="?android:progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/loginButtonView"
             tools:visibility="visible" />
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>
