@@ -7,9 +7,8 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.data.model.db.Day
-import pl.edu.zut.mad.schedule.util.NetworkConnection
 import pl.edu.zut.mad.schedule.util.MessageProvider
+import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 
 class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
@@ -40,26 +39,20 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
             }
 
     private fun fetchScheduleForAlbumNumber(albumNumber: Int) {
+        view.showLoading()
         val disposable = service.fetchScheduleByAlbumNumber(albumNumber)
                 .subscribeOn(Schedulers.io())
+                .flatMap { repository.save(it) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { view.showLoading() }
                 .doOnComplete { view.hideLoading() }
                 .subscribe(
-                        { saveSchedule(it, albumNumber) },
+                        {
+                            view.onDataSaved()
+                            user.save(albumNumber)
+                        },
                         { onError(it) }
                 )
         compositeDisposable.add(disposable)
-    }
-
-    private fun saveSchedule(days: List<Day>, albumNumber: Int) {
-        repository.save(days,
-                {
-                    user.save(albumNumber)
-                    view.onDataSaved()
-                },
-                { onError(it) }
-        )
     }
 
     private fun onError(error: Throwable) {

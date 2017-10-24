@@ -3,6 +3,7 @@ package pl.edu.zut.mad.schedule
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
+import pl.edu.zut.mad.schedule.data.model.db.Day
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import java.util.*
@@ -36,9 +37,9 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
     }
 
     private fun loadLessons() {
-        val days = repository.getSchedule()
-        val minDate = days.minBy { it.date }?.date?.withDayOfMonth(1) ?: LocalDate.now().minusMonths(3)
-        val maxDate = days.maxBy { it.date }?.date?.withDayOfMonth(31) ?: LocalDate.now().plusMonths(3)
+        val days = ArrayList<Day>()//repository.getSchedule()
+        val minDate = LocalDate.parse("2017-10-01")//days.minBy { it.date }?.date?.withDayOfMonth(1) ?: LocalDate.now().minusMonths(3) // TODO: get directly from repository
+        val maxDate = minDate.plusMonths(5)//days.maxBy { it.date }?.date?.withDayOfMonth(31) ?: LocalDate.now().plusMonths(3) // TODO: get directly from repository
 
         val maxDateCal = dateToCalendar(minDate)
         val minDateCal = dateToCalendar(maxDate)

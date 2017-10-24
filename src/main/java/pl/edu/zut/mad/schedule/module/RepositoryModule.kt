@@ -2,9 +2,11 @@ package pl.edu.zut.mad.schedule.module
 
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
+import pl.edu.zut.mad.schedule.util.ModelMapper
 import javax.inject.Singleton
 
 
@@ -18,7 +20,10 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(): Realm = Realm.getDefaultInstance()
+    fun provideDatabase(): Realm =
+            Observable.fromCallable { Realm.getDefaultInstance() }
+                    .subscribeOn(Schedulers.single())
+                    .blockingFirst()
 
     @Provides
     @Singleton
