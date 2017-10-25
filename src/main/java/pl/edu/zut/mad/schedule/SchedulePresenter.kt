@@ -1,9 +1,12 @@
 package pl.edu.zut.mad.schedule
 
+import android.util.Log
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
+import io.reactivex.Observable
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
-import pl.edu.zut.mad.schedule.data.model.db.Day
+import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
+import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import java.util.*
@@ -37,7 +40,6 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
     }
 
     private fun loadLessons() {
-        val days = ArrayList<Day>()//repository.getSchedule()
         val minDate = LocalDate.parse("2017-10-01")//days.minBy { it.date }?.date?.withDayOfMonth(1) ?: LocalDate.now().minusMonths(3) // TODO: get directly from repository
         val maxDate = minDate.plusMonths(5)//days.maxBy { it.date }?.date?.withDayOfMonth(31) ?: LocalDate.now().plusMonths(3) // TODO: get directly from repository
 
@@ -46,21 +48,29 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
         view.onDateIntervalCalculated(maxDateCal, minDateCal)
 
         val events: MutableList<CalendarEvent> = ArrayList()
-        var nextDay = minDate
-        while (!nextDay.isEqual(maxDate)) {
-            events.addAll(getLessonEventsForDayDate(nextDay))
-            nextDay = nextDay.plusDays(1)
-        }
-        view.onLessonsEventLoad(events)
+        val dateDates = getCalendarDates(minDate, maxDate)
+        Observable.fromIterable(dateDates)
+                .flatMapMaybe { repository.getLessonsForDay(it) }
+                .subscribe(
+                        { events.addAll(mapToLessonsEvents(it)) },
+                        { Log.d(this.javaClass.simpleName, "error: ${it.message}") }, // TODO: print error to UI?
+                        { view.onLessonsEventLoad(events) }
+                )
     }
 
-    private fun dateToCalendar(date: LocalDate) = date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+    private fun mapToLessonsEvents(day: DayUi): List<LessonEvent> =
+            day.lessons.map { LessonEvent(day.date, it) }.toList()
 
-    private fun getLessonEventsForDayDate(dayDate: LocalDate): MutableList<CalendarEvent> {
-        val events: MutableList<CalendarEvent> = ArrayList()
-        repository.getLessonsForDay(dayDate)?.lessons?.forEach {
-            events.add(LessonEvent(dayDate, it))
-        } ?: events.add(LessonEvent(dayDate, null))
-        return events
+    private fun dateToCalendar(date: LocalDate) =
+            date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+
+    private fun getCalendarDates(minDate: LocalDate, maxDate: LocalDate): MutableList<LocalDate> {
+        var nextDay = minDate
+        val dateDates: MutableList<LocalDate> = ArrayList()
+        while (!nextDay.isEqual(maxDate)) {
+            dateDates.add(nextDay)
+            nextDay = nextDay.plusDays(1)
+        }
+        return dateDates
     }
 }

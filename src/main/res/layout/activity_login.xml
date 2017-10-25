@@ -35,10 +35,10 @@
         </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/loginButtonView"
+            android:id="@+id/downloadScheduleButtonView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login"
+            android:text="@string/download_schedule"
             android:theme="@style/LoginButton" />
 
         <android.support.v4.widget.ContentLoadingProgressBar

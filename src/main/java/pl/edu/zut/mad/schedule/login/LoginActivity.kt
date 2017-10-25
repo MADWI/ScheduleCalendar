@@ -29,7 +29,8 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
             .plus(LoginModule(this))
             .inject(this)
 
-    private fun initViews() = loginButtonView.setOnClickListener { presenter.onLoginClick() }
+    private fun initViews() =
+            downloadScheduleButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
 
     override fun getAlbumNumberText() = albumNumberTextView.text.toString()
 
@@ -41,13 +42,13 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
         loadingView.visibility = View.VISIBLE
         albumNumberLayoutView.error = null
         albumNumberTextView.isEnabled = false
-        loginButtonView.isEnabled = false
+        downloadScheduleButtonView.isEnabled = false
     }
 
     override fun hideLoading() {
         loadingView.visibility = View.GONE
         albumNumberTextView.isEnabled = true
-        loginButtonView.isEnabled = true
+        downloadScheduleButtonView.isEnabled = true
     }
 
     override fun onDataSaved() {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="login">Zaloguj się</string>
+    <string name="download_schedule">Pobierz plan</string>
     <string name="password">Hasło</string>
     <string name="album_number">Number albumu</string>
     <string name="no_lessons">Brak zajęć</string>

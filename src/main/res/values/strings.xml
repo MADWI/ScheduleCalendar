@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">ScheduleCalendar</string>
-    <string name="login">Login</string>
+    <string name="download_schedule">Download schedule</string>
     <string name="password">Password</string>
     <string name="album_number">Album number</string>
     <string name="no_lessons">No lessons</string>

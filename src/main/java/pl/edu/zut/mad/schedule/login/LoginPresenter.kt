@@ -18,7 +18,7 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun onLoginClick() {
+    override fun onDownloadScheduleClick() {
         val albumNumber = view.getAlbumNumberText()
         if (!validateAlbumNumber(albumNumber)) {
             return
@@ -42,7 +42,8 @@ class LoginPresenter(private val view: LoginMvp.View, private val repository: Sc
         view.showLoading()
         val disposable = service.fetchScheduleByAlbumNumber(albumNumber)
                 .subscribeOn(Schedulers.io())
-                .flatMap { repository.save(it) }
+                .flatMapCompletable { repository.save(it) }
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete { view.hideLoading() }
                 .subscribe(

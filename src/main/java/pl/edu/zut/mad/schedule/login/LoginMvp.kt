@@ -18,7 +18,7 @@ interface LoginMvp {
     }
 
     interface Presenter {
-        fun onLoginClick()
+        fun onDownloadScheduleClick()
 
         fun cancelFetch()
     }

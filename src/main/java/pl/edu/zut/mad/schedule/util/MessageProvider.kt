@@ -10,7 +10,7 @@ class MessageProvider {
         if (error is HttpException) {
             when (error.code()) {
                 404 -> return R.string.error_album_number_not_found
-                504 -> return R.string.error_service_database_update
+                503 -> return R.string.error_service_database_update
                 500 -> return R.string.error_service_internal
             }
         }
