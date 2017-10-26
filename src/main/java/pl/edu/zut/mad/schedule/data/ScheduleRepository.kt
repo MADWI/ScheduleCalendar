@@ -42,15 +42,15 @@ class ScheduleRepository(private val database: ScheduleDatabase, private val map
 
     fun getScheduleMinDate(): LocalDate = database.instance
             .where(DayDb::class.java)
-            .findAll()
-            .map { mapper.dayFromDbToUi(it) } // TODO
+            .findAll() // TODO min.let after BE change
+            .map { mapper.dayFromDbToUi(it) }
             .minBy { it.date }
             ?.date ?: LocalDate.now().minusMonths(2)
 
     fun getScheduleMaxDate(): LocalDate = database.instance
             .where(DayDb::class.java)
-            .findAll()
-            .map { mapper.dayFromDbToUi(it) } // TODO
+            .findAll() // TODO max.let after BE change
+            .map { mapper.dayFromDbToUi(it) }
             .maxBy { it.date }
             ?.date ?: LocalDate.now().plusMonths(2)
 }

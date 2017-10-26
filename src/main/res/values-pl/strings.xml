@@ -3,6 +3,7 @@
     <string name="download_schedule">Pobierz plan</string>
     <string name="password">Hasło</string>
     <string name="album_number">Number albumu</string>
+    <string name="today">Dzisiaj</string>
     <string name="no_lessons">Brak zajęć</string>
     <string name="lesson_cancelled">Odwołane</string>
     <string name="error_no_internet">Brak połączenia z internetem</string>

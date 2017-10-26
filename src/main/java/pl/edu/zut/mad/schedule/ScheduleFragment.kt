@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.util.app
@@ -48,11 +49,6 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
             .plus(ScheduleModule(this))
             .inject(this)
 
-    override fun showLoginView() {
-        val intent = Intent(activity, LoginActivity::class.java)
-        startActivityForResult(intent, REQUEST_CODE)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             presenter.loadData()
@@ -68,12 +64,25 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
         calendarContentManager.loadItemsFromStart(lessonsEvents)
     }
 
-    fun logout() = presenter.logout()
-
-    fun refreshSchedule() = presenter.refresh()
+    override fun showLoginView() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE)
+    }
 
     override fun showError() {
         val contentView = activity.findViewById<View>(android.R.id.content)
         Snackbar.make(contentView, R.string.error_no_internet, Snackbar.LENGTH_SHORT).show()
+    }
+
+    fun refreshSchedule() = presenter.refresh()
+
+    fun logout() = presenter.logout()
+
+    fun moveToToday() {
+        val today = LocalDate.now().toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
+        calendarContentManager.agendaCalendarView
+                .agendaView
+                .agendaListView
+                .scrollToCurrentDate(today)
     }
 }

@@ -3,6 +3,7 @@
     <string name="download_schedule">Download schedule</string>
     <string name="password">Password</string>
     <string name="album_number">Album number</string>
+    <string name="today">Today</string>
     <string name="no_lessons">No lessons</string>
     <string name="lesson_cancelled">Cancelled</string>
     <string name="error_no_internet">No Internet connection</string>
