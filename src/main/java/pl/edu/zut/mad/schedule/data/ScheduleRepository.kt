@@ -1,11 +1,12 @@
 package pl.edu.zut.mad.schedule.data
 
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
+import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
@@ -29,16 +30,27 @@ class ScheduleRepository(private val database: ScheduleDatabase, private val map
                     .subscribeOn(Schedulers.io())
                     .subscribe()
 
-    fun getLessonsForDay(dayDate: LocalDate): Maybe<DayUi> = Maybe.fromCallable<DayUi> {
-        database.instance.where(DayDb::class.java)
-                .equalTo(DATE_COLUMN, mapper.toStringFromDate(dayDate))
-                .findFirst()
-                ?.asFlowable<DayDb>() // TODO: change to calls without Rx?
-                ?.map {
-                    mapper.dayFromDbToUi(it)
-                }
-                ?.blockingFirst()
-    }
+    fun getLessonsForDay(dayDate: LocalDate): Observable<OptionalDay> =
+            Observable.fromCallable<OptionalDay> {
+                database.instance.where(DayDb::class.java)
+                        .equalTo(DATE_COLUMN, mapper.toStringFromDate(dayDate))
+                        .findFirst()
+                        ?.asFlowable<DayDb>() // TODO: change to calls without Rx?
+                        ?.map { mapper.dayFromDbToUi(it) }
+                        ?.blockingFirst() ?: EmptyDay(dayDate)
+            }
 
-    fun getSchedule() = database.instance.where(DayDb::class.java).findAll().map { mapper.dayFromDbToUi(it) } // TODO
+    fun getScheduleMinDate(): LocalDate = database.instance
+            .where(DayDb::class.java)
+            .findAll()
+            .map { mapper.dayFromDbToUi(it) } // TODO
+            .minBy { it.date }
+            ?.date ?: LocalDate.now().minusMonths(2)
+
+    fun getScheduleMaxDate(): LocalDate = database.instance
+            .where(DayDb::class.java)
+            .findAll()
+            .map { mapper.dayFromDbToUi(it) } // TODO
+            .maxBy { it.date }
+            ?.date ?: LocalDate.now().plusMonths(2)
 }

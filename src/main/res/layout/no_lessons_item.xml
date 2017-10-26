@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/no_lessons_text_padding_drawable"
-        android:drawableStart="@drawable/ic_smile_24dp"
+        android:drawableStart="@drawable/ic_smile_accent_24dp"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/no_lessons_text_padding_horizontal"
         android:paddingStart="@dimen/no_lessons_text_padding_horizontal"
