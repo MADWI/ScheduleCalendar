@@ -1,0 +1,17 @@
+language: android
+jdk: oraclejdk8
+
+env:
+  global:
+    - ANDROID_API_LEVEL=26
+    - BUILD_TOOLS_VER=26.0.2
+android:
+  components:
+    - tools
+    - platform-tools
+    - tools
+    - build-tools-$BUILD_TOOLS_VER
+    - android-$ANDROID_API_LEVEL
+    - extra-android-m2repository
+script:
+  - ./gradlew clean build
