@@ -2,7 +2,6 @@ package pl.edu.zut.mad.schedule.util
 
 import io.realm.RealmList
 import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.data.model.db.TimeRange
 import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
@@ -14,18 +13,13 @@ class ModelMapper {
 
     companion object {
         private const val CANCELED_LESSON_TEXT = "odwołane"
-        private val dateFormatter = DateTimeFormat.forPattern("dd-MM-yyyy")
     }
 
-    fun toStringFromDate(date: LocalDate): String = date.toString(dateFormatter)
-
     fun dayFromDbToUi(dayDb: DayDb): DayUi {
-        val localDate = toDateFromString(dayDb.date)
+        val localDate = LocalDate.fromDateFields(dayDb.date)
         val lessonsUi = toUiLessonsFromDb(dayDb.lessons)
         return DayUi(localDate, lessonsUi)
     }
-
-    private fun toDateFromString(date: String): LocalDate = LocalDate.parse(date, dateFormatter)
 
     private fun toUiLessonsFromDb(lessons: RealmList<LessonDb>): List<LessonUi> =
             lessons.map {

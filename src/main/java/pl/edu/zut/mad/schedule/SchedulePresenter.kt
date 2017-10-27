@@ -44,17 +44,19 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
         val minDate = repository.getScheduleMinDate()
         val maxDate = repository.getScheduleMaxDate()
 
-        val maxDateCal = dateToCalendar(minDate)
-        val minDateCal = dateToCalendar(maxDate)
-        view.onDateIntervalCalculated(maxDateCal, minDateCal)
+        val minDateCal = Calendar.getInstance()
+        minDateCal.time = minDate
+        val maxDateCal = Calendar.getInstance()
+        maxDateCal.time = maxDate
+        view.onDateIntervalCalculated(minDateCal, maxDateCal)
 
         val events: MutableList<CalendarEvent> = ArrayList()
-        val dateDates = getCalendarDates(minDate, maxDate)
+        val dateDates = getCalendarDates(LocalDate.fromDateFields(minDate), LocalDate.fromDateFields(maxDate))
         Observable.fromIterable(dateDates)
                 .flatMap { repository.getLessonsForDay(it) }
                 .subscribe(
                         {
-                            when(it) {
+                            when (it) {
                                 is DayUi -> events.addAll(mapToLessonsEvents(it))
                                 is EmptyDay -> events.add(LessonEvent(it.date, null))
                             }
@@ -66,9 +68,6 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
 
     private fun mapToLessonsEvents(day: DayUi): List<LessonEvent> = // TODO: move to mapper
             day.lessons.map { LessonEvent(day.date, it) }.toList()
-
-    private fun dateToCalendar(date: LocalDate) =
-            date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
 
     private fun getCalendarDates(minDate: LocalDate, maxDate: LocalDate): MutableList<LocalDate> {
         var nextDay = minDate

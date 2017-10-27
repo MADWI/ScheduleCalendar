@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule.module
 
 import android.app.Application
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedule.data.ScheduleService
@@ -17,9 +18,12 @@ class ServiceModule {
     @Provides
     @Singleton
     fun provideService(): ScheduleService {
+        val gSon = GsonBuilder()
+                .setDateFormat("dd-MM-yyyy")
+                .create()
         return Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gSon))
                 .baseUrl(ScheduleService.BASE_URL)
                 .build()
                 .create(ScheduleService::class.java)

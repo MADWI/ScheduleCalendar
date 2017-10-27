@@ -8,6 +8,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import pl.edu.zut.mad.schedule.util.ModelMapper
+import java.util.*
 import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
@@ -33,24 +34,18 @@ class ScheduleRepository(private val database: ScheduleDatabase, private val map
     fun getLessonsForDay(dayDate: LocalDate): Observable<OptionalDay> =
             Observable.fromCallable<OptionalDay> {
                 database.instance.where(DayDb::class.java)
-                        .equalTo(DATE_COLUMN, mapper.toStringFromDate(dayDate))
+                        .equalTo(DATE_COLUMN, dayDate.toDate())
                         .findFirst()
                         ?.asFlowable<DayDb>() // TODO: change to calls without Rx?
-                        ?.map { mapper.dayFromDbToUi(it) }
+                        ?.map { mapper.dayFromDbToUi(it) } // TODO: move to presenter
                         ?.blockingFirst() ?: EmptyDay(dayDate)
             }
 
-    fun getScheduleMinDate(): LocalDate = database.instance
+    fun getScheduleMinDate(): Date = database.instance
             .where(DayDb::class.java)
-            .findAll() // TODO min.let after BE change
-            .map { mapper.dayFromDbToUi(it) }
-            .minBy { it.date }
-            ?.date ?: LocalDate.now().minusMonths(2)
+            .minimumDate(DATE_COLUMN) ?: Date() // TODO: think about it
 
-    fun getScheduleMaxDate(): LocalDate = database.instance
+    fun getScheduleMaxDate(): Date = database.instance
             .where(DayDb::class.java)
-            .findAll() // TODO max.let after BE change
-            .map { mapper.dayFromDbToUi(it) }
-            .maxBy { it.date }
-            ?.date ?: LocalDate.now().plusMonths(2)
+            .maximumDate(DATE_COLUMN) ?: Date() // TODO: think about it
 }
