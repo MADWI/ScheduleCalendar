@@ -79,10 +79,9 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     fun logout() = presenter.logout()
 
     fun moveToToday() {
-        val today = LocalDate.now().toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
         calendarContentManager.agendaCalendarView
                 .agendaView
                 .agendaListView
-                .scrollToCurrentDate(today)
+                .scrollToCurrentDate(Calendar.getInstance())
     }
 }
