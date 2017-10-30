@@ -9,19 +9,16 @@ import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
-import javax.inject.Singleton
 
 
 @Module
 class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
 
     @Provides
-    @Singleton
     fun provideSchedulePresenter(repository: ScheduleRepository, datesProvider: DatesProvider,
                                  mapper: ModelMapper, connection: NetworkConnection, user: User) =
             SchedulePresenter(repository, mapper, scheduleView, datesProvider, user, connection)
 
     @Provides
-    @Singleton
     fun provideDatesProvider() = DatesProvider()
 }
