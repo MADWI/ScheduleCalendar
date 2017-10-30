@@ -1,7 +1,7 @@
 package pl.edu.zut.mad.schedule.data
 
 import io.reactivex.Observable
-import pl.edu.zut.mad.schedule.data.model.db.Day
+import pl.edu.zut.mad.schedule.data.model.api.Day
 import retrofit2.http.GET
 import retrofit2.http.Path
 

@@ -8,7 +8,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
-import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
+import pl.edu.zut.mad.schedule.data.model.api.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 
 

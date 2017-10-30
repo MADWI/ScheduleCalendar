@@ -2,12 +2,12 @@ package pl.edu.zut.mad.schedule.util
 
 import io.realm.RealmList
 import org.joda.time.LocalDate
-import pl.edu.zut.mad.schedule.data.model.db.TimeRange
+import pl.edu.zut.mad.schedule.data.model.api.TimeRange
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import java.util.*
-import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
-import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
+import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
+import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 
@@ -18,13 +18,13 @@ class ModelMapper {
         private const val CANCELED_LESSON_TEXT = "odwołane"
     }
 
-    fun dayFromDbToUi(dayDb: DayDb): DayUi {
-        val localDate = LocalDate.fromDateFields(dayDb.date)
-        val lessonsUi = toUiLessonsFromDb(dayDb.lessons)
+    fun dayFromApiToUi(dayApi: DayApi): DayUi {
+        val localDate = LocalDate.fromDateFields(dayApi.date)
+        val lessonsUi = toUiLessonsFromApi(dayApi.lessons)
         return DayUi(localDate, lessonsUi)
     }
 
-    private fun toUiLessonsFromDb(lessons: RealmList<LessonDb>): List<LessonUi> =
+    private fun toUiLessonsFromApi(lessons: RealmList<LessonApi>): List<LessonUi> =
             lessons.map {
                 with(it) {
                     val subjectWithCourseType = "$subject ($courseType)"
