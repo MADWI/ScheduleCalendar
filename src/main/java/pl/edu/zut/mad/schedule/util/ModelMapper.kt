@@ -3,6 +3,7 @@ package pl.edu.zut.mad.schedule.util
 import io.realm.RealmList
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.db.TimeRange
+import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import java.util.*
 import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
@@ -45,4 +46,6 @@ class ModelMapper {
             LocalDate.now()
         }
     }
+
+    fun toLessonEvent(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
 }

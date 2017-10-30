@@ -3,19 +3,18 @@ package pl.edu.zut.mad.schedule
 import android.util.Log
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import io.reactivex.Observable
-import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
-import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
+import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 
 
-class SchedulePresenter(private val repository: ScheduleRepository, private val user: User,
-                        private val view: ScheduleMvp.View, private val mapper: ModelMapper,
-                        private val networkConnection: NetworkConnection)
+class SchedulePresenter(private val repository: ScheduleRepository, private val mapper: ModelMapper,
+                        private val view: ScheduleMvp.View, private val datesProvider: DatesProvider,
+                        private val user: User, private val connection: NetworkConnection)
     : ScheduleMvp.Presenter {
 
     override fun logout() {
@@ -25,7 +24,7 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
     }
 
     override fun refresh() {
-        if (networkConnection.isAvailable()) {
+        if (connection.isAvailable()) {
             view.showLoginView()
         } else {
             view.showError()
@@ -46,28 +45,18 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
         view.onDateIntervalCalculated(minDate, maxDate)
 
         val events: MutableList<CalendarEvent> = ArrayList()
-        val dateDates = getCalendarDates(minDate, maxDate)
+        val dateDates = datesProvider.getByInterval(minDate, maxDate)
         Observable.fromIterable(dateDates)
                 .flatMap { repository.getLessonsForDay(it) }
                 .subscribe(
                         {
                             when (it) {
                                 is DayUi -> events.addAll(mapper.toLessonsEvents(it))
-                                is EmptyDay -> events.add(LessonEvent(it.date, null))
+                                is EmptyDay -> events.add(mapper.toLessonEvent(it))
                             }
                         },
                         { Log.d(this.javaClass.simpleName, "error: ${it.message}") }, // TODO: print error to UI?
                         { view.onLessonsEventLoad(events) }
                 )
-    }
-
-    private fun getCalendarDates(minDate: LocalDate, maxDate: LocalDate): MutableList<LocalDate> {
-        var nextDay = minDate
-        val dateDates: MutableList<LocalDate> = ArrayList()
-        while (!nextDay.isEqual(maxDate)) {
-            dateDates.add(nextDay)
-            nextDay = nextDay.plusDays(1)
-        }
-        return dateDates
     }
 }
