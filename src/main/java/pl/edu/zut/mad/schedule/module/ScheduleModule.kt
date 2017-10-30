@@ -14,11 +14,13 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 @Module
 class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
 
+    @Schedule
     @Provides
     fun provideSchedulePresenter(repository: ScheduleRepository, datesProvider: DatesProvider,
-                                 mapper: ModelMapper, connection: NetworkConnection, user: User) =
+                                 mapper: ModelMapper, connection: NetworkConnection, user: User): ScheduleMvp.Presenter =
             SchedulePresenter(repository, mapper, scheduleView, datesProvider, user, connection)
 
+    @Schedule
     @Provides
     fun provideDatesProvider() = DatesProvider()
 }

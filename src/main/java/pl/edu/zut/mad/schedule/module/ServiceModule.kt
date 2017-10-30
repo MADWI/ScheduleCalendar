@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule.module
 
 import android.app.Application
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -14,11 +15,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class ServiceModule {
 
+    companion object {
+        private const val DATE_FORMAT = "dd-MM-yyyy" // TODO: move to config class?
+    }
+
     @Provides
-    fun provideService(): ScheduleService {
-        val gSon = GsonBuilder()
-                .setDateFormat("dd-MM-yyyy")
-                .create()
+    fun provideService(gSon: Gson): ScheduleService {
         return Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gSon))
@@ -28,5 +30,10 @@ class ServiceModule {
     }
 
     @Provides
-    fun provideNetworkUtils(app: Application) = NetworkConnection(app)
+    fun provideGSon(): Gson = GsonBuilder()
+            .setDateFormat(DATE_FORMAT)
+            .create()
+
+    @Provides
+    fun provideNetworkConnection(app: Application) = NetworkConnection(app)
 }

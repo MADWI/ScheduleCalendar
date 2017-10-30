@@ -19,9 +19,11 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 ))
 class LoginModule(private val view: LoginMvp.View) {
 
+    @Login
     @Provides
     fun provideTextProvider() = MessageProvider()
 
+    @Login
     @Provides
     fun provideLoginPresenter(service: ScheduleService, repository: ScheduleRepository,
                               messageProvider: MessageProvider, connection: NetworkConnection,

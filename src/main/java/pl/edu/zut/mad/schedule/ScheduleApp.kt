@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule
 
 import android.app.Application
+import com.squareup.leakcanary.LeakCanary
 import io.realm.Realm
 import net.danlew.android.joda.JodaTimeAndroid
 import pl.edu.zut.mad.schedule.module.DaggerScheduleAppComponent
@@ -19,8 +20,15 @@ class ScheduleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        init()
+    }
+
+    private fun init() {
         component.inject(this)
         Realm.init(this)
         JodaTimeAndroid.init(this)
+        if (!LeakCanary.isInAnalyzerProcess(this)) {
+            LeakCanary.install(this)
+        }
     }
 }

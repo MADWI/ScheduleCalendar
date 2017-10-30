@@ -4,6 +4,7 @@ import dagger.Subcomponent
 import pl.edu.zut.mad.schedule.ScheduleFragment
 
 
+@Schedule
 @Subcomponent(modules = arrayOf(
         UserModule::class,
         ServiceModule::class,
