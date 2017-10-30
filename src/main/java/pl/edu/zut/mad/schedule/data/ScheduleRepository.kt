@@ -8,8 +8,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import pl.edu.zut.mad.schedule.util.ModelMapper
-import java.util.*
-import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
+import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb // TODO: Db -> Api
 import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
@@ -36,16 +35,18 @@ class ScheduleRepository(private val database: ScheduleDatabase, private val map
                 database.instance.where(DayDb::class.java)
                         .equalTo(DATE_COLUMN, dayDate.toDate())
                         .findFirst()
-                        ?.asFlowable<DayDb>() // TODO: change to calls without Rx?
-                        ?.map { mapper.dayFromDbToUi(it) } // TODO: move to presenter
+                        ?.asFlowable<DayDb>()
+                        ?.map { mapper.dayFromDbToUi(it) }
                         ?.blockingFirst() ?: EmptyDay(dayDate)
             }
 
-    fun getScheduleMinDate(): Date = database.instance
+    fun getScheduleMinDate(): LocalDate = database.instance
             .where(DayDb::class.java)
-            .minimumDate(DATE_COLUMN) ?: Date() // TODO: think about it
+            .minimumDate(DATE_COLUMN)
+            .let { mapper.toUiDate(it) }
 
-    fun getScheduleMaxDate(): Date = database.instance
+    fun getScheduleMaxDate(): LocalDate = database.instance
             .where(DayDb::class.java)
-            .maximumDate(DATE_COLUMN) ?: Date() // TODO: think about it
+            .maximumDate(DATE_COLUMN)
+            .let { mapper.toUiDate(it) }
 }

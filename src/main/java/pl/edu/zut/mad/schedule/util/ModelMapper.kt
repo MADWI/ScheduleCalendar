@@ -3,6 +3,8 @@ package pl.edu.zut.mad.schedule.util
 import io.realm.RealmList
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.db.TimeRange
+import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
+import java.util.*
 import pl.edu.zut.mad.schedule.data.model.db.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.db.Lesson as LessonDb
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
@@ -30,4 +32,17 @@ class ModelMapper {
                     LessonUi(teacherFullNameWithRoom, subjectWithCourseType, isCancelled, timeRange ?: TimeRange())
                 }
             }
+
+    fun toLessonsEvents(day: DayUi): List<LessonEvent> =
+            day.lessons
+                    .map { LessonEvent(day.date, it) }
+                    .toList()
+
+    fun toUiDate(date: Date?): LocalDate {
+        return if (date != null) {
+            LocalDate.fromDateFields(date)
+        } else {
+            LocalDate.now()
+        }
+    }
 }
