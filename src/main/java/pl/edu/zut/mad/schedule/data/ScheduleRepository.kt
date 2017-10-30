@@ -30,14 +30,14 @@ class ScheduleRepository(private val database: ScheduleDatabase, private val map
                     .subscribeOn(Schedulers.io())
                     .subscribe()
 
-    fun getLessonsForDay(dayDate: LocalDate): Observable<OptionalDay> =
+    fun getDaysForDate(date: LocalDate): Observable<OptionalDay> =
             Observable.fromCallable<OptionalDay> {
                 database.instance.where(DayDb::class.java)
-                        .equalTo(DATE_COLUMN, dayDate.toDate())
+                        .equalTo(DATE_COLUMN, date.toDate())
                         .findFirst()
                         ?.asFlowable<DayDb>()
                         ?.map { mapper.dayFromDbToUi(it) }
-                        ?.blockingFirst() ?: EmptyDay(dayDate)
+                        ?.blockingFirst() ?: EmptyDay(date)
             }
 
     fun getScheduleMinDate(): LocalDate = database.instance
