@@ -70,8 +70,9 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     override fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>) =
             calendarContentManager.loadItemsFromStart(lessonsEvents)
 
-    override fun showLoginView() {
+    override fun showLoginView(albumNumber: Int?) {
         val intent = Intent(activity, LoginActivity::class.java)
+        intent.putExtra(LoginActivity.ALBUM_NUMBER_KEY, albumNumber)
         startActivityForResult(intent, REQUEST_CODE)
     }
 

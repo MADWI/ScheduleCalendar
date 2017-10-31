@@ -13,6 +13,10 @@ import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
+    companion object {
+        internal const val ALBUM_NUMBER_KEY = "album_number_key"
+    }
+
     @Inject lateinit var presenter: LoginMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,15 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
     private fun init() {
         initInjections()
         initViews()
+        readArgument()
+    }
+
+    private fun readArgument() {
+        val albumNumber = intent.getIntExtra(ALBUM_NUMBER_KEY, -1)
+        if (albumNumber != -1) {
+            albumNumberTextView.setText(albumNumber.toString())
+            presenter.onDownloadScheduleClick()
+        }
     }
 
     private fun initInjections() = app.component

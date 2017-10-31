@@ -11,7 +11,7 @@ interface ScheduleMvp {
 
         fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>)
 
-        fun showLoginView()
+        fun showLoginView(albumNumber: Int?)
 
         fun showInternetError()
     }

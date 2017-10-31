@@ -20,12 +20,12 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
     override fun logout() {
         user.delete()
         repository.delete()
-        view.showLoginView()
+        view.showLoginView(null)
     }
 
     override fun refresh() =
             if (connection.isAvailable()) {
-                view.showLoginView()
+                view.showLoginView(user.getAlbumNumber())
             } else {
                 view.showInternetError()
             }
@@ -34,7 +34,7 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
             if (user.isSaved()) {
                 loadLessons()
             } else {
-                view.showLoginView()
+                view.showLoginView(null)
             }
 
     private fun loadLessons() {
