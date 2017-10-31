@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 
 @Module
-class ScheduleAppModule(private val app: Application) : Application() {
+internal class ScheduleAppModule(private val app: Application) : Application() {
 
     @Provides
     @Singleton

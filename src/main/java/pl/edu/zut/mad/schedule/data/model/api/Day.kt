@@ -5,5 +5,5 @@ import io.realm.RealmObject
 import java.util.*
 
 
-open class Day(var date: Date = Date(),
-               var lessons: RealmList<Lesson> = RealmList()) : RealmObject()
+internal open class Day(var date: Date = Date(),
+                        var lessons: RealmList<Lesson> = RealmList()) : RealmObject()

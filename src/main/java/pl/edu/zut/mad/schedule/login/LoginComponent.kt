@@ -13,7 +13,7 @@ import pl.edu.zut.mad.schedule.module.UserModule
         ServiceModule::class,
         RepositoryModule::class)
 )
-interface LoginComponent {
+internal interface LoginComponent {
 
     fun inject(loginActivity: LoginActivity)
 }

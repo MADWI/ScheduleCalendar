@@ -5,7 +5,7 @@ import org.joda.time.LocalDate
 import java.util.*
 
 
-class LessonEvent : BaseCalendarEvent {
+internal class LessonEvent : BaseCalendarEvent {
 
     constructor(date: LocalDate, lesson: Lesson?) {
         val day = date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())

@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 
-interface ScheduleService {
+internal interface ScheduleService {
 
     @GET("{albumNumber}")
     fun fetchScheduleByAlbumNumber(@Path("albumNumber") albumNumber: Int): Observable<List<Day>>

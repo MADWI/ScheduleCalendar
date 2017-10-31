@@ -3,7 +3,7 @@ package pl.edu.zut.mad.schedule.login
 import android.support.annotation.StringRes
 
 
-interface LoginMvp {
+internal interface LoginMvp {
 
     interface View {
         fun getAlbumNumberText(): String

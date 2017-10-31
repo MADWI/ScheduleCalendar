@@ -11,7 +11,7 @@ import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
 
-class LoginActivity : AppCompatActivity(), LoginMvp.View {
+internal class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     companion object {
         internal const val ALBUM_NUMBER_KEY = "album_number_key"
