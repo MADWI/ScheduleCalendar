@@ -58,13 +58,15 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
     override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) {
-        calendarContentManager.locale = Locale.getDefault()
-        val calendarMinDate = Calendar.getInstance()
-        calendarMinDate.time = minDate.toDate()
-        val calendarMaxDate = Calendar.getInstance()
-        calendarMaxDate.time = maxDate.toDate()
-        calendarContentManager.setDateRange(calendarMinDate, calendarMaxDate)
+        calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
     }
+
+    private fun dateToCalendar(date: LocalDate): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar.time = date.toDate()
+        return calendar
+    }
+
 
     override fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>) {
         calendarContentManager.loadItemsFromStart(lessonsEvents)
