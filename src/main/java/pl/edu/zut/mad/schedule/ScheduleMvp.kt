@@ -4,7 +4,7 @@ import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
 
 
-interface ScheduleMvp {
+internal interface ScheduleMvp {
 
     interface View {
         fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate)

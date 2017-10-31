@@ -10,7 +10,7 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 
 @Module
-class LoginModule(private val view: LoginMvp.View) {
+internal class LoginModule(private val view: LoginMvp.View) {
 
     @Login
     @Provides

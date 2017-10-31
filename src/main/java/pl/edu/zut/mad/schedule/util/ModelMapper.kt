@@ -12,7 +12,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 
 
-class ModelMapper {
+internal class ModelMapper {
 
     companion object {
         private const val CANCELED_LESSON_TEXT = "odwołane"

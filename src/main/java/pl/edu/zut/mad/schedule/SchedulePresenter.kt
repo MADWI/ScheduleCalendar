@@ -11,7 +11,7 @@ import pl.edu.zut.mad.schedule.data.model.api.Day as DayDb
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 
 
-class SchedulePresenter(private val repository: ScheduleRepository, private val mapper: ModelMapper,
+internal class SchedulePresenter(private val repository: ScheduleRepository, private val mapper: ModelMapper,
                         private val view: ScheduleMvp.View, private val datesProvider: DatesProvider,
                         private val user: User, private val connection: NetworkConnection)
     : ScheduleMvp.Presenter {

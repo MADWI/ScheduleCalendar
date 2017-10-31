@@ -14,7 +14,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 
 
-class ScheduleRepository(private val database: ScheduleDatabase, private val mapper: ModelMapper) {
+internal class ScheduleRepository(private val database: ScheduleDatabase, private val mapper: ModelMapper) {
 
     companion object {
         private const val DATE_COLUMN = "date"

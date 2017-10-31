@@ -11,7 +11,7 @@ import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 
-class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
+internal class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
                      private val service: ScheduleService, private val network: NetworkConnection,
                      private val messageProvider: MessageProvider, private val user: User)
     : LoginMvp.Presenter {

@@ -2,7 +2,7 @@ package pl.edu.zut.mad.schedule
 
 import android.content.SharedPreferences
 
-class User(private val preferences: SharedPreferences) {
+internal class User(private val preferences: SharedPreferences) {
 
     companion object {
         const val PREFERENCES_FILE_KEY = "pl.edu.zut.mad.user.preferences"

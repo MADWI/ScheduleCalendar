@@ -3,7 +3,7 @@ package pl.edu.zut.mad.schedule.util
 import org.joda.time.LocalDate
 
 
-class DatesProvider {
+internal class DatesProvider {
 
     fun getByInterval(start: LocalDate, end: LocalDate): MutableList<LocalDate> {
         var nextDay = start
