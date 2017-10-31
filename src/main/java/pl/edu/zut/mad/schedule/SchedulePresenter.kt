@@ -23,21 +23,19 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
         view.showLoginView()
     }
 
-    override fun refresh() {
-        if (connection.isAvailable()) {
-            view.showLoginView()
-        } else {
-            view.showError()
-        }
-    }
+    override fun refresh() =
+            if (connection.isAvailable()) {
+                view.showLoginView()
+            } else {
+                view.showInternetError()
+            }
 
-    override fun loadData() {
-        if (user.isSaved()) {
-            loadLessons()
-        } else {
-            view.showLoginView()
-        }
-    }
+    override fun loadData() =
+            if (user.isSaved()) {
+                loadLessons()
+            } else {
+                view.showLoginView()
+            }
 
     private fun loadLessons() {
         val minDate = repository.getScheduleMinDate()

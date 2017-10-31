@@ -1,6 +1,6 @@
 package pl.edu.zut.mad.schedule.login
 
-import android.support.annotation.IdRes
+import android.support.annotation.StringRes
 
 
 interface LoginMvp {
@@ -8,7 +8,7 @@ interface LoginMvp {
     interface View {
         fun getAlbumNumberText(): String
 
-        fun showError(@IdRes errorResId: Int)
+        fun showError(@StringRes errorRes: Int)
 
         fun showLoading()
 

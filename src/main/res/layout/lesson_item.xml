@@ -88,7 +88,7 @@
         app:layout_constraintLeft_toLeftOf="@id/guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/timeGroupView"
-        tools:text="Budowanie aplikacji w systemach mobilnych (wykład)" />
+        tools:text="Data analysis and research experiment (lecture)" />
 
     <TextView
         android:id="@+id/teacherWithRoomView"
@@ -105,6 +105,6 @@
         app:layout_constraintLeft_toLeftOf="@id/subjectWithTypeView"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subjectWithTypeView"
-        tools:text="dr. inż. Radosław Maciaszczyk WI WI2-14" />
+        tools:text="dr inż. Larisa Dobryakova WI WI2-14" />
 
 </android.support.constraint.ConstraintLayout>

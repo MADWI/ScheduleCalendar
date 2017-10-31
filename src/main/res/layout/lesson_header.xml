@@ -14,7 +14,7 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="12sp"
-        tools:text="Środa, 18 października" />
+        tools:text="Wednesday, 18 October" />
 
     <View
         android:layout_width="match_parent"

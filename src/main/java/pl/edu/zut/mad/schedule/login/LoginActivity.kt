@@ -2,6 +2,7 @@ package pl.edu.zut.mad.schedule.login
 
 import android.app.Activity
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
@@ -34,8 +35,8 @@ class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     override fun getAlbumNumberText() = albumNumberTextView.text.toString()
 
-    override fun showError(errorResId: Int) {
-        albumNumberLayoutView.error = resources.getString(errorResId)
+    override fun showError(@StringRes errorRes: Int) {
+        albumNumberLayoutView.error = resources.getString(errorRes)
     }
 
     override fun showLoading() {

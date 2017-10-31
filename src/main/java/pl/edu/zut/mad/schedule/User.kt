@@ -19,5 +19,5 @@ class User(private val preferences: SharedPreferences) {
 
     fun isSaved() = preferences.contains(ALBUM_NUMBER_KEY)
 
-    fun getAlbumNumber() = preferences.getInt(ALBUM_NUMBER_KEY, -1)
+    fun getAlbumNumber() = preferences.getInt(ALBUM_NUMBER_KEY, -1) // TODO: refresh
 }

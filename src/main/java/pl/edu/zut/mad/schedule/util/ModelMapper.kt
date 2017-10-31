@@ -39,13 +39,12 @@ class ModelMapper {
                     .map { LessonEvent(day.date, it) }
                     .toList()
 
-    fun toUiDate(date: Date?): LocalDate {
-        return if (date != null) {
-            LocalDate.fromDateFields(date)
-        } else {
-            LocalDate.now()
-        }
-    }
+    fun toUiDate(date: Date?): LocalDate =
+            if (date != null) {
+                LocalDate.fromDateFields(date)
+            } else {
+                LocalDate.now()
+            }
 
     fun toLessonEvent(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
 }

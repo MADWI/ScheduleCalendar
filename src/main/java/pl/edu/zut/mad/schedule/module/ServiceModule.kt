@@ -14,18 +14,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ServiceModule {
 
     companion object {
-        private const val DATE_FORMAT = "dd-MM-yyyy" // TODO: move to config class?
+        private const val DATE_FORMAT = "dd-MM-yyyy"
     }
 
     @Provides
-    fun provideService(gSon: Gson): ScheduleService {
-        return Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gSon))
-                .baseUrl(ScheduleService.BASE_URL)
-                .build()
-                .create(ScheduleService::class.java)
-    }
+    fun provideService(gSon: Gson): ScheduleService =
+            Retrofit.Builder()
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gSon))
+                    .baseUrl(ScheduleService.BASE_URL)
+                    .build()
+                    .create(ScheduleService::class.java)
 
     @Provides
     fun provideGSon(): Gson = GsonBuilder()

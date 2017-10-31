@@ -57,9 +57,8 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
         }
     }
 
-    override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) {
-        calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
-    }
+    override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) =
+            calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
 
     private fun dateToCalendar(date: LocalDate): Calendar {
         val calendar = Calendar.getInstance()
@@ -68,16 +67,15 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
 
-    override fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>) {
-        calendarContentManager.loadItemsFromStart(lessonsEvents)
-    }
+    override fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>) =
+            calendarContentManager.loadItemsFromStart(lessonsEvents)
 
     override fun showLoginView() {
         val intent = Intent(activity, LoginActivity::class.java)
         startActivityForResult(intent, REQUEST_CODE)
     }
 
-    override fun showError() {
+    override fun showInternetError() {
         val contentView = activity.findViewById<View>(android.R.id.content)
         Snackbar.make(contentView, R.string.error_no_internet, Snackbar.LENGTH_SHORT).show()
     }
@@ -86,10 +84,9 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     fun logout() = presenter.logout()
 
-    fun moveToToday() {
-        calendarContentManager.agendaCalendarView
-                .agendaView
-                .agendaListView
-                .scrollToCurrentDate(Calendar.getInstance())
-    }
+    fun moveToToday() =
+            calendarContentManager.agendaCalendarView
+                    .agendaView
+                    .agendaListView
+                    .scrollToCurrentDate(Calendar.getInstance())
 }

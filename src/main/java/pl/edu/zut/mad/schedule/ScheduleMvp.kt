@@ -13,7 +13,7 @@ interface ScheduleMvp {
 
         fun showLoginView()
 
-        fun showError()
+        fun showInternetError()
     }
 
     interface Presenter {
