@@ -24,9 +24,6 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
     private val timeViewColor by lazy {
         ContextCompat.getColor(context, R.color.scheduleColorPrimaryDark)
     }
-    private val cancelledBackground by lazy {
-        ContextCompat.getDrawable(context, R.drawable.border_red)
-    }
 
     override fun getHeaderLayout() = R.layout.lesson_header
 
@@ -58,7 +55,6 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         }
         if (lesson.isCancelled) {
             view.findViewById<View>(R.id.cancelledTextView).visibility = View.VISIBLE
-            view.findViewById<View>(R.id.scheduleTaskItemView).foreground = cancelledBackground
         }
     }
 
