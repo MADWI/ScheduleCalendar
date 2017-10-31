@@ -1,6 +1,5 @@
 package pl.edu.zut.mad.schedule
 
-import android.util.Log
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import io.reactivex.Observable
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
@@ -53,7 +52,7 @@ class SchedulePresenter(private val repository: ScheduleRepository, private val 
                                 is EmptyDay -> events.add(mapper.toLessonEvent(it))
                             }
                         },
-                        { Log.d(this.javaClass.simpleName, "error: ${it.message}") }, // TODO: print error to UI?
+                        { },
                         { view.onLessonsEventLoad(events) }
                 )
     }

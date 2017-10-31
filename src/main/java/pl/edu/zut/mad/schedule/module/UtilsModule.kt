@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 
 @Module
-class UtilsModule{
+internal class UtilsModule{
 
     @Provides
     @Singleton

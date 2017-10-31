@@ -9,7 +9,7 @@ import pl.edu.zut.mad.schedule.User
 
 
 @Module
-class UserModule {
+internal class UserModule {
 
     @Provides
     fun provideUserPreferences(application: Application): SharedPreferences =

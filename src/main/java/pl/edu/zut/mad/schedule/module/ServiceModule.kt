@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 @Module
-class ServiceModule {
+internal class ServiceModule {
 
     companion object {
         private const val DATE_FORMAT = "dd-MM-yyyy"

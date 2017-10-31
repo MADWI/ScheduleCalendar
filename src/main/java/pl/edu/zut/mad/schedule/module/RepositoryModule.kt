@@ -8,7 +8,7 @@ import pl.edu.zut.mad.schedule.util.ModelMapper
 
 
 @Module
-class RepositoryModule {
+internal class RepositoryModule {
 
     @Provides
     fun provideRepository(database: ScheduleDatabase, mapper: ModelMapper) =

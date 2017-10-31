@@ -12,7 +12,7 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 
 @Module
-class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
+internal class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
 
     @Schedule
     @Provides
