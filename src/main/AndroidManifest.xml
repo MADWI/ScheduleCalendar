@@ -3,7 +3,6 @@
     package="pl.edu.zut.mad.schedule">
 
     <application
-        android:name="pl.edu.zut.mad.schedule.app.ScheduleApp"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">

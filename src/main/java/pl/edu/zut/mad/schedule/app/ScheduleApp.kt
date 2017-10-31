@@ -6,7 +6,7 @@ import io.realm.Realm
 import net.danlew.android.joda.JodaTimeAndroid
 
 
-class ScheduleApp : Application() {
+open class ScheduleApp : Application() {
 
     val component: ScheduleAppComponent by lazy {
         DaggerScheduleAppComponent
@@ -18,5 +18,10 @@ class ScheduleApp : Application() {
     override fun onCreate() {
         super.onCreate()
         component.inject(this)
+        Realm.init(this)
+        JodaTimeAndroid.init(this)
+        if (!LeakCanary.isInAnalyzerProcess(this)) {
+            LeakCanary.install(this)
+        }
     }
 }
