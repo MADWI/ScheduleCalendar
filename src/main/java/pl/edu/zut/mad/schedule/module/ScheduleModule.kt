@@ -19,8 +19,4 @@ class ScheduleModule(private val scheduleView: ScheduleMvp.View) {
     fun provideSchedulePresenter(repository: ScheduleRepository, datesProvider: DatesProvider,
                                  mapper: ModelMapper, connection: NetworkConnection, user: User): ScheduleMvp.Presenter =
             SchedulePresenter(repository, mapper, scheduleView, datesProvider, user, connection)
-
-    @Schedule
-    @Provides
-    fun provideDatesProvider() = DatesProvider()
 }

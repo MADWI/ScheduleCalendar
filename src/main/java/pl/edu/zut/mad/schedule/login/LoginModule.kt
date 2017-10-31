@@ -5,23 +5,12 @@ import dagger.Provides
 import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.module.RepositoryModule
-import pl.edu.zut.mad.schedule.module.ServiceModule
-import pl.edu.zut.mad.schedule.module.UserModule
 import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 
-@Module(includes = arrayOf(
-        UserModule::class,
-        ServiceModule::class,
-        RepositoryModule::class
-))
+@Module
 class LoginModule(private val view: LoginMvp.View) {
-
-    @Login
-    @Provides
-    fun provideTextProvider() = MessageProvider()
 
     @Login
     @Provides

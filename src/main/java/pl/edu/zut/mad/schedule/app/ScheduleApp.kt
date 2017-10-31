@@ -1,12 +1,9 @@
-package pl.edu.zut.mad.schedule
+package pl.edu.zut.mad.schedule.app
 
 import android.app.Application
 import com.squareup.leakcanary.LeakCanary
 import io.realm.Realm
 import net.danlew.android.joda.JodaTimeAndroid
-import pl.edu.zut.mad.schedule.module.DaggerScheduleAppComponent
-import pl.edu.zut.mad.schedule.module.ScheduleAppComponent
-import pl.edu.zut.mad.schedule.module.ScheduleAppModule
 
 
 class ScheduleApp : Application() {

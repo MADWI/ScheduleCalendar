@@ -1,12 +1,10 @@
 package pl.edu.zut.mad.schedule.module
 
-import android.app.Application
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.util.NetworkConnection
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -33,7 +31,4 @@ class ServiceModule {
     fun provideGSon(): Gson = GsonBuilder()
             .setDateFormat(DATE_FORMAT)
             .create()
-
-    @Provides
-    fun provideNetworkConnection(app: Application) = NetworkConnection(app)
 }
