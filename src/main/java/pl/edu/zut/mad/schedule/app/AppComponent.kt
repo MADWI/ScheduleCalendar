@@ -13,11 +13,11 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(
+        AppModule::class,
         UserModule::class,
-        UtilsModule::class,
-        ScheduleAppModule::class
+        UtilsModule::class
 ))
-internal interface ScheduleAppComponent {
+internal interface AppComponent {
 
     fun inject(app: Application)
 
