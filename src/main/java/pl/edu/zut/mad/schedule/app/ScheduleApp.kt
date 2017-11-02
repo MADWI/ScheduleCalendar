@@ -9,9 +9,9 @@ import net.danlew.android.joda.JodaTimeAndroid
 open class ScheduleApp : Application() {
 
     internal val component: AppComponent by lazy {
-        DaggerScheduleAppComponent
+        DaggerAppComponent
                 .builder()
-                .scheduleAppModule(AppModule(this))
+                .appModule(AppModule(this))
                 .build()
     }
 
