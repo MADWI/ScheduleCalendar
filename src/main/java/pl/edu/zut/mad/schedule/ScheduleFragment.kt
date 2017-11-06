@@ -28,7 +28,9 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     @Inject internal lateinit var presenter: ScheduleMvp.Presenter
 
     private val calendarContentManager: CalendarContentManager by lazy {
-        CalendarContentManager(CalendarController(dateListener), scheduleCalendarView, LessonsAdapter(activity))
+        val calendarController = CalendarController()
+        calendarController.dateListener = dateListener
+        CalendarContentManager(calendarController, scheduleCalendarView, LessonsAdapter(activity))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

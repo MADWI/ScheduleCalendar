@@ -5,8 +5,9 @@ import com.ognev.kotlin.agendacalendarview.models.IDayItem
 import org.joda.time.LocalDate
 import java.util.Calendar
 
-internal class CalendarController(private val dateListener: DateListener?) : CalendarController {
+internal class CalendarController : CalendarController {
 
+    var dateListener: DateListener? = null
     private var previousDate: LocalDate? = null
 
     override fun onDaySelected(dayItem: IDayItem) {
