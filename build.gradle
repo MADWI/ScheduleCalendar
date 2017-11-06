@@ -30,6 +30,12 @@ ext {
     retrofit_version = '2.3.0'
     dagger_version = '2.12'
     kotlin_version = '1.1.51'
+    joda_version = '2.9.9'
+    leak_canary_version = '1.5.4'
+    calendar_version = '1.0'
+    constraint_layout_version = '1.0.2'
+    rx_java_version = '2.0.1'
+    junit_version = '4.12'
 }
 
 buildscript {
@@ -46,10 +52,10 @@ buildscript {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'joda-time:joda-time:2.9.9'
-    api 'net.danlew:android.joda:2.9.9'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation "junit:junit:$junit_version"
+    testImplementation "joda-time:joda-time:$joda_version"
+    api "net.danlew:android.joda:$joda_version"
+    implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:design:$support_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -61,10 +67,10 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
 
-    implementation 'com.ognev.kotlin.agendacalendarview:kotlin-agendacalendarview:1.0'
+    implementation "com.ognev.kotlin.agendacalendarview:kotlin-agendacalendarview:$calendar_version"
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
 }
