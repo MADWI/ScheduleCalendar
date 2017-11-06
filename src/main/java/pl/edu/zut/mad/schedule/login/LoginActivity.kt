@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
@@ -31,8 +32,8 @@ internal class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     private fun readArgument() {
-        val albumNumber = intent.getIntExtra(ALBUM_NUMBER_KEY, -1)
-        if (albumNumber != -1) {
+        val albumNumber = intent.getIntExtra(ALBUM_NUMBER_KEY, User.ALBUM_NUMBER_ERROR)
+        if (albumNumber != User.ALBUM_NUMBER_ERROR) {
             albumNumberTextView.setText(albumNumber.toString())
             presenter.onDownloadScheduleClick()
         }

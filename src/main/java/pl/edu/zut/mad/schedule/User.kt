@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 internal class User(private val preferences: SharedPreferences) {
 
     companion object {
+        const val ALBUM_NUMBER_ERROR = -1
         const val PREFERENCES_FILE_KEY = "pl.edu.zut.mad.user.preferences"
         private const val ALBUM_NUMBER_KEY = "album_number_key"
     }
@@ -19,5 +20,5 @@ internal class User(private val preferences: SharedPreferences) {
 
     fun isSaved() = preferences.contains(ALBUM_NUMBER_KEY)
 
-    fun getAlbumNumber() = preferences.getInt(ALBUM_NUMBER_KEY, -1)
+    fun getAlbumNumber() = preferences.getInt(ALBUM_NUMBER_KEY, ALBUM_NUMBER_ERROR)
 }
