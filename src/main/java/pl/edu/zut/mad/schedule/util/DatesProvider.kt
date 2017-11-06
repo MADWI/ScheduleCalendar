@@ -6,11 +6,11 @@ internal class DatesProvider {
 
     fun getByInterval(start: LocalDate, end: LocalDate): MutableList<LocalDate> {
         var nextDay = start
-        val dateDates: MutableList<LocalDate> = ArrayList()
+        val dates: MutableList<LocalDate> = ArrayList()
         while (!nextDay.isEqual(end)) {
-            dateDates.add(nextDay)
+            dates.add(nextDay)
             nextDay = nextDay.plusDays(1)
         }
-        return dateDates
+        return dates
     }
 }
