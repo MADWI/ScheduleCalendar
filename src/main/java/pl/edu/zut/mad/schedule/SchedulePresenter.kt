@@ -26,7 +26,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
             view.showInternetError()
         }
 
-    override fun loadData() =
+    override fun onViewIsCreated() =
         if (user.isSaved()) {
             loadLessons()
         } else {

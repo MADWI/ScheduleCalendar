@@ -41,7 +41,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     private fun init() {
         initInjections()
-        presenter.loadData()
+        presenter.onViewIsCreated()
     }
 
     private fun initInjections() = app.component
@@ -50,7 +50,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
-            presenter.loadData()
+            presenter.onViewIsCreated()
         } else if (resultCode == Activity.RESULT_CANCELED) {
             activity.finish()
         }

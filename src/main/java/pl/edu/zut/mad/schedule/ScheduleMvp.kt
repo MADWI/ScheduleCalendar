@@ -16,7 +16,7 @@ internal interface ScheduleMvp {
     }
 
     interface Presenter {
-        fun loadData()
+        fun onViewIsCreated()
 
         fun logout()
 
