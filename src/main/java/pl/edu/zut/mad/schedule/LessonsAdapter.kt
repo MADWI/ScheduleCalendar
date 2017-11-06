@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
+import kotlinx.android.synthetic.main.lesson_item.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import java.text.SimpleDateFormat
@@ -48,10 +49,10 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         }
         val lesson = lessonEvent.event as Lesson
         with(lesson) {
-            view.findViewById<TextView>(R.id.timeStartView).text = timeRange.from
-            view.findViewById<TextView>(R.id.timeEndView).text = timeRange.to
-            view.findViewById<TextView>(R.id.subjectWithTypeView).text = subjectWithType
-            view.findViewById<TextView>(R.id.teacherWithRoomView).text = teacherWithRoom
+            view.timeStartView.text = timeRange.from
+            view.timeEndView.text = timeRange.to
+            view.subjectWithTypeView.text = subjectWithType
+            view.teacherWithRoomView.text = teacherWithRoom
         }
         if (lesson.isCancelled) {
             view.findViewById<View>(R.id.cancelledTextView).visibility = View.VISIBLE
