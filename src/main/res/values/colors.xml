@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="scheduleColorPrimary">#008149</color>
+    <color name="scheduleColorPrimaryDark">#026f40</color>
+    <color name="scheduleColorAccent">#323B88</color>
+    <color name="calendar_cell_default">@android:color/white</color>
+    <color name="calendar_cell_selected">@color/scheduleColorAccent</color>
+    <color name="calendar_cell_classes_day">@color/scheduleColorPrimary</color>
+    <color name="textScheduleTask">#424242</color>
+    <color name="scheduleLightGray">#EEEEEE</color>
+    <color name="today_date_border">#ff4545</color>
+</resources>
