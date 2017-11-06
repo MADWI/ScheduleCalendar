@@ -16,6 +16,7 @@ import java.util.Locale
 internal class LessonsAdapter(private val context: Context) : DefaultEventAdapter() {
 
     companion object {
+        private const val GRAY_ITEM_POSITION_INTERVAL = 2
         private val DATE_FORMAT = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
     }
 
@@ -33,18 +34,14 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
     }
 
     override fun getEventLayout(isEmptyEvent: Boolean) =
-            if (isEmptyEvent) {
-                R.layout.lesson_item
-            } else {
-                R.layout.no_lessons_item
-            }
+        if (isEmptyEvent) R.layout.lesson_item else R.layout.no_lessons_item
 
     override fun getEventItemView(view: View, event: CalendarEvent, position: Int) {
         val lessonEvent = event as LessonEvent
         if (!lessonEvent.hasEvent()) {
             return
         }
-        if (position.rem(2) == 0) {
+        if (position.rem(GRAY_ITEM_POSITION_INTERVAL) == 0) {
             colorBackgroundToGray(view)
         }
         val lesson = lessonEvent.event as Lesson
@@ -55,12 +52,12 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
             view.teacherWithRoomView.text = teacherWithRoom
         }
         if (lesson.isCancelled) {
-            view.findViewById<View>(R.id.cancelledTextView).visibility = View.VISIBLE
+            view.cancelledTextView.visibility = View.VISIBLE
         }
     }
 
     private fun colorBackgroundToGray(view: View) {
-        view.findViewById<View>(R.id.timeGroupView).setBackgroundColor(timeViewColor)
-        view.findViewById<View>(R.id.scheduleTaskItemView).setBackgroundColor(itemViewColor)
+        view.timeGroupView.setBackgroundColor(timeViewColor)
+        view.scheduleTaskItemView.setBackgroundColor(itemViewColor)
     }
 }
