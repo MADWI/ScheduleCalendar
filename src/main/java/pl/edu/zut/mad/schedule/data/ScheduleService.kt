@@ -5,7 +5,6 @@ import pl.edu.zut.mad.schedule.data.model.api.Day
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-
 internal interface ScheduleService {
 
     @GET("{albumNumber}")

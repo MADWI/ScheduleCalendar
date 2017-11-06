@@ -4,7 +4,6 @@ import dagger.Subcomponent
 import pl.edu.zut.mad.schedule.module.RepositoryModule
 import pl.edu.zut.mad.schedule.module.ServiceModule
 
-
 @Login
 @Subcomponent(modules = arrayOf(
         LoginModule::class,

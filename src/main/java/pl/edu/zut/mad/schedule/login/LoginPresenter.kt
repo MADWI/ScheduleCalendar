@@ -10,11 +10,9 @@ import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
-
 internal class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
-                     private val service: ScheduleService, private val network: NetworkConnection,
-                     private val messageProvider: MessageProvider, private val user: User)
-    : LoginMvp.Presenter {
+    private val service: ScheduleService, private val network: NetworkConnection,
+    private val messageProvider: MessageProvider, private val user: User) : LoginMvp.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -31,28 +29,28 @@ internal class LoginPresenter(private val view: LoginMvp.View, private val repos
     }
 
     private fun validateAlbumNumber(albumNumber: String) =
-            if (albumNumber.isEmpty()) {
-                view.showError(R.string.error_field_cannot_be_empty)
-                false
-            } else {
-                true
-            }
+        if (albumNumber.isEmpty()) {
+            view.showError(R.string.error_field_cannot_be_empty)
+            false
+        } else {
+            true
+        }
 
     private fun fetchScheduleForAlbumNumber(albumNumber: Int) {
         view.showLoading()
         val disposable = service.fetchScheduleByAlbumNumber(albumNumber)
-                .subscribeOn(Schedulers.io())
-                .flatMapCompletable { repository.save(it) }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { view.hideLoading() }
-                .subscribe(
-                        {
-                            view.onDataSaved()
-                            user.save(albumNumber)
-                        },
-                        { onError(it) }
-                )
+            .subscribeOn(Schedulers.io())
+            .flatMapCompletable { repository.save(it) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete { view.hideLoading() }
+            .subscribe(
+                {
+                    view.onDataSaved()
+                    user.save(albumNumber)
+                },
+                { onError(it) }
+            )
         compositeDisposable.add(disposable)
     }
 

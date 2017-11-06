@@ -5,7 +5,6 @@ import com.squareup.leakcanary.LeakCanary
 import io.realm.Realm
 import net.danlew.android.joda.JodaTimeAndroid
 
-
 open class ScheduleApp : Application() {
 
     internal val component: AppComponent by lazy {

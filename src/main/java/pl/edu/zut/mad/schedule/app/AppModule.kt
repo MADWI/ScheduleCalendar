@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-
 @Module
 internal class AppModule(private val app: Application) : Application() {
 

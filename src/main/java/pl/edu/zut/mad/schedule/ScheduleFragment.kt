@@ -15,9 +15,8 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.util.app
-import java.util.*
+import java.util.Calendar
 import javax.inject.Inject
-
 
 class ScheduleFragment : Fragment(), ScheduleMvp.View {
 
@@ -33,7 +32,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_schedule, container, false)
+        inflater.inflate(R.layout.fragment_schedule, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,8 +45,8 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
     private fun initInjections() = app.component
-            .plus(ScheduleModule(this))
-            .inject(this)
+        .plus(ScheduleModule(this))
+        .inject(this)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
@@ -58,7 +57,7 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     }
 
     override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) =
-            calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
+        calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
 
     private fun dateToCalendar(date: LocalDate): Calendar {
         val calendar = Calendar.getInstance()
@@ -66,9 +65,8 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
         return calendar
     }
 
-
     override fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>) =
-            calendarContentManager.loadItemsFromStart(lessonsEvents)
+        calendarContentManager.loadItemsFromStart(lessonsEvents)
 
     override fun showLoginView(albumNumber: Int?) {
         val intent = Intent(activity, LoginActivity::class.java)
@@ -86,8 +84,8 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
     fun logout() = presenter.logout()
 
     fun moveToToday() =
-            calendarContentManager.agendaCalendarView
-                    .agendaView
-                    .agendaListView
-                    .scrollToCurrentDate(Calendar.getInstance())
+        calendarContentManager.agendaCalendarView
+            .agendaView
+            .agendaListView
+            .scrollToCurrentDate(Calendar.getInstance())
 }

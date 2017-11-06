@@ -10,7 +10,6 @@ import pl.edu.zut.mad.schedule.module.UserModule
 import pl.edu.zut.mad.schedule.module.UtilsModule
 import javax.inject.Singleton
 
-
 @Singleton
 @Component(modules = arrayOf(
         AppModule::class,

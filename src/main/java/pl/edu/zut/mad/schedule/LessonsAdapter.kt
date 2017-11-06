@@ -10,8 +10,8 @@ import kotlinx.android.synthetic.main.lesson_item.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.Calendar
+import java.util.Locale
 
 internal class LessonsAdapter(private val context: Context) : DefaultEventAdapter() {
 

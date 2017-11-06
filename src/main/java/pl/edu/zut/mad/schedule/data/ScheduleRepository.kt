@@ -13,7 +13,6 @@ import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 
-
 internal class ScheduleRepository(private val database: ScheduleDatabase, private val mapper: ModelMapper) {
 
     companion object {

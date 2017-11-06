@@ -1,9 +1,9 @@
 package pl.edu.zut.mad.schedule.data.model.ui
 
-import com.ognev.kotlin.agendacalendarview.models.*
+import com.ognev.kotlin.agendacalendarview.models.BaseCalendarEvent
+import com.ognev.kotlin.agendacalendarview.models.DayItem
 import org.joda.time.LocalDate
-import java.util.*
-
+import java.util.Locale
 
 internal class LessonEvent : BaseCalendarEvent {
 

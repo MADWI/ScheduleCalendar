@@ -3,7 +3,6 @@ package pl.edu.zut.mad.schedule
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
 
-
 internal interface ScheduleMvp {
 
     interface View {

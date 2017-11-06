@@ -4,7 +4,6 @@ import android.app.Activity
 import android.support.v4.app.Fragment
 import pl.edu.zut.mad.schedule.app.ScheduleApp
 
-
 val Activity.app: ScheduleApp
     get() = application as ScheduleApp
 

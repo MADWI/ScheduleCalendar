@@ -3,7 +3,6 @@ package pl.edu.zut.mad.schedule.util
 import pl.edu.zut.mad.schedule.R
 import retrofit2.HttpException
 
-
 internal class MessageProvider {
 
     fun getIdByHttpError(error: Throwable): Int {

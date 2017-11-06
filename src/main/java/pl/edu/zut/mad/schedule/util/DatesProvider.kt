@@ -2,7 +2,6 @@ package pl.edu.zut.mad.schedule.util
 
 import org.joda.time.LocalDate
 
-
 internal class DatesProvider {
 
     fun getByInterval(start: LocalDate, end: LocalDate): MutableList<LocalDate> {

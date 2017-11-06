@@ -3,8 +3,7 @@ package pl.edu.zut.mad.schedule
 import com.ognev.kotlin.agendacalendarview.CalendarController
 import com.ognev.kotlin.agendacalendarview.models.IDayItem
 import org.joda.time.LocalDate
-import java.util.*
-
+import java.util.Calendar
 
 internal class CalendarController(private val dateListener: DateListener?) : CalendarController {
 

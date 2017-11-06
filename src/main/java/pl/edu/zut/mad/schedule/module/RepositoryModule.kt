@@ -6,7 +6,6 @@ import pl.edu.zut.mad.schedule.data.ScheduleDatabase
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.util.ModelMapper
 
-
 @Module
 internal class RepositoryModule {
 

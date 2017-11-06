@@ -8,9 +8,8 @@ import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import javax.inject.Singleton
 
-
 @Module
-internal class UtilsModule{
+internal class UtilsModule {
 
     @Provides
     @Singleton

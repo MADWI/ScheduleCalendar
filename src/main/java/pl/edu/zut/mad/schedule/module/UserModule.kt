@@ -8,7 +8,6 @@ import dagger.Provides
 import pl.edu.zut.mad.schedule.User
 import javax.inject.Singleton
 
-
 @Module
 internal class UserModule {
 

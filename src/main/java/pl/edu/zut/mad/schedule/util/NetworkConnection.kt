@@ -3,7 +3,6 @@ package pl.edu.zut.mad.schedule.util
 import android.content.Context
 import android.net.ConnectivityManager
 
-
 internal class NetworkConnection(private val context: Context) {
 
     fun isAvailable(): Boolean {

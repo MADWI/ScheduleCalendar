@@ -10,7 +10,6 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
-
 internal class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     companion object {

@@ -8,7 +8,6 @@ import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
-
 @Module
 internal class LoginModule(private val view: LoginMvp.View) {
 
