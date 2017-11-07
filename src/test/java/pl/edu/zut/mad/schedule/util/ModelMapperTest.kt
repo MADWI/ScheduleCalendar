@@ -35,32 +35,32 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperDay(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperDay(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
 
         assertThat(dayUi.date.dayOfMonth).isEqualTo(DATE_DAY)
     }
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperMonth(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperMonth(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
 
         assertThat(dayUi.date.monthOfYear).isEqualTo(DATE_MONTH)
     }
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperYear(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperYear(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
 
         assertThat(dayUi.date.year).isEqualTo(DATE_YEAR)
     }
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperLessonSubjectWithType(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperLessonSubjectWithType(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.subjectWithType).isEqualTo("$SUBJECT ($TYPE)")
@@ -68,8 +68,8 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperLessonTeacherWithRoom(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiProperLessonTeacherWithRoom(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.teacherWithRoom)
@@ -78,8 +78,8 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperLessonTimeStart(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperLessonTimeStart(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.timeRange.from).isEqualTo(TIME_START)
@@ -87,8 +87,8 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperLessonTimeEnd(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperLessonTimeEnd(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.timeRange.to).isEqualTo(TIME_END)
@@ -96,8 +96,8 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperLessonNotCancelled(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperLessonNotCancelled(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.isCancelled).isFalse()
@@ -105,8 +105,8 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApiWithCancelledLesson", location = arrayOf(MockData::class))
-    fun mapFromApiToUiSetProperLessonCancelled(dayApi: DayApi) {
-        val dayUi = modelMapper.dayFromApiToUi(dayApi)
+    fun mapToDayUiFromApiSetProperLessonCancelled(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.isCancelled).isTrue()

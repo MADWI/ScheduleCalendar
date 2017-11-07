@@ -32,7 +32,7 @@ internal class ScheduleRepository(private val database: ScheduleDatabase, privat
                 .equalTo(DATE_COLUMN, date.toDate())
                 .findFirst()
                 ?.asFlowable<DayApi>()
-                ?.map { mapper.dayFromApiToUi(it) }
+                ?.map { mapper.toDayUiFromApi(it) }
                 ?.blockingFirst() ?: EmptyDay(date)
         }
 
