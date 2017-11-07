@@ -14,7 +14,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 internal class ModelMapper {
 
     companion object {
-        private const val CANCELED_LESSON_TEXT = "odwołane"
+        const val CANCELED_LESSON_TEXT = "odwołane"
     }
 
     fun dayFromApiToUi(dayApi: DayApi): DayUi {

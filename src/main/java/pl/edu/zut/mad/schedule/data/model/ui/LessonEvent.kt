@@ -1,7 +1,6 @@
 package pl.edu.zut.mad.schedule.data.model.ui
 
 import com.ognev.kotlin.agendacalendarview.models.BaseCalendarEvent
-import com.ognev.kotlin.agendacalendarview.models.DayItem
 import org.joda.time.LocalDate
 import java.util.Locale
 
@@ -11,7 +10,7 @@ internal class LessonEvent : BaseCalendarEvent {
         val day = date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
         this.startTime = day
         this.endTime = day
-        this.dayReference = DayItem.buildDayItemFromCal(day)
+        this.dayReference = DayItem(date, lesson != null)
         this.event = lesson
         setEventInstanceDay(day)
     }

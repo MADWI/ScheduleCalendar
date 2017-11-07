@@ -39,6 +39,7 @@ ext {
     junit_version = '4.12'
     mockito_version = '1.5.0'
     assertj_version = '3.8.0'
+    data_provider_version = '1.10.0'
 }
 
 buildscript {
@@ -60,6 +61,7 @@ dependencies {
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
     testImplementation "joda-time:joda-time:$joda_version"
     testImplementation "org.assertj:assertj-core:$assertj_version"
+    testImplementation "com.tngtech.java:junit-dataprovider:$data_provider_version"
     api "net.danlew:android.joda:$joda_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     implementation "com.android.support:appcompat-v7:$support_version"
