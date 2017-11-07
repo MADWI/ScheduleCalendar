@@ -21,6 +21,7 @@ import pl.edu.zut.mad.schedule.MockData.Companion.TIME_START
 import pl.edu.zut.mad.schedule.MockData.Companion.TYPE
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
+import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 
 @RunWith(DataProviderRunner::class)
 internal class ModelMapperTest {
@@ -75,7 +76,6 @@ internal class ModelMapperTest {
             .isEqualTo("$ACADEMIC_TITLE $TEACHER_NAME $TEACHER_SURNAME $ROOM")
     }
 
-
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
     fun mapFromApiToUiSetProperLessonTimeStart(dayApi: DayApi) {
@@ -113,8 +113,11 @@ internal class ModelMapperTest {
     }
 
     @Test
-    fun toLessonsEvents() {
-//        TODO()
+    @UseDataProvider("dayUi", location = arrayOf(MockData::class))
+    fun lessonsEventHasEventReturnTrue(dayUi: DayUi) {
+        val lessonEvents = modelMapper.toLessonsEvents(dayUi)
+
+        assertThat(lessonEvents[0].hasEvent()).isTrue()
     }
 
     @Test
