@@ -41,7 +41,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
         val events: MutableList<CalendarEvent> = ArrayList()
         val dateDates = datesProvider.getByInterval(minDate, maxDate)
         Observable.fromIterable(dateDates)
-            .flatMap { repository.getDaysForDate(it) }
+            .flatMap { repository.getDayByDate(it) }
             .subscribe(
                 {
                     when (it) {
