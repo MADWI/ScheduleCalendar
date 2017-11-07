@@ -8,16 +8,22 @@ import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.mockito.InjectMocks
+import org.mockito.Mock
 
 class NetworkConnectionTest {
 
-    private val context = mock<Context>()
-    private val connectivityManager = mock<ConnectivityManager>()
+    @Mock
+    private lateinit var context: Context
+
+    @Mock
+    private lateinit var connectivityManager: ConnectivityManager
+
+    @InjectMocks
     private lateinit var networkConnection: NetworkConnection
 
     @Before
     fun setUp() {
-        networkConnection = NetworkConnection(context)
         whenever(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager)
     }
 
