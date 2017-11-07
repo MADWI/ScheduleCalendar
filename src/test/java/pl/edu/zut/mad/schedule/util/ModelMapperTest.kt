@@ -114,8 +114,8 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayUi", location = arrayOf(MockData::class))
-    fun lessonsEventHasEventReturnTrue(dayUi: DayUi) {
-        val lessonEvents = modelMapper.toLessonsEvents(dayUi)
+    fun mapToLessonsEventsFromDayUiHasEventReturnTrue(dayUi: DayUi) {
+        val lessonEvents = modelMapper.toLessonsEventsFromDayUi(dayUi)
 
         assertThat(lessonEvents[0].hasEvent()).isTrue()
     }
@@ -125,7 +125,7 @@ internal class ModelMapperTest {
         val date = LocalDate.now()
         val emptyDay = EmptyDay(date)
 
-        val lessonEvent = modelMapper.toLessonEvent(emptyDay)
+        val lessonEvent = modelMapper.toLessonEventFromEmptyDay(emptyDay)
 
         assertThat(lessonEvent.event).isNull()
     }
@@ -135,7 +135,7 @@ internal class ModelMapperTest {
         val date = LocalDate.now()
         val emptyDay = EmptyDay(date)
 
-        val lessonEvent = modelMapper.toLessonEvent(emptyDay)
+        val lessonEvent = modelMapper.toLessonEventFromEmptyDay(emptyDay)
 
         assertThat(lessonEvent.hasEvent()).isFalse()
     }

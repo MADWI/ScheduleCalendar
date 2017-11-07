@@ -45,8 +45,8 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
             .subscribe(
                 {
                     when (it) {
-                        is Day -> events.addAll(mapper.toLessonsEvents(it))
-                        is EmptyDay -> events.add(mapper.toLessonEvent(it))
+                        is Day -> events.addAll(mapper.toLessonsEventsFromDayUi(it))
+                        is EmptyDay -> events.add(mapper.toLessonEventFromEmptyDay(it))
                     }
                 },
                 { },
