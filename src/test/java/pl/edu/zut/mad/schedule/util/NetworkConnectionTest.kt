@@ -7,18 +7,12 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.junit.MockitoJUnit
-import org.mockito.junit.MockitoRule
+import org.mockito.MockitoAnnotations
 
 class NetworkConnectionTest {
-
-    @Rule
-    @JvmField
-    val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
     @Mock
     private lateinit var context: Context
@@ -31,6 +25,7 @@ class NetworkConnectionTest {
 
     @Before
     fun setUp() {
+        MockitoAnnotations.initMocks(this)
         whenever(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager)
     }
 
