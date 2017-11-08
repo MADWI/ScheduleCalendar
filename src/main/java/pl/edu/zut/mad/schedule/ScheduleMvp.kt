@@ -8,11 +8,13 @@ internal interface ScheduleMvp {
     interface View {
         fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate)
 
-        fun onLessonsEventLoad(lessonsEvents: MutableList<CalendarEvent>)
+        fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>)
 
-        fun showLoginView(albumNumber: Int?)
+        fun showLoginView()
 
         fun showInternetError()
+
+        fun refreshSchedule(albumNumber: Int)
     }
 
     interface Presenter {
