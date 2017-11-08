@@ -2,7 +2,6 @@ package pl.edu.zut.mad.schedule.util
 
 import okhttp3.ResponseBody
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
 import org.junit.Test
 import pl.edu.zut.mad.schedule.R
 import retrofit2.HttpException
@@ -11,15 +10,10 @@ import java.lang.Exception
 
 class MessageProviderTest {
 
-    private lateinit var messageProvider: MessageProvider
-
-    @Before
-    fun setUp() {
-        messageProvider = MessageProvider()
-    }
+    private val messageProvider = MessageProvider()
 
     @Test
-    fun properIdFor404() {
+    fun providerReturnIdResAlbumNumberNotFoundWhenErrorIs404() {
         val httpError = getHttpErrorWithCode(404)
 
         val messageId = messageProvider.getResIdByError(httpError)
@@ -28,7 +22,7 @@ class MessageProviderTest {
     }
 
     @Test
-    fun properIdFor503() {
+    fun providerReturnIdResDatabaseUpdateWhenErrorIs503() {
         val httpError = getHttpErrorWithCode(503)
 
         val messageId = messageProvider.getResIdByError(httpError)
@@ -37,7 +31,7 @@ class MessageProviderTest {
     }
 
     @Test
-    fun properIdFor500() {
+    fun providerReturnIdResInternalWhenErrorIs500() {
         val httpError = getHttpErrorWithCode(500)
 
         val messageId = messageProvider.getResIdByError(httpError)
@@ -46,7 +40,7 @@ class MessageProviderTest {
     }
 
     @Test
-    fun properIdForOther() {
+    fun providerReturnIdResUnrecognizedWhenErrorIsOther() {
         val messageId = messageProvider.getResIdByError(Exception())
 
         assertThat(R.string.error_service_unrecognized).isEqualTo(messageId)
