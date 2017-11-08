@@ -43,6 +43,15 @@ internal class MockData {
 
         @JvmStatic
         @DataProvider
+        fun dayApiList(): Array<Array<Any>> {
+            val lessons = RealmList<LessonApi>()
+            lessons.add(getLessonApiWithReservationStatus(RESERVATION_STATUS_NOT_CANCELLED))
+            val day = DayApi(getApiDate(), lessons)
+            return arrayOf(arrayOf<Any>(listOf(day)))
+        }
+
+        @JvmStatic
+        @DataProvider
         fun dayApiWithCancelledLesson(): Array<Array<Any>> {
             val lessons = RealmList<LessonApi>()
             lessons.add(getLessonApiWithReservationStatus(RESERVATION_STATUS_CANCELLED))
