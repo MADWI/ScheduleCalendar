@@ -6,7 +6,7 @@ import java.net.HttpURLConnection
 
 internal class MessageProvider {
 
-    fun getIdByHttpError(error: Throwable): Int {
+    fun getResIdByError(error: Throwable): Int {
         if (error is HttpException) {
             when (error.code()) {
                 HttpURLConnection.HTTP_NOT_FOUND -> return R.string.error_album_number_not_found

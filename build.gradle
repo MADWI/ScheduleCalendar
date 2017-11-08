@@ -3,6 +3,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
+apply plugin: 'jacoco-android'
 apply from: 'ktlint.gradle'
 
 android {
@@ -36,6 +37,9 @@ ext {
     constraint_layout_version = '1.0.2'
     rx_java_version = '2.0.1'
     junit_version = '4.12'
+    mockito_version = '1.5.0'
+    assertj_version = '3.8.0'
+    data_provider_version = '1.10.0'
 }
 
 buildscript {
@@ -46,6 +50,7 @@ buildscript {
     dependencies {
         classpath "io.realm:realm-gradle-plugin:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
+        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
     }
 }
 
@@ -53,7 +58,10 @@ buildscript {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation "junit:junit:$junit_version"
+    testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
     testImplementation "joda-time:joda-time:$joda_version"
+    testImplementation "org.assertj:assertj-core:$assertj_version"
+    testImplementation "com.tngtech.java:junit-dataprovider:$data_provider_version"
     api "net.danlew:android.joda:$joda_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
     implementation "com.android.support:appcompat-v7:$support_version"

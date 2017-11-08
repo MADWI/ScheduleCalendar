@@ -41,12 +41,12 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
         val events: MutableList<CalendarEvent> = ArrayList()
         val dateDates = datesProvider.getByInterval(minDate, maxDate)
         Observable.fromIterable(dateDates)
-            .flatMap { repository.getDaysForDate(it) }
+            .flatMap { repository.getDayByDate(it) }
             .subscribe(
                 {
                     when (it) {
-                        is Day -> events.addAll(mapper.toLessonsEvents(it))
-                        is EmptyDay -> events.add(mapper.toLessonEvent(it))
+                        is Day -> events.addAll(mapper.toLessonsEventsFromDayUi(it))
+                        is EmptyDay -> events.add(mapper.toLessonEventFromEmptyDay(it))
                     }
                 },
                 { },

@@ -14,16 +14,16 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 internal class ModelMapper {
 
     companion object {
-        private const val CANCELED_LESSON_TEXT = "odwołane"
+        const val CANCELED_LESSON_TEXT = "odwołane"
     }
 
-    fun dayFromApiToUi(dayApi: DayApi): DayUi {
+    fun toDayUiFromApi(dayApi: DayApi): DayUi {
         val localDate = LocalDate.fromDateFields(dayApi.date)
-        val lessonsUi = toUiLessonsFromApi(dayApi.lessons)
+        val lessonsUi = toLessonsUiFromApi(dayApi.lessons)
         return DayUi(localDate, lessonsUi)
     }
 
-    private fun toUiLessonsFromApi(lessons: RealmList<LessonApi>): List<LessonUi> =
+    private fun toLessonsUiFromApi(lessons: RealmList<LessonApi>): List<LessonUi> =
         lessons.map {
             with(it) {
                 val subjectWithCourseType = "$subject ($courseType)"
@@ -33,7 +33,7 @@ internal class ModelMapper {
             }
         }
 
-    fun toLessonsEvents(day: DayUi): List<LessonEvent> =
+    fun toLessonsEventsFromDayUi(day: DayUi): List<LessonEvent> =
         day.lessons
             .map { LessonEvent(day.date, it) }
             .toList()
@@ -45,5 +45,5 @@ internal class ModelMapper {
             LocalDate.now()
         }
 
-    fun toLessonEvent(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
+    fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
 }
