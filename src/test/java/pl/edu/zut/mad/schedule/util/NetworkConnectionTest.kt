@@ -30,7 +30,7 @@ class NetworkConnectionTest {
     }
 
     @Test
-    fun isAvailableReturnsTrue() {
+    fun isAvailableIsTrueWhenNetworkInfoReturnsTrue() {
         val networkInfo = mock<NetworkInfo>()
 
         whenever(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
@@ -40,7 +40,7 @@ class NetworkConnectionTest {
     }
 
     @Test
-    fun isAvailableReturnsFalse() {
+    fun isAvailableIsTrueWhenNetworkInfoReturnsFalse() {
         val networkInfo = mock<NetworkInfo>()
 
         whenever(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
@@ -50,7 +50,7 @@ class NetworkConnectionTest {
     }
 
     @Test
-    fun isAvailableReturnsFalseWhenNetworkInfoIsNull() {
+    fun isAvailableIsTrueWhenNetworkInfoIsNull() {
         whenever(connectivityManager.activeNetworkInfo).thenReturn(null)
 
         assertThat(networkConnection.isAvailable()).isFalse()
