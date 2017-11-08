@@ -71,10 +71,7 @@ internal class LoginPresenterTest {
 
     @Test
     fun showLoadingIsCalledWhenServiceFetchScheduleReturnsDays() {
-        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
-        whenever(network.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
-            .thenReturn(Observable.just(emptyList()))
+        prepareMocksToReturnDayListForSchedule(emptyList())
 
         loginPresenter.onDownloadScheduleClick()
 
@@ -83,10 +80,7 @@ internal class LoginPresenterTest {
 
     @Test
     fun fetchScheduleIsCalledWhenServiceFetchScheduleReturnsDays() {
-        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
-        whenever(network.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
-            .thenReturn(Observable.just(emptyList()))
+        prepareMocksToReturnDayListForSchedule(emptyList())
 
         loginPresenter.onDownloadScheduleClick()
 
@@ -95,10 +89,7 @@ internal class LoginPresenterTest {
 
     @Test
     fun repositorySaveIsCalledWhenServiceFetchScheduleReturnsDays() {
-        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
-        whenever(network.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
-            .thenReturn(Observable.just(emptyList()))
+        prepareMocksToReturnDayListForSchedule(emptyList())
 
         loginPresenter.onDownloadScheduleClick()
 
@@ -108,10 +99,7 @@ internal class LoginPresenterTest {
     @Test
     @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
     fun hideLoadingIsCalledWhenServiceFetchScheduleReturnsDays(days: List<Day>) {
-        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
-        whenever(network.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
-            .thenReturn(Observable.just(days))
+        prepareMocksToReturnDayListForSchedule(days)
 
         loginPresenter.onDownloadScheduleClick()
 
@@ -121,11 +109,7 @@ internal class LoginPresenterTest {
     @Test
     @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
     fun onDataSavedIsCalledWhenServiceFetchScheduleReturnsDays(days: List<Day>) {
-        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
-        whenever(network.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
-            .thenReturn(Observable.just(days))
-        whenever(repository.save(days)).thenReturn(Completable.complete())
+        prepareMocksToReturnDayListForSchedule(days)
 
         loginPresenter.onDownloadScheduleClick()
 
@@ -135,11 +119,7 @@ internal class LoginPresenterTest {
     @Test
     @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
     fun userSaveIsCalledWhenServiceFetchScheduleReturnsDays(days: List<Day>) {
-        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
-        whenever(network.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
-            .thenReturn(Observable.just(days))
-        whenever(repository.save(days)).thenReturn(Completable.complete())
+        prepareMocksToReturnDayListForSchedule(days)
 
         loginPresenter.onDownloadScheduleClick()
 
@@ -168,5 +148,13 @@ internal class LoginPresenterTest {
         loginPresenter.onDownloadScheduleClick()
 
         verify(view).showError(any())
+    }
+
+    private fun prepareMocksToReturnDayListForSchedule(days: List<Day>) {
+        whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
+        whenever(network.isAvailable()).thenReturn(true)
+        whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
+            .thenReturn(Observable.just(days))
+        whenever(repository.save(days)).thenReturn(Completable.complete())
     }
 }
