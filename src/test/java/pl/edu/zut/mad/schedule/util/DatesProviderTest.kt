@@ -1,8 +1,8 @@
 package pl.edu.zut.mad.schedule.util
 
+import org.assertj.core.api.Assertions.assertThat
 import org.joda.time.Days
 import org.joda.time.LocalDate
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class DatesProviderTest {
@@ -12,25 +12,25 @@ class DatesProviderTest {
     private val datesProvider = DatesProvider()
 
     @Test
-    fun datesAmountIsProper() {
+    fun datesLengthIsEqualToDaysBetweenInclusive() {
         val dates = datesProvider.getByInterval(startDate, endDate)
 
         val daysBetweenInclusive = Days.daysBetween(dates.first(), dates.last()).days + 1
 
-        assertEquals(daysBetweenInclusive, dates.size)
+        assertThat(daysBetweenInclusive).isEqualTo(dates.size)
     }
 
     @Test
-    fun firstDayIsEqualsStartDate() {
+    fun firstDayIsEqualToStartDate() {
         val dates = datesProvider.getByInterval(startDate, endDate)
 
-        assertEquals(dates.first(), startDate)
+        assertThat(dates.first()).isEqualTo(startDate)
     }
 
     @Test
-    fun lastDayIsEqualsStartDate() {
+    fun lastDayIsEqualToEndDate() {
         val dates = datesProvider.getByInterval(startDate, endDate)
 
-        assertEquals(dates.last(), endDate)
+        assertThat(dates.last()).isEqualTo(endDate)
     }
 }
