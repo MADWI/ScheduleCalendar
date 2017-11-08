@@ -27,8 +27,8 @@ internal class MockData {
         const val ROOM = "WI1-128"
         const val TIME_START = "8:15"
         const val TIME_END = "10:00"
-        private const val TEACHER_WITH_ROOM = "$ACADEMIC_TITLE $TEACHER_NAME $TEACHER_SURNAME $ROOM"
-        private const val SUBJECT_WITH_TYPE = "$SUBJECT ($TYPE)"
+        const val TEACHER_WITH_ROOM = "$ACADEMIC_TITLE $TEACHER_NAME $TEACHER_SURNAME $ROOM"
+        const val SUBJECT_WITH_TYPE = "$SUBJECT ($TYPE)"
         private const val RESERVATION_STATUS_NOT_CANCELLED = "wykład"
         private const val RESERVATION_STATUS_CANCELLED = ModelMapper.CANCELED_LESSON_TEXT
 
