@@ -35,12 +35,12 @@ internal class LoginPresenterTest {
     @JvmField
     val testSchedulerRule = RxImmediateSchedulerRule()
 
-    private val user = mock<User>()
-    private val view = mock<LoginMvp.View>()
-    private val service = mock<ScheduleService>()
-    private val network = mock<NetworkConnection>()
-    private val repository = mock<ScheduleRepository>()
-    private val messageProvider = mock<MessageProvider>()
+    val user = mock<User>()
+    val view = mock<LoginMvp.View>()
+    val service = mock<ScheduleService>()
+    val network = mock<NetworkConnection>()
+    val repository = mock<ScheduleRepository>()
+    val messageProvider = mock<MessageProvider>()
 
     @InjectMocks
     private lateinit var loginPresenter: LoginPresenter

@@ -9,6 +9,7 @@ import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 import pl.edu.zut.mad.schedule.data.model.api.Teacher
 import pl.edu.zut.mad.schedule.data.model.api.TimeRange
+import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import java.util.Calendar
 import java.util.Date
@@ -66,6 +67,12 @@ internal class MockData {
             lessons.add(getLessonUiWithCancellation())
             val day = DayUi(getUiDate(), lessons)
             return arrayOf(arrayOf<Any>(day))
+        }
+
+        @JvmStatic
+        @DataProvider
+        fun emptyDay(): Array<Array<Any>> {
+            return arrayOf(arrayOf<Any>(EmptyDay(getUiDate())))
         }
 
         private fun getApiDate(): Date {
