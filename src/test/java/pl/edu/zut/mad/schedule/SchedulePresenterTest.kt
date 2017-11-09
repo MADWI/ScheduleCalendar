@@ -28,12 +28,12 @@ internal class SchedulePresenterTest {
     @JvmField
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
-    private val user = mock<User>()
-    private val mapper = mock<ModelMapper>()
-    private val view = mock<ScheduleMvp.View>()
-    private val datesProvider = mock<DatesProvider>()
-    private val connection = mock<NetworkConnection>()
-    private val repository = mock<ScheduleRepository>()
+    val user = mock<User>()
+    val mapper = mock<ModelMapper>()
+    val view = mock<ScheduleMvp.View>()
+    val datesProvider = mock<DatesProvider>()
+    val connection = mock<NetworkConnection>()
+    val repository = mock<ScheduleRepository>()
 
     @InjectMocks
     private lateinit var schedulePresenter: SchedulePresenter
