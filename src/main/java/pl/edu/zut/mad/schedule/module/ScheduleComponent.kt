@@ -8,7 +8,7 @@ import pl.edu.zut.mad.schedule.ScheduleFragment
         ScheduleModule::class,
         RepositoryModule::class)
 )
-internal interface ScheduleComponent {
+interface ScheduleComponent {
 
     fun inject(scheduleFragment: ScheduleFragment)
 }

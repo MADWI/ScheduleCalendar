@@ -12,6 +12,10 @@
         <activity
             android:name=".login.LoginActivityTest$TestLoginActivity"
             android:theme="@style/Login" />
+
+        <activity
+            android:name="android.support.v7.app.AppCompatActivity"
+            android:theme="@style/Login" />
     </application>
 
 </manifest>

@@ -13,19 +13,21 @@ import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.login.LoginActivity
+import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.util.app
 import java.util.Calendar
 import javax.inject.Inject
 
-class ScheduleFragment : Fragment(), ScheduleMvp.View {
+open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, ScheduleMvp.View {
 
     companion object {
-        private const val REQUEST_CODE = 123
+        internal const val REQUEST_CODE = 123
     }
 
     var dateListener: DateListener? = null
     @Inject internal lateinit var presenter: ScheduleMvp.Presenter
+    private lateinit var component: ScheduleComponent
 
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
@@ -41,14 +43,19 @@ class ScheduleFragment : Fragment(), ScheduleMvp.View {
         init()
     }
 
+    override fun getComponent() = component
+
     private fun init() {
+        initComponent()
         initInjections()
         presenter.onViewIsCreated()
     }
 
-    private fun initInjections() = app.component
-        .plus(ScheduleModule(this))
-        .inject(this)
+    private fun initComponent() {
+        component = app.component.plus(ScheduleModule(this))
+    }
+
+    private fun initInjections() = getComponent().inject(this)
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
