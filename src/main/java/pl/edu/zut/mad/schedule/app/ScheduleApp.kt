@@ -16,7 +16,6 @@ open class ScheduleApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        component.inject(this)
         Realm.init(this)
         JodaTimeAndroid.init(this)
         if (!LeakCanary.isInAnalyzerProcess(this)) {

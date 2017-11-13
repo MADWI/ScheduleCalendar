@@ -48,8 +48,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "io.realm:realm-gradle-plugin:4.1.1"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51"
+        classpath 'io.realm:realm-gradle-plugin:4.1.1'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.51'
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
     }
 }

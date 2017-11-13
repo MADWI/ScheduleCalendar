@@ -1,6 +1,5 @@
 package pl.edu.zut.mad.schedule.app
 
-import android.app.Application
 import dagger.Component
 import pl.edu.zut.mad.schedule.login.LoginComponent
 import pl.edu.zut.mad.schedule.login.LoginModule
@@ -17,8 +16,6 @@ import javax.inject.Singleton
         UtilsModule::class
 ))
 internal interface AppComponent {
-
-    fun inject(app: Application)
 
     fun plus(loginModule: LoginModule): LoginComponent
 
