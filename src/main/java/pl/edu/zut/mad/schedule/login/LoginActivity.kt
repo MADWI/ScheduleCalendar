@@ -3,15 +3,15 @@ package pl.edu.zut.mad.schedule.login
 import android.app.Activity
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
+import pl.edu.zut.mad.schedule.BaseActivity
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
-internal open class LoginActivity : AppCompatActivity(), LoginMvp.View {
+internal open class LoginActivity : BaseActivity<LoginComponent>(), LoginMvp.View {
 
     companion object {
         const val ALBUM_NUMBER_KEY = "album_number_key"
@@ -57,7 +57,7 @@ internal open class LoginActivity : AppCompatActivity(), LoginMvp.View {
         finish()
     }
 
-    open fun getActivityComponent() = component // move to interface
+    override fun getActivityComponent() = component
 
     private fun initComponent() {
         component = app.component.plus(LoginModule(this))

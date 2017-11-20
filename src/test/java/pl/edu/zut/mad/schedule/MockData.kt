@@ -71,9 +71,7 @@ internal class MockData {
 
         @JvmStatic
         @DataProvider
-        fun emptyDay(): Array<Array<Any>> {
-            return arrayOf(arrayOf<Any>(EmptyDay(getUiDate())))
-        }
+        fun emptyDay(): Array<Array<Any>> = arrayOf(arrayOf<Any>(EmptyDay(getUiDate())))
 
         private fun getApiDate(): Date {
             val calendar = Calendar.getInstance()
@@ -81,9 +79,7 @@ internal class MockData {
             return calendar.time
         }
 
-        private fun getUiDate(): LocalDate {
-            return LocalDate.fromDateFields(getApiDate())
-        }
+        private fun getUiDate(): LocalDate = LocalDate.fromDateFields(getApiDate())
 
         private fun getLessonApiWithReservationStatus(reservationStatus: String): LessonApi {
             val teacher = Teacher(ACADEMIC_TITLE, TEACHER_NAME, TEACHER_SURNAME)
