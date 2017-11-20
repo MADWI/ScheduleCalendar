@@ -57,7 +57,7 @@ internal open class LoginActivity : AppCompatActivity(), LoginMvp.View {
         finish()
     }
 
-    open fun getActivityComponent() = component
+    open fun getActivityComponent() = component // move to interface
 
     private fun initComponent() {
         component = app.component.plus(LoginModule(this))
