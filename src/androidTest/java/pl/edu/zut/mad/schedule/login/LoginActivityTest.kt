@@ -16,10 +16,11 @@ import org.junit.Rule
 import org.junit.Test
 import pl.edu.zut.mad.schedule.R
 
-internal class LoginActivityTest : LoginActivity() {
+@Suppress("IllegalIdentifier")
+internal class LoginActivityTest {
 
     @get:Rule
-    val activityRule = ActivityTestRule(LoginActivityTest::class.java, false, false)
+    val activityRule = ActivityTestRule(TestLoginActivity()::class.java, false, false)
 
     val activity: LoginActivity by lazy {
         activityRule.activity
@@ -30,16 +31,8 @@ internal class LoginActivityTest : LoginActivity() {
         const val EXPECTED_ALBUM_NUMBER_TEXT = "32190"
     }
 
-    override fun getActivityComponent(): LoginComponent {
-        return object : LoginComponent {
-            override fun inject(loginActivity: LoginActivity) {
-                loginActivity.presenter = mock()
-            }
-        }
-    }
-
     @Test
-    fun clickOnDownloadScheduleButtonCallsPresenterDownloadingMethod() {
+    fun `click on download schedule button should call presenter downloading method`() {
         activityRule.launchActivity(null)
         onView(withId(R.id.downloadScheduleButtonView)).perform(click())
 
@@ -47,14 +40,14 @@ internal class LoginActivityTest : LoginActivity() {
     }
 
     @Test
-    fun albumNumberFromIntentIsSetToTextView() {
+    fun `album number from intent should be set to tex view`() {
         launchActivityWithIntentWithAlbumNumber()
 
         onView(withId(R.id.albumNumberTextView)).check(matches(withText(EXPECTED_ALBUM_NUMBER_TEXT)))
     }
 
     @Test
-    fun getAlbumNumberTextReturnInputtedText() {
+    fun `method get album number text should return inputted text`() {
         activityRule.launchActivity(null)
         onView(withId(R.id.albumNumberTextView)).perform(typeText(EXPECTED_ALBUM_NUMBER_TEXT))
 
@@ -62,7 +55,7 @@ internal class LoginActivityTest : LoginActivity() {
     }
 
     @Test
-    fun presenterDownloadingMethodIsCalledWhenAlbumNumberIsPresentInLaunchingIntent() {
+    fun `presenter downloading method should be called when album number is present intent`() {
         launchActivityWithIntentWithAlbumNumber()
 
         verify(activity.presenter).onDownloadScheduleClick()
@@ -72,5 +65,16 @@ internal class LoginActivityTest : LoginActivity() {
         val intent = Intent()
         intent.putExtra(LoginActivity.ALBUM_NUMBER_KEY, EXPECTED_ALBUM_NUMBER)
         activityRule.launchActivity(intent)
+    }
+
+    class TestLoginActivity : LoginActivity() {
+
+        override fun getActivityComponent(): LoginComponent {
+            return object : LoginComponent {
+                override fun inject(loginActivity: LoginActivity) {
+                    loginActivity.presenter = mock()
+                }
+            }
+        }
     }
 }

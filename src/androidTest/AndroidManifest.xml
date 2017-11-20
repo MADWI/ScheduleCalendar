@@ -10,7 +10,7 @@
         android:supportsRtl="true">
 
         <activity
-            android:name=".login.LoginActivityTest"
+            android:name=".login.LoginActivityTest$TestLoginActivity"
             android:theme="@style/Login" />
     </application>
 
