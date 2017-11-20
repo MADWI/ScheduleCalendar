@@ -11,13 +11,14 @@ import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
-internal class LoginActivity : AppCompatActivity(), LoginMvp.View {
+internal open class LoginActivity : AppCompatActivity(), LoginMvp.View {
 
     companion object {
-        internal const val ALBUM_NUMBER_KEY = "album_number_key"
+        const val ALBUM_NUMBER_KEY = "album_number_key"
     }
 
     @Inject lateinit var presenter: LoginMvp.Presenter
+    private lateinit var component: LoginComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,25 +27,11 @@ internal class LoginActivity : AppCompatActivity(), LoginMvp.View {
     }
 
     private fun init() {
+        initComponent()
         initInjections()
         initViews()
         readArgument()
     }
-
-    private fun readArgument() {
-        val albumNumber = intent.getIntExtra(ALBUM_NUMBER_KEY, User.ALBUM_NUMBER_ERROR)
-        if (albumNumber != User.ALBUM_NUMBER_ERROR) {
-            albumNumberTextView.setText(albumNumber.toString())
-            presenter.onDownloadScheduleClick()
-        }
-    }
-
-    private fun initInjections() = app.component
-            .plus(LoginModule(this))
-            .inject(this)
-
-    private fun initViews() =
-            downloadScheduleButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
 
     override fun getAlbumNumberText() = albumNumberTextView.text.toString()
 
@@ -68,5 +55,26 @@ internal class LoginActivity : AppCompatActivity(), LoginMvp.View {
     override fun onDataSaved() {
         setResult(Activity.RESULT_OK)
         finish()
+    }
+
+    open fun getActivityComponent() = component
+
+    private fun initComponent() {
+        component = app.component.plus(LoginModule(this))
+    }
+
+    private fun initInjections() {
+        getActivityComponent().inject(this)
+    }
+
+    private fun initViews() =
+        downloadScheduleButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
+
+    private fun readArgument() {
+        val albumNumber = intent.getIntExtra(ALBUM_NUMBER_KEY, User.ALBUM_NUMBER_ERROR)
+        if (albumNumber != User.ALBUM_NUMBER_ERROR) {
+            albumNumberTextView.setText(albumNumber.toString())
+            presenter.onDownloadScheduleClick()
+        }
     }
 }
