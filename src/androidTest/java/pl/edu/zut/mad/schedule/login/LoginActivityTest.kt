@@ -68,7 +68,7 @@ internal class LoginActivityTest {
 
     class TestLoginActivity : LoginActivity() {
 
-        override fun getActivityComponent(): LoginComponent {
+        override fun getComponent(): LoginComponent {
             return object : LoginComponent {
                 override fun inject(loginActivity: LoginActivity) {
                     loginActivity.presenter = mock()
