@@ -32,7 +32,7 @@ internal class ScheduleFragmentTest {
     val scheduleFragment = TestScheduleFragment()
 
     val fragmentStartsIdlingResource by lazy {
-        FragmentStartsIdlingResource(activityRule.activity)
+        FragmentStartsIdlingResource(activityRule.activity, TestScheduleFragment::class)
     }
 
     @Before

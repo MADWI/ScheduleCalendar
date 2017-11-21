@@ -1,10 +1,13 @@
 package pl.edu.zut.mad.schedule
 
 import android.support.test.espresso.IdlingResource
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import kotlin.reflect.KClass
 
-internal class FragmentStartsIdlingResource(private val activity: AppCompatActivity) : IdlingResource {
-    // TODO: add fragment class to match
+internal class FragmentStartsIdlingResource(private val activity: AppCompatActivity,
+    private val fragmentClass: KClass<out Fragment>) : IdlingResource {
+
     private lateinit var resourceCallback: IdlingResource.ResourceCallback
     private var isIdle = false
 
@@ -13,7 +16,9 @@ internal class FragmentStartsIdlingResource(private val activity: AppCompatActiv
     override fun isIdleNow(): Boolean {
         if (isIdle) return true
         val fragments = activity.supportFragmentManager.fragments
-        isIdle = fragments.size > 0 && fragments[0].isVisible
+        isIdle = fragments.stream().anyMatch {
+            it.isVisible && it::class.java.isAssignableFrom(fragmentClass.java)
+        }
         if (isIdle) {
             resourceCallback.onTransitionToIdle()
         }
