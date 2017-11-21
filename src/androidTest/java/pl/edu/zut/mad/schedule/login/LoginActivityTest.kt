@@ -16,7 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import pl.edu.zut.mad.schedule.R
 
-@Suppress("IllegalIdentifier")
 internal class LoginActivityTest {
 
     @get:Rule
@@ -32,7 +31,7 @@ internal class LoginActivityTest {
     }
 
     @Test
-    fun `click on download schedule button should call presenter downloading method`() {
+    fun clickOnDownloadScheduleButtonShouldCallPresenterDownloadingMethod() {
         activityRule.launchActivity(null)
         onView(withId(R.id.downloadScheduleButtonView)).perform(click())
 
@@ -40,14 +39,14 @@ internal class LoginActivityTest {
     }
 
     @Test
-    fun `album number from intent should be set to tex view`() {
+    fun albumNumberFromIntentShouldBeSetToTexView() {
         launchActivityWithIntentWithAlbumNumber()
 
         onView(withId(R.id.albumNumberTextView)).check(matches(withText(EXPECTED_ALBUM_NUMBER_TEXT)))
     }
 
     @Test
-    fun `method get album number text should return inputted text`() {
+    fun methodGetAlbumNumberTextShouldInputtedText() {
         activityRule.launchActivity(null)
         onView(withId(R.id.albumNumberTextView)).perform(typeText(EXPECTED_ALBUM_NUMBER_TEXT))
 
@@ -55,7 +54,7 @@ internal class LoginActivityTest {
     }
 
     @Test
-    fun `presenter downloading method should be called when album number is present intent`() {
+    fun presenterDownloadingMethodShouldBeCalledWhenAlbumNumberIsPresentInIntent() {
         launchActivityWithIntentWithAlbumNumber()
 
         verify(activity.presenter).onDownloadScheduleClick()
