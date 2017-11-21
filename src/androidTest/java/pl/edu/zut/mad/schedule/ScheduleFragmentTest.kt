@@ -28,7 +28,6 @@ internal class ScheduleFragmentTest {
 
     @get:Rule
     val activityRule = ActivityTestRule(AppCompatActivity::class.java)
-
     val scheduleFragment = TestScheduleFragment()
 
     val fragmentStartsIdlingResource by lazy {
