@@ -4,7 +4,7 @@ import android.support.test.espresso.IdlingResource
 import android.support.v7.app.AppCompatActivity
 
 internal class FragmentStartsIdlingResource(private val activity: AppCompatActivity) : IdlingResource {
-
+    // TODO: add fragment class to match
     private lateinit var resourceCallback: IdlingResource.ResourceCallback
     private var isIdle = false
 

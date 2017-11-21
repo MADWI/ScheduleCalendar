@@ -18,7 +18,6 @@ internal open class LoginActivity : BaseActivity<LoginComponent>(), LoginMvp.Vie
     }
 
     @Inject lateinit var presenter: LoginMvp.Presenter
-    private lateinit var component: LoginComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +26,6 @@ internal open class LoginActivity : BaseActivity<LoginComponent>(), LoginMvp.Vie
     }
 
     private fun init() {
-        initComponent()
         initInjections()
         initViews()
         readArgument()

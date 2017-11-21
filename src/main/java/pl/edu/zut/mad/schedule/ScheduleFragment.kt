@@ -27,7 +27,6 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
     var dateListener: DateListener? = null
     @Inject internal lateinit var presenter: ScheduleMvp.Presenter
-    private lateinit var component: ScheduleComponent
 
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
@@ -43,16 +42,11 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         init()
     }
 
-    override fun getComponent() = component
+    override fun getComponent() = app.component.plus(ScheduleModule(this))
 
     private fun init() {
-        initComponent()
         initInjections()
         presenter.onViewIsCreated()
-    }
-
-    private fun initComponent() {
-        component = app.component.plus(ScheduleModule(this))
     }
 
     private fun initInjections() = getComponent().inject(this)
