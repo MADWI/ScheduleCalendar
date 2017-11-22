@@ -3,24 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/scheduleColorPrimary">
+        android:layout_height="30dp"
+        android:background="@color/scheduleColorPrimary"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/widgetPreviousDayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_left_white_24dp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/widgetDateView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="16sp"
             tools:text="Wednesday 22.11.2017" />
+
+        <ImageButton
+            android:id="@+id/widgetNextDayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_right_white_24dp"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <ListView
