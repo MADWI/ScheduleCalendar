@@ -6,5 +6,5 @@ import pl.edu.zut.mad.schedule.module.RepositoryModule
 @Component(modules = arrayOf(RepositoryModule::class))
 internal interface WidgetComponent {
 
-    fun inject(lessonsListRemoteViewsFactory: LessonsListRemoteViewsFactory)
+    fun inject(lessonsRemoteViewsFactory: LessonsRemoteViewsFactory)
 }

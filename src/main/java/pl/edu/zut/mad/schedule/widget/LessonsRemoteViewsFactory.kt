@@ -12,22 +12,22 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import javax.inject.Inject
 
-internal class LessonsListRemoteViewsFactory(private val context: Context)
+internal class LessonsRemoteViewsFactory(private val context: Context)
     : RemoteViewsService.RemoteViewsFactory {
 
     @Inject lateinit var scheduleRepository: ScheduleRepository
     private lateinit var optionalDay: OptionalDay
+    private lateinit var dayDate: LocalDate
 
     override fun onCreate() {
         DaggerWidgetComponent.builder()
             .build()
             .inject(this)
-        optionalDay = scheduleRepository.getDayByDate(LocalDate.now().plusDays(1)).blockingFirst()
     }
 
     override fun getViewAt(position: Int): RemoteViews =
         when (optionalDay) {
-            is EmptyDay -> RemoteViews(context.packageName, R.layout.lesson_item)
+            is EmptyDay -> RemoteViews(context.packageName, R.layout.no_lessons_item)
             is Day -> bindRemoteDay((optionalDay as Day).lessons[position])
         }
 
@@ -41,13 +41,15 @@ internal class LessonsListRemoteViewsFactory(private val context: Context)
             remoteViews
         }
 
-    override fun getLoadingView() = null // TODO
+    override fun getLoadingView() = null
 
     override fun getItemId(position: Int) = position.toLong()
 
     override fun hasStableIds() = true
 
     override fun onDataSetChanged() {
+        dayDate = LocalDate.now()
+        optionalDay = scheduleRepository.getDayByDate(dayDate).blockingFirst()
     }
 
     override fun getCount() =
