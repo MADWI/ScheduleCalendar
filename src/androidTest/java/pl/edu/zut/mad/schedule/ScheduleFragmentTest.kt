@@ -26,6 +26,10 @@ import pl.edu.zut.mad.schedule.module.ScheduleComponent
 
 internal class ScheduleFragmentTest {
 
+    companion object {
+        private const val ON_VIEW_IS_CREATED_TIMES_INVOCATION = 2
+    }
+
     @get:Rule
     val activityRule = ActivityTestRule(AppCompatActivity::class.java)
     val scheduleFragment = TestScheduleFragment()
@@ -45,7 +49,7 @@ internal class ScheduleFragmentTest {
     fun presenterOnViewIsCreatedShouldBeCalledWhenActivityResultIsOk() {
         scheduleFragment.onActivityResult(ScheduleFragment.REQUEST_CODE, RESULT_OK, null)
 
-        verify(scheduleFragment.presenter, times(2)).onViewIsCreated()
+        verify(scheduleFragment.presenter, times(ON_VIEW_IS_CREATED_TIMES_INVOCATION)).onViewIsCreated()
     }
 
     @Test
