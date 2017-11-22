@@ -46,8 +46,8 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         }
         val lesson = lessonEvent.event as Lesson
         with(lesson) {
-            view.timeStartView.text = timeRange.from
-            view.timeEndView.text = timeRange.to
+            view.timeStartView.text = timeRange.start
+            view.timeEndView.text = timeRange.end
             view.subjectWithTypeView.text = subjectWithType
             view.teacherWithRoomView.text = teacherWithRoom
         }
