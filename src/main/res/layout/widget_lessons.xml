@@ -21,7 +21,6 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             tools:text="Wednesday 22.11.2017" />
-        <!-- TODO: style -->
     </LinearLayout>
 
     <ListView
