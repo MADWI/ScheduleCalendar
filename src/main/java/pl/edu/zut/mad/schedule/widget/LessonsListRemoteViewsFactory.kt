@@ -5,26 +5,25 @@ import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.data.ScheduleDatabase
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.model.ui.Day
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
-import pl.edu.zut.mad.schedule.util.ModelMapper
+import javax.inject.Inject
 
-class ListRemoteViewsFactory(private val context: Context) : RemoteViewsService.RemoteViewsFactory {
+internal class LessonsListRemoteViewsFactory(private val context: Context)
+    : RemoteViewsService.RemoteViewsFactory {
 
+    @Inject lateinit var scheduleRepository: ScheduleRepository
     private lateinit var optionalDay: OptionalDay
 
-    override fun getLoadingView() = null // TODO
-
-    override fun getItemId(position: Int) = position.toLong()
-
-    override fun onDataSetChanged() {
+    override fun onCreate() {
+        DaggerWidgetComponent.builder()
+            .build()
+            .inject(this)
+        optionalDay = scheduleRepository.getDayByDate(LocalDate.now().plusDays(1)).blockingFirst()
     }
-
-    override fun hasStableIds() = true
 
     override fun getViewAt(position: Int): RemoteViews =
         when (optionalDay) {
@@ -42,6 +41,15 @@ class ListRemoteViewsFactory(private val context: Context) : RemoteViewsService.
             remoteViews
         }
 
+    override fun getLoadingView() = null // TODO
+
+    override fun getItemId(position: Int) = position.toLong()
+
+    override fun hasStableIds() = true
+
+    override fun onDataSetChanged() {
+    }
+
     override fun getCount() =
         when (optionalDay) {
             is EmptyDay -> 1
@@ -51,10 +59,5 @@ class ListRemoteViewsFactory(private val context: Context) : RemoteViewsService.
     override fun getViewTypeCount() = 2
 
     override fun onDestroy() {
-    }
-
-    override fun onCreate() {
-        val scheduleRepository = ScheduleRepository(ScheduleDatabase(), ModelMapper()) // TODO: injection
-        optionalDay = scheduleRepository.getDayByDate(LocalDate.now()).blockingFirst()
     }
 }

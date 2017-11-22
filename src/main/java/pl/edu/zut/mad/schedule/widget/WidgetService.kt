@@ -5,5 +5,5 @@ import android.widget.RemoteViewsService
 
 internal class WidgetService : RemoteViewsService() {
 
-    override fun onGetViewFactory(intent: Intent?) = ListRemoteViewsFactory(this)
+    override fun onGetViewFactory(intent: Intent?) = LessonsListRemoteViewsFactory(this)
 }
