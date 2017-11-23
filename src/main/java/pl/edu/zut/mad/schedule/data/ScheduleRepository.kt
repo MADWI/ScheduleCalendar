@@ -13,7 +13,7 @@ import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 internal class ScheduleRepository(private val database: ScheduleDatabase, private val mapper: ModelMapper) {
 
     companion object {
-        private const val DATE_COLUMN = "date"
+        const val DATE_COLUMN = "date"
     }
 
     fun save(days: List<DayApi>): Completable =

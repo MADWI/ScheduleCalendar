@@ -72,6 +72,14 @@ internal class MockData {
 
         @JvmStatic
         @DataProvider
+        fun dayApiAndUi(): Array<Array<Any>> {
+            val dayUi = dayUi()[0][0]
+            val dayApi = dayApi()[0][0]
+            return arrayOf(arrayOf(dayApi, dayUi))
+        }
+
+        @JvmStatic
+        @DataProvider
         fun emptyDay(): Array<Array<Any>> = arrayOf(arrayOf<Any>(EmptyDay(getUiDate())))
 
         private fun getApiDate(): Date {
