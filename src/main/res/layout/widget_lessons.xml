@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="@dimen/widget_date_text_size"
             tools:text="Wednesday 22.11.2017" />
     </LinearLayout>
 
