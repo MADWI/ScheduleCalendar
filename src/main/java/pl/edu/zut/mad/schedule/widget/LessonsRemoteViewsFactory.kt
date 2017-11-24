@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule.widget
 
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import org.joda.time.LocalDate
@@ -12,7 +13,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import javax.inject.Inject
 
-internal class LessonsRemoteViewsFactory(private val context: Context)
+internal class LessonsRemoteViewsFactory(private val context: Context, private val intent: Intent?)
     : RemoteViewsService.RemoteViewsFactory {
 
     @Inject lateinit var scheduleRepository: ScheduleRepository
@@ -45,7 +46,7 @@ internal class LessonsRemoteViewsFactory(private val context: Context)
 
     override fun getItemId(position: Int) = position.toLong()
 
-    override fun hasStableIds() = true
+    override fun hasStableIds() = false
 
     override fun onDataSetChanged() {
         dayDate = LocalDate.now()
