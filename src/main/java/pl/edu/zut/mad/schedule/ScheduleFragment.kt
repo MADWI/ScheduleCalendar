@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -31,7 +32,13 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
-        CalendarContentManager(calendarController, scheduleCalendarView, LessonsAdapter(activity))
+        val lessonAdapter = LessonsAdapter(activity)
+
+        // TODO: move to better place
+        lessonAdapter.lessonClickListener = {
+            Toast.makeText(context, "Lesson clicked ${it.subjectWithType}", Toast.LENGTH_SHORT).show()
+        }
+        CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

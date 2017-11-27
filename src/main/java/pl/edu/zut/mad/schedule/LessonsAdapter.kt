@@ -20,6 +20,8 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         private val DATE_FORMAT = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
     }
 
+    lateinit var lessonClickListener: (Lesson) -> Unit?
+
     private val itemViewColor by lazy {
         ContextCompat.getColor(context, R.color.scheduleLightGray)
     }
@@ -53,6 +55,9 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         }
         if (lesson.isCancelled) {
             view.cancelledTextView.visibility = View.VISIBLE
+        }
+        view.setOnClickListener {
+            lessonClickListener.invoke(lessonEvent.event as Lesson)
         }
     }
 
