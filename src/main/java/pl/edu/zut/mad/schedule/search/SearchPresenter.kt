@@ -6,7 +6,8 @@ import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.util.ModelMapper
 
-internal class SearchPresenter(private val view: SearchMvp.View, private val service: ScheduleService)
+internal class SearchPresenter(private val view: SearchMvp.View,
+    private val service: ScheduleService, private val modelMapper: ModelMapper)
     : SearchMvp.Presenter {
 
     override fun onSearch() {
@@ -20,7 +21,7 @@ internal class SearchPresenter(private val view: SearchMvp.View, private val ser
             .subscribe(
                 {
                     val daysUi = it.map {
-                        ModelMapper().toDayUiFromApi(it)
+                        modelMapper.toDayUiFromApi(it)
                     }
                     view.onScheduleDownloaded(daysUi)
                 },
