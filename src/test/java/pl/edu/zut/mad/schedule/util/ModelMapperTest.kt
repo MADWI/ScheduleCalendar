@@ -67,20 +67,20 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiTimerRangeFromIsEqualToTimeStart(dayApi: DayApi) {
+    fun dayUiTimeRangeStartIsEqualToTimeStart(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.timeRange.from).isEqualTo(TIME_START)
+        assertThat(lesson.timeRange.start).isEqualTo(TIME_START)
     }
 
     @Test
     @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiTimerRangeToIsEqualToTimeEnd(dayApi: DayApi) {
+    fun dayUiTimeRangeEndIsEqualToTimeEnd(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.timeRange.to).isEqualTo(TIME_END)
+        assertThat(lesson.timeRange.end).isEqualTo(TIME_END)
     }
 
     @Test

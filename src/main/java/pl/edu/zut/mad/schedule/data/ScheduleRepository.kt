@@ -13,7 +13,7 @@ import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 internal class ScheduleRepository(private val database: ScheduleDatabase, private val mapper: ModelMapper) {
 
     companion object {
-        private const val DATE_COLUMN = "date"
+        const val DATE_COLUMN = "date"
     }
 
     fun save(days: List<DayApi>): Completable =
@@ -26,15 +26,14 @@ internal class ScheduleRepository(private val database: ScheduleDatabase, privat
             .subscribeOn(Schedulers.io())
             .subscribe()
 
-    fun getDayByDate(date: LocalDate): Observable<OptionalDay> =
-        Observable.fromCallable<OptionalDay> {
-            database.instance.where(DayApi::class.java)
-                .equalTo(DATE_COLUMN, date.toDate())
-                .findFirst()
-                ?.asFlowable<DayApi>()
-                ?.map { mapper.toDayUiFromApi(it) }
-                ?.blockingFirst() ?: EmptyDay(date)
-        }
+    fun getDayByDate(date: LocalDate): Observable<OptionalDay> {
+        val day = database.instance.where(DayApi::class.java)
+            .equalTo(DATE_COLUMN, date.toDate())
+            .findFirst()
+        val optionalDay: OptionalDay =
+            if (day == null) EmptyDay(date) else mapper.toDayUiFromApi(day)
+        return Observable.just(optionalDay)
+    }
 
     fun getScheduleMinDate(): LocalDate = database.instance
         .where(DayApi::class.java)

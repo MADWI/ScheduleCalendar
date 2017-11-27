@@ -8,7 +8,8 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
 import pl.edu.zut.mad.schedule.data.model.api.Teacher
-import pl.edu.zut.mad.schedule.data.model.api.TimeRange
+import pl.edu.zut.mad.schedule.data.model.api.TimeRange as TimeRangeApi
+import pl.edu.zut.mad.schedule.data.model.ui.TimeRange as TimeRangeUi
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import java.util.Calendar
@@ -71,6 +72,14 @@ internal class MockData {
 
         @JvmStatic
         @DataProvider
+        fun dayApiAndUi(): Array<Array<Any>> {
+            val dayUi = dayUi()[0][0]
+            val dayApi = dayApi()[0][0]
+            return arrayOf(arrayOf(dayApi, dayUi))
+        }
+
+        @JvmStatic
+        @DataProvider
         fun emptyDay(): Array<Array<Any>> = arrayOf(arrayOf<Any>(EmptyDay(getUiDate())))
 
         private fun getApiDate(): Date {
@@ -83,12 +92,12 @@ internal class MockData {
 
         private fun getLessonApiWithReservationStatus(reservationStatus: String): LessonApi {
             val teacher = Teacher(ACADEMIC_TITLE, TEACHER_NAME, TEACHER_SURNAME)
-            val timeRange = TimeRange(TIME_START, TIME_END)
+            val timeRange = TimeRangeApi(TIME_START, TIME_END)
             return LessonApi(SUBJECT, TYPE, ROOM, teacher, reservationStatus, timeRange)
         }
 
         private fun getLessonUiWithCancellation(): LessonUi {
-            val timeRange = TimeRange(TIME_START, TIME_END)
+            val timeRange = TimeRangeUi(TIME_START, TIME_END)
             return LessonUi(TEACHER_WITH_ROOM, SUBJECT_WITH_TYPE, false, timeRange)
         }
     }
