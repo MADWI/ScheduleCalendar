@@ -12,6 +12,9 @@
     <string name="error_service_database_update">Baza danych serwera jest w trakcie aktualizacji, spróbuj ponownie za kilka minut</string>
     <string name="error_service_internal">Błąd serwera, spróbuj ponownie za kilka minut</string>
     <string name="error_service_unrecognized">Nieznany błąd, spróbuj ponownie za kilka minut</string>
+    <string name="teacher_name">Imię wykładowcy</string>
+    <string name="teacher_surname">Nazwisko wykładowcy</string>
+    <string name="faculty">Wydział</string>
     <string-array name="week_days">
         <item>Poniedziałek</item>
         <item>Wtorek</item>

@@ -16,6 +16,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
+import pl.edu.zut.mad.schedule.search.SearchScheduleActivity
 import pl.edu.zut.mad.schedule.util.app
 import java.util.Calendar
 import javax.inject.Inject
@@ -36,7 +37,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
         // TODO: move to better place
         lessonAdapter.lessonClickListener = {
-            Toast.makeText(context, "Lesson clicked ${it.subjectWithType}", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(context, SearchScheduleActivity::class.java))
         }
         CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
     }
