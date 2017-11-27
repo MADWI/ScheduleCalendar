@@ -34,8 +34,8 @@ internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHo
         fun bindLessonWithDate(lesson: Lesson) {
             with(lesson) {
                 itemView.dateView.text = "27-11-2017" // TODO: add date to ui.Lesson model
-                itemView.timeStartView.text = timeRange.from
-                itemView.timeEndView.text = timeRange.to
+                itemView.timeStartView.text = timeRange.start
+                itemView.timeEndView.text = timeRange.end
                 itemView.subjectWithTypeView.text = subjectWithType
                 itemView.teacherWithRoomView.text = teacherWithRoom
             }

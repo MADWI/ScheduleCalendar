@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Day
+import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
 internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
@@ -22,12 +23,9 @@ internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
         initViews()
     }
 
-    private fun initInjections() {
-        DaggerSearchComponent.builder()
-            .searchModule(SearchModule(this))
-            .build()
-            .inject(this)
-    }
+    private fun initInjections() = app.component
+        .plus(SearchModule(this))
+        .inject(this)
 
     private fun initViews() {
         searchButton.setOnClickListener {

@@ -5,11 +5,16 @@ import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.MessageProvider
+import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import javax.inject.Singleton
 
 @Module
 internal class UtilsModule {
+
+    @Provides
+    @Singleton
+    fun provideMapper() = ModelMapper()
 
     @Provides
     @Singleton
