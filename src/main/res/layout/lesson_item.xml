@@ -40,6 +40,13 @@
         app:layout_constraintTop_toBottomOf="@id/cancelledTextView">
 
         <TextView
+            android:id="@+id/dateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            tools:text="27-11-2017" />
+
+        <TextView
             android:id="@+id/timeStartView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

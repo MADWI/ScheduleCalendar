@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-internal class LessonsAdapter(private val context: Context) : DefaultEventAdapter() {
+internal class CalendarLessonsAdapter(private val context: Context) : DefaultEventAdapter() {
 
     companion object {
         private const val GRAY_ITEM_POSITION_INTERVAL = 2

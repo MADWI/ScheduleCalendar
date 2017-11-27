@@ -24,7 +24,7 @@
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-    	<activity android:name=".search.SearchScheduleActivity" />
+        <activity android:name=".search.SearchActivity" />
     </application>
 
 </manifest>

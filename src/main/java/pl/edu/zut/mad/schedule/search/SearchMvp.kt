@@ -1,6 +1,8 @@
 package pl.edu.zut.mad.schedule.search
 
-interface SearchMvp {
+import pl.edu.zut.mad.schedule.data.model.ui.Day
+
+internal interface SearchMvp {
 
     interface View {
         fun getTeacherName(): String
@@ -10,6 +12,8 @@ interface SearchMvp {
         fun getFacultyAbbreviation(): String
 
         fun getSubject(): String
+
+        fun onScheduleDownloaded(days: List<Day>)
     }
 
     interface Presenter {

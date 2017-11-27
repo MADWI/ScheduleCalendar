@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -16,7 +15,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
-import pl.edu.zut.mad.schedule.search.SearchScheduleActivity
+import pl.edu.zut.mad.schedule.search.SearchActivity
 import pl.edu.zut.mad.schedule.util.app
 import java.util.Calendar
 import javax.inject.Inject
@@ -33,11 +32,11 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
-        val lessonAdapter = LessonsAdapter(activity)
+        val lessonAdapter = CalendarLessonsAdapter(activity)
 
         // TODO: move to better place
         lessonAdapter.lessonClickListener = {
-            startActivity(Intent(context, SearchScheduleActivity::class.java))
+            startActivity(Intent(context, SearchActivity::class.java))
         }
         CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
     }
