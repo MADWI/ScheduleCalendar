@@ -11,12 +11,23 @@ import javax.inject.Inject
 internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
 
     @Inject internal lateinit var presenter: SearchMvp.Presenter
+    private val lessonsAdapter = LessonsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         init()
     }
+
+    override fun getTeacherName() = teacherNameInputView.text.toString()
+
+    override fun getTeacherSurname() = teacherSurnameInputView.text.toString()
+
+    override fun getFacultyAbbreviation() = facultyAbbreviationInputView.text.toString()
+
+    override fun getSubject() = subjectInputView.text.toString()
+
+    override fun onScheduleDownloaded(lessons: List<Lesson>) = lessonsAdapter.setLessons(lessons)
 
     private fun init() {
         initInjections()
@@ -28,6 +39,7 @@ internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
         .inject(this)
 
     private fun initViews() {
+        lessonsListView.adapter = lessonsAdapter
         searchButton.setOnClickListener {
             presenter.onSearch()
         }
@@ -35,19 +47,5 @@ internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
         teacherSurnameInputView.setText("Piela")
         facultyAbbreviationInputView.setText("WI")
         subjectInputView.setText("Modelowanie i symulacja systemów")
-    }
-
-    override fun getTeacherName() = teacherNameInputView.text.toString()
-
-    override fun getTeacherSurname() = teacherSurnameInputView.text.toString()
-
-    override fun getFacultyAbbreviation() = facultyAbbreviationInputView.text.toString()
-
-    override fun getSubject() = subjectInputView.text.toString()
-
-    override fun onScheduleDownloaded(lessons: List<Lesson>) {
-        val lessonsAdapter = LessonsAdapter() // TODO consider by constructor instead of setter
-        lessonsListView.adapter = lessonsAdapter
-        lessonsAdapter.setLessons(lessons)
     }
 }

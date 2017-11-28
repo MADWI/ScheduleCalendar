@@ -98,7 +98,8 @@ internal class MockData {
 
         private fun getLessonUiWithCancellation(): LessonUi {
             val timeRange = TimeRangeUi(TIME_START, TIME_END)
-            return LessonUi(TEACHER_WITH_ROOM, SUBJECT_WITH_TYPE, false, timeRange)
+            val date = getUiDate()
+            return LessonUi(TEACHER_WITH_ROOM, SUBJECT_WITH_TYPE, false, timeRange, date)
         }
     }
 }

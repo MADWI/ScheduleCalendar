@@ -128,4 +128,14 @@ internal class ModelMapperTest {
 
         assertThat(lessonEvent.hasEvent()).isFalse()
     }
+
+    @Test
+    @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
+    fun uiLessonsShouldConsistOfLessonFromApiDays(daysApi: List<DayApi>) {
+        val expectedLessonsCount = daysApi.map { it.lessons }.sumBy { it.size }
+
+        val lessons = modelMapper.toUiLessons(daysApi)
+
+        assertThat(lessons.size).isEqualTo(expectedLessonsCount)
+    }
 }
