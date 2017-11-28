@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_search.*
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.data.model.ui.Day
+import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
@@ -45,9 +45,9 @@ internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
 
     override fun getSubject() = subjectInputView.text.toString()
 
-    override fun onScheduleDownloaded(days: List<Day>) { // TODO mapped to lessons with date by parameter
+    override fun onScheduleDownloaded(lessons: List<Lesson>) {
         val lessonsAdapter = LessonsAdapter() // TODO consider by constructor instead of setter
         lessonsListView.adapter = lessonsAdapter
-        lessonsAdapter.setDays(days)
+        lessonsAdapter.setLessons(lessons)
     }
 }

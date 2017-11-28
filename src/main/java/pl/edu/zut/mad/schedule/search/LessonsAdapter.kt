@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.lesson_item.view.*
 import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.data.model.ui.Day
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHolder>() {
@@ -30,8 +29,8 @@ internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHo
 
     override fun getItemCount() = lessons.size
 
-    fun setDays(days: List<Day>) {
-        lessons = days.flatMap { it.lessons }
+    fun setLessons(lessons: List<Lesson>) {
+        this.lessons = lessons
         notifyDataSetChanged()
     }
 

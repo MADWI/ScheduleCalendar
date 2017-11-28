@@ -20,10 +20,8 @@ internal class SearchPresenter(private val view: SearchMvp.View,
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    val daysUi = it.map {
-                        modelMapper.toDayUiFromApi(it)
-                    }
-                    view.onScheduleDownloaded(daysUi)
+                    val lessons = modelMapper.toUiLessons(it)
+                    view.onScheduleDownloaded(lessons)
                 },
                 {
                     Log.e("Presenter error", it.toString())

@@ -1,6 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
-import pl.edu.zut.mad.schedule.data.model.ui.Day
+import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 internal interface SearchMvp {
 
@@ -13,7 +13,7 @@ internal interface SearchMvp {
 
         fun getSubject(): String
 
-        fun onScheduleDownloaded(days: List<Day>)
+        fun onScheduleDownloaded(lessons: List<Lesson>)
     }
 
     interface Presenter {
