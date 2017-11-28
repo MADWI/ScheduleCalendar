@@ -5,18 +5,18 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_search_input.*
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
-internal class SearchFragment : Fragment(), SearchMvp.View {
+internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     @Inject internal lateinit var presenter: SearchMvp.Presenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-        inflater.inflate(R.layout.fragment_search, container, false)
+        inflater.inflate(R.layout.fragment_search_input, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

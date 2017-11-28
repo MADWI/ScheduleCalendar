@@ -15,6 +15,8 @@
     <string name="teacher_name">Imię wykładowcy</string>
     <string name="teacher_surname">Nazwisko wykładowcy</string>
     <string name="faculty">Wydział</string>
+    <string name="room">Sala</string>
+    <string name="subject">Przedmiot</string>
     <string-array name="week_days">
         <item>Poniedziałek</item>
         <item>Wtorek</item>
@@ -24,5 +26,4 @@
         <item>Sobota</item>
         <item>Niedziela</item>
     </string-array>
-    <string name="room">Sala</string>
 </resources>

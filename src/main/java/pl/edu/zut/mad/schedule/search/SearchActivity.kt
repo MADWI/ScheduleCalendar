@@ -14,7 +14,7 @@ internal class SearchActivity : AppCompatActivity() {
 
     private fun startSearchFragment() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.searchMainContainer, SearchFragment())
+            .replace(R.id.searchMainContainer, SearchInputFragment())
             .commit()
     }
 }

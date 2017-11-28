@@ -10,5 +10,5 @@ import pl.edu.zut.mad.schedule.module.ServiceModule
 ))
 internal interface SearchComponent {
 
-    fun inject(searchFragment: SearchFragment)
+    fun inject(searchInputFragment: SearchInputFragment)
 }
