@@ -1,10 +1,10 @@
 package pl.edu.zut.mad.schedule.search
 
-import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.util.ModelMapper
+import pl.edu.zut.mad.schedule.util.log
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper)
@@ -15,7 +15,9 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val teacherSurname = view.getTeacherSurname()
         val subject = view.getSubject()
         val faculty = view.getFacultyAbbreviation()
-        service.fetchScheduleByQueries(teacherName, teacherSurname, faculty, subject)
+        val dateFrom = view.getDateFrom()
+        val dateTo = view.getDateTo()
+        service.fetchScheduleByQueries(teacherName, teacherSurname, faculty, subject, dateFrom.toString(), dateTo.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -24,7 +26,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
                     view.onScheduleDownloaded(lessons)
                 },
                 {
-                    Log.e("Presenter error", it.toString()) // TODO loading and error
+                    log("Error $it") // TODO loading and error
                 }
             )
     }

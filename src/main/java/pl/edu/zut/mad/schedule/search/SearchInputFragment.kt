@@ -39,6 +39,12 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun getSubject() = subjectInputView.text.toString()
 
+    override fun getDateFrom(): LocalDate =
+        LocalDate.parse(dateFromView.text.toString(), DATE_FORMATTER)
+
+    override fun getDateTo(): LocalDate =
+        LocalDate.parse(dateToView.text.toString(), DATE_FORMATTER)
+
     override fun onScheduleDownloaded(lessons: List<Lesson>) {
         val searchResultsFragment = SearchResultsFragment.newInstance(lessons)
         activity.supportFragmentManager.beginTransaction()
@@ -69,24 +75,30 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initDatePickers() {
         val dateFrom = LocalDate.now()
-        dateFromView.text = dateFrom.toString()
+        dateFromView.text = dateFrom.toString(DATE_FORMATTER)
         dateFromView.setOnClickListener {
             DatePickerDialog(context,
                 DatePickerDialog.OnDateSetListener
                 { _, year, month, dayOfMonth -> dateFromView.text = parseDate(dayOfMonth, month, year) },
-                dateFrom.year, dateFrom.monthOfYear, dateFrom.dayOfMonth)
+                dateFrom.year, dateFrom.monthOfYear - 1, dateFrom.dayOfMonth)
                 .show()
         }
         val dateTo = dateFrom.plusDays(7)
-        dateToView.text = dateTo.toString()
+        dateToView.text = dateTo.toString(DATE_FORMATTER)
         dateToView.setOnClickListener {
-            DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth -> parseDate(dayOfMonth, month, year) },
-                dateTo.year, dateTo.monthOfYear, dateTo.dayOfMonth)
+            DatePickerDialog(context,
+                DatePickerDialog.OnDateSetListener
+                { _, year, month, dayOfMonth -> dateToView.text = parseDate(dayOfMonth, month, year) },
+                dateTo.year, dateTo.monthOfYear - 1, dateTo.dayOfMonth)
                 .show()
         }
     }
 
     private fun parseDate(dayOfMonth: Int, month: Int, year: Int): String? {
-        return DATE_FORMATTER.print(LocalDate.parse("$year-${month + 1}-$dayOfMonth"))
+        val date = LocalDate()
+            .withDayOfMonth(dayOfMonth)
+            .withMonthOfYear(month + 1)
+            .withYear(year)
+        return DATE_FORMATTER.print(date)
     }
 }
