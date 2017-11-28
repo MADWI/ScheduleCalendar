@@ -24,19 +24,19 @@ internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHo
     }
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
-        holder.bindLessonWithDate(lessons[position])
+        holder.bindLesson(lessons[position])
     }
 
     override fun getItemCount() = lessons.size
 
     fun setLessons(lessons: List<Lesson>) {
-        this.lessons = lessons
+        this.lessons = lessons // TODO clear and addAll
         notifyDataSetChanged()
     }
 
     class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bindLessonWithDate(lesson: Lesson) {
+        fun bindLesson(lesson: Lesson) {
             with(lesson) {
                 itemView.dateView.text = DATE_FORMATTER.print(lesson.date)
                 itemView.timeStartView.text = timeRange.start

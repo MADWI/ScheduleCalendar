@@ -32,8 +32,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun getSubject() = subjectInputView.text.toString()
 
     override fun onScheduleDownloaded(lessons: List<Lesson>) {
+        val searchResultsFragment = SearchResultsFragment.newInstance(lessons)
         activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.searchMainContainer, SearchResultsFragment())
+            .replace(R.id.searchMainContainer, searchResultsFragment)
+            .addToBackStack(null)
             .commit()
     }
 

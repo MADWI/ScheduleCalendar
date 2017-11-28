@@ -17,6 +17,7 @@
     <string name="faculty">Faculty</string>
     <string name="subject">Subject</string>
     <string name="room">Room</string>
+    <string name="filed_of_study">Filed of study</string>
     <string-array name="week_days">
         <item>Monday</item>
         <item>Tuesday</item>
