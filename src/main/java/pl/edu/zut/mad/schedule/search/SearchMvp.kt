@@ -19,6 +19,12 @@ internal interface SearchMvp {
         fun getDateTo(): LocalDate
 
         fun onScheduleDownloaded(lessons: List<Lesson>)
+
+        fun showLoading()
+
+        fun hideLoading()
+
+        fun showError()
     }
 
     interface Presenter {

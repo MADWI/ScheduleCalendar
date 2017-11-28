@@ -11,6 +11,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     : SearchMvp.Presenter {
 
     override fun onSearch() {
+        view.showLoading()
         val teacherName = view.getTeacherName()
         val teacherSurname = view.getTeacherSurname()
         val subject = view.getSubject()
@@ -20,6 +21,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         service.fetchScheduleByQueries(teacherName, teacherSurname, faculty, subject, dateFrom.toString(), dateTo.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnComplete { view.hideLoading() }
             .subscribe(
                 {
                     val lessons = modelMapper.toUiLessons(it)

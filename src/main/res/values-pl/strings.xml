@@ -17,13 +17,9 @@
     <string name="faculty">Wydział</string>
     <string name="room">Sala</string>
     <string name="subject">Przedmiot</string>
-    <string-array name="week_days">
-        <item>Poniedziałek</item>
-        <item>Wtorek</item>
-        <item>Środa</item>
-        <item>Czwartek</item>
-        <item>Piątek</item>
-        <item>Sobota</item>
-        <item>Niedziela</item>
+    <string name="filed_of_study">Kierunek studiów</string>
+    <string-array name="form_entries">
+        <item>stacjonarne</item>
+        <item>niestacjonarne</item>
     </string-array>
 </resources>

@@ -45,6 +45,15 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun getDateTo(): LocalDate =
         LocalDate.parse(dateToView.text.toString(), DATE_FORMATTER)
 
+    override fun showLoading() {
+    }
+
+    override fun hideLoading() {
+    }
+
+    override fun showError() {
+    }
+
     override fun onScheduleDownloaded(lessons: List<Lesson>) {
         val searchResultsFragment = SearchResultsFragment.newInstance(lessons)
         activity.supportFragmentManager.beginTransaction()
