@@ -5,11 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.lesson_item.view.*
+import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Day
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHolder>() {
+
+    companion object {
+        private const val DATE_FORMAT = "dd-MM-yyyy"
+        private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT)
+    }
 
     private var lessons: List<Lesson> = ArrayList()
 
@@ -33,7 +39,7 @@ internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHo
 
         fun bindLessonWithDate(lesson: Lesson) {
             with(lesson) {
-                itemView.dateView.text = "27-11-2017" // TODO: add date to ui.Lesson model
+                itemView.dateView.text = DATE_FORMATTER.print(lesson.date)
                 itemView.timeStartView.text = timeRange.start
                 itemView.timeEndView.text = timeRange.end
                 itemView.subjectWithTypeView.text = subjectWithType

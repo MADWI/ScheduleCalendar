@@ -45,8 +45,8 @@ internal class SearchActivity : AppCompatActivity(), SearchMvp.View {
 
     override fun getSubject() = subjectInputView.text.toString()
 
-    override fun onScheduleDownloaded(days: List<Day>) { // TODO: mapped to lessons with date by parameter
-        val lessonsAdapter = LessonsAdapter() // TODO: consider by constructor instead of setter
+    override fun onScheduleDownloaded(days: List<Day>) { // TODO mapped to lessons with date by parameter
+        val lessonsAdapter = LessonsAdapter() // TODO consider by constructor instead of setter
         lessonsListView.adapter = lessonsAdapter
         lessonsAdapter.setDays(days)
     }
