@@ -28,8 +28,7 @@ internal class SearchResultsFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val lessonsAdapter = LessonsAdapter()
-        lessonsAdapter.setLessons(arguments.getParcelableArrayList(LESSONS_KEY))
-        lessonsListView.adapter = lessonsAdapter
+        val lessons = arguments.getParcelableArrayList<Lesson>(LESSONS_KEY)
+        lessonsListView.adapter = LessonsAdapter(lessons)
     }
 }

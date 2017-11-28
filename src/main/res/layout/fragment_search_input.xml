@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -85,7 +84,22 @@
             android:hint="@string/filed_of_study" />
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/dateFromView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_date_black_24dp"
+        tools:text="21-11-2017" />
+
+    <TextView
+        android:id="@+id/dateToView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_date_black_24dp"
+        tools:text="28-11-2017" />
+
     <Button
+        android:layout_gravity="bottom"
         android:id="@+id/searchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,17 +1,25 @@
 package pl.edu.zut.mad.schedule.search
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_search_input.*
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
+
+    companion object {
+        private const val DATE_FORMAT = "dd-MM-yyyy"
+        private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT) // TODO move to config class
+    }
 
     @Inject internal lateinit var presenter: SearchMvp.Presenter
 
@@ -49,6 +57,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         .inject(this)
 
     private fun initViews() {
+        initDatePickers()
         searchButton.setOnClickListener {
             presenter.onSearch()
         }
@@ -56,5 +65,28 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         teacherSurnameInputView.setText("Piela")
         facultyAbbreviationInputView.setText("WI")
         subjectInputView.setText("Modelowanie i symulacja systemów")
+    }
+
+    private fun initDatePickers() {
+        val dateFrom = LocalDate.now()
+        dateFromView.text = dateFrom.toString()
+        dateFromView.setOnClickListener {
+            DatePickerDialog(context,
+                DatePickerDialog.OnDateSetListener
+                { _, year, month, dayOfMonth -> dateFromView.text = parseDate(dayOfMonth, month, year) },
+                dateFrom.year, dateFrom.monthOfYear, dateFrom.dayOfMonth)
+                .show()
+        }
+        val dateTo = dateFrom.plusDays(7)
+        dateToView.text = dateTo.toString()
+        dateToView.setOnClickListener {
+            DatePickerDialog(context, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth -> parseDate(dayOfMonth, month, year) },
+                dateTo.year, dateTo.monthOfYear, dateTo.dayOfMonth)
+                .show()
+        }
+    }
+
+    private fun parseDate(dayOfMonth: Int, month: Int, year: Int): String? {
+        return DATE_FORMATTER.print(LocalDate.parse("$year-${month + 1}-$dayOfMonth"))
     }
 }

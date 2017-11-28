@@ -9,14 +9,13 @@ import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
-internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHolder>() {
+internal class LessonsAdapter(private var lessons: List<Lesson>) :
+    RecyclerView.Adapter<LessonsAdapter.LessonViewHolder>() {
 
     companion object {
         private const val DATE_FORMAT = "dd-MM-yyyy"
         private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT)
     }
-
-    private var lessons: List<Lesson> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.lesson_item, parent, false)
@@ -28,11 +27,6 @@ internal class LessonsAdapter : RecyclerView.Adapter<LessonsAdapter.LessonViewHo
     }
 
     override fun getItemCount() = lessons.size
-
-    fun setLessons(lessons: List<Lesson>) {
-        this.lessons = lessons // TODO clear and addAll
-        notifyDataSetChanged()
-    }
 
     class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
