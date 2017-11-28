@@ -15,6 +15,8 @@
     <string name="teacher_name">Teacher name</string>
     <string name="teacher_surname">Teacher surname</string>
     <string name="faculty">Faculty</string>
+    <string name="subject">Subject</string>
+    <string name="room">Room</string>
     <string-array name="week_days">
         <item>Monday</item>
         <item>Tuesday</item>

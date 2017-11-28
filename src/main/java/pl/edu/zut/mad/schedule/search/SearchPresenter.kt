@@ -24,7 +24,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
                     view.onScheduleDownloaded(lessons)
                 },
                 {
-                    Log.e("Presenter error", it.toString())
+                    Log.e("Presenter error", it.toString()) // TODO loading and error
                 }
             )
     }

@@ -24,4 +24,5 @@
         <item>Sobota</item>
         <item>Niedziela</item>
     </string-array>
+    <string name="room">Sala</string>
 </resources>
