@@ -6,7 +6,8 @@ import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
-import kotlinx.android.synthetic.main.lesson_item.view.*
+import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
+import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import java.text.SimpleDateFormat
@@ -36,7 +37,7 @@ internal class CalendarLessonsAdapter(private val context: Context) : DefaultEve
     }
 
     override fun getEventLayout(isEmptyEvent: Boolean) =
-        if (isEmptyEvent) R.layout.lesson_item else R.layout.no_lessons_item
+        if (isEmptyEvent) R.layout.lesson_calendar_item else R.layout.no_lessons_item
 
     override fun getEventItemView(view: View, event: CalendarEvent, position: Int) {
         val lessonEvent = event as LessonEvent

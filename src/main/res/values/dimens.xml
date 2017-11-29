@@ -19,4 +19,5 @@
     <dimen name="widget_min_width">250dp</dimen>
     <dimen name="widget_date_text_size">16sp</dimen>
     <dimen name="search_input_padding">16dp</dimen>
+    <dimen name="lesson_time_group_width">80dp</dimen>
 </resources>

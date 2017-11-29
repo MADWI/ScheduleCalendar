@@ -33,7 +33,7 @@ internal class LessonsRemoteViewsFactory(private val context: Context)
 
     private fun bindRemoteDay(lesson: Lesson) =
         with(lesson) {
-            val remoteViews = RemoteViews(context.packageName, R.layout.lesson_item)
+            val remoteViews = RemoteViews(context.packageName, R.layout.lesson_calendar_item)
             remoteViews.setTextViewText(R.id.timeStartView, timeRange.start)
             remoteViews.setTextViewText(R.id.timeEndView, timeRange.end)
             remoteViews.setTextViewText(R.id.teacherWithRoomView, teacherWithRoom)

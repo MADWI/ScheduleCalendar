@@ -131,11 +131,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            app:spinning_bar_padding="5dp"
-            android:textColor="@color/white"
             android:background="@color/scheduleColorPrimaryDark"
+            android:text="@android:string/search_go"
+            android:textColor="@color/white"
             app:spinning_bar_color="@color/white"
-            android:text="@android:string/search_go" />
+            app:spinning_bar_padding="5dp" />
 
     </LinearLayout>
 
