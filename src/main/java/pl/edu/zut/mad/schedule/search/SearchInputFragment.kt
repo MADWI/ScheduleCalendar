@@ -17,6 +17,7 @@ import javax.inject.Inject
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     companion object {
+        private const val DAYS_IN_WEEK = 7
         private const val DATE_FORMAT = "dd-MM-yyyy"
         private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT) // TODO move to config class
     }
@@ -38,6 +39,12 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun getFacultyAbbreviation() = facultyAbbreviationInputView.text.toString()
 
     override fun getSubject() = subjectInputView.text.toString()
+
+    override fun getFieldOfStudy() = fieldOfStudyInputView.text.toString()
+
+    override fun getSemester(): Int? = semesterSpinnerView.selectedItem?.toString()?.toInt()
+
+    override fun getForm() = formSpinnerView.selectedItem?.toString() ?: ""
 
     override fun getDateFrom(): LocalDate =
         LocalDate.parse(dateFromView.text.toString(), DATE_FORMATTER)
@@ -92,7 +99,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
                 dateFrom.year, dateFrom.monthOfYear - 1, dateFrom.dayOfMonth)
                 .show()
         }
-        val dateTo = dateFrom.plusDays(7)
+        val dateTo = dateFrom.plusDays(DAYS_IN_WEEK)
         dateToView.text = dateTo.toString(DATE_FORMATTER)
         dateToView.setOnClickListener {
             DatePickerDialog(context,
@@ -103,7 +110,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    private fun parseDate(dayOfMonth: Int, month: Int, year: Int): String? {
+    private fun parseDate(dayOfMonth: Int, month: Int, year: Int): String {
         val date = LocalDate()
             .withDayOfMonth(dayOfMonth)
             .withMonthOfYear(month + 1)

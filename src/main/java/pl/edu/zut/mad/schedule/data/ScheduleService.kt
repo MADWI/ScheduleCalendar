@@ -14,7 +14,8 @@ internal interface ScheduleService {
     @GET(".")
     fun fetchScheduleByQueries(@Query("name") teacherName: String, @Query("surname") teacherSurname: String,
         @Query("facultyAbbreviation") facultyAbbreviation: String, @Query("subject") subject: String,
-        @Query("dateFrom") dateFrom: String, @Query("dateTo") dateTo: String)
+        @Query("fieldOfStudy") fieldOfStudy: String, @Query("semester") semester: Int?,
+        @Query("form") form: String, @Query("dateFrom") dateFrom: String, @Query("dateTo") dateTo: String)
         : Observable<List<Day>>
 
     companion object {

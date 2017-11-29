@@ -49,6 +49,7 @@ ext {
     assertj_version = '3.8.0'
     data_provider_version = '1.10.0'
     espresso_version = '2.2.2'
+    material_spinner_version = '2.0.0'
 }
 
 buildscript {
@@ -97,6 +98,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
 
     implementation "com.ognev.kotlin.agendacalendarview:kotlin-agendacalendarview:$calendar_version"
+    implementation "com.github.ganfra:material-spinner:$material_spinner_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"

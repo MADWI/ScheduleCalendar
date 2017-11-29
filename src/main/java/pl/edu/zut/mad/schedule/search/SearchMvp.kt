@@ -14,6 +14,12 @@ internal interface SearchMvp {
 
         fun getSubject(): String
 
+        fun getFieldOfStudy(): String
+
+        fun getSemester(): Int?
+
+        fun getForm(): String
+
         fun getDateFrom(): LocalDate
 
         fun getDateTo(): LocalDate

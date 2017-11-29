@@ -12,6 +12,10 @@
             android:name=".login.LoginActivity"
             android:theme="@style/Login" />
 
+        <activity
+            android:name=".search.SearchActivity"
+            android:theme="@style/Search" />
+
         <receiver android:name=".widget.ScheduleWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -25,7 +29,6 @@
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <activity android:name=".search.SearchActivity" />
     </application>
 
 </manifest>
