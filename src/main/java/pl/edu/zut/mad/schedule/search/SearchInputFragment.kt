@@ -55,11 +55,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun getDateTo(): LocalDate =
         LocalDate.parse(dateToView.text.toString(), DATE_FORMATTER)
 
-    override fun showLoading() {
-    }
+    override fun showLoading() = searchButton.startAnimation()
 
-    override fun hideLoading() {
-    }
+    override fun hideLoading() = searchButton.revertAnimation()
 
     override fun showError(@StringRes errorRes: Int) {
         val contentView = activity.findViewById<View>(android.R.id.content)

@@ -23,6 +23,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     override fun onSearch() {
         view.showLoading()
         if (!networkConnection.isAvailable()) {
+            view.hideLoading()
             view.showError(R.string.error_no_internet)
             return
         }
@@ -39,19 +40,20 @@ internal class SearchPresenter(private val view: SearchMvp.View,
             fieldOfStudy, semester, form, dateFrom.toString(DATE_FORMATTER), dateTo.toString(DATE_FORMATTER))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { view.hideLoading() }
             .subscribe(
-                { showLessons(it) },
-                { showError(it) }
+                { showLessonsAndHideLoading(it) },
+                { showErrorAndHideLoading(it) }
             )
     }
 
-    private fun showLessons(days: List<Day>) {
+    private fun showLessonsAndHideLoading(days: List<Day>) {
+        view.hideLoading()
         val lessons = modelMapper.toUiLessons(days)
         view.onScheduleDownloaded(lessons)
     }
 
-    private fun showError(error: Throwable) {
+    private fun showErrorAndHideLoading(error: Throwable) {
+        view.hideLoading()
         val errorResId = messageProvider.getResIdByError(error)
         view.showError(errorResId)
     }

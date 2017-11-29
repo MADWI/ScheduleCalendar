@@ -2,8 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="pl.edu.zut.mad.schedule.search.SearchActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -127,11 +126,15 @@
             android:paddingTop="@dimen/search_input_padding"
             tools:text="28-11-2017" />
 
-        <Button
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/searchButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_horizontal"
+            app:spinning_bar_padding="5dp"
+            android:textColor="@color/white"
+            android:background="@color/scheduleColorPrimaryDark"
+            app:spinning_bar_color="@color/white"
             android:text="@android:string/search_go" />
 
     </LinearLayout>

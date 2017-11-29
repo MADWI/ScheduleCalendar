@@ -48,8 +48,9 @@ ext {
     dagger_mock_version = '0.8.2'
     assertj_version = '3.8.0'
     data_provider_version = '1.10.0'
-    espresso_version = '2.2.2'
+    espresso_version = '3.0.1'
     material_spinner_version = '2.0.0'
+    loading_button_version = '1.8.4'
 }
 
 buildscript {
@@ -99,6 +100,7 @@ dependencies {
 
     implementation "com.ognev.kotlin.agendacalendarview:kotlin-agendacalendarview:$calendar_version"
     implementation "com.github.ganfra:material-spinner:$material_spinner_version"
+    implementation "br.com.simplepass:loading-button-android:$loading_button_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
