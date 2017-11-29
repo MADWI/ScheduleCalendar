@@ -3,14 +3,16 @@ package pl.edu.zut.mad.schedule.search
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.joda.time.format.DateTimeFormat
+import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.util.ModelMapper
+import pl.edu.zut.mad.schedule.util.NetworkConnection
 import pl.edu.zut.mad.schedule.util.log
 import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
-    private val service: ScheduleService, private val modelMapper: ModelMapper)
-    : SearchMvp.Presenter {
+    private val service: ScheduleService, private val modelMapper: ModelMapper,
+    private val networkConnection: NetworkConnection) : SearchMvp.Presenter {
 
     companion object {
         private const val DATE_FORMAT = "dd-MM-yyyy"
@@ -19,6 +21,10 @@ internal class SearchPresenter(private val view: SearchMvp.View,
 
     override fun onSearch() {
         view.showLoading()
+        if (!networkConnection.isAvailable()) {
+            view.showError(R.string.error_no_internet)
+            return
+        }
         val teacherName = view.getTeacherName()
         val teacherSurname = view.getTeacherSurname()
         val facultyAbbreviation = view.getFacultyAbbreviation()
@@ -29,7 +35,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val dateFrom = view.getDateFrom()
         val dateTo = view.getDateTo()
         service.fetchScheduleByQueries(teacherName, teacherSurname, facultyAbbreviation, subject,
-            fieldOfStudy, semester, form,  dateFrom.toString(DATE_FORMATTER), dateTo.toString(DATE_FORMATTER))
+            fieldOfStudy, semester, form, dateFrom.toString(DATE_FORMATTER), dateTo.toString(DATE_FORMATTER))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete { view.hideLoading() }

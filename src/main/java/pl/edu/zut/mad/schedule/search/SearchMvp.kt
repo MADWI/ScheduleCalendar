@@ -1,5 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
+import android.support.annotation.StringRes
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
@@ -30,7 +31,7 @@ internal interface SearchMvp {
 
         fun hideLoading()
 
-        fun showError()
+        fun showError(@StringRes errorRes: Int)
     }
 
     interface Presenter {
