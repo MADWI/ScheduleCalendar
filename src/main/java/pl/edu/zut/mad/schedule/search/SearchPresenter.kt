@@ -5,14 +5,15 @@ import io.reactivex.schedulers.Schedulers
 import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
+import pl.edu.zut.mad.schedule.data.model.api.Day
+import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
-import pl.edu.zut.mad.schedule.util.log
-import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
-    private val networkConnection: NetworkConnection) : SearchMvp.Presenter {
+    private val networkConnection: NetworkConnection, private val messageProvider: MessageProvider)
+    : SearchMvp.Presenter {
 
     companion object {
         private const val DATE_FORMAT = "dd-MM-yyyy"
@@ -40,13 +41,18 @@ internal class SearchPresenter(private val view: SearchMvp.View,
             .observeOn(AndroidSchedulers.mainThread())
             .doOnComplete { view.hideLoading() }
             .subscribe(
-                {
-                    val lessons = modelMapper.toUiLessons(it)
-                    view.onScheduleDownloaded(lessons)
-                },
-                {
-                    log("Error " + (it as HttpException).response()) // TODO loading and error
-                }
+                { showLessons(it) },
+                { showError(it) }
             )
+    }
+
+    private fun showLessons(days: List<Day>) {
+        val lessons = modelMapper.toUiLessons(days)
+        view.onScheduleDownloaded(lessons)
+    }
+
+    private fun showError(error: Throwable) {
+        val errorResId = messageProvider.getResIdByError(error)
+        view.showError(errorResId)
     }
 }
