@@ -3,7 +3,6 @@ package pl.edu.zut.mad.schedule.search
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.MessageProvider
@@ -14,7 +13,7 @@ import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
-    private val networkConnection: NetworkConnection, private val messageProvider: MessageProvider)
+    private val networkConnection: NetworkConnection, private val messageProvider: MessageProvider) //TODO separate provider for login and search
     : SearchMvp.Presenter {
 
     override fun onSearch() {
@@ -34,10 +33,8 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val form = view.getForm()
         val dateFrom = view.getDateFrom()
         val dateTo = view.getDateTo()
-        val dateFromQuery = dateFrom.toString(ScheduleDate.UI_FORMATTER)
-        val dateToQuery = dateTo.toString(ScheduleDate.UI_FORMATTER)
         service.fetchScheduleByQueries(teacherName, teacherSurname, facultyAbbreviation, subject,
-            fieldOfStudy, courseType, semester, form, dateFromQuery, dateToQuery)
+            fieldOfStudy, courseType, semester, form, dateFrom, dateTo)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

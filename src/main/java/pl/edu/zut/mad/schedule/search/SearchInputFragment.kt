@@ -50,11 +50,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun getForm() = formSpinnerView.selectedItem?.toString() ?: ""
 
-    override fun getDateFrom(): LocalDate =
-        LocalDate.parse(dateFromView.text.toString(), ScheduleDate.UI_FORMATTER)
+    override fun getDateFrom() = dateFromView.text.toString()
 
-    override fun getDateTo(): LocalDate =
-        LocalDate.parse(dateToView.text.toString(), ScheduleDate.UI_FORMATTER)
+    override fun getDateTo() = dateToView.text.toString()
 
     override fun showLoading() = searchButton.startAnimation()
 

@@ -1,7 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
 import android.support.annotation.StringRes
-import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 internal interface SearchMvp {
@@ -23,9 +22,9 @@ internal interface SearchMvp {
 
         fun getForm(): String
 
-        fun getDateFrom(): LocalDate
+        fun getDateFrom(): String
 
-        fun getDateTo(): LocalDate
+        fun getDateTo(): String
 
         fun onScheduleDownloaded(lessons: List<Lesson>)
 
