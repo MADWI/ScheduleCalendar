@@ -10,7 +10,7 @@
         <item name="spinning_bar_padding">@dimen/spinning_bar_padding</item>
     </style>
     
-    <declare-styleable name="br.com.simplepass.loading_button_lib.customViews.CircularProgressButton">
+    <declare-styleable name="CircularProgressButton">
         <attr name="spinning_bar_color" format="color" />
         <attr name="spinning_bar_padding" format="dimension" />
     </declare-styleable>

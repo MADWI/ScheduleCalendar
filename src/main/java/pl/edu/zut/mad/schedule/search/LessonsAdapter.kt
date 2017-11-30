@@ -6,17 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.lesson_search_item.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
-import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 internal class LessonsAdapter(private var lessons: List<Lesson>) :
     RecyclerView.Adapter<LessonsAdapter.LessonViewHolder>() {
-
-    companion object {
-        private const val DATE_FORMAT = "dd-MM-yyyy" // TODO  move to config class
-        private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.lesson_search_item, parent, false)
@@ -33,8 +28,8 @@ internal class LessonsAdapter(private var lessons: List<Lesson>) :
 
         fun bindLesson(lesson: Lesson) {
             with(lesson) {
-                itemView.dateView.text = DATE_FORMATTER.print(lesson.date)
-                itemView.timeView.text = String.format("%s-%s", timeRange.start, timeRange.end) // TODO move to config class
+                itemView.dateView.text = ScheduleDate.UI_FORMATTER.print(lesson.date)
+                itemView.timeView.text = String.format(ScheduleDate.TIME_SEARCH_LESSON_PATTERN, timeRange.start, timeRange.end)
                 itemView.subjectWithTypeView.text = subjectWithType
                 itemView.teacherWithRoomView.text = teacherWithRoom
             }

@@ -11,8 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
@@ -21,8 +21,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     companion object {
         private const val DAYS_IN_WEEK = 7
-        private const val DATE_FORMAT = "dd-MM-yyyy"
-        private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT) // TODO move to config class
     }
 
     @Inject internal lateinit var presenter: SearchMvp.Presenter
@@ -50,10 +48,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun getForm() = formSpinnerView.selectedItem?.toString() ?: ""
 
     override fun getDateFrom(): LocalDate =
-        LocalDate.parse(dateFromView.text.toString(), DATE_FORMATTER)
+        LocalDate.parse(dateFromView.text.toString(), ScheduleDate.UI_FORMATTER)
 
     override fun getDateTo(): LocalDate =
-        LocalDate.parse(dateToView.text.toString(), DATE_FORMATTER)
+        LocalDate.parse(dateToView.text.toString(), ScheduleDate.UI_FORMATTER)
 
     override fun showLoading() = searchButton.startAnimation()
 
@@ -94,7 +92,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initDatePickers() {
         val dateFrom = LocalDate.now()
-        dateFromView.text = dateFrom.toString(DATE_FORMATTER)
+        dateFromView.text = dateFrom.toString(ScheduleDate.UI_FORMATTER)
         dateFromView.setOnClickListener {
             DatePickerDialog(context,
                 DatePickerDialog.OnDateSetListener
@@ -103,7 +101,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
                 .show()
         }
         val dateTo = dateFrom.plusDays(DAYS_IN_WEEK)
-        dateToView.text = dateTo.toString(DATE_FORMATTER)
+        dateToView.text = dateTo.toString(ScheduleDate.UI_FORMATTER)
         dateToView.setOnClickListener {
             DatePickerDialog(context,
                 DatePickerDialog.OnDateSetListener
@@ -118,6 +116,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .withDayOfMonth(dayOfMonth)
             .withMonthOfYear(month + 1)
             .withYear(year)
-        return DATE_FORMATTER.print(date)
+        return ScheduleDate.UI_FORMATTER.print(date)
     }
 }

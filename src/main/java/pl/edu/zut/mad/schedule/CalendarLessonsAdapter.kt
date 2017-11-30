@@ -10,15 +10,12 @@ import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 internal class CalendarLessonsAdapter(private val context: Context) : DefaultEventAdapter() {
 
     companion object {
         private const val GRAY_ITEM_POSITION_INTERVAL = 2
-        private val DATE_FORMAT = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
     }
 
     lateinit var lessonClickListener: (Lesson) -> Unit?
@@ -33,7 +30,8 @@ internal class CalendarLessonsAdapter(private val context: Context) : DefaultEve
     override fun getHeaderLayout() = R.layout.lesson_header
 
     override fun getHeaderItemView(view: View, day: Calendar) {
-        view.findViewById<TextView>(R.id.lessonDayView).text = DATE_FORMAT.format(day.time)
+        val headerText = ScheduleDate.UI_LESSON_HEADER_FORMATTER.print(day.time.time)
+        view.findViewById<TextView>(R.id.lessonHeaderDateView).text = headerText
     }
 
     override fun getEventLayout(isEmptyEvent: Boolean) =
