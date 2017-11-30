@@ -9,6 +9,8 @@ import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
+import pl.edu.zut.mad.schedule.util.log
+import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
@@ -19,6 +21,9 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         private const val DATE_FORMAT = "dd-MM-yyyy"
         private val DATE_FORMATTER = DateTimeFormat.forPattern(DATE_FORMAT) // TODO move to config class
     }
+
+    // TODO login button consistent with search
+    // TODO Config class
 
     override fun onSearch() {
         view.showLoading()
@@ -53,6 +58,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     }
 
     private fun showErrorAndHideLoading(error: Throwable) {
+        log((error as HttpException).response().toString())
         view.hideLoading()
         val errorResId = messageProvider.getResIdByError(error)
         view.showError(errorResId)

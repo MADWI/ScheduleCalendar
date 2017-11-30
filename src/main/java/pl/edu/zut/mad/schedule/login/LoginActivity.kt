@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedule.ComponentView
 import pl.edu.zut.mad.schedule.R
@@ -40,16 +39,14 @@ internal open class LoginActivity : AppCompatActivity(),
     }
 
     override fun showLoading() {
-        loadingView.visibility = View.VISIBLE
         albumNumberLayoutView.error = null
         albumNumberTextView.isEnabled = false
-        downloadScheduleButtonView.isEnabled = false
+        downloadButtonView.startAnimation()
     }
 
     override fun hideLoading() {
-        loadingView.visibility = View.GONE
         albumNumberTextView.isEnabled = true
-        downloadScheduleButtonView.isEnabled = true
+        downloadButtonView.revertAnimation()
     }
 
     override fun onDataSaved() {
@@ -64,7 +61,7 @@ internal open class LoginActivity : AppCompatActivity(),
     }
 
     private fun initViews() =
-        downloadScheduleButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
+        downloadButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
 
     private fun readArgument() {
         val albumNumber = intent.getIntExtra(ALBUM_NUMBER_KEY, User.ALBUM_NUMBER_ERROR)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="download_schedule">Pobierz plan</string>
+    <string name="download">Pobierz plan</string>
     <string name="password">Hasło</string>
     <string name="album_number">Number albumu</string>
     <string name="today">Dzisiaj</string>
@@ -18,6 +18,8 @@
     <string name="room">Sala</string>
     <string name="subject">Przedmiot</string>
     <string name="filed_of_study">Kierunek studiów</string>
+    <string name="semester">Semestr</string>
+    <string name="form">Forma</string>
     <string-array name="form_entries">
         <item>stacjonarne</item>
         <item>niestacjonarne</item>

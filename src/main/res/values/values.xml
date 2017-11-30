@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LoginButton" parent="Base.Widget.AppCompat.Button">
+    <style name="DownloadButton" parent="Base.Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="colorButtonNormal">@color/scheduleColorAccent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:background">@color/scheduleColorPrimaryDark</item>
     </style>
 </resources>

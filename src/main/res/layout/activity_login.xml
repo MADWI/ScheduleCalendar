@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,21 +35,14 @@
                 android:inputType="numberSigned" />
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/downloadScheduleButtonView"
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/downloadButtonView"
+            style="@style/DownloadButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/download_schedule"
-            android:theme="@style/LoginButton" />
-
-        <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/loadingView"
-            style="?android:progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:text="@string/download"
+            app:spinning_bar_color="@color/white"
+            app:spinning_bar_padding="@dimen/spinning_bar_padding" />
     </LinearLayout>
 
 </ScrollView>
