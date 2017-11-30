@@ -30,7 +30,7 @@
         <item>auditorium</item>
         <item>laboratory</item>
     </string-array>
-    <string-array name="semester_entries">
+    <string-array name="semester_entries" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>

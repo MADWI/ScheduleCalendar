@@ -20,14 +20,14 @@
     <string name="field_of_study">Kierunek studiów</string>
     <string name="semester">Semestr</string>
     <string name="form">Forma</string>
+    <string name="course_type">Typ</string>
     <string-array name="form_entries">
         <item>stacjonarne</item>
         <item>niestacjonarne</item>
     </string-array>
-    <string-array name="course_entries">
+    <string-array name="course_type_entries">
         <item>wykład</item>
         <item>audytoryjne</item>
         <item>laboratorium</item>
     </string-array>
-    <string name="course_type">Typ</string>
 </resources>
