@@ -129,12 +129,9 @@
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/searchButton"
             style="@style/DownloadButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@android:string/search_go"
-            app:spinning_bar_color="@color/white"
-            app:spinning_bar_padding="@dimen/spinning_bar_padding" />
-        <!-- TODO move custom attributes to common style -->
+            android:text="@android:string/search_go" />
     </LinearLayout>
 
 </ScrollView>
