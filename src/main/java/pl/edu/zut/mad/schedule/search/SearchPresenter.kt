@@ -33,8 +33,10 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val form = view.getForm()
         val dateFrom = view.getDateFrom()
         val dateTo = view.getDateTo()
+        val dateFromQuery = dateFrom.toString(ScheduleDate.UI_FORMATTER)
+        val dateToQuery = dateTo.toString(ScheduleDate.UI_FORMATTER)
         service.fetchScheduleByQueries(teacherName, teacherSurname, facultyAbbreviation, subject,
-            fieldOfStudy, semester, form, dateFrom.toString(ScheduleDate.UI_FORMATTER), dateTo.toString(ScheduleDate.UI_FORMATTER))
+            fieldOfStudy, semester, form, dateFromQuery, dateToQuery)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

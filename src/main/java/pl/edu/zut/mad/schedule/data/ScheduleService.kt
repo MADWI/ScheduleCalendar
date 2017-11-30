@@ -15,8 +15,7 @@ internal interface ScheduleService {
     fun fetchScheduleByQueries(@Query("name") teacherName: String, @Query("surname") teacherSurname: String,
         @Query("facultyAbbreviation") facultyAbbreviation: String, @Query("subject") subject: String,
         @Query("fieldOfStudy") fieldOfStudy: String, @Query("semester") semester: Int?,
-        @Query("form") form: String, @Query("dateFrom") dateFrom: String, @Query("dateTo") dateTo: String)
-        : Observable<List<Day>>
+        @Query("form") form: String, @Query("dateFrom") dateFrom: String, @Query("dateTo") dateTo: String): Observable<List<Day>>
 
     companion object {
         const val BASE_URL = "http://uxplan.wi.zut.edu.pl/api/schedule/"

@@ -33,8 +33,6 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
         val lessonAdapter = CalendarLessonsAdapter(activity)
-
-        //TODO move to better place
         lessonAdapter.lessonClickListener = {
             startActivity(Intent(context, SearchActivity::class.java))
         }
