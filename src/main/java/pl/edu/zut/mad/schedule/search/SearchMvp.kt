@@ -17,6 +17,8 @@ internal interface SearchMvp {
 
         fun getFieldOfStudy(): String
 
+        fun getCourseType(): String
+
         fun getSemester(): Int?
 
         fun getForm(): String

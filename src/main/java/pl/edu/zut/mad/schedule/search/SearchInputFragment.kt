@@ -43,6 +43,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun getFieldOfStudy() = fieldOfStudyInputView.text.toString()
 
+    override fun getCourseType() = courseTypeSpinnerView.selectedItem?.toString() ?: ""
+
     override fun getSemester(): Int? = semesterSpinnerView.selectedItem?.toString()?.toInt()
 
     override fun getForm() = formSpinnerView.selectedItem?.toString() ?: ""

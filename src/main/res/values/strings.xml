@@ -17,12 +17,18 @@
     <string name="faculty">Faculty</string>
     <string name="subject">Subject</string>
     <string name="room">Room</string>
-    <string name="filed_of_study">Filed of study</string>
+    <string name="field_of_study">Field of study</string>
     <string name="semester">Semester</string>
     <string name="form">Form</string>
+    <string name="course_type">Course type</string>
     <string-array name="form_entries">
         <item>part-time</item>
         <item>full-time</item>
+    </string-array>
+    <string-array name="course_type_entries">
+        <item>lecture</item>
+        <item>auditorium</item>
+        <item>laboratory</item>
     </string-array>
     <string-array name="semester_entries">
         <item>1</item>

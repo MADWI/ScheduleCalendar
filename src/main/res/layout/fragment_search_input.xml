@@ -90,8 +90,16 @@
                 android:id="@+id/fieldOfStudyInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/filed_of_study" />
+                android:hint="@string/field_of_study" />
         </android.support.design.widget.TextInputLayout>
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/courseTypeSpinnerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/course_type_entries"
+            android:paddingTop="@dimen/search_input_padding"
+            app:ms_hint="@string/course_type" />
 
         <fr.ganfra.materialspinner.MaterialSpinner
             android:id="@+id/semesterSpinnerView"

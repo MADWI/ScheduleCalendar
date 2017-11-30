@@ -3,7 +3,7 @@ package pl.edu.zut.mad.schedule
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 
-internal class ScheduleDate {
+internal class ScheduleDate { //TODO move to Utils module
 
     companion object {
         const val API_PATTERN = "dd-MM-yyyy"

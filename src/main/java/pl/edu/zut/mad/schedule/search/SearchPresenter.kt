@@ -29,6 +29,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val facultyAbbreviation = view.getFacultyAbbreviation()
         val subject = view.getSubject()
         val fieldOfStudy = view.getFieldOfStudy()
+        val courseType = view.getCourseType()
         val semester = view.getSemester()
         val form = view.getForm()
         val dateFrom = view.getDateFrom()
@@ -36,7 +37,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val dateFromQuery = dateFrom.toString(ScheduleDate.UI_FORMATTER)
         val dateToQuery = dateTo.toString(ScheduleDate.UI_FORMATTER)
         service.fetchScheduleByQueries(teacherName, teacherSurname, facultyAbbreviation, subject,
-            fieldOfStudy, semester, form, dateFromQuery, dateToQuery)
+            fieldOfStudy, courseType, semester, form, dateFromQuery, dateToQuery)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
