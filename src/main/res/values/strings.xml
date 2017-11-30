@@ -21,6 +21,8 @@
     <string name="semester">Semester</string>
     <string name="form">Form</string>
     <string name="course_type">Course type</string>
+    <string name="date_from">Date from</string>
+    <string name="date_to">Date to</string>
     <string-array name="form_entries">
         <item>part-time</item>
         <item>full-time</item>

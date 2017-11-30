@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".search.SearchActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,21 +119,36 @@
             app:ms_alignLabels="true"
             app:ms_hint="@string/form" />
 
-        <TextView
-            android:id="@+id/dateFromView"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_date_black_24dp"
-            android:paddingTop="@dimen/search_input_padding"
-            tools:text="21-11-2017" />
+            android:paddingTop="@dimen/search_input_padding">
 
-        <TextView
-            android:id="@+id/dateToView"
-            android:layout_width="wrap_content"
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/dateFromView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/date_input_drawable_padding"
+                android:focusable="false"
+                android:hint="@string/date_from"
+                tools:text="21-11-2017" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_date_black_24dp"
-            android:paddingTop="@dimen/search_input_padding"
-            tools:text="28-11-2017" />
+            android:paddingTop="@dimen/search_input_padding">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/dateToView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/date_input_drawable_padding"
+                android:focusable="false"
+                android:hint="@string/date_to"
+                tools:text="28-11-2017" />
+        </android.support.design.widget.TextInputLayout>
 
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
             android:id="@+id/searchButton"

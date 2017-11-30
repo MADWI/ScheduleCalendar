@@ -21,6 +21,8 @@
     <string name="semester">Semestr</string>
     <string name="form">Forma</string>
     <string name="course_type">Typ</string>
+    <string name="date_from">Data od</string>
+    <string name="date_to">Date do</string>
     <string-array name="form_entries">
         <item>stacjonarne</item>
         <item>niestacjonarne</item>
