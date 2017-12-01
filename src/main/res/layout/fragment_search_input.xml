@@ -158,7 +158,7 @@
         </android.support.design.widget.TextInputLayout>
 
         <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
-            android:id="@+id/searchButton"
+            android:id="@+id/searchButtonView"
             style="@style/DownloadButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

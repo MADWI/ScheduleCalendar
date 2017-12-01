@@ -21,7 +21,7 @@ import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.data.model.api.Day
-import pl.edu.zut.mad.schedule.util.MessageProvider
+import pl.edu.zut.mad.schedule.util.MessageProviderLogin
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 @RunWith(DataProviderRunner::class)
@@ -40,7 +40,7 @@ internal class LoginPresenterTest {
     val service = mock<ScheduleService>()
     val network = mock<NetworkConnection>()
     val repository = mock<ScheduleRepository>()
-    val messageProvider = mock<MessageProvider>()
+    val messageProvider = mock<MessageProviderLogin>()
 
     @InjectMocks
     private lateinit var loginPresenter: LoginPresenter

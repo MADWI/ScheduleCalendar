@@ -70,4 +70,9 @@ internal open class LoginActivity : AppCompatActivity(),
             presenter.onDownloadScheduleClick()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        downloadButtonView.dispose()
+    }
 }

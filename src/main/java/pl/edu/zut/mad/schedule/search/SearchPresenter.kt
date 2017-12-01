@@ -5,7 +5,7 @@ import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.data.model.api.Day
-import pl.edu.zut.mad.schedule.util.MessageProvider
+import pl.edu.zut.mad.schedule.util.MessageProviderLogin
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import pl.edu.zut.mad.schedule.util.log
@@ -13,7 +13,7 @@ import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
-    private val networkConnection: NetworkConnection, private val messageProvider: MessageProvider) //TODO separate provider for login and search
+    private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderLogin) //TODO separate provider for login and search
     : SearchMvp.Presenter {
 
     override fun onSearch() {

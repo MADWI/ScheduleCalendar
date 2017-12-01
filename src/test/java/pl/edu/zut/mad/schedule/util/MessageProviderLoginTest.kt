@@ -8,9 +8,9 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.lang.Exception
 
-class MessageProviderTest {
+class MessageProviderLoginTest {
 
-    private val messageProvider = MessageProvider()
+    private val messageProvider = MessageProviderLogin()
 
     @Test
     fun providerReturnIdResAlbumNumberNotFoundWhenErrorIs404() {

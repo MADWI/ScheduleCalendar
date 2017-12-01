@@ -54,9 +54,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun getDateTo() = dateToView.text.toString()
 
-    override fun showLoading() = searchButton.startAnimation()
+    override fun showLoading() = searchButtonView.startAnimation()
 
-    override fun hideLoading() = searchButton.revertAnimation()
+    override fun hideLoading() = searchButtonView.revertAnimation()
 
     override fun showError(@StringRes errorRes: Int) {
         val contentView = activity.findViewById<View>(android.R.id.content)
@@ -82,7 +82,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initViews() {
         initDatePickers()
-        searchButton.setOnClickListener { presenter.onSearch() }
+        searchButtonView.setOnClickListener { presenter.onSearch() }
         teacherNameInputView.setText("Piotr")
         teacherSurnameInputView.setText("Piela")
         facultyAbbreviationInputView.setText("WI")
@@ -113,5 +113,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .withMonthOfYear(month + 1)
             .withYear(year)
         return ScheduleDate.UI_FORMATTER.print(date)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchButtonView.dispose()
     }
 }
