@@ -4,10 +4,10 @@ import dagger.Subcomponent
 import pl.edu.zut.mad.schedule.module.ServiceModule
 
 @Search
-@Subcomponent(modules = arrayOf(
+@Subcomponent(modules = [
     SearchModule::class,
     ServiceModule::class
-))
+])
 internal interface SearchComponent {
 
     fun inject(searchInputFragment: SearchInputFragment)
