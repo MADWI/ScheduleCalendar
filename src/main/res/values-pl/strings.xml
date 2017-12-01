@@ -9,6 +9,7 @@
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_field_cannot_be_empty">Pole nie może być puste</string>
     <string name="error_album_number_not_found">Podany numer albumu nie istnieje</string>
+    <string name="error_schedule_is_empty">Dla danego zapytania plan jest pusty</string>
     <string name="error_service_database_update">Baza danych serwera jest w trakcie aktualizacji, spróbuj ponownie za kilka minut</string>
     <string name="error_service_internal">Błąd serwera, spróbuj ponownie za kilka minut</string>
     <string name="error_service_unrecognized">Nieznany błąd, spróbuj ponownie za kilka minut</string>

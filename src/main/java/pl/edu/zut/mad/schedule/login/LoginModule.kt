@@ -17,4 +17,8 @@ internal class LoginModule(private val view: LoginMvp.View) {
                               messageProvider: MessageProviderLogin, connection: NetworkConnection,
                               user: User): LoginMvp.Presenter =
             LoginPresenter(view, repository, service, connection, messageProvider, user)
+
+    @Login
+    @Provides
+    fun provideMessageProviderLogin() = MessageProviderLogin()
 }
