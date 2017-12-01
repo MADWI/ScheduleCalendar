@@ -26,7 +26,7 @@ internal interface SearchMvp {
 
         fun getDateTo(): String
 
-        fun onScheduleDownloaded(lessons: List<Lesson>)
+        fun setData(lessons: List<Lesson>)
 
         fun showLoading()
 

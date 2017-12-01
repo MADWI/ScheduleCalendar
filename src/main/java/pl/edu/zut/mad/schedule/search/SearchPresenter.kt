@@ -7,8 +7,6 @@ import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
-import pl.edu.zut.mad.schedule.util.log
-import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
@@ -45,11 +43,10 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     private fun showLessonsAndHideLoading(days: List<Day>) {
         view.hideLoading()
         val lessons = modelMapper.toUiLessons(days)
-        view.onScheduleDownloaded(lessons)
+        view.setData(lessons)
     }
 
     private fun showErrorAndHideLoading(error: Throwable) {
-        log((error as HttpException).response().toString())
         view.hideLoading()
         val errorResId = messageProvider.getResIdByError(error)
         view.showError(errorResId)

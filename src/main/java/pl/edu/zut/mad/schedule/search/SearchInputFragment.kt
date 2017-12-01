@@ -63,7 +63,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         Snackbar.make(contentView, errorRes, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onScheduleDownloaded(lessons: List<Lesson>) {
+    override fun setData(lessons: List<Lesson>) {
         val searchResultsFragment = SearchResultsFragment.newInstance(lessons)
         activity.supportFragmentManager.beginTransaction()
             .replace(R.id.searchMainContainer, searchResultsFragment)
@@ -83,10 +83,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     private fun initViews() {
         initDatePickers()
         searchButtonView.setOnClickListener { presenter.onSearch() }
-        teacherNameInputView.setText("Piotr")
-        teacherSurnameInputView.setText("Piela")
-        facultyAbbreviationInputView.setText("WI")
-        subjectInputView.setText("Modelowanie i symulacja systemów")
     }
 
     private fun initDatePickers() {
