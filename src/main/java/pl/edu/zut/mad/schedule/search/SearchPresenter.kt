@@ -10,7 +10,7 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
-    private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderSearch) //TODO tests
+    private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderSearch)
     : SearchMvp.Presenter {
 
     override fun onSearch() {
