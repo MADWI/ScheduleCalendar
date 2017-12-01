@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedule.util
+package pl.edu.zut.mad.schedule.login
 
 import okhttp3.ResponseBody
 import org.assertj.core.api.Assertions.assertThat

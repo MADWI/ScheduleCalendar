@@ -12,7 +12,7 @@ import retrofit2.HttpException
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
-    private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderSearch) //TODO separate provider for login and search
+    private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderSearch) //TODO tests
     : SearchMvp.Presenter {
 
     override fun onSearch() {

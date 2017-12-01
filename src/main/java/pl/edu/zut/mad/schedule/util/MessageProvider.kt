@@ -5,7 +5,7 @@ import pl.edu.zut.mad.schedule.R
 import retrofit2.HttpException
 import java.net.HttpURLConnection
 
-abstract class MessageProvider {
+internal abstract class MessageProvider {
 
     fun getResIdByError(error: Throwable): Int {
         if (error is HttpException) {

@@ -5,7 +5,6 @@ import dagger.Provides
 import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.util.MessageProviderLogin
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 @Module
