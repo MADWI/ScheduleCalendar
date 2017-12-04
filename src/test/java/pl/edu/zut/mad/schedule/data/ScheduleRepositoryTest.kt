@@ -19,6 +19,7 @@ import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 
+@Suppress("IllegalIdentifier")
 @RunWith(DataProviderRunner::class)
 internal class ScheduleRepositoryTest {
 
@@ -40,7 +41,7 @@ internal class ScheduleRepositoryTest {
     }
 
     @Test
-    fun getDayByDateShouldReturnEmptyDayWhenResultIsNull() {
+    fun `get day should return empty day when database result is null`() {
         whenever(dayRealmQuery.findFirst()).thenReturn(null)
 
         val day = repository.getDayByDate(date).blockingFirst()
@@ -49,8 +50,8 @@ internal class ScheduleRepositoryTest {
     }
 
     @Test
-    @UseDataProvider("dayApiAndUi", location = arrayOf(MockData::class))
-    fun getDayByDateShouldReturnDayWhenResultIsNotNull(dayApi: DayApi, dayUi: DayUi) {
+    @UseDataProvider("dayApiAndUi", location = [(MockData::class)])
+    fun `get day should return day when result is not null`(dayApi: DayApi, dayUi: DayUi) {
         whenever(dayRealmQuery.findFirst()).thenReturn(dayApi)
         whenever(modelMapper.toDayUiFromApi(dayApi)).thenReturn(dayUi)
 
