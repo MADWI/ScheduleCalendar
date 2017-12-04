@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lessonItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:background="@android:color/white">
@@ -28,26 +29,24 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/timeStartView"
+            android:id="@+id/dateView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/lesson_item_time_gap"
             android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:drawableStart="@drawable/ic_class_start_white_18dp"
-            android:maxLength="5"
+            android:maxLength="@integer/lesson_search_date_view_max_length"
             android:textColor="@android:color/white"
-            tools:text="12:15" />
+            tools:text="29-11-2017" />
 
         <TextView
-            android:id="@+id/timeEndView"
+            android:id="@+id/timeView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lesson_item_time_gap"
             android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:drawableStart="@drawable/ic_class_end_white_18dp"
-            android:gravity="center"
-            android:maxLength="5"
+            android:maxLength="@integer/lesson_search_time_view_max_length"
             android:textColor="@android:color/white"
-            tools:text="14:00" />
+            tools:text="12:15-14:00" />
     </LinearLayout>
 
     <include

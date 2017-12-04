@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/lesson_item_margin_bottom"
-    android:layout_marginEnd="@dimen/lesson_item_margin_horizontal"
-    android:layout_marginStart="@dimen/lesson_item_margin_horizontal"
-    android:layout_marginTop="@dimen/lesson_item_margin_top"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/lesson_item_margin_bottom"
+    android:paddingEnd="@dimen/lesson_item_margin_horizontal"
+    android:paddingStart="@dimen/lesson_item_margin_horizontal"
+    android:paddingTop="@dimen/lesson_item_margin_top">
 
     <TextView
         android:id="@+id/subjectWithTypeView"
@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/lesson_item_drawable_padding"
         android:drawableStart="@drawable/ic_school_accent_24dp"
+        android:gravity="center_vertical"
         android:textColor="@color/textScheduleTask"
         android:textSize="@dimen/lesson_item_text_size_subject"
         tools:text="Data analysis and research experiment (lecture)" />
@@ -25,6 +26,7 @@
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/lesson_item_drawable_padding"
         android:drawableStart="@drawable/ic_lecturer_accent_24dp"
+        android:gravity="center_vertical"
         android:textColor="@color/textScheduleTask"
         android:textSize="@dimen/lesson_item_text_size_teacher"
         tools:text="dr inż. Larisa Dobryakova WI WI2-14" />

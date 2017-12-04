@@ -1,37 +1,28 @@
 package pl.edu.zut.mad.schedule
 
 import android.content.Context
-import android.support.v4.content.ContextCompat
 import android.view.View
-import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
 import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
+import kotlinx.android.synthetic.main.lesson_header.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
+import pl.edu.zut.mad.schedule.util.LessonItemPainter
 import java.util.Calendar
 
-internal class CalendarLessonsAdapter(private val context: Context) : DefaultEventAdapter() {
+internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() {
 
-    companion object {
-        private const val GRAY_ITEM_POSITION_INTERVAL = 2
-    }
+    private val lessonItemPainter = LessonItemPainter(context)
 
     lateinit var lessonClickListener: (Lesson) -> Unit?
-
-    private val itemViewColor by lazy {
-        ContextCompat.getColor(context, R.color.scheduleLightGray)
-    }
-    private val timeViewColor by lazy {
-        ContextCompat.getColor(context, R.color.scheduleColorPrimaryDark)
-    }
 
     override fun getHeaderLayout() = R.layout.lesson_header
 
     override fun getHeaderItemView(view: View, day: Calendar) {
         val headerText = ScheduleDate.UI_LESSON_HEADER_FORMATTER.print(day.time.time)
-        view.findViewById<TextView>(R.id.lessonHeaderDateView).text = headerText
+        view.lessonHeaderDateView.text = headerText
     }
 
     override fun getEventLayout(isEmptyEvent: Boolean) =
@@ -42,26 +33,20 @@ internal class CalendarLessonsAdapter(private val context: Context) : DefaultEve
         if (!lessonEvent.hasEvent()) {
             return
         }
-        if (position.rem(GRAY_ITEM_POSITION_INTERVAL) == 0) {
-            colorBackgroundToGray(view)
-        }
         val lesson = lessonEvent.event as Lesson
+        bindLesson(lesson, view)
+        lessonItemPainter.colorBackgroundToGrayIfShould(view, position)
+        view.setOnClickListener { lessonClickListener.invoke(lessonEvent.event as Lesson) }
+    }
+
+    private fun bindLesson(lesson: Lesson, view: View) =
         with(lesson) {
             view.timeStartView.text = timeRange.start
             view.timeEndView.text = timeRange.end
             view.subjectWithTypeView.text = subjectWithType
             view.teacherWithRoomView.text = teacherWithRoom
+            if (isCancelled) {
+                view.cancelledTextView.visibility = View.VISIBLE
+            }
         }
-        if (lesson.isCancelled) {
-            view.cancelledTextView.visibility = View.VISIBLE
-        }
-        view.setOnClickListener {
-            lessonClickListener.invoke(lessonEvent.event as Lesson)
-        }
-    }
-
-    private fun colorBackgroundToGray(view: View) {
-        view.timeGroupView.setBackgroundColor(timeViewColor)
-        view.scheduleTaskItemView.setBackgroundColor(itemViewColor)
-    }
 }
