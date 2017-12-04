@@ -8,12 +8,13 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.lang.Exception
 
+@Suppress("IllegalIdentifier")
 class MessageProviderLoginTest {
 
     private val messageProvider = MessageProviderLogin()
 
     @Test
-    fun providerReturnIdResAlbumNumberNotFoundWhenErrorIs404() {
+    fun `provider return res id album number not found when error is 404`() {
         val httpError = getHttpErrorWithCode(404)
 
         val messageId = messageProvider.getResIdByError(httpError)
@@ -22,7 +23,7 @@ class MessageProviderLoginTest {
     }
 
     @Test
-    fun providerReturnIdResDatabaseUpdateWhenErrorIs503() {
+    fun `provider return res id database update when error is 503`() {
         val httpError = getHttpErrorWithCode(503)
 
         val messageId = messageProvider.getResIdByError(httpError)
@@ -31,7 +32,7 @@ class MessageProviderLoginTest {
     }
 
     @Test
-    fun providerReturnIdResInternalWhenErrorIs500() {
+    fun `provider return res id internal when error is 500`() {
         val httpError = getHttpErrorWithCode(500)
 
         val messageId = messageProvider.getResIdByError(httpError)
@@ -40,7 +41,7 @@ class MessageProviderLoginTest {
     }
 
     @Test
-    fun providerReturnIdResUnrecognizedWhenErrorIsOther() {
+    fun `provider return res id unrecognized in other cases`() {
         val messageId = messageProvider.getResIdByError(Exception())
 
         assertThat(R.string.error_service_unrecognized).isEqualTo(messageId)

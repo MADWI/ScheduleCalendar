@@ -12,6 +12,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
+@Suppress("IllegalIdentifier")
 class NetworkConnectionTest {
 
     @Mock
@@ -30,7 +31,7 @@ class NetworkConnectionTest {
     }
 
     @Test
-    fun isAvailableIsTrueWhenNetworkInfoReturnsTrue() {
+    fun `is available is true when network info return true`() {
         val networkInfo = mock<NetworkInfo>()
 
         whenever(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
@@ -40,7 +41,7 @@ class NetworkConnectionTest {
     }
 
     @Test
-    fun isAvailableIsTrueWhenNetworkInfoReturnsFalse() {
+    fun `is available is false when network info return false`() {
         val networkInfo = mock<NetworkInfo>()
 
         whenever(connectivityManager.activeNetworkInfo).thenReturn(networkInfo)
@@ -50,7 +51,7 @@ class NetworkConnectionTest {
     }
 
     @Test
-    fun isAvailableIsTrueWhenNetworkInfoIsNull() {
+    fun `is available is true when network info is null`() {
         whenever(connectivityManager.activeNetworkInfo).thenReturn(null)
 
         assertThat(networkConnection.isAvailable()).isFalse()

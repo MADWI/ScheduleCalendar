@@ -23,6 +23,7 @@ import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
+@Suppress("IllegalIdentifier")
 @RunWith(DataProviderRunner::class)
 internal class LoginPresenterTest {
 
@@ -50,7 +51,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun showErrorIsCalledWhenAlbumNumberIsEmpty() {
+    fun `show error should be called when album number is empty`() {
         whenever(view.getAlbumNumberText()).thenReturn(EMPTY_ALBUM_NUMBER)
 
         loginPresenter.onDownloadScheduleClick()
@@ -59,7 +60,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun showErrorIsCalledWhenNetworkIsNotAvailable() {
+    fun `show error should be called when network is not available`() {
         whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
         whenever(network.isAvailable()).thenReturn(false)
 
@@ -69,7 +70,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun showLoadingIsCalledWhenServiceFetchScheduleReturnsDays() {
+    fun `show loading should be called when schedule service return data`() {
         prepareMocksToReturnDayListForSchedule(emptyList())
 
         loginPresenter.onDownloadScheduleClick()
@@ -78,7 +79,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun fetchScheduleIsCalledWhenServiceFetchScheduleReturnsDays() {
+    fun `fetch schedule should be called on presenter download click`() {
         prepareMocksToReturnDayListForSchedule(emptyList())
 
         loginPresenter.onDownloadScheduleClick()
@@ -87,7 +88,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun repositorySaveIsCalledWhenServiceFetchScheduleReturnsDays() {
+    fun `repository save should be called on presenter download click`() {
         prepareMocksToReturnDayListForSchedule(emptyList())
 
         loginPresenter.onDownloadScheduleClick()
@@ -96,8 +97,8 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
-    fun hideLoadingIsCalledWhenServiceFetchScheduleReturnsDays(days: List<Day>) {
+    @UseDataProvider("dayApiList", location = [(MockData::class)])
+    fun `hide loading should be called when schedule service return data`(days: List<Day>) {
         prepareMocksToReturnDayListForSchedule(days)
 
         loginPresenter.onDownloadScheduleClick()
@@ -106,8 +107,8 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
-    fun onDataSavedIsCalledWhenServiceFetchScheduleReturnsDays(days: List<Day>) {
+    @UseDataProvider("dayApiList", location = [(MockData::class)])
+    fun `on data saved should be called when schedule service return data`(days: List<Day>) {
         prepareMocksToReturnDayListForSchedule(days)
 
         loginPresenter.onDownloadScheduleClick()
@@ -116,8 +117,8 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
-    fun userSaveIsCalledWhenServiceFetchScheduleReturnsDays(days: List<Day>) {
+    @UseDataProvider("dayApiList", location = [(MockData::class)])
+    fun `user save should be called when schedule service return data`(days: List<Day>) {
         prepareMocksToReturnDayListForSchedule(days)
 
         loginPresenter.onDownloadScheduleClick()
@@ -126,7 +127,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun hideLoadingIsCalledWhenFetchScheduleReturnsError() {
+    fun `hide loading should be called when schedule service return error`() {
         whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
         whenever(network.isAvailable()).thenReturn(true)
         whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
@@ -138,7 +139,7 @@ internal class LoginPresenterTest {
     }
 
     @Test
-    fun showErrorIsCalledWhenFetchScheduleReturnsError() {
+    fun `show error should be called when schedule service return error`() {
         whenever(view.getAlbumNumberText()).thenReturn(ALBUM_NUMBER)
         whenever(network.isAvailable()).thenReturn(true)
         whenever(service.fetchScheduleByAlbumNumber(ALBUM_NUMBER.toInt()))
