@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="lesson_search_time_view_max_length">13</integer>
+    <integer name="lesson_search_date_view_max_length">10</integer>
+</resources>

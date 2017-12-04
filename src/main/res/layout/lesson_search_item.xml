@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/lesson_item_time_gap"
             android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:maxLength="10"
+            android:maxLength="@integer/lesson_search_date_view_max_length"
             android:textColor="@android:color/white"
             tools:text="29-11-2017" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/lesson_item_time_gap"
             android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:maxLength="13"
+            android:maxLength="@integer/lesson_search_time_view_max_length"
             android:textColor="@android:color/white"
             tools:text="12:15-14:00" />
     </LinearLayout>
