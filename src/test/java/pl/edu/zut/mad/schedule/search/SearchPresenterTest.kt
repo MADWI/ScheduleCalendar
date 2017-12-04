@@ -18,6 +18,7 @@ import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
+@Suppress("IllegalIdentifier")
 internal class SearchPresenterTest {
 
     @Rule
@@ -38,7 +39,7 @@ internal class SearchPresenterTest {
     lateinit var presenter: SearchPresenter
 
     @Test
-    fun onSearchShouldCallViewHideLoadingWhenConnectionIsNotAvailable() {
+    fun `search should call hide loading when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
         presenter.onSearch()
@@ -47,7 +48,7 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun onSearchShouldCallViewShowErrorWhenConnectionIsNotAvailable() {
+    fun `search should call show error when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
         presenter.onSearch()
@@ -56,7 +57,7 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun onSearchShouldCallServiceFetchScheduleWhenConnectionIsAvailable() {
+    fun `search should call fetch schedule when connection is available`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
         presenter.onSearch()
@@ -65,7 +66,7 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun onSearchShouldCallViewHideLoadingWhenServiceReturnData() {
+    fun `search should call hide loading when service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
         presenter.onSearch()
@@ -74,7 +75,7 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun onSearchShouldCallViewOnScheduleDownloadedWhenServiceReturnData() {
+    fun `search should call set data when schedule service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
         presenter.onSearch()
@@ -83,7 +84,7 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun onSearchShouldCallViewHideLoadingWhenServiceReturnError() {
+    fun `search should call hide loading when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
         presenter.onSearch()
@@ -92,7 +93,7 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun onSearchShouldCallViewShowErrorWhenServiceReturnError() {
+    fun `search should call show error when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
         presenter.onSearch()
