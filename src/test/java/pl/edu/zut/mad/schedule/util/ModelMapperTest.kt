@@ -18,38 +18,39 @@ import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 
+@Suppress("IllegalIdentifier")
 @RunWith(DataProviderRunner::class)
 internal class ModelMapperTest {
 
     private val modelMapper = ModelMapper()
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiDayIsEqualToDayApiDay(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui date is equal to day api date`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
 
         assertThat(dayUi.date.dayOfMonth).isEqualTo(DATE_DAY)
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiMonthIsEqualToDayApiMonth(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui month is equal to day api month`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
 
         assertThat(dayUi.date.monthOfYear).isEqualTo(DATE_MONTH)
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiYearIsEqualToDayApiYear(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui year is equal to day api year`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
 
         assertThat(dayUi.date.year).isEqualTo(DATE_YEAR)
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiHasProperSubjectWithType(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper subject with type`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
@@ -57,8 +58,8 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiHasProperTeacherWithRoom(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper teacher with room`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
@@ -66,8 +67,8 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiTimeRangeStartIsEqualToTimeStart(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui time range start is equal to time start`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
@@ -75,8 +76,8 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiTimeRangeEndIsEqualToTimeEnd(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui time range end is equal to time end`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
@@ -84,8 +85,8 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayApi", location = arrayOf(MockData::class))
-    fun dayUiLessonsIsCancelledIsFalse(dayApi: DayApi) {
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui lessons is cancelled is false`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
@@ -93,8 +94,8 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayApiWithCancelledLesson", location = arrayOf(MockData::class))
-    fun lessonIsCancelledIsTrue(dayApi: DayApi) {
+    @UseDataProvider("dayApiWithCancelledLesson", location = [(MockData::class)])
+    fun `lesson is cancelled is true`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
@@ -102,15 +103,15 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayUi", location = arrayOf(MockData::class))
-    fun lessonEventHasEventIsTrue(dayUi: DayUi) {
+    @UseDataProvider("dayUi", location = [(MockData::class)])
+    fun `lesson has event is true`(dayUi: DayUi) {
         val lessonEvents = modelMapper.toLessonsEventsFromDayUi(dayUi)
 
         assertThat(lessonEvents[0].hasEvent()).isTrue()
     }
 
     @Test
-    fun emptyDayEventIsNull() {
+    fun `empty day event is null`() {
         val date = LocalDate.now()
         val emptyDay = EmptyDay(date)
 
@@ -120,7 +121,7 @@ internal class ModelMapperTest {
     }
 
     @Test
-    fun emptyDayHasEventIsFalse() {
+    fun `empty day has event is false`() {
         val date = LocalDate.now()
         val emptyDay = EmptyDay(date)
 
@@ -130,8 +131,8 @@ internal class ModelMapperTest {
     }
 
     @Test
-    @UseDataProvider("dayApiList", location = arrayOf(MockData::class))
-    fun uiLessonsShouldConsistOfLessonFromApiDays(daysApi: List<DayApi>) {
+    @UseDataProvider("dayApiList", location = [(MockData::class)])
+    fun `ui lessons should consist of lesson from api days`(daysApi: List<DayApi>) {
         val expectedLessonsCount = daysApi.map { it.lessons }.sumBy { it.size }
 
         val lessons = modelMapper.toUiLessons(daysApi)
