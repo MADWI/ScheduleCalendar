@@ -33,7 +33,7 @@ internal class LoginActivityTest {
     @Test
     fun clickOnDownloadScheduleButtonShouldCallPresenterDownloadingMethod() {
         activityRule.launchActivity(null)
-        onView(withId(R.id.downloadScheduleButtonView)).perform(click())
+        onView(withId(R.id.downloadButtonView)).perform(click())
 
         verify(activity.presenter).onDownloadScheduleClick()
     }

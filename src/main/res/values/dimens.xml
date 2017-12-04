@@ -18,4 +18,10 @@
     <dimen name="widget_min_height">110dp</dimen>
     <dimen name="widget_min_width">250dp</dimen>
     <dimen name="widget_date_text_size">16sp</dimen>
+    <dimen name="search_input_padding">16dp</dimen>
+    <dimen name="lesson_time_group_width">80dp</dimen>
+    <dimen name="spinning_bar_padding">5dp</dimen>
+    <dimen name="date_input_drawable_padding">16dp</dimen>
+    <dimen name="search_input_layout_padding">10dp</dimen>
+    <dimen name="search_input_spinner_horizontal_margin">4dp</dimen>
 </resources>

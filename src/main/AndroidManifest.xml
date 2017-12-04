@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pl.edu.zut.mad.schedule">
 
@@ -8,8 +9,12 @@
         android:supportsRtl="true">
 
         <activity
-            android:name="pl.edu.zut.mad.schedule.login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:theme="@style/Login" />
+
+        <activity
+            android:name=".search.SearchActivity"
+            android:theme="@style/Search" />
 
         <receiver android:name=".widget.ScheduleWidgetProvider">
             <intent-filter>
@@ -23,6 +28,7 @@
         <service
             android:name=".widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

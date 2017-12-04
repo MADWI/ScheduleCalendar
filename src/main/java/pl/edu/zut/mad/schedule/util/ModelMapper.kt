@@ -18,6 +18,10 @@ internal class ModelMapper {
         const val CANCELED_LESSON_TEXT = "odwołane"
     }
 
+    fun toUiLessons(days: List<DayApi>): List<LessonUi> =
+        days.map { toDayUiFromApi(it) }
+            .flatMap { it.lessons }
+
     fun toDayUiFromApi(dayApi: DayApi): DayUi {
         val localDate = LocalDate.fromDateFields(dayApi.date)
         val lessonsUi = toLessonsUiFromApi(dayApi.lessons)

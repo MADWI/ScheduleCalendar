@@ -3,6 +3,8 @@
 
     <style name="Login" parent="@style/Theme.AppCompat.Light.NoActionBar" />
 
+    <style name="Search" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+
     <style name="CancelledLessonView">
         <item name="android:padding">5dp</item>
         <item name="android:textAllCaps">true</item>

@@ -7,12 +7,11 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.util.MessageProvider
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 internal class LoginPresenter(private val view: LoginMvp.View, private val repository: ScheduleRepository,
     private val service: ScheduleService, private val network: NetworkConnection,
-    private val messageProvider: MessageProvider, private val user: User) : LoginMvp.Presenter {
+    private val messageProvider: MessageProviderLogin, private val user: User) : LoginMvp.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
 

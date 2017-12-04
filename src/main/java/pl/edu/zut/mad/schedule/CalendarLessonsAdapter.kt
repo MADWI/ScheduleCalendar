@@ -6,19 +6,19 @@ import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
-import kotlinx.android.synthetic.main.lesson_item.view.*
+import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
+import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
-internal class LessonsAdapter(private val context: Context) : DefaultEventAdapter() {
+internal class CalendarLessonsAdapter(private val context: Context) : DefaultEventAdapter() {
 
     companion object {
         private const val GRAY_ITEM_POSITION_INTERVAL = 2
-        private val DATE_FORMAT = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
     }
+
+    lateinit var lessonClickListener: (Lesson) -> Unit?
 
     private val itemViewColor by lazy {
         ContextCompat.getColor(context, R.color.scheduleLightGray)
@@ -30,11 +30,12 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
     override fun getHeaderLayout() = R.layout.lesson_header
 
     override fun getHeaderItemView(view: View, day: Calendar) {
-        view.findViewById<TextView>(R.id.lessonDayView).text = DATE_FORMAT.format(day.time)
+        val headerText = ScheduleDate.UI_LESSON_HEADER_FORMATTER.print(day.time.time)
+        view.findViewById<TextView>(R.id.lessonHeaderDateView).text = headerText
     }
 
     override fun getEventLayout(isEmptyEvent: Boolean) =
-        if (isEmptyEvent) R.layout.lesson_item else R.layout.no_lessons_item
+        if (isEmptyEvent) R.layout.lesson_calendar_item else R.layout.no_lessons_item
 
     override fun getEventItemView(view: View, event: CalendarEvent, position: Int) {
         val lessonEvent = event as LessonEvent
@@ -53,6 +54,9 @@ internal class LessonsAdapter(private val context: Context) : DefaultEventAdapte
         }
         if (lesson.isCancelled) {
             view.cancelledTextView.visibility = View.VISIBLE
+        }
+        view.setOnClickListener {
+            lessonClickListener.invoke(lessonEvent.event as Lesson)
         }
     }
 

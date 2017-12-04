@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="download_schedule">Pobierz plan</string>
+    <string name="download">Pobierz plan</string>
     <string name="password">Hasło</string>
     <string name="album_number">Number albumu</string>
     <string name="today">Dzisiaj</string>
@@ -9,16 +9,28 @@
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_field_cannot_be_empty">Pole nie może być puste</string>
     <string name="error_album_number_not_found">Podany numer albumu nie istnieje</string>
+    <string name="error_empty_schedule">Dla danego zapytania plan jest pusty</string>
     <string name="error_service_database_update">Baza danych serwera jest w trakcie aktualizacji, spróbuj ponownie za kilka minut</string>
     <string name="error_service_internal">Błąd serwera, spróbuj ponownie za kilka minut</string>
     <string name="error_service_unrecognized">Nieznany błąd, spróbuj ponownie za kilka minut</string>
-    <string-array name="week_days">
-        <item>Poniedziałek</item>
-        <item>Wtorek</item>
-        <item>Środa</item>
-        <item>Czwartek</item>
-        <item>Piątek</item>
-        <item>Sobota</item>
-        <item>Niedziela</item>
+    <string name="teacher_name">Imię wykładowcy</string>
+    <string name="teacher_surname">Nazwisko wykładowcy</string>
+    <string name="faculty">Wydział</string>
+    <string name="room">Sala</string>
+    <string name="subject">Przedmiot</string>
+    <string name="field_of_study">Kierunek studiów</string>
+    <string name="semester">Semestr</string>
+    <string name="form">Forma</string>
+    <string name="course_type">Typ</string>
+    <string name="date_from">Data od</string>
+    <string name="date_to">Date do</string>
+    <string-array name="form_entries">
+        <item>stacjonarne</item>
+        <item>niestacjonarne</item>
+    </string-array>
+    <string-array name="course_type_entries">
+        <item>wykład</item>
+        <item>audytoryjne</item>
+        <item>laboratorium</item>
     </string-array>
 </resources>

@@ -15,6 +15,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
+import pl.edu.zut.mad.schedule.search.SearchActivity
 import pl.edu.zut.mad.schedule.util.app
 import java.util.Calendar
 import javax.inject.Inject
@@ -31,7 +32,11 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
-        CalendarContentManager(calendarController, scheduleCalendarView, LessonsAdapter(activity))
+        val lessonAdapter = CalendarLessonsAdapter(activity)
+        lessonAdapter.lessonClickListener = {
+            startActivity(Intent(context, SearchActivity::class.java))
+        }
+        CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

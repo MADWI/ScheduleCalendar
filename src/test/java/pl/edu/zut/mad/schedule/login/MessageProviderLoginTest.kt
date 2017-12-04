@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedule.util
+package pl.edu.zut.mad.schedule.login
 
 import okhttp3.ResponseBody
 import org.assertj.core.api.Assertions.assertThat
@@ -8,9 +8,9 @@ import retrofit2.HttpException
 import retrofit2.Response
 import java.lang.Exception
 
-class MessageProviderTest {
+class MessageProviderLoginTest {
 
-    private val messageProvider = MessageProvider()
+    private val messageProvider = MessageProviderLogin()
 
     @Test
     fun providerReturnIdResAlbumNumberNotFoundWhenErrorIs404() {

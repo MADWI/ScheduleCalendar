@@ -7,6 +7,8 @@ import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.module.UserModule
 import pl.edu.zut.mad.schedule.module.UtilsModule
+import pl.edu.zut.mad.schedule.search.SearchComponent
+import pl.edu.zut.mad.schedule.search.SearchModule
 import javax.inject.Singleton
 
 @Singleton
@@ -18,6 +20,8 @@ import javax.inject.Singleton
 internal interface AppComponent {
 
     fun plus(loginModule: LoginModule): LoginComponent
+
+    fun plus(searchModule: SearchModule): SearchComponent
 
     fun plus(scheduleModule: ScheduleModule): ScheduleComponent
 }

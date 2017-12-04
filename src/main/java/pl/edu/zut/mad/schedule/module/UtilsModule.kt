@@ -4,7 +4,7 @@ import android.app.Application
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedule.util.DatesProvider
-import pl.edu.zut.mad.schedule.util.MessageProvider
+import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 import javax.inject.Singleton
 
@@ -13,11 +13,11 @@ internal class UtilsModule {
 
     @Provides
     @Singleton
-    fun provideDatesProvider() = DatesProvider()
+    fun provideMapper() = ModelMapper()
 
     @Provides
     @Singleton
-    fun provideMessageProvider() = MessageProvider()
+    fun provideDatesProvider() = DatesProvider()
 
     @Provides
     @Singleton

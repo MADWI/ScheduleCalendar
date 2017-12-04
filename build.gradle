@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jetbrains.kotlin.android.extensions'
 apply plugin: 'realm-android'
 apply plugin: 'jacoco-android'
 apply from: 'ktlint.gradle'
@@ -28,6 +29,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 ext {
     support_version = '26.1.0'
     retrofit_version = '2.3.0'
@@ -43,12 +48,14 @@ ext {
     dagger_mock_version = '0.8.2'
     assertj_version = '3.8.0'
     data_provider_version = '1.10.0'
-    espresso_version = '2.2.2'
+    espresso_version = '3.0.1'
+    material_spinner_version = '2.0.0'
+    loading_button_version = '1.8.4'
 }
 
 buildscript {
     ext {
-        kotlin_version = '1.1.60'
+        kotlin_version = '1.2.0'
     }
     repositories {
         google()
@@ -92,6 +99,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
 
     implementation "com.ognev.kotlin.agendacalendarview:kotlin-agendacalendarview:$calendar_version"
+    implementation "com.github.ganfra:material-spinner:$material_spinner_version"
+    implementation "br.com.simplepass:loading-button-android:$loading_button_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"

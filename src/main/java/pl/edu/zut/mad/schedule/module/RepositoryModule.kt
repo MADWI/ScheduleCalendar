@@ -15,7 +15,4 @@ internal class RepositoryModule {
 
     @Provides
     fun provideDatabase() = ScheduleDatabase()
-
-    @Provides
-    fun provideMapper() = ModelMapper()
 }
