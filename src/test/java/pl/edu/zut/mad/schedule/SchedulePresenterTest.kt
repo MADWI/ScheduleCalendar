@@ -21,6 +21,7 @@ import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
+@Suppress("IllegalIdentifier")
 @RunWith(DataProviderRunner::class)
 internal class SchedulePresenterTest {
 
@@ -45,7 +46,7 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    fun getDayByDateIsCalledOnViewIsCreated() {
+    fun `get day should be called when on view is created`() {
         prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
 
         schedulePresenter.onViewIsCreated()
@@ -54,8 +55,8 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    @UseDataProvider("dayUi", location = arrayOf(MockData::class))
-    fun onLessonsEventsLoadIsCalledWhenRepositoryReturnsDay(day: Day) {
+    @UseDataProvider("dayUi", location = [(MockData::class)])
+    fun `on lessons events should be called when repository return data`(day: Day) {
         prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
         whenever(repository.getDayByDate(DATE)).thenReturn(Observable.just(day))
 
@@ -65,8 +66,8 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    @UseDataProvider("emptyDay", location = arrayOf(MockData::class))
-    fun onLessonsEventsLoadIsCalledWhenRepositoryReturnsEmptyDay(emptyDay: EmptyDay) {
+    @UseDataProvider("emptyDay", location = [(MockData::class)])
+    fun `on lessons events should be be called when repository return empty day`(emptyDay: EmptyDay) {
         prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
         whenever(repository.getDayByDate(DATE)).thenReturn(Observable.just(emptyDay))
 
@@ -76,7 +77,7 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    fun onDateIntervalCalculatedIsCalledOnViewIsCreated() {
+    fun `on date interval calculated is called on view is created`() {
         whenever(user.isSaved()).thenReturn(true)
         whenever(repository.getScheduleMinDate()).thenReturn(MIN_DATE)
         whenever(repository.getScheduleMaxDate()).thenReturn(MAX_DATE)
@@ -87,7 +88,7 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    fun showLoginViewIsCalledWhenUserIsNotSaved() {
+    fun `show login view should be called when user is not saved`() {
         whenever(user.isSaved()).thenReturn(false)
 
         schedulePresenter.onViewIsCreated()
@@ -96,7 +97,7 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    fun refreshScheduleIsCalledWhenConnectionIsAvailable() {
+    fun `refresh schedule should be called when connection is available`() {
         whenever(connection.isAvailable()).thenReturn(true)
 
         schedulePresenter.refresh()
@@ -105,7 +106,7 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    fun showInternetErrorIsCalledWhenConnectionIsAvailable() {
+    fun `show internet error should be called when connection is not available`() {
         whenever(connection.isAvailable()).thenReturn(false)
 
         schedulePresenter.refresh()
@@ -114,21 +115,21 @@ internal class SchedulePresenterTest {
     }
 
     @Test
-    fun userDeleteIsCalledOnLogout() {
+    fun `user delete should be called on logout`() {
         schedulePresenter.logout()
 
         verify(user).delete()
     }
 
     @Test
-    fun repositoryDeleteIsCalledOnLogout() {
+    fun `repository delete should be called on logout`() {
         schedulePresenter.logout()
 
         verify(repository).delete()
     }
 
     @Test
-    fun showLoginViewIsCalledOnLogout() {
+    fun `show login view should be called on logout`() {
         schedulePresenter.logout()
 
         verify(view).showLoginView()

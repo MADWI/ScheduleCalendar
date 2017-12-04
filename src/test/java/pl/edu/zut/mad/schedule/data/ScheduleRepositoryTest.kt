@@ -23,7 +23,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 @RunWith(DataProviderRunner::class)
 internal class ScheduleRepositoryTest {
 
-    val date = LocalDate.now()
+    val date: LocalDate = LocalDate.now()
     val realm: Realm = mock()
     val modelMapper: ModelMapper = mock()
     val dayRealmQuery: RealmQuery<DayApi> = mock()
