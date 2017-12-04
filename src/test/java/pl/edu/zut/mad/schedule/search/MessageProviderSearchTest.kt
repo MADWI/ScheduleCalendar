@@ -7,12 +7,13 @@ import pl.edu.zut.mad.schedule.R
 import retrofit2.HttpException
 import retrofit2.Response
 
+@Suppress("IllegalIdentifier")
 class MessageProviderSearchTest {
 
     private val messageProvider = MessageProviderSearch()
 
     @Test
-    fun providerReturnIdResEmptyScheduleAlbumNumberNotFoundWhenErrorIs404() {
+    fun `provider should return id res empty schedule when http error is 404`() {
         val httpError = getHttpErrorWithCode(404)
 
         val messageId = messageProvider.getResIdByError(httpError)
