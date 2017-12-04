@@ -29,7 +29,7 @@ internal class LessonItemPainter(private val context: Context) {
     }
 
     fun colorBackgroundToGrayIfShould(view: View, position: Int) {
-        if (position % GRAY_ITEM_POSITION_INTERVAL == 0) {
+        if (position.rem(GRAY_ITEM_POSITION_INTERVAL) == 0) {
             view.timeGroupView.setBackgroundColor(timeViewColorGray)
             view.setBackgroundColor(itemViewColorGray)
         } else {
