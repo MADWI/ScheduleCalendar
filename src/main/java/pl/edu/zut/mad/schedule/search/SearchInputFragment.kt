@@ -66,6 +66,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun setData(lessons: List<Lesson>) {
         activity.supportFragmentManager.beginTransaction()
             .replace(R.id.searchMainContainer, SearchResultsFragment.newInstance(lessons))
+            .addToBackStack(null)
             .commit()
     }
 

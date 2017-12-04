@@ -29,6 +29,6 @@ internal class SearchResultsFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val lessons = arguments.getParcelableArrayList<Lesson>(LESSONS_KEY)
-        lessonsListView.adapter = LessonsAdapter(lessons)
+        lessonsListView.adapter = LessonsSearchResultAdapter(lessons, context)
     }
 }

@@ -9,7 +9,9 @@ internal class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-        startSearchFragment()
+        if (savedInstanceState == null) {
+            startSearchFragment()
+        }
     }
 
     private fun startSearchFragment() {
