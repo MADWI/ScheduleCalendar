@@ -10,6 +10,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
+import pl.edu.zut.mad.schedule.util.LessonFormatter
 import javax.inject.Inject
 
 internal class LessonsRemoteViewsFactory(private val context: Context)
@@ -33,11 +34,14 @@ internal class LessonsRemoteViewsFactory(private val context: Context)
 
     private fun bindRemoteDay(lesson: Lesson) =
         with(lesson) {
+            val lessonFormatter = LessonFormatter(lesson)
+            val subjectWithType = lessonFormatter.getSubjectWithType()
+            val teacherWithRoom = lessonFormatter.getTeacherWithRoom()
             val remoteViews = RemoteViews(context.packageName, R.layout.lesson_calendar_item)
             remoteViews.setTextViewText(R.id.timeStartView, timeRange.start)
             remoteViews.setTextViewText(R.id.timeEndView, timeRange.end)
             remoteViews.setTextViewText(R.id.teacherWithRoomView, teacherWithRoom)
-            remoteViews.setTextViewText(R.id.subjectWithTypeView, "$subject ($type)") //TODO LessonFormatter
+            remoteViews.setTextViewText(R.id.subjectWithTypeView, subjectWithType)
             remoteViews
         }
 
