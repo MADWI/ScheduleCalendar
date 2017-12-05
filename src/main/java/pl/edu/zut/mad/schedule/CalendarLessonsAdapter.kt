@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.lesson_header.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
+import pl.edu.zut.mad.schedule.util.LessonFormatter
 import pl.edu.zut.mad.schedule.util.LessonItemPainter
 import java.util.Calendar
 
@@ -41,10 +42,11 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
 
     private fun bindLesson(lesson: Lesson, view: View) =
         with(lesson) {
+            val lessonFormatter = LessonFormatter(this)
             view.timeStartView.text = timeRange.start
             view.timeEndView.text = timeRange.end
-            view.subjectWithTypeView.text = subjectWithType
-            view.teacherWithRoomView.text = teacherWithRoom
+            view.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
+            view.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             if (isCancelled) {
                 view.cancelledTextView.visibility = View.VISIBLE
             }
