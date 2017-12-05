@@ -45,25 +45,21 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         init()
     }
 
-    override fun getTeacherName() = teacherNameInputView.text.toString()
-
-    override fun getTeacherSurname() = teacherSurnameInputView.text.toString()
-
-    override fun getFacultyAbbreviation() = facultyAbbreviationInputView.text.toString()
-
-    override fun getSubject() = subjectInputView.text.toString()
-
-    override fun getFieldOfStudy() = fieldOfStudyInputView.text.toString()
-
-    override fun getCourseType() = courseTypeSpinnerView.selectedItem?.toString() ?: ""
-
-    override fun getSemester(): Int? = semesterSpinnerView.selectedItem?.toString()?.toInt()
-
-    override fun getForm() = formSpinnerView.selectedItem?.toString() ?: ""
-
-    override fun getDateFrom() = dateFromView.text.toString()
-
-    override fun getDateTo() = dateToView.text.toString()
+    override fun getSearchQuery(): Map<String, String> {
+        val searchQuery = HashMap<String, String>()
+        searchQuery.put("name", teacherNameInputView.text.toString())
+        searchQuery.put("surname", teacherSurnameInputView.text.toString())
+        searchQuery.put("facultyAbbreviation", facultyAbbreviationInputView.text.toString())
+        searchQuery.put("subject", subjectInputView.text.toString())
+        searchQuery.put("fieldOfStudy", fieldOfStudyInputView.text.toString())
+        searchQuery.put("courseType", courseTypeSpinnerView.selectedItem?.toString() ?: "")
+        searchQuery.put("semester", semesterSpinnerView.selectedItem?.toString() ?: "")
+        searchQuery.put("form", formSpinnerView.selectedItem?.toString() ?: "")
+        searchQuery.put("dateFrom", dateFromView.text.toString())
+        searchQuery.put("dateTo", dateToView.text.toString())
+        //TODO extract keys
+        return searchQuery
+    }
 
     override fun showLoading() = searchButtonView.startAnimation()
 

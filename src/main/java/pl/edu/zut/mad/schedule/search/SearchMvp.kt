@@ -6,31 +6,13 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 internal interface SearchMvp {
 
     interface View {
-        fun getTeacherName(): String
-
-        fun getTeacherSurname(): String
-
-        fun getFacultyAbbreviation(): String
-
-        fun getSubject(): String
-
-        fun getFieldOfStudy(): String
-
-        fun getCourseType(): String
-
-        fun getSemester(): Int?
-
-        fun getForm(): String
-
-        fun getDateFrom(): String
-
-        fun getDateTo(): String
-
         fun setData(lessons: List<Lesson>)
 
         fun showLoading()
 
         fun hideLoading()
+
+        fun getSearchQuery(): Map<String, String>
 
         fun showError(@StringRes errorRes: Int)
     }
