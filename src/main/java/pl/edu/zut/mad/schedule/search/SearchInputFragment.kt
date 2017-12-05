@@ -125,9 +125,12 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         with(lesson) {
             teacherNameInputView.setText(teacher.name)
             teacherSurnameInputView.setText(teacher.surname)
-            subjectInputView.setText(subject)
+            facultyAbbreviationInputView.setText(facultyAbbreviation)
             roomInputView.setText(room)
+            subjectInputView.setText(subject)
+            fieldOfStudyInputView.setText(fieldOfStudy)
             courseTypeSpinnerView.setSelection(getTypeSelectedItemPosition(type))
+            semesterSpinnerView.setSelection(semester)
         }
     }
 
@@ -136,6 +139,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             "wykład" -> 1
             "audytoryjne" -> 2
             "laboratorium" -> 3
+            "lektorat" -> 4
             else -> 0
         }
 

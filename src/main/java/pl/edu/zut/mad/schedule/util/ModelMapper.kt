@@ -36,7 +36,8 @@ internal class ModelMapper {
                 val isCancelled = reservationStatus.equals(CANCELED_LESSON_TEXT, true)
                 val timeRangeUi = toUiTimeRange(timeRange ?: TimeRangeApi())
                 val teacherUi = toUiTeacher(teacher ?: TeacherApi())
-                LessonUi(subject, courseType, room, teacherUi, isCancelled, timeRangeUi, date)
+                LessonUi(subject, courseType, room, teacherUi, facultyAbbreviation,
+                    fieldOfStudy, semester, isCancelled, timeRangeUi, date)
             }
         }
 

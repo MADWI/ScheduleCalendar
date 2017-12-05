@@ -32,6 +32,7 @@
         <item>lecture</item>
         <item>auditorium</item>
         <item>laboratory</item>
+        <item>language course</item>
     </string-array>
     <string-array name="semester_entries" translatable="false">
         <item>1</item>
