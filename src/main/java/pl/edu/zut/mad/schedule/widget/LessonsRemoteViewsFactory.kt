@@ -37,7 +37,7 @@ internal class LessonsRemoteViewsFactory(private val context: Context)
             remoteViews.setTextViewText(R.id.timeStartView, timeRange.start)
             remoteViews.setTextViewText(R.id.timeEndView, timeRange.end)
             remoteViews.setTextViewText(R.id.teacherWithRoomView, teacherWithRoom)
-            remoteViews.setTextViewText(R.id.subjectWithTypeView, subjectWithType)
+            remoteViews.setTextViewText(R.id.subjectWithTypeView, "$subject ($type)") //TODO LessonFormatter
             remoteViews
         }
 

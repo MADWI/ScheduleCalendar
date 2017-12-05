@@ -32,10 +32,10 @@ internal class ModelMapper {
         lessons.map {
             with(it) {
                 val subjectWithCourseType = "$subject ($courseType)"
-                val teacherFullNameWithRoom = "${teacher?.academicTitle} ${teacher?.name} ${teacher?.surname} $room"
+                val teacherFullNameWithRoom = "${teacher?.academicTitle} ${teacher?.name} ${teacher?.surname} $room" //TODO move to Utils
                 val isCancelled = reservationStatus.equals(CANCELED_LESSON_TEXT, true)
                 val timeRangeUi = toUiTimeRange(timeRange ?: TimeRangeApi())
-                LessonUi(teacherFullNameWithRoom, subjectWithCourseType, isCancelled, timeRangeUi, date)
+                LessonUi(subject, courseType, room, teacherFullNameWithRoom, isCancelled, timeRangeUi, date)
             }
         }
 

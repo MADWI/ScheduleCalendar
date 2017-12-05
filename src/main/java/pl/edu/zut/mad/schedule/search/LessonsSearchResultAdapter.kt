@@ -35,7 +35,7 @@ internal class LessonsSearchResultAdapter(private var lessons: List<Lesson>, con
             with(lesson) {
                 itemView.dateView.text = ScheduleDate.UI_FORMATTER.print(lesson.date)
                 itemView.timeView.text = String.format(ScheduleDate.TIME_SEARCH_LESSON_PATTERN, timeRange.start, timeRange.end)
-                itemView.subjectWithTypeView.text = subjectWithType
+                itemView.subjectWithTypeView.text = "$subject ($type)" //TODO LessonFormatter
                 itemView.teacherWithRoomView.text = teacherWithRoom
             }
         }

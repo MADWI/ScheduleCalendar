@@ -43,7 +43,7 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
         with(lesson) {
             view.timeStartView.text = timeRange.start
             view.timeEndView.text = timeRange.end
-            view.subjectWithTypeView.text = subjectWithType
+            view.subjectWithTypeView.text = "$subject ($type)" //TODO LessonFormatter
             view.teacherWithRoomView.text = teacherWithRoom
             if (isCancelled) {
                 view.cancelledTextView.visibility = View.VISIBLE
