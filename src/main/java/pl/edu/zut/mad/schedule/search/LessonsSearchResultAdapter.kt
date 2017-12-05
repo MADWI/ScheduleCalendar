@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
+import pl.edu.zut.mad.schedule.util.LessonFormatter
 import pl.edu.zut.mad.schedule.util.LessonItemPainter
 
 internal class LessonsSearchResultAdapter(private var lessons: List<Lesson>, context: Context) :
@@ -33,10 +34,11 @@ internal class LessonsSearchResultAdapter(private var lessons: List<Lesson>, con
 
         fun bindLesson(lesson: Lesson) {
             with(lesson) {
+                val lessonFormatter = LessonFormatter(this)
                 itemView.dateView.text = ScheduleDate.UI_FORMATTER.print(lesson.date)
                 itemView.timeView.text = String.format(ScheduleDate.TIME_SEARCH_LESSON_PATTERN, timeRange.start, timeRange.end)
-                itemView.subjectWithTypeView.text = subjectWithType
-                itemView.teacherWithRoomView.text = teacherWithRoom
+                itemView.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
+                itemView.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             }
         }
     }
