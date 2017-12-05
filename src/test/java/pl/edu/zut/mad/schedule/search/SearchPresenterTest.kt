@@ -1,7 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -20,6 +19,10 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 
 @Suppress("IllegalIdentifier")
 internal class SearchPresenterTest {
+
+    companion object {
+        val searchInput = SearchInput("", "", "", "", "", "", "", "", "", "")
+    }
 
     @Rule
     @JvmField
@@ -62,7 +65,7 @@ internal class SearchPresenterTest {
 
         presenter.onSearch()
 
-        verify(service).fetchScheduleByQueries(any(), any(), any(), any(), any(), any(), eq(null), any(), any(), any())
+        verify(service).fetchScheduleByQueries(any())
     }
 
     @Test
@@ -102,22 +105,8 @@ internal class SearchPresenterTest {
     }
 
     private fun prepareServiceMockToReturnObservable(observable: Observable<List<Day>>) {
-        prepareViewMocksToReturnQuery()
         whenever(networkConnection.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByQueries(any(), any(), any(), any(), any(), any(), eq(null),
-            any(), any(), any())).thenReturn(observable)
-    }
-
-    private fun prepareViewMocksToReturnQuery() {
-        whenever(view.getTeacherName()).thenReturn("")
-        whenever(view.getTeacherSurname()).thenReturn("")
-        whenever(view.getFacultyAbbreviation()).thenReturn("")
-        whenever(view.getSubject()).thenReturn("")
-        whenever(view.getFieldOfStudy()).thenReturn("")
-        whenever(view.getCourseType()).thenReturn("")
-        whenever(view.getSemester()).thenReturn(null)
-        whenever(view.getForm()).thenReturn("")
-        whenever(view.getDateFrom()).thenReturn("")
-        whenever(view.getDateTo()).thenReturn("")
+        whenever(view.loadSearchQuery()).thenReturn(Observable.just(searchInput))
+        whenever(service.fetchScheduleByQueries(any())).thenReturn(observable)
     }
 }

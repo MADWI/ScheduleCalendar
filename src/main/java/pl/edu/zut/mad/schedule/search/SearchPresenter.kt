@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule.search
 
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
@@ -13,6 +14,8 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderSearch)
     : SearchMvp.Presenter {
 
+    private val compositeDisposable = CompositeDisposable()
+
     override fun onSearch() {
         view.showLoading()
         if (!networkConnection.isAvailable()) {
@@ -20,25 +23,19 @@ internal class SearchPresenter(private val view: SearchMvp.View,
             view.showError(R.string.error_no_internet)
             return
         }
-        val teacherName = view.getTeacherName()
-        val teacherSurname = view.getTeacherSurname()
-        val facultyAbbreviation = view.getFacultyAbbreviation()
-        val subject = view.getSubject()
-        val fieldOfStudy = view.getFieldOfStudy()
-        val courseType = view.getCourseType()
-        val semester = view.getSemester()
-        val form = view.getForm()
-        val dateFrom = view.getDateFrom()
-        val dateTo = view.getDateTo()
-        service.fetchScheduleByQueries(teacherName, teacherSurname, facultyAbbreviation, subject,
-            fieldOfStudy, courseType, semester, form, dateFrom, dateTo)
+        val disposable = view.loadSearchQuery()
+            .map { modelMapper.toLessonsSearchQueryMap(it) }
+            .flatMap { service.fetchScheduleByQueries(it) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { showLessonsAndHideLoading(it) },
                 { showErrorAndHideLoading(it) }
             )
+        compositeDisposable.add(disposable)
     }
+
+    override fun onDetach() = compositeDisposable.clear()
 
     private fun showLessonsAndHideLoading(days: List<Day>) {
         view.hideLoading()
