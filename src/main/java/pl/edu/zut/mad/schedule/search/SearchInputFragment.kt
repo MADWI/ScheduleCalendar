@@ -22,6 +22,15 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     companion object {
         private const val DAYS_IN_WEEK = 7
+        private const val LESSON_KEY = "lesson_key"
+
+        fun newInstance(lesson: Lesson): SearchInputFragment {
+            val inputFragment = SearchInputFragment()
+            val arguments = Bundle()
+            arguments.putParcelable(LESSON_KEY, lesson)
+            inputFragment.arguments = arguments
+            return inputFragment
+        }
     }
 
     @Inject internal lateinit var presenter: SearchMvp.Presenter
@@ -82,6 +91,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     private fun initViews() {
         initDatePickers()
         searchButtonView.setOnClickListener { presenter.onSearch() }
+        initInputViewsWithLessonArgument()
     }
 
     private fun initDatePickers() {
@@ -109,6 +119,25 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .withYear(year)
         return ScheduleDate.UI_FORMATTER.print(date)
     }
+
+    private fun initInputViewsWithLessonArgument() {
+        val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
+        with(lesson) {
+            teacherNameInputView.setText(teacher.name)
+            teacherSurnameInputView.setText(teacher.surname)
+            subjectInputView.setText(subject)
+            roomInputView.setText(room)
+            courseTypeSpinnerView.setSelection(getTypeSelectedItemPosition(type))
+        }
+    }
+
+    private fun getTypeSelectedItemPosition(courseType: String) = //TODO move to separate class
+        when (courseType) {
+            "wykład" -> 1
+            "audytoryjne" -> 2
+            "laboratorium" -> 3
+            else -> 0
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()

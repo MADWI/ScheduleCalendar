@@ -7,12 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
-internal class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
 
     companion object {
         private const val LESSON_KEY = "lesson_key"
 
-        fun getIntentWithLesson(context: Context, lesson: Lesson): Intent {
+        internal fun getIntentWithLesson(context: Context, lesson: Lesson): Intent {
             val intent = Intent(context, SearchActivity::class.java)
             val extras = Bundle()
             extras.putParcelable(LESSON_KEY, lesson)
@@ -30,8 +30,17 @@ internal class SearchActivity : AppCompatActivity() {
     }
 
     private fun startSearchFragment() {
+        val searchInputFragment = getSearchInputFragmentWithArguments()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.searchMainContainer, SearchInputFragment())
+            .replace(R.id.searchMainContainer, searchInputFragment)
             .commit()
+    }
+
+    private fun getSearchInputFragmentWithArguments(): SearchInputFragment {
+        val arguments = intent.extras
+        val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY)
+        return if (lesson == null)
+            SearchInputFragment()
+        else SearchInputFragment.newInstance(lesson)
     }
 }
