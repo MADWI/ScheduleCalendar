@@ -10,10 +10,14 @@ import pl.edu.zut.mad.schedule.MockData
 import pl.edu.zut.mad.schedule.MockData.Companion.DATE_DAY
 import pl.edu.zut.mad.schedule.MockData.Companion.DATE_MONTH
 import pl.edu.zut.mad.schedule.MockData.Companion.DATE_YEAR
-import pl.edu.zut.mad.schedule.MockData.Companion.SUBJECT_WITH_TYPE
-import pl.edu.zut.mad.schedule.MockData.Companion.TEACHER_WITH_ROOM
+import pl.edu.zut.mad.schedule.MockData.Companion.ROOM
+import pl.edu.zut.mad.schedule.MockData.Companion.SUBJECT
+import pl.edu.zut.mad.schedule.MockData.Companion.TEACHER_ACADEMIC_TITLE
+import pl.edu.zut.mad.schedule.MockData.Companion.TEACHER_NAME
+import pl.edu.zut.mad.schedule.MockData.Companion.TEACHER_SURNAME
 import pl.edu.zut.mad.schedule.MockData.Companion.TIME_END
 import pl.edu.zut.mad.schedule.MockData.Companion.TIME_START
+import pl.edu.zut.mad.schedule.MockData.Companion.TYPE
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
@@ -50,20 +54,56 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = [(MockData::class)])
-    fun `day ui has proper subject with type`(dayApi: DayApi) {
+    fun `day ui has proper subject`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.subjectWithType).isEqualTo(SUBJECT_WITH_TYPE)
+        assertThat(lesson.subject).isEqualTo(SUBJECT)
     }
 
     @Test
     @UseDataProvider("dayApi", location = [(MockData::class)])
-    fun `day ui has proper teacher with room`(dayApi: DayApi) {
+    fun `day ui has proper type`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.teacherWithRoom).isEqualTo(TEACHER_WITH_ROOM)
+        assertThat(lesson.type).isEqualTo(TYPE)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper teacher academic title`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.teacher.academicTitle).isEqualTo(TEACHER_ACADEMIC_TITLE)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper teacher name`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.teacher.name).isEqualTo(TEACHER_NAME)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper teacher surname`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.teacher.surname).isEqualTo(TEACHER_SURNAME)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper room`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.room).isEqualTo(ROOM)
     }
 
     @Test
