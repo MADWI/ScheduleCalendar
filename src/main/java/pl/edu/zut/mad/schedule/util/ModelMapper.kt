@@ -7,9 +7,11 @@ import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import java.util.Date
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
+import pl.edu.zut.mad.schedule.data.model.api.Teacher as TeacherApi
 import pl.edu.zut.mad.schedule.data.model.api.TimeRange as TimeRangeApi
 import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson as LessonUi
+import pl.edu.zut.mad.schedule.data.model.ui.Teacher as TeacherUi
 import pl.edu.zut.mad.schedule.data.model.ui.TimeRange as TimeRangeUi
 
 internal class ModelMapper {
@@ -31,16 +33,18 @@ internal class ModelMapper {
     private fun toLessonsUiFromApi(lessons: RealmList<LessonApi>, date: LocalDate): List<LessonUi> =
         lessons.map {
             with(it) {
-                val subjectWithCourseType = "$subject ($courseType)"
-                val teacherFullNameWithRoom = "${teacher?.academicTitle} ${teacher?.name} ${teacher?.surname} $room" //TODO move to Utils
                 val isCancelled = reservationStatus.equals(CANCELED_LESSON_TEXT, true)
                 val timeRangeUi = toUiTimeRange(timeRange ?: TimeRangeApi())
-                LessonUi(subject, courseType, room, teacherFullNameWithRoom, isCancelled, timeRangeUi, date)
+                val teacherUi = toUiTeacher(teacher ?: TeacherApi())
+                LessonUi(subject, courseType, room, teacherUi, isCancelled, timeRangeUi, date)
             }
         }
 
     private fun toUiTimeRange(timeRangeApi: TimeRangeApi) =
-        TimeRangeUi(timeRangeApi.from, timeRangeApi.to)
+        with(timeRangeApi) { TimeRangeUi(from, to) }
+
+    private fun toUiTeacher(teacherApi: TeacherApi) =
+        with(teacherApi) { TeacherUi(academicTitle, name, surname) }
 
     fun toLessonsEventsFromDayUi(day: DayUi): List<LessonEvent> =
         day.lessons

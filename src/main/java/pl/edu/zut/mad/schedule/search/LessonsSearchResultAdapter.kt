@@ -38,7 +38,7 @@ internal class LessonsSearchResultAdapter(private var lessons: List<Lesson>, con
                 itemView.dateView.text = ScheduleDate.UI_FORMATTER.print(lesson.date)
                 itemView.timeView.text = String.format(ScheduleDate.TIME_SEARCH_LESSON_PATTERN, timeRange.start, timeRange.end)
                 itemView.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
-                itemView.teacherWithRoomView.text = teacherWithRoom //TODO LessonFormatter
+                itemView.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             }
         }
     }
