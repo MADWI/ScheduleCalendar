@@ -15,7 +15,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.util.LessonSearchSelector
+import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
@@ -35,7 +35,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     @Inject lateinit var presenter: SearchMvp.Presenter
-    @Inject lateinit var lessonSearchSelector: LessonSearchSelector
+    @Inject lateinit var lessonIndexer: LessonIndexer
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -131,7 +131,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             roomInputView.setText(room)
             subjectInputView.setText(subject)
             fieldOfStudyInputView.setText(fieldOfStudy)
-            val courseTypeSelection = lessonSearchSelector.getCourseTypeSelection(type)
+            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
             courseTypeSpinnerView.setSelection(courseTypeSelection)
             semesterSpinnerView.setSelection(semester)
         }
