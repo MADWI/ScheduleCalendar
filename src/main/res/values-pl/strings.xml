@@ -32,6 +32,7 @@
         <item>wykład</item>
         <item>audytoryjne</item>
         <item>laboratorium</item>
+        <item>projekt</item>
         <item>lektorat</item>
     </string-array>
 </resources>

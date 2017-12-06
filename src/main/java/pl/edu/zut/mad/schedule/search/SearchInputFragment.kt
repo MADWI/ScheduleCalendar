@@ -1,6 +1,8 @@
 package pl.edu.zut.mad.schedule.search
 
 import android.app.DatePickerDialog
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -15,7 +17,9 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
+import pl.edu.zut.mad.schedule.util.LessonSearchSelector
 import pl.edu.zut.mad.schedule.util.app
+import java.util.Locale
 import javax.inject.Inject
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
@@ -42,7 +46,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
-
+    //TODO wrap with lesson model
     override fun getTeacherName() = teacherNameInputView.text.toString()
 
     override fun getTeacherSurname() = teacherSurnameInputView.text.toString()
@@ -121,6 +125,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun initInputViewsWithLessonArgument() {
+        val lessonSearchSelector = LessonSearchSelector(getLocalizedResources()) //TODO move to module
         val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
         with(lesson) {
             teacherNameInputView.setText(teacher.name)
@@ -129,19 +134,18 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             roomInputView.setText(room)
             subjectInputView.setText(subject)
             fieldOfStudyInputView.setText(fieldOfStudy)
-            courseTypeSpinnerView.setSelection(getTypeSelectedItemPosition(type))
+            val courseTypeSelection = lessonSearchSelector.getCourseTypeSelection(type)
+            courseTypeSpinnerView.setSelection(courseTypeSelection)
             semesterSpinnerView.setSelection(semester)
         }
     }
 
-    private fun getTypeSelectedItemPosition(courseType: String) = //TODO move to separate class
-        when (courseType) {
-            "wykład" -> 1
-            "audytoryjne" -> 2
-            "laboratorium" -> 3
-            "lektorat" -> 4
-            else -> 0
-        }
+    private fun getLocalizedResources(): Resources { //TODO move to module
+        val configuration = Configuration(context.resources.configuration)
+        configuration.setLocale(Locale("pl"))
+        val localizedContext = context.createConfigurationContext(configuration)
+        return localizedContext.resources
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

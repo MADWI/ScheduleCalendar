@@ -30,6 +30,9 @@ internal class MockData {
         const val ROOM = "WI1-128"
         const val TIME_START = "8:15"
         const val TIME_END = "10:00"
+        const val FACULTY_ABBREVIATION = "WI"
+        const val FIELD_OF_STUDY = "informatyka"
+        const val SEMESTER = 2
         const val TEACHER_WITH_ROOM = "$TEACHER_ACADEMIC_TITLE $TEACHER_NAME $TEACHER_SURNAME $ROOM"
         const val SUBJECT_WITH_TYPE = "$SUBJECT ($TYPE)"
         private val TEACHER_UI = TeacherUi(TEACHER_ACADEMIC_TITLE, TEACHER_NAME, TEACHER_SURNAME)
@@ -101,7 +104,8 @@ internal class MockData {
 
         private fun getLessonUiWithCancellation(): LessonUi {
             val date = getUiDate()
-            return LessonUi(SUBJECT, TYPE, ROOM, TEACHER_UI, false, TIME_RANGE_UI, date)
+            return LessonUi(SUBJECT, TYPE, ROOM, TEACHER_UI, FACULTY_ABBREVIATION, FIELD_OF_STUDY,
+                SEMESTER, false, TIME_RANGE_UI, date)
         }
     }
 }
