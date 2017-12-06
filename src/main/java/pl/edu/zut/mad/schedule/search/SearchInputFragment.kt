@@ -44,7 +44,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
-    //TODO wrap with lesson model
+
     override fun getTeacherName() = teacherNameInputView.text.toString()
 
     override fun getTeacherSurname() = teacherSurnameInputView.text.toString()
