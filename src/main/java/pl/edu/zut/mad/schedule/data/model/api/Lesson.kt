@@ -7,7 +7,3 @@ internal open class Lesson(var subject: String = "", var courseType: String = ""
     var reservationStatus: String = "", var timeRange: TimeRange? = null,
     var facultyAbbreviation: String = "", var fieldOfStudy: String = "",
     var semester: Int = 0) : RealmObject()
-
-//TODO test facultyAbbreviation
-//TODO test fieldOfStudy
-//TODO test semester

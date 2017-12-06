@@ -99,7 +99,8 @@ internal class MockData {
         private fun getUiDate(): LocalDate = LocalDate.fromDateFields(getApiDate())
 
         private fun getLessonApiWithReservationStatus(reservationStatus: String): LessonApi {
-            return LessonApi(SUBJECT, TYPE, ROOM, TEACHER_API, reservationStatus, TIME_RANGE_API)
+            return LessonApi(SUBJECT, TYPE, ROOM, TEACHER_API, reservationStatus, TIME_RANGE_API,
+                FACULTY_ABBREVIATION, FIELD_OF_STUDY, SEMESTER)
         }
 
         private fun getLessonUiWithCancellation(): LessonUi {
