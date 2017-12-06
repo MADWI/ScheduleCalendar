@@ -1,8 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
 import android.app.DatePickerDialog
-import android.content.res.Configuration
-import android.content.res.Resources
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -19,7 +17,6 @@ import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonSearchSelector
 import pl.edu.zut.mad.schedule.util.app
-import java.util.Locale
 import javax.inject.Inject
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
@@ -37,7 +34,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    @Inject internal lateinit var presenter: SearchMvp.Presenter
+    @Inject lateinit var presenter: SearchMvp.Presenter
+    @Inject lateinit var lessonSearchSelector: LessonSearchSelector
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -125,7 +123,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun initInputViewsWithLessonArgument() {
-        val lessonSearchSelector = LessonSearchSelector(getLocalizedResources()) //TODO move to module
         val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
         with(lesson) {
             teacherNameInputView.setText(teacher.name)
@@ -138,13 +135,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             courseTypeSpinnerView.setSelection(courseTypeSelection)
             semesterSpinnerView.setSelection(semester)
         }
-    }
-
-    private fun getLocalizedResources(): Resources { //TODO move to module
-        val configuration = Configuration(context.resources.configuration)
-        configuration.setLocale(Locale("pl"))
-        val localizedContext = context.createConfigurationContext(configuration)
-        return localizedContext.resources
     }
 
     override fun onDestroyView() {

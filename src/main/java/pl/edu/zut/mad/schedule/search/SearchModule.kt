@@ -1,8 +1,10 @@
 package pl.edu.zut.mad.schedule.search
 
+import android.content.res.Resources
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedule.data.ScheduleService
+import pl.edu.zut.mad.schedule.util.LessonSearchSelector
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
@@ -18,4 +20,8 @@ internal class SearchModule(private val view: SearchMvp.View) {
     @Search
     @Provides
     fun provideMessageProviderSearch() = MessageProviderSearch()
+
+    @Search
+    @Provides
+    fun provideLessonSearchSelector(polishResources: Resources) = LessonSearchSelector(polishResources) //TODO change name
 }
