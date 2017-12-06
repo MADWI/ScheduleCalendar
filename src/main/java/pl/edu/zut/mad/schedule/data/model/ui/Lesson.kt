@@ -9,5 +9,6 @@ import org.joda.time.LocalDate
 @Parcelize
 internal data class Lesson(val subject: String, val type: String,
     val room: String, val teacher: Teacher,
-    val isCancelled: Boolean, val timeRange: TimeRange,
-    val date: LocalDate) : Parcelable
+    val facultyAbbreviation: String, val fieldOfStudy: String,
+    val semester: Int, val isCancelled: Boolean,
+    val timeRange: TimeRange, val date: LocalDate) : Parcelable

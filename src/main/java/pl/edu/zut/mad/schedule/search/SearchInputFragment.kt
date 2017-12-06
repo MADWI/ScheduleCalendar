@@ -15,6 +15,7 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
+import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
@@ -22,9 +23,19 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     companion object {
         private const val DAYS_IN_WEEK = 7
+        private const val LESSON_KEY = "lesson_key"
+
+        fun newInstance(lesson: Lesson): SearchInputFragment {
+            val inputFragment = SearchInputFragment()
+            val arguments = Bundle()
+            arguments.putParcelable(LESSON_KEY, lesson)
+            inputFragment.arguments = arguments
+            return inputFragment
+        }
     }
 
-    @Inject internal lateinit var presenter: SearchMvp.Presenter
+    @Inject lateinit var presenter: SearchMvp.Presenter
+    @Inject lateinit var lessonIndexer: LessonIndexer
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -82,6 +93,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     private fun initViews() {
         initDatePickers()
         searchButtonView.setOnClickListener { presenter.onSearch() }
+        initInputViewsWithLessonArgument()
     }
 
     private fun initDatePickers() {
@@ -108,6 +120,21 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .withMonthOfYear(month + 1)
             .withYear(year)
         return ScheduleDate.UI_FORMATTER.print(date)
+    }
+
+    private fun initInputViewsWithLessonArgument() {
+        val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
+        with(lesson) {
+            teacherNameInputView.setText(teacher.name)
+            teacherSurnameInputView.setText(teacher.surname)
+            facultyAbbreviationInputView.setText(facultyAbbreviation)
+            roomInputView.setText(room)
+            subjectInputView.setText(subject)
+            fieldOfStudyInputView.setText(fieldOfStudy)
+            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
+            courseTypeSpinnerView.setSelection(courseTypeSelection)
+            semesterSpinnerView.setSelection(semester)
+        }
     }
 
     override fun onDestroyView() {

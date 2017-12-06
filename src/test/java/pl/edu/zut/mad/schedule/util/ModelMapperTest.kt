@@ -10,7 +10,10 @@ import pl.edu.zut.mad.schedule.MockData
 import pl.edu.zut.mad.schedule.MockData.Companion.DATE_DAY
 import pl.edu.zut.mad.schedule.MockData.Companion.DATE_MONTH
 import pl.edu.zut.mad.schedule.MockData.Companion.DATE_YEAR
+import pl.edu.zut.mad.schedule.MockData.Companion.FACULTY_ABBREVIATION
+import pl.edu.zut.mad.schedule.MockData.Companion.FIELD_OF_STUDY
 import pl.edu.zut.mad.schedule.MockData.Companion.ROOM
+import pl.edu.zut.mad.schedule.MockData.Companion.SEMESTER
 import pl.edu.zut.mad.schedule.MockData.Companion.SUBJECT
 import pl.edu.zut.mad.schedule.MockData.Companion.TEACHER_ACADEMIC_TITLE
 import pl.edu.zut.mad.schedule.MockData.Companion.TEACHER_NAME
@@ -122,6 +125,33 @@ internal class ModelMapperTest {
         val lesson = dayUi.lessons[0]
 
         assertThat(lesson.timeRange.end).isEqualTo(TIME_END)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper faculty abbreviation`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.facultyAbbreviation).isEqualTo(FACULTY_ABBREVIATION)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper field of study abbreviation`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.fieldOfStudy).isEqualTo(FIELD_OF_STUDY)
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui has proper semester`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.semester).isEqualTo(SEMESTER)
     }
 
     @Test
