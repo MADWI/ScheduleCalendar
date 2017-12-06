@@ -20,7 +20,6 @@ class SearchActivity : AppCompatActivity() {
             return intent
         }
     }
-   }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
