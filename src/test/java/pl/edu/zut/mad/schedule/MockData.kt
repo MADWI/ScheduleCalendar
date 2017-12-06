@@ -33,6 +33,8 @@ internal class MockData {
         const val FACULTY_ABBREVIATION = "WI"
         const val FIELD_OF_STUDY = "informatyka"
         const val SEMESTER = 2
+        const val TEACHER_WITH_ROOM = "$TEACHER_ACADEMIC_TITLE $TEACHER_NAME $TEACHER_SURNAME $ROOM"
+        const val SUBJECT_WITH_TYPE = "$SUBJECT ($TYPE)"
         private val TEACHER_UI = TeacherUi(TEACHER_ACADEMIC_TITLE, TEACHER_NAME, TEACHER_SURNAME)
         private val TEACHER_API = TeacherApi(TEACHER_ACADEMIC_TITLE, TEACHER_NAME, TEACHER_SURNAME)
         private val TIME_RANGE_UI = TimeRangeUi(TIME_START, TIME_END)
