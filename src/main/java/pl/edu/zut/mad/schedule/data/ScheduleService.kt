@@ -4,21 +4,12 @@ import io.reactivex.Observable
 import pl.edu.zut.mad.schedule.data.model.api.Day
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 internal interface ScheduleService {
 
     @GET("{albumNumber}")
     fun fetchScheduleByAlbumNumber(@Path("albumNumber") albumNumber: Int): Observable<List<Day>>
-
-    //TODO delete
-    @GET(".")
-    fun fetchScheduleByQueries(@Query("name") teacherName: String, @Query("surname") teacherSurname: String,
-        @Query("facultyAbbreviation") facultyAbbreviation: String, @Query("subject") subject: String,
-        @Query("fieldOfStudy") fieldOfStudy: String, @Query("courseType") courseType: String,
-        @Query("semester") semester: Int?, @Query("form") form: String,
-        @Query("dateFrom") dateFrom: String, @Query("dateTo") dateTo: String): Observable<List<Day>>
 
     @GET(".")
     fun fetchScheduleByQueries(@QueryMap queries: Map<String, String>): Observable<List<Day>>
