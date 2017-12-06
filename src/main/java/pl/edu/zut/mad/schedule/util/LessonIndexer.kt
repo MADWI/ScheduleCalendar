@@ -3,7 +3,7 @@ package pl.edu.zut.mad.schedule.util
 import android.content.res.Resources
 import pl.edu.zut.mad.schedule.R
 
-class LessonIndexer(resources: Resources) {
+internal class LessonIndexer(resources: Resources) {
 
     private val types: Array<String> = resources.getStringArray(R.array.course_type_entries)
 

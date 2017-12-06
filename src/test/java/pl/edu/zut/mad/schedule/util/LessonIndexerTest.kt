@@ -9,7 +9,7 @@ import org.junit.Test
 import pl.edu.zut.mad.schedule.R
 
 @Suppress("IllegalIdentifier")
-class LessonIndexerTest {
+internal class LessonIndexerTest {
 
     companion object {
         private const val LECTURE = "wykład"
