@@ -22,7 +22,6 @@ import javax.inject.Inject
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     companion object {
-        private const val DAYS_IN_WEEK = 7
         private const val LESSON_KEY = "lesson_key"
         private const val QUERY_TEACHER_NAME = "name"
         private const val QUERY_TEACHER_SURNAME = "surname"
@@ -52,7 +51,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        init(savedInstanceState)
     }
 
     override fun getSearchQuery(): Map<String, String> {
@@ -86,36 +85,43 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .commit()
     }
 
-    private fun init() {
+    private fun init(savedInstanceState: Bundle?) {
         initInjections()
-        initViews()
+        initViews(savedInstanceState)
     }
 
     private fun initInjections() = app.component
         .plus(SearchModule(this))
         .inject(this)
 
-    private fun initViews() {
+    private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
         searchButtonView.setOnClickListener { presenter.onSearch() }
-        initInputViewsWithLessonArgument()
+        if (savedInstanceState == null) {
+            initInputViewsWithLessonArgument()
+        }
     }
 
     private fun initDatePickers() {
-        val dateFrom = LocalDate.now()
-        dateFromView.setOnClickListener { getDatePickerDialog(dateFrom, dateFromView).show() }
-        val dateTo = dateFrom.plusDays(DAYS_IN_WEEK)
-        dateToView.setOnClickListener { getDatePickerDialog(dateTo, dateToView).show() }
+        dateFromView.setOnClickListener { getDatePickerDialog(dateFromView).show() }
+        dateToView.setOnClickListener { getDatePickerDialog(dateToView).show() }
     }
 
-    private fun getDatePickerDialog(date: LocalDate, editText: EditText) =
-        DatePickerDialog(context, getOnDateSetListenerForView(editText),
+    private fun getDatePickerDialog(dateEditText: EditText): DatePickerDialog {
+        val dateText = dateEditText.text.toString()
+        val date = if (dateText.isEmpty()) {
+            LocalDate.now()
+        } else {
+            LocalDate.parse(dateText, ScheduleDate.UI_FORMATTER)
+        }
+        return DatePickerDialog(context, getOnDateSetListenerForView(dateEditText),
             date.year, date.monthOfYear - 1, date.dayOfMonth)
+    }
 
-    private fun getOnDateSetListenerForView(editText: EditText): DatePickerDialog.OnDateSetListener {
+    private fun getOnDateSetListenerForView(dateEditText: EditText): DatePickerDialog.OnDateSetListener {
         return DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val dateText = parseDate(dayOfMonth, month, year)
-            editText.setText(dateText)
+            dateEditText.setText(dateText)
         }
     }
 
