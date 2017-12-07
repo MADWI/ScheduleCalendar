@@ -12,7 +12,7 @@ internal interface SearchMvp {
 
         fun hideLoading()
 
-        fun getSearchQuery(): Map<String, String>
+        fun getSearchQuery(): SearchInputViewModel
 
         fun showError(@StringRes errorRes: Int)
     }
