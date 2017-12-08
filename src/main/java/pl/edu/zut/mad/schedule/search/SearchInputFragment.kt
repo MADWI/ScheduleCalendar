@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
@@ -44,8 +45,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         init(savedInstanceState)
     }
 
-    override fun getSearchQuery(): SearchInputViewModel {
-        return SearchInputViewModel(
+    override fun loadSearchQuery(): Observable<SearchInputViewModel> {
+        val searchInput = SearchInputViewModel(
             teacherNameInputView.text.toString(),
             teacherSurnameInputView.text.toString(),
             facultyAbbreviationInputView.text.toString(),
@@ -56,6 +57,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             formSpinnerView.selectedItem?.toString() ?: "",
             dateFromView.text.toString(),
             dateToView.text.toString())
+        return Observable.just(searchInput)
     }
 
     override fun showLoading() = searchButtonView.startAnimation()
@@ -140,5 +142,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun onDestroyView() {
         super.onDestroyView()
         searchButtonView.dispose()
+        presenter.onDetach()
     }
 }
