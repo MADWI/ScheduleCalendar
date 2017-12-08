@@ -1,7 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
 import android.app.DatePickerDialog
-import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -16,7 +15,6 @@ import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.databinding.FragmentSearchInputBinding
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
@@ -38,25 +36,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     @Inject lateinit var presenter: SearchMvp.Presenter
     @Inject lateinit var lessonIndexer: LessonIndexer
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = DataBindingUtil.inflate<FragmentSearchInputBinding>(inflater, R.layout.fragment_search_input, container, false)
-
-        val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY)!!
-        val searchInput = SearchInputViewModel(
-            lesson.teacher.name,
-            lesson.teacher.surname,
-            lesson.facultyAbbreviation,
-            lesson.subject,
-            lesson.fieldOfStudy,
-            lesson.type,
-            lesson.semester.toString(),
-            "stacjonarne",
-            lesson.room,
-            "10-12-2017",
-            "10-12-2017")
-        binding.searchInput = searchInput
-        return binding.root
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        inflater.inflate(R.layout.fragment_search_input, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,7 +54,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             courseTypeSpinnerView.selectedItem?.toString() ?: "",
             semesterSpinnerView.selectedItem?.toString() ?: "",
             formSpinnerView.selectedItem?.toString() ?: "",
-            roomInputView.text.toString(),
             dateFromView.text.toString(),
             dateToView.text.toString())
     }
@@ -107,7 +87,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         initDatePickers()
         searchButtonView.setOnClickListener { presenter.onSearch() }
         if (savedInstanceState == null) {
-//            initInputViewsWithLessonArgument()
+            initInputViewsWithLessonArgument()
         }
     }
 
