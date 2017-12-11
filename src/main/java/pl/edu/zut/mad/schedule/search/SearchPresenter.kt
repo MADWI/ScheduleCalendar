@@ -24,7 +24,6 @@ internal class SearchPresenter(private val view: SearchMvp.View,
             return
         }
         val disposable = view.loadSearchQuery()
-            .subscribeOn(Schedulers.io())
             .map { modelMapper.toLessonsSearchQueryMap(it) }
             .flatMap { service.fetchScheduleByQueries(it) }
             .subscribeOn(Schedulers.io())

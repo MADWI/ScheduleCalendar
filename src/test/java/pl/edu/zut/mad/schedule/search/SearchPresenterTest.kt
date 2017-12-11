@@ -101,7 +101,9 @@ internal class SearchPresenterTest {
     }
 
     private fun prepareServiceMockToReturnObservable(observable: Observable<List<Day>>) {
+        val searchInput = SearchInputViewModel("", "", "", "", "", "", "", "", "", "")
         whenever(networkConnection.isAvailable()).thenReturn(true)
+        whenever(view.loadSearchQuery()).thenReturn(Observable.just(searchInput))
         whenever(service.fetchScheduleByQueries(any())).thenReturn(observable)
     }
 }
