@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_search_input.*
@@ -98,21 +98,21 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         dateToView.setOnClickListener { getDatePickerDialog(dateToView).show() }
     }
 
-    private fun getDatePickerDialog(dateEditText: EditText): DatePickerDialog {
-        val dateText = dateEditText.text.toString()
+    private fun getDatePickerDialog(textView: TextView): DatePickerDialog {
+        val dateText = textView.text.toString()
         val date = if (dateText.isEmpty()) {
             LocalDate.now()
         } else {
             LocalDate.parse(dateText, ScheduleDate.UI_FORMATTER)
         }
-        return DatePickerDialog(context, getOnDateSetListenerForView(dateEditText),
+        return DatePickerDialog(context, getOnDateSetListenerForView(textView),
             date.year, date.monthOfYear - 1, date.dayOfMonth)
     }
 
-    private fun getOnDateSetListenerForView(dateEditText: EditText): DatePickerDialog.OnDateSetListener {
+    private fun getOnDateSetListenerForView(textView: TextView): DatePickerDialog.OnDateSetListener {
         return DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val dateText = parseDate(dayOfMonth, month, year)
-            dateEditText.setText(dateText)
+            textView.text = dateText
         }
     }
 
