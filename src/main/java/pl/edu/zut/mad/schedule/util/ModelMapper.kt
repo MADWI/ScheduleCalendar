@@ -72,7 +72,7 @@ internal class ModelMapper {
 
     fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
 
-    fun toLessonsSearchQueryMap(searchInput: SearchInputViewModel) : Map<String, String> {
+    fun toLessonsSearchQueryMap(searchInput: SearchInputViewModel): Map<String, String> {
         val query = HashMap<String, String>()
         query.put(QUERY_TEACHER_NAME, searchInput.teacherName)
         query.put(QUERY_TEACHER_SURNAME, searchInput.teacherSurname)
