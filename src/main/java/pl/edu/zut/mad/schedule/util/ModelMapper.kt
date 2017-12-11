@@ -4,7 +4,7 @@ import io.realm.RealmList
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
-import pl.edu.zut.mad.schedule.search.SearchInputViewModel
+import pl.edu.zut.mad.schedule.search.SearchInput
 import java.util.Date
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
@@ -72,7 +72,7 @@ internal class ModelMapper {
 
     fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
 
-    fun toLessonsSearchQueryMap(searchInput: SearchInputViewModel): Map<String, String> {
+    fun toLessonsSearchQueryMap(searchInput: SearchInput): Map<String, String> {
         val query = HashMap<String, String>()
         query.put(QUERY_TEACHER_NAME, searchInput.teacherName)
         query.put(QUERY_TEACHER_SURNAME, searchInput.teacherSurname)

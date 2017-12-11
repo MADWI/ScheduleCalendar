@@ -13,7 +13,7 @@ internal interface SearchMvp {
 
         fun hideLoading()
 
-        fun loadSearchQuery(): Observable<SearchInputViewModel>
+        fun loadSearchQuery(): Observable<SearchInput>
 
         fun showError(@StringRes errorRes: Int)
     }

@@ -19,6 +19,6 @@ internal interface LoginMvp {
     interface Presenter {
         fun onDownloadScheduleClick()
 
-        fun cancelFetch() //TODO base presenter
+        fun cancelFetch()
     }
 }

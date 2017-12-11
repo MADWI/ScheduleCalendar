@@ -45,8 +45,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         init(savedInstanceState)
     }
 
-    override fun loadSearchQuery(): Observable<SearchInputViewModel> {
-        val searchInput = SearchInputViewModel(
+    override fun loadSearchQuery(): Observable<SearchInput> {
+        val searchInput = SearchInput(
             teacherNameInputView.text.toString(),
             teacherSurnameInputView.text.toString(),
             facultyAbbreviationInputView.text.toString(),
