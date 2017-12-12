@@ -37,7 +37,7 @@ internal class SearchPresenterTest {
     val searchInputSubject = PublishSubject.create<SearchInput>()
 
     val view: SearchMvp.View = mock {
-        on { getSearchSubject() } doReturn searchInputSubject
+        on { observeSearchInput() } doReturn searchInputSubject
     }
     val service: ScheduleService = mock()
     val modelMapper: ModelMapper = mock()
@@ -51,7 +51,7 @@ internal class SearchPresenterTest {
     fun `search should call hide loading when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).hideLoading()
     }
@@ -60,7 +60,7 @@ internal class SearchPresenterTest {
     fun `search should call show error when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).showError(R.string.error_no_internet)
     }
@@ -69,7 +69,7 @@ internal class SearchPresenterTest {
     fun `search should call fetch schedule when connection is available`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(service).fetchScheduleByQueries(any())
     }
@@ -78,7 +78,7 @@ internal class SearchPresenterTest {
     fun `search should call hide loading when service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).hideLoading()
     }
@@ -87,7 +87,7 @@ internal class SearchPresenterTest {
     fun `search should call set data when schedule service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).setData(any())
     }
@@ -96,7 +96,7 @@ internal class SearchPresenterTest {
     fun `search should call hide loading when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).hideLoading()
     }
@@ -105,13 +105,12 @@ internal class SearchPresenterTest {
     fun `search should call show error when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).showError(any())
     }
 
     private fun prepareServiceMockToReturnObservable(observable: Observable<List<Day>>) {
-        searchInputSubject.onNext(searchInput)
         whenever(networkConnection.isAvailable()).thenReturn(true)
         whenever(service.fetchScheduleByQueries(any())).thenReturn(observable)
     }

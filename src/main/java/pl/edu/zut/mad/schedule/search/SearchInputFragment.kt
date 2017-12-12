@@ -65,7 +65,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .commit()
     }
 
-    override fun getSearchSubject(): PublishSubject<SearchInput> {
+    override fun observeSearchInput(): PublishSubject<SearchInput> {
         return searchInputSubject
     }
 
@@ -80,10 +80,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
-        searchButtonView.setOnClickListener {
-            searchInputSubject.onNext(getSearchInput())
-            presenter.onSearch()
-        }
+        searchButtonView.setOnClickListener { searchInputSubject.onNext(getSearchInput()) }
         if (savedInstanceState == null) {
             initInputViewsWithLessonArgument()
         }

@@ -13,14 +13,12 @@ internal interface SearchMvp {
 
         fun hideLoading()
 
-        fun getSearchSubject(): PublishSubject<SearchInput>
+        fun observeSearchInput(): PublishSubject<SearchInput>
 
         fun showError(@StringRes errorRes: Int)
     }
 
     interface Presenter {
-        fun onSearch()
-
         fun onDetach()
     }
 }
