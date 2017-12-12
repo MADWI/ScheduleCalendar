@@ -1,10 +1,12 @@
 package pl.edu.zut.mad.schedule.search
 
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.InjectMocks
@@ -32,7 +34,11 @@ internal class SearchPresenterTest {
     @JvmField
     val rxSchedulerRule = RxImmediateSchedulerRule()
 
-    val view: SearchMvp.View = mock()
+    val searchInputSubject = PublishSubject.create<SearchInput>()
+
+    val view: SearchMvp.View = mock {
+        on { getSearchSubject() } doReturn searchInputSubject
+    }
     val service: ScheduleService = mock()
     val modelMapper: ModelMapper = mock()
     val messageProvider: MessageProviderSearch = mock()
@@ -105,8 +111,8 @@ internal class SearchPresenterTest {
     }
 
     private fun prepareServiceMockToReturnObservable(observable: Observable<List<Day>>) {
+        searchInputSubject.onNext(searchInput)
         whenever(networkConnection.isAvailable()).thenReturn(true)
-        whenever(view.loadSearchQuery()).thenReturn(Observable.just(searchInput))
         whenever(service.fetchScheduleByQueries(any())).thenReturn(observable)
     }
 }
