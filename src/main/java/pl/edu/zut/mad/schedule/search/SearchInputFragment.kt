@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
@@ -37,27 +37,16 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     @Inject lateinit var presenter: SearchMvp.Presenter
     @Inject lateinit var lessonIndexer: LessonIndexer
 
+    private val searchInputSubject by lazy {
+        PublishSubject.create<SearchInput>()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
-    }
-
-    override fun loadSearchQuery(): Observable<SearchInput> {
-        val searchInput = SearchInput(
-            teacherNameInputView.text.toString(),
-            teacherSurnameInputView.text.toString(),
-            facultyAbbreviationInputView.text.toString(),
-            subjectInputView.text.toString(),
-            fieldOfStudyInputView.text.toString(),
-            courseTypeSpinnerView.selectedItem?.toString() ?: "",
-            semesterSpinnerView.selectedItem?.toString() ?: "",
-            formSpinnerView.selectedItem?.toString() ?: "",
-            dateFromView.text.toString(),
-            dateToView.text.toString())
-        return Observable.just(searchInput)
     }
 
     override fun showLoading() = searchButtonView.startAnimation()
@@ -76,6 +65,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .commit()
     }
 
+    override fun getSearchSubject(): PublishSubject<SearchInput> {
+        return searchInputSubject
+    }
+
     private fun init(savedInstanceState: Bundle?) {
         initInjections()
         initViews(savedInstanceState)
@@ -87,7 +80,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
-        searchButtonView.setOnClickListener { presenter.onSearch() }
+        searchButtonView.setOnClickListener {
+            searchInputSubject.onNext(getSearchInput())
+            presenter.onSearch()
+        }
         if (savedInstanceState == null) {
             initInputViewsWithLessonArgument()
         }
@@ -137,6 +133,20 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             courseTypeSpinnerView.setSelection(courseTypeSelection)
             semesterSpinnerView.setSelection(semester)
         }
+    }
+
+    private fun getSearchInput(): SearchInput {
+        return SearchInput(
+            teacherNameInputView.text.toString(),
+            teacherSurnameInputView.text.toString(),
+            facultyAbbreviationInputView.text.toString(),
+            subjectInputView.text.toString(),
+            fieldOfStudyInputView.text.toString(),
+            courseTypeSpinnerView.selectedItem?.toString() ?: "",
+            semesterSpinnerView.selectedItem?.toString() ?: "",
+            formSpinnerView.selectedItem?.toString() ?: "",
+            dateFromView.text.toString(),
+            dateToView.text.toString())
     }
 
     override fun onDestroyView() {

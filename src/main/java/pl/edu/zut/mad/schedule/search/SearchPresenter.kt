@@ -15,6 +15,13 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     : SearchMvp.Presenter {
 
     private val compositeDisposable = CompositeDisposable()
+    private lateinit var searchInput: SearchInput
+
+    init {
+        val disposable = view.getSearchSubject()
+            .subscribe { searchInput = it }
+        compositeDisposable.add(disposable)
+    }
 
     override fun onSearch() {
         view.showLoading()
@@ -23,9 +30,8 @@ internal class SearchPresenter(private val view: SearchMvp.View,
             view.showError(R.string.error_no_internet)
             return
         }
-        val disposable = view.loadSearchQuery()
-            .map { modelMapper.toLessonsSearchQueryMap(it) }
-            .flatMap { service.fetchScheduleByQueries(it) }
+        val searchQueryMap = modelMapper.toLessonsSearchQueryMap(searchInput)
+        val disposable = service.fetchScheduleByQueries(searchQueryMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
