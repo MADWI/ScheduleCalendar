@@ -15,10 +15,10 @@ internal class CircularRevealAnimation(private val view: View, private val anima
     private val startColor: Int = ContextCompat.getColor(view.context, startColorId)
     private val endColor: Int = ContextCompat.getColor(view.context, endColorId)
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(Build.VERSION_CODES.M)
     fun startEnterAnimation() {
         val animation = getEnterAnimationWithSettings(view, animationParams)
-        val duration = 15000L // extract and use resources
+        val duration = 400L // extract and use resources
         animation.duration = duration
         animation.interpolator = FastOutSlowInInterpolator()
         animation.start()
