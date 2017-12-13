@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
+import pl.edu.zut.mad.schedule.animation.AnimationSettings
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.util.AnimationUtils
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
@@ -141,13 +141,13 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    private fun getRevealSettings(view: View): AnimationUtils.RevealSettings {
+    private fun getRevealSettings(view: View): AnimationSettings {
         val viewLocation = IntArray(2)
         view.getLocationOnScreen(viewLocation)
         val centerX = view.x.toInt() + view.width / 2
         val centerY = viewLocation[1]
-        return AnimationUtils.RevealSettings(
-            centerX, centerY, searchInputContainerView.width, searchInputContainerView.height
+        return AnimationSettings(
+            centerX, centerY, searchInputContainerView.width, searchInputContainerView.height, view.height / 2
         )
     }
 
