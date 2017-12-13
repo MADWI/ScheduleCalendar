@@ -20,7 +20,6 @@ import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.search.SearchActivity
 import pl.edu.zut.mad.schedule.util.Animations
 import pl.edu.zut.mad.schedule.util.app
-import pl.edu.zut.mad.schedule.util.log
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -28,6 +27,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
     companion object {
         internal const val REQUEST_CODE = 123
+        internal const val ANIMATION_PARAMS_KEY = "animation_params_key"
     }
 
     var dateListener: DateListener? = null
@@ -57,17 +57,10 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
     private fun initInjections() = getComponent().inject(this)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             presenter.onViewIsCreated()
-            view!!.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-                    v!!.removeOnLayoutChangeListener(this)
-                    val animationSettings = data?.getSerializableExtra("animation_settings_key") as AnimationParams
-                    Animations.registerAnimation(view!!, CircularRevealAnimation(view!!, animationSettings, R.color.scheduleColorPrimaryDark, R.color.white))
-                    log("onLayoutChange")
-                }
-            })
+            startAnimation(view, data)
         } else if (resultCode == Activity.RESULT_CANCELED) {
             activity.finish()
         }
@@ -118,5 +111,16 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
             startActivity(intent)
         }
         return lessonAdapter
+    }
+
+    private fun startAnimation(view: View?, data: Intent) {
+        if (view == null) {
+            return
+        }
+        val params = data.getSerializableExtra(ANIMATION_PARAMS_KEY) as AnimationParams
+        val startColorId = R.color.scheduleColorPrimaryDark
+        val endColorId = android.R.color.transparent
+        val animation = CircularRevealAnimation(view, params, startColorId, endColorId)
+        Animations.registerAnimation(view, animation)
     }
 }

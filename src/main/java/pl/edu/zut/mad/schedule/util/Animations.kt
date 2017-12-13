@@ -9,10 +9,10 @@ internal class Animations {
 
     companion object {
         fun registerAnimation(view: View, animation: CircularRevealAnimation) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
 
             view.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-                @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+                @RequiresApi(Build.VERSION_CODES.M)
                 override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
                     v.removeOnLayoutChangeListener(this)
                     animation.startEnterAnimation()

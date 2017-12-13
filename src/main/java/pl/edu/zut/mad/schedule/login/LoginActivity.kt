@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedule.ComponentView
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.ScheduleFragment
 import pl.edu.zut.mad.schedule.User
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.util.app
@@ -28,12 +29,6 @@ internal open class LoginActivity : AppCompatActivity(),
         init()
     }
 
-    private fun init() {
-        initInjections()
-        initViews()
-        readArgument()
-    }
-
     override fun getAlbumNumberText() = albumNumberTextView.text.toString()
 
     override fun showError(@StringRes errorRes: Int) {
@@ -52,24 +47,23 @@ internal open class LoginActivity : AppCompatActivity(),
     }
 
     override fun onDataSaved() {
-        //TODO cleanup
-        val intent = Intent()
-        val extras = Bundle()
-        val animationSettings = AnimationParams(
-            downloadButtonView.x.toInt() + downloadButtonView.width / 2,
-            downloadButtonView.y.toInt() + downloadButtonView.height / 2,
-            downloadButtonView.width,
-            downloadButtonView.height,
-            0
-        )
-        extras.putSerializable("animation_settings_key", animationSettings)
-        intent.putExtras(extras)
-
-        setResult(Activity.RESULT_OK, intent)
+        val resultData = getResultData()
+        setResult(Activity.RESULT_OK, resultData)
         finish()
     }
 
     override fun getComponent() = app.component.plus(LoginModule(this))
+
+    override fun onDestroy() {
+        super.onDestroy()
+        downloadButtonView.dispose()
+    }
+
+    private fun init() {
+        initInjections()
+        initViews()
+        readArgument()
+    }
 
     private fun initInjections() {
         getComponent().inject(this)
@@ -86,8 +80,16 @@ internal open class LoginActivity : AppCompatActivity(),
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        downloadButtonView.dispose()
+    private fun getResultData(): Intent {
+        val data = Intent()
+        val animationSettings = AnimationParams(
+            downloadButtonView.x.toInt() + downloadButtonView.width / 2,
+            downloadButtonView.y.toInt() + downloadButtonView.height / 2,
+            window.decorView.width,
+            window.decorView.height,
+            0
+        )
+        data.putExtra(ScheduleFragment.ANIMATION_PARAMS_KEY, animationSettings)
+        return data
     }
 }

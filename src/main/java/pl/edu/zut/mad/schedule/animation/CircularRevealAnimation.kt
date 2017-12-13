@@ -18,7 +18,7 @@ internal class CircularRevealAnimation(private val view: View, private val anima
     @RequiresApi(Build.VERSION_CODES.M)
     fun startEnterAnimation() {
         val animation = getEnterAnimationWithSettings(view, animationParams)
-        val duration = 400L // extract and use resources
+        val duration = 1400L // extract and use resources
         animation.duration = duration
         animation.interpolator = FastOutSlowInInterpolator()
         animation.start()
