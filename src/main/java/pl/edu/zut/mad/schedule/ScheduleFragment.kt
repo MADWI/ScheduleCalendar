@@ -12,11 +12,15 @@ import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.animation.AnimationParams
+import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.search.SearchActivity
+import pl.edu.zut.mad.schedule.util.Animations
 import pl.edu.zut.mad.schedule.util.app
+import pl.edu.zut.mad.schedule.util.log
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -56,6 +60,14 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             presenter.onViewIsCreated()
+            view!!.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
+                override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+                    v!!.removeOnLayoutChangeListener(this)
+                    val animationSettings = data?.getSerializableExtra("animation_settings_key") as AnimationParams
+                    Animations.registerAnimation(view!!, CircularRevealAnimation(view!!, animationSettings, R.color.scheduleColorPrimaryDark, R.color.white))
+                    log("onLayoutChange")
+                }
+            })
         } else if (resultCode == Activity.RESULT_CANCELED) {
             activity.finish()
         }

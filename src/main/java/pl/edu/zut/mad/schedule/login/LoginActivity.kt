@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule.login
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedule.ComponentView
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.User
+import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
@@ -50,7 +52,20 @@ internal open class LoginActivity : AppCompatActivity(),
     }
 
     override fun onDataSaved() {
-        setResult(Activity.RESULT_OK)
+        //TODO cleanup
+        val intent = Intent()
+        val extras = Bundle()
+        val animationSettings = AnimationParams(
+            downloadButtonView.x.toInt() + downloadButtonView.width / 2,
+            downloadButtonView.y.toInt() + downloadButtonView.height / 2,
+            downloadButtonView.width,
+            downloadButtonView.height,
+            0
+        )
+        extras.putSerializable("animation_settings_key", animationSettings)
+        intent.putExtras(extras)
+
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 

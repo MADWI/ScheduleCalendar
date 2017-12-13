@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
-import pl.edu.zut.mad.schedule.animation.AnimationSettings
+import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
@@ -71,9 +71,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     override fun setData(lessons: List<Lesson>) {
-        val searchFragment = SearchResultsFragment.newInstance(lessons, getRevealSettings(searchButtonView))
+        val animationParams = getAnimationParams(searchButtonView)
+        val searchFragment = SearchResultsFragment.newInstance(lessons, animationParams)
         activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.searchMainContainer, searchFragment)
+            .add(R.id.searchMainContainer, searchFragment)
             .addToBackStack(null)
             .commit()
     }
@@ -141,14 +142,14 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    private fun getRevealSettings(view: View): AnimationSettings {
+    private fun getAnimationParams(buttonView: View): AnimationParams {
         val viewLocation = IntArray(2)
-        view.getLocationOnScreen(viewLocation)
-        val centerX = view.x.toInt() + view.width / 2
+        buttonView.getLocationOnScreen(viewLocation)
+        val centerX = buttonView.x.toInt() + buttonView.width / 2
         val centerY = viewLocation[1]
-        return AnimationSettings(
-            centerX, centerY, searchInputContainerView.width, searchInputContainerView.height, view.height / 2
-        )
+        val width = view?.width ?: 0
+        val height = view?.height ?: 0
+        return AnimationParams(centerX, centerY, width, height, buttonView.height / 2)
     }
 
     override fun onDestroyView() {
