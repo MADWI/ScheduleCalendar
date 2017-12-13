@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
+import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
@@ -120,7 +121,8 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         val params = data.getSerializableExtra(ANIMATION_PARAMS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
         val endColorId = android.R.color.transparent
-        val animation = CircularRevealAnimation(view, params, startColorId, endColorId)
-        Animations.registerAnimation(view, animation)
+        val revealAnimation = CircularRevealAnimation(view, params)
+        val colorAnimation = ColorAnimation(view, startColorId, endColorId)
+        Animations.registerAnimation(view, revealAnimation, colorAnimation)
     }
 }
