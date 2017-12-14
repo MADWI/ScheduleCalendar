@@ -82,14 +82,14 @@ internal open class LoginActivity : AppCompatActivity(),
 
     private fun getResultData(): Intent {
         val data = Intent()
-        val animationSettings = AnimationParams(
-            downloadButtonView.x.toInt() + downloadButtonView.width / 2,
-            downloadButtonView.y.toInt() + downloadButtonView.height / 2,
-            window.decorView.width,
-            window.decorView.height,
-            0
-        )
-        data.putExtra(ScheduleFragment.ANIMATION_PARAMS_KEY, animationSettings)
+        val centerX = downloadButtonView.x.toInt() + downloadButtonView.width / 2
+        val centerY = downloadButtonView.y.toInt() + downloadButtonView.height / 2
+        val width = window.decorView.width
+        val height = window.decorView.height
+        val startRadius = 0
+        val endRadius = height / 2
+        val params = AnimationParams(centerX, centerY, width, height, startRadius, endRadius)
+        data.putExtra(ScheduleFragment.ANIMATION_PARAMS_KEY, params)
         return data
     }
 }

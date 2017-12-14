@@ -4,4 +4,4 @@ import java.io.Serializable
 
 data class AnimationParams(val centerX: Int, val centerY: Int,
     val width: Int, val height: Int,
-    val startRadius: Int) : Serializable
+    val startRadius: Int, val endRadius: Int) : Serializable

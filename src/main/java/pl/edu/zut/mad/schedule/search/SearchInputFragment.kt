@@ -149,7 +149,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         val centerY = viewLocation[1]
         val width = view?.width ?: 0
         val height = view?.height ?: 0
-        return AnimationParams(centerX, centerY, width, height, buttonView.height / 2)
+        val startRadius = buttonView.height / 2
+        return AnimationParams(centerX, centerY, width, height, startRadius, height)
     }
 
     override fun onDestroyView() {

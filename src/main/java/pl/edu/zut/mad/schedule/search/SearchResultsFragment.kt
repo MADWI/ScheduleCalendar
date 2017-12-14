@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.animation.AnimationParams
-import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
+import pl.edu.zut.mad.schedule.animation.CircularRevealEnterAnimation
 import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.Animations
@@ -51,8 +51,8 @@ internal class SearchResultsFragment : Fragment() {
         val animationSettings = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
         val endColorId = android.R.color.transparent
-        val revealAnimation = CircularRevealAnimation(animationSettings)
+        val revealEnterAnimation = CircularRevealEnterAnimation(animationSettings)
         val colorAnimation = ColorAnimation(startColorId, endColorId)
-        Animations.registerAnimation(view, revealAnimation, colorAnimation)
+        Animations.registerAnimation(view, revealEnterAnimation, colorAnimation)
     }
 }
