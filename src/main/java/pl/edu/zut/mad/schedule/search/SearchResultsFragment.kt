@@ -39,13 +39,13 @@ internal class SearchResultsFragment : Fragment(), Dismissible {
         init(view)
     }
 
-    override fun dismiss(listener: Dismissible.Listener) {
+    override fun dismiss(listener: () -> Unit) {
         val animationParams = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
         val exitAnimationSettings = with(animationParams) {
             AnimationParams(centerX, centerY, width, height, endRadius, 0)
         }
         val revealExitAnimation = CircularRevealAnimation(exitAnimationSettings) {
-            listener.onDismissed()
+            listener.invoke()
         }
         val startColorId = android.R.color.transparent
         val endColorId = R.color.scheduleColorPrimaryDark

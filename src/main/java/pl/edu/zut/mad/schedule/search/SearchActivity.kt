@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.animation.Dismissible
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 class SearchActivity : AppCompatActivity() {
@@ -46,13 +45,15 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val resultsFragment = supportFragmentManager.findFragmentByTag(SearchResultsFragment.TAG) ?: return
-        (resultsFragment as SearchResultsFragment).dismiss(object : Dismissible.Listener { //TODO replace with lambda function
-            override fun onDismissed() {
-                supportFragmentManager.beginTransaction()
-                    .remove(resultsFragment)
-                    .commitNow()
-            }
-        })
+        val resultsFragment = supportFragmentManager.findFragmentByTag(SearchResultsFragment.TAG)
+        if (resultsFragment == null) {
+            super.onBackPressed()
+            return
+        }
+        (resultsFragment as SearchResultsFragment).dismiss {
+            supportFragmentManager.beginTransaction()
+                .remove(resultsFragment)
+                .commitNow()
+        }
     }
 }
