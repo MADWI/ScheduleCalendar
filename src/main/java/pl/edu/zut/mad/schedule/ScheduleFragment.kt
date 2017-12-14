@@ -121,8 +121,8 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         val params = data.getSerializableExtra(ANIMATION_PARAMS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
         val endColorId = android.R.color.transparent
-        val revealAnimation = CircularRevealAnimation(view, params)
-        val colorAnimation = ColorAnimation(view, startColorId, endColorId)
+        val revealAnimation = CircularRevealAnimation(params)
+        val colorAnimation = ColorAnimation(startColorId, endColorId)
         Animations.registerAnimation(view, revealAnimation, colorAnimation)
     }
 }

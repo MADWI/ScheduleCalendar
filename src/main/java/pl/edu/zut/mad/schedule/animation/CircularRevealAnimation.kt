@@ -6,19 +6,20 @@ import android.support.annotation.RequiresApi
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
 import android.view.ViewAnimationUtils
+import pl.edu.zut.mad.schedule.R
 
-internal class CircularRevealAnimation(private val view: View, private val animationParams: AnimationParams) {
+class CircularRevealAnimation(private val animationParams: AnimationParams) : Animation {
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun startEnterAnimation() {
+    override fun start(view: View) {
         val animation = getEnterAnimationWithSettings(view, animationParams)
-        val duration = 1400L //TODO extract and use resources
-        animation.duration = duration
+        animation.duration = view.context.resources.getInteger(R.integer.animation_time).toLong()
         animation.interpolator = FastOutSlowInInterpolator()
         animation.start()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    // TODO: remove method
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun getEnterAnimationWithSettings(view: View, animationParams: AnimationParams): Animator {
         with(animationParams) {
             val finalRadius = Math.sqrt((width * width + height * height).toDouble()).toFloat() // TODO move to AnimationParams

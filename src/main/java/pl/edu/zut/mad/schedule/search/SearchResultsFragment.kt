@@ -51,8 +51,8 @@ internal class SearchResultsFragment : Fragment() {
         val animationSettings = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
         val endColorId = android.R.color.transparent
-        val revealAnimation = CircularRevealAnimation(view, animationSettings)
-        val colorAnimation = ColorAnimation(view, startColorId, endColorId)
+        val revealAnimation = CircularRevealAnimation(animationSettings)
+        val colorAnimation = ColorAnimation(startColorId, endColorId)
         Animations.registerAnimation(view, revealAnimation, colorAnimation)
     }
 }

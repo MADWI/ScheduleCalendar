@@ -8,21 +8,21 @@ import android.support.annotation.ColorRes
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.view.View
+import pl.edu.zut.mad.schedule.R
 
-class ColorAnimation(private val view: View, private @ColorRes val startColorId: Int,
-    private @ColorRes val endColorId: Int) {
+class ColorAnimation(private @ColorRes val startColorId: Int,
+    private @ColorRes val endColorId: Int): Animation {
 
-    private val startColor: Int = ContextCompat.getColor(view.context, startColorId)
-    private val endColor: Int = ContextCompat.getColor(view.context, endColorId)
-    private val animationDuration = 400L
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun startColorAnimation() {
+    @RequiresApi(Build.VERSION_CODES.M) //TODO check inheritance of annotations
+    override fun start(view: View) {
+        val startColor = ContextCompat.getColor(view.context, startColorId)
+        val endColor = ContextCompat.getColor(view.context, endColorId)
+        val time = view.context.resources.getInteger(R.integer.animation_time).toLong()
         with(ValueAnimator()) {
             setIntValues(startColor, endColor)
             setEvaluator(ArgbEvaluator())
             addUpdateListener { view.foreground = ColorDrawable(it.animatedValue as Int) }
-            duration = animationDuration
+            duration = time
             start()
         }
     }
