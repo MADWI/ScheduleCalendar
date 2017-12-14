@@ -74,7 +74,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         val animationParams = getAnimationParams(searchButtonView)
         val searchFragment = SearchResultsFragment.newInstance(lessons, animationParams)
         activity.supportFragmentManager.beginTransaction()
-            .add(R.id.searchMainContainer, searchFragment)
+            .add(R.id.searchMainContainer, searchFragment, SearchResultsFragment.TAG)
             .addToBackStack(null)
             .commit()
     }

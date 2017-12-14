@@ -19,5 +19,9 @@ internal class Animations {
                 }
             })
         }
+
+        fun startAnimations(view: View, vararg animations: Animation) {
+            animations.forEach { it.start(view) }
+        }
     }
 }
