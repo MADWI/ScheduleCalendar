@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.animation.Animation
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
 import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import pl.edu.zut.mad.schedule.animation.Dismissible
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.Animations
-import pl.edu.zut.mad.schedule.util.log
 
 internal class SearchResultsFragment : Fragment(), Dismissible {
 
@@ -46,13 +44,9 @@ internal class SearchResultsFragment : Fragment(), Dismissible {
         val exitAnimationSettings = with(animationParams) {
             AnimationParams(centerX, centerY, width, height, endRadius, 0)
         }
-
-        val revealExitAnimation = CircularRevealAnimation(exitAnimationSettings, object : Animation.Listener {
-            override fun onAnimationEnd() {
-                listener.onDismissed()
-                log("onAnimationEnd")
-            }
-        })
+        val revealExitAnimation = CircularRevealAnimation(exitAnimationSettings) {
+            listener.onDismissed()
+        }
         val startColorId = android.R.color.transparent
         val endColorId = R.color.scheduleColorPrimaryDark
         val colorAnimation = ColorAnimation(startColorId, endColorId)
@@ -73,11 +67,7 @@ internal class SearchResultsFragment : Fragment(), Dismissible {
         val animationSettings = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
         val endColorId = android.R.color.transparent
-        val revealEnterAnimation = CircularRevealAnimation(animationSettings, object : Animation.Listener {
-            override fun onAnimationEnd() {
-                log("onAnimationEnd")
-            }
-        })
+        val revealEnterAnimation = CircularRevealAnimation(animationSettings)
         val colorAnimation = ColorAnimation(startColorId, endColorId)
         Animations.registerAnimation(view, revealEnterAnimation, colorAnimation)
     }

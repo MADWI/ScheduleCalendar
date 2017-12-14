@@ -11,7 +11,7 @@ import android.view.View
 import pl.edu.zut.mad.schedule.R
 
 class ColorAnimation(private @ColorRes val startColorId: Int,
-    private @ColorRes val endColorId: Int): Animation {
+    private @ColorRes val endColorId: Int) : Animation {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun start(view: View) {

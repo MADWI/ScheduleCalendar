@@ -12,7 +12,6 @@ import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
-import pl.edu.zut.mad.schedule.animation.Animation
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
 import pl.edu.zut.mad.schedule.animation.ColorAnimation
@@ -22,7 +21,6 @@ import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.search.SearchActivity
 import pl.edu.zut.mad.schedule.util.Animations
 import pl.edu.zut.mad.schedule.util.app
-import pl.edu.zut.mad.schedule.util.log
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -123,11 +121,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         val params = data.getSerializableExtra(ANIMATION_PARAMS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
         val endColorId = android.R.color.transparent
-        val revealEnterAnimation = CircularRevealAnimation(params, object : Animation.Listener {
-            override fun onAnimationEnd() {
-                log("onAnimationEnd")
-            }
-        })
+        val revealEnterAnimation = CircularRevealAnimation(params)
         val colorAnimation = ColorAnimation(startColorId, endColorId)
         Animations.registerAnimation(view, revealEnterAnimation, colorAnimation)
     }

@@ -10,7 +10,7 @@ import android.view.ViewAnimationUtils
 import pl.edu.zut.mad.schedule.R
 
 class CircularRevealAnimation(private val animationParams: AnimationParams,
-    private val listener: Animation.Listener) : Animation {
+    private val listener: (() -> Unit)? = null) : Animation {
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun start(view: View) {
@@ -22,7 +22,7 @@ class CircularRevealAnimation(private val animationParams: AnimationParams,
         animator.interpolator = FastOutSlowInInterpolator()
         animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
-                listener.onAnimationEnd()
+                listener?.invoke()
             }
         })
         animator.start()
