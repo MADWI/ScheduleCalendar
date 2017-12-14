@@ -1,11 +1,12 @@
 package pl.edu.zut.mad.schedule.search
 
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.eq
+import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.InjectMocks
@@ -21,6 +22,10 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 @Suppress("IllegalIdentifier")
 internal class SearchPresenterTest {
 
+    companion object {
+        val searchInput = SearchInput("", "", "", "", "", "", "", "", "", "")
+    }
+
     @Rule
     @JvmField
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
@@ -29,7 +34,11 @@ internal class SearchPresenterTest {
     @JvmField
     val rxSchedulerRule = RxImmediateSchedulerRule()
 
-    val view: SearchMvp.View = mock()
+    val searchInputSubject = PublishSubject.create<SearchInput>()
+
+    val view: SearchMvp.View = mock {
+        on { observeSearchInput() } doReturn searchInputSubject
+    }
     val service: ScheduleService = mock()
     val modelMapper: ModelMapper = mock()
     val messageProvider: MessageProviderSearch = mock()
@@ -42,7 +51,7 @@ internal class SearchPresenterTest {
     fun `search should call hide loading when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).hideLoading()
     }
@@ -51,7 +60,7 @@ internal class SearchPresenterTest {
     fun `search should call show error when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).showError(R.string.error_no_internet)
     }
@@ -60,16 +69,16 @@ internal class SearchPresenterTest {
     fun `search should call fetch schedule when connection is available`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
-        verify(service).fetchScheduleByQueries(any(), any(), any(), any(), any(), any(), eq(null), any(), any(), any())
+        verify(service).fetchScheduleByQueries(any())
     }
 
     @Test
     fun `search should call hide loading when service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).hideLoading()
     }
@@ -78,7 +87,7 @@ internal class SearchPresenterTest {
     fun `search should call set data when schedule service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).setData(any())
     }
@@ -87,7 +96,7 @@ internal class SearchPresenterTest {
     fun `search should call hide loading when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).hideLoading()
     }
@@ -96,28 +105,13 @@ internal class SearchPresenterTest {
     fun `search should call show error when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
-        presenter.onSearch()
+        searchInputSubject.onNext(searchInput)
 
         verify(view).showError(any())
     }
 
     private fun prepareServiceMockToReturnObservable(observable: Observable<List<Day>>) {
-        prepareViewMocksToReturnQuery()
         whenever(networkConnection.isAvailable()).thenReturn(true)
-        whenever(service.fetchScheduleByQueries(any(), any(), any(), any(), any(), any(), eq(null),
-            any(), any(), any())).thenReturn(observable)
-    }
-
-    private fun prepareViewMocksToReturnQuery() {
-        whenever(view.getTeacherName()).thenReturn("")
-        whenever(view.getTeacherSurname()).thenReturn("")
-        whenever(view.getFacultyAbbreviation()).thenReturn("")
-        whenever(view.getSubject()).thenReturn("")
-        whenever(view.getFieldOfStudy()).thenReturn("")
-        whenever(view.getCourseType()).thenReturn("")
-        whenever(view.getSemester()).thenReturn(null)
-        whenever(view.getForm()).thenReturn("")
-        whenever(view.getDateFrom()).thenReturn("")
-        whenever(view.getDateTo()).thenReturn("")
+        whenever(service.fetchScheduleByQueries(any())).thenReturn(observable)
     }
 }

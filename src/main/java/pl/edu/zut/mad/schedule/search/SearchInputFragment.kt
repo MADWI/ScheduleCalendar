@@ -8,8 +8,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
@@ -22,7 +23,6 @@ import javax.inject.Inject
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     companion object {
-        private const val DAYS_IN_WEEK = 7
         private const val LESSON_KEY = "lesson_key"
 
         fun newInstance(lesson: Lesson): SearchInputFragment {
@@ -37,33 +37,17 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     @Inject lateinit var presenter: SearchMvp.Presenter
     @Inject lateinit var lessonIndexer: LessonIndexer
 
+    private val searchInputSubject by lazy {
+        PublishSubject.create<SearchInput>()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
+        init(savedInstanceState)
     }
-
-    override fun getTeacherName() = teacherNameInputView.text.toString()
-
-    override fun getTeacherSurname() = teacherSurnameInputView.text.toString()
-
-    override fun getFacultyAbbreviation() = facultyAbbreviationInputView.text.toString()
-
-    override fun getSubject() = subjectInputView.text.toString()
-
-    override fun getFieldOfStudy() = fieldOfStudyInputView.text.toString()
-
-    override fun getCourseType() = courseTypeSpinnerView.selectedItem?.toString() ?: ""
-
-    override fun getSemester(): Int? = semesterSpinnerView.selectedItem?.toString()?.toInt()
-
-    override fun getForm() = formSpinnerView.selectedItem?.toString() ?: ""
-
-    override fun getDateFrom() = dateFromView.text.toString()
-
-    override fun getDateTo() = dateToView.text.toString()
 
     override fun showLoading() = searchButtonView.startAnimation()
 
@@ -81,36 +65,47 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .commit()
     }
 
-    private fun init() {
+    override fun observeSearchInput(): PublishSubject<SearchInput> {
+        return searchInputSubject
+    }
+
+    private fun init(savedInstanceState: Bundle?) {
         initInjections()
-        initViews()
+        initViews(savedInstanceState)
     }
 
     private fun initInjections() = app.component
         .plus(SearchModule(this))
         .inject(this)
 
-    private fun initViews() {
+    private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
-        searchButtonView.setOnClickListener { presenter.onSearch() }
-        initInputViewsWithLessonArgument()
+        searchButtonView.setOnClickListener { searchInputSubject.onNext(getSearchInput()) }
+        if (savedInstanceState == null) {
+            initInputViewsWithLessonArgument()
+        }
     }
 
     private fun initDatePickers() {
-        val dateFrom = LocalDate.now()
-        dateFromView.setOnClickListener { getDatePickerDialog(dateFrom, dateFromView).show() }
-        val dateTo = dateFrom.plusDays(DAYS_IN_WEEK)
-        dateToView.setOnClickListener { getDatePickerDialog(dateTo, dateToView).show() }
+        dateFromView.setOnClickListener { getDatePickerDialog(dateFromView).show() }
+        dateToView.setOnClickListener { getDatePickerDialog(dateToView).show() }
     }
 
-    private fun getDatePickerDialog(date: LocalDate, editText: EditText) =
-        DatePickerDialog(context, getOnDateSetListenerForView(editText),
+    private fun getDatePickerDialog(textView: TextView): DatePickerDialog {
+        val dateText = textView.text.toString()
+        val date = if (dateText.isEmpty()) {
+            LocalDate.now()
+        } else {
+            LocalDate.parse(dateText, ScheduleDate.UI_FORMATTER)
+        }
+        return DatePickerDialog(context, getOnDateSetListenerForView(textView),
             date.year, date.monthOfYear - 1, date.dayOfMonth)
+    }
 
-    private fun getOnDateSetListenerForView(editText: EditText): DatePickerDialog.OnDateSetListener {
+    private fun getOnDateSetListenerForView(textView: TextView): DatePickerDialog.OnDateSetListener {
         return DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val dateText = parseDate(dayOfMonth, month, year)
-            editText.setText(dateText)
+            textView.text = dateText
         }
     }
 
@@ -137,8 +132,23 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
+    private fun getSearchInput(): SearchInput {
+        return SearchInput(
+            teacherNameInputView.text.toString(),
+            teacherSurnameInputView.text.toString(),
+            facultyAbbreviationInputView.text.toString(),
+            subjectInputView.text.toString(),
+            fieldOfStudyInputView.text.toString(),
+            courseTypeSpinnerView.selectedItem?.toString() ?: "",
+            semesterSpinnerView.selectedItem?.toString() ?: "",
+            formSpinnerView.selectedItem?.toString() ?: "",
+            dateFromView.text.toString(),
+            dateToView.text.toString())
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         searchButtonView.dispose()
+        presenter.onDetach()
     }
 }

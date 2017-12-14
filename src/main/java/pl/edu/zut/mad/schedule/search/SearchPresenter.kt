@@ -1,10 +1,10 @@
 package pl.edu.zut.mad.schedule.search
 
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
@@ -13,42 +13,32 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     private val networkConnection: NetworkConnection, private val messageProvider: MessageProviderSearch)
     : SearchMvp.Presenter {
 
-    override fun onSearch() {
-        view.showLoading()
+    private val compositeDisposable = CompositeDisposable()
+
+    init {
+        val disposable = view.observeSearchInput()
+            .doOnNext { view.showLoading() }
+            .subscribe { fetchSchedule(it) }
+        compositeDisposable.add(disposable)
+    }
+
+    private fun fetchSchedule(searchInput: SearchInput) {
         if (!networkConnection.isAvailable()) {
             view.hideLoading()
             view.showError(R.string.error_no_internet)
             return
         }
-        val teacherName = view.getTeacherName()
-        val teacherSurname = view.getTeacherSurname()
-        val facultyAbbreviation = view.getFacultyAbbreviation()
-        val subject = view.getSubject()
-        val fieldOfStudy = view.getFieldOfStudy()
-        val courseType = view.getCourseType()
-        val semester = view.getSemester()
-        val form = view.getForm()
-        val dateFrom = view.getDateFrom()
-        val dateTo = view.getDateTo()
-        service.fetchScheduleByQueries(teacherName, teacherSurname, facultyAbbreviation, subject,
-            fieldOfStudy, courseType, semester, form, dateFrom, dateTo)
+        val searchQueryMap = modelMapper.toLessonsSearchQueryMap(searchInput)
+        val disposable = service.fetchScheduleByQueries(searchQueryMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnTerminate { view.hideLoading() }
             .subscribe(
-                { showLessonsAndHideLoading(it) },
-                { showErrorAndHideLoading(it) }
+                { view.setData(modelMapper.toUiLessons(it)) },
+                { view.showError(messageProvider.getResIdByError(it)) }
             )
+        compositeDisposable.add(disposable)
     }
 
-    private fun showLessonsAndHideLoading(days: List<Day>) {
-        view.hideLoading()
-        val lessons = modelMapper.toUiLessons(days)
-        view.setData(lessons)
-    }
-
-    private fun showErrorAndHideLoading(error: Throwable) {
-        view.hideLoading()
-        val errorResId = messageProvider.getResIdByError(error)
-        view.showError(errorResId)
-    }
+    override fun onDetach() = compositeDisposable.clear()
 }

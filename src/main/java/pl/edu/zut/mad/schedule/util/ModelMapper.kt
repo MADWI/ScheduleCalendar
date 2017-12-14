@@ -4,6 +4,7 @@ import io.realm.RealmList
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
+import pl.edu.zut.mad.schedule.search.SearchInput
 import java.util.Date
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
 import pl.edu.zut.mad.schedule.data.model.api.Lesson as LessonApi
@@ -18,6 +19,16 @@ internal class ModelMapper {
 
     companion object {
         const val CANCELED_LESSON_TEXT = "odwołane"
+        private const val QUERY_TEACHER_NAME = "name"
+        private const val QUERY_TEACHER_SURNAME = "surname"
+        private const val QUERY_FACULTY_ABBREVIATION = "facultyAbbreviation"
+        private const val QUERY_SUBJECT = "subject"
+        private const val QUERY_FIELD_OF_STUDY = "fieldOfStudy"
+        private const val QUERY_COURSE_TYPE = "courseType"
+        private const val QUERY_SEMESTER = "semester"
+        private const val QUERY_FORM = "form"
+        private const val QUERY_DATE_FROM = "dateFrom"
+        private const val QUERY_DATE_TO = "dateTo"
     }
 
     fun toUiLessons(days: List<DayApi>): List<LessonUi> =
@@ -60,4 +71,19 @@ internal class ModelMapper {
         }
 
     fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
+
+    fun toLessonsSearchQueryMap(searchInput: SearchInput): Map<String, String> {
+        val query = HashMap<String, String>()
+        query.put(QUERY_TEACHER_NAME, searchInput.teacherName)
+        query.put(QUERY_TEACHER_SURNAME, searchInput.teacherSurname)
+        query.put(QUERY_FACULTY_ABBREVIATION, searchInput.facultyAbbreviation)
+        query.put(QUERY_SUBJECT, searchInput.subject)
+        query.put(QUERY_FIELD_OF_STUDY, searchInput.fieldOfStudy)
+        query.put(QUERY_COURSE_TYPE, searchInput.courseType)
+        query.put(QUERY_SEMESTER, searchInput.semester)
+        query.put(QUERY_FORM, searchInput.form)
+        query.put(QUERY_DATE_FROM, searchInput.dateFrom)
+        query.put(QUERY_DATE_TO, searchInput.dateTo)
+        return query
+    }
 }
