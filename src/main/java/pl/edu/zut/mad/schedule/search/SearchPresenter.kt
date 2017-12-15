@@ -5,7 +5,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
-import pl.edu.zut.mad.schedule.data.model.api.Day
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
 
@@ -16,36 +15,30 @@ internal class SearchPresenter(private val view: SearchMvp.View,
 
     private val compositeDisposable = CompositeDisposable()
 
-    override fun onSearch() {
-        view.showLoading()
+    init {
+        val disposable = view.observeSearchInput()
+            .doOnNext { view.showLoading() }
+            .subscribe { fetchSchedule(it) }
+        compositeDisposable.add(disposable)
+    }
+
+    private fun fetchSchedule(searchInput: SearchInput) {
         if (!networkConnection.isAvailable()) {
             view.hideLoading()
             view.showError(R.string.error_no_internet)
             return
         }
-        val disposable = view.loadSearchQuery()
-            .map { modelMapper.toLessonsSearchQueryMap(it) }
-            .flatMap { service.fetchScheduleByQueries(it) }
+        val searchQueryMap = modelMapper.toLessonsSearchQueryMap(searchInput)
+        val disposable = service.fetchScheduleByQueries(searchQueryMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnTerminate { view.hideLoading() }
             .subscribe(
-                { showLessonsAndHideLoading(it) },
-                { showErrorAndHideLoading(it) }
+                { view.setData(modelMapper.toUiLessons(it)) },
+                { view.showError(messageProvider.getResIdByError(it)) }
             )
         compositeDisposable.add(disposable)
     }
 
     override fun onDetach() = compositeDisposable.clear()
-
-    private fun showLessonsAndHideLoading(days: List<Day>) {
-        view.hideLoading()
-        val lessons = modelMapper.toUiLessons(days)
-        view.setData(lessons)
-    }
-
-    private fun showErrorAndHideLoading(error: Throwable) {
-        view.hideLoading()
-        val errorResId = messageProvider.getResIdByError(error)
-        view.showError(errorResId)
-    }
 }

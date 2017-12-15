@@ -1,7 +1,7 @@
 package pl.edu.zut.mad.schedule.search
 
 import android.support.annotation.StringRes
-import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
 internal interface SearchMvp {
@@ -13,7 +13,7 @@ internal interface SearchMvp {
 
         fun hideLoading()
 
-        fun loadSearchQuery(): Observable<SearchInput>
+        fun observeSearchInput(): PublishSubject<SearchInput>
 
         fun showError(@StringRes errorRes: Int)
     }
