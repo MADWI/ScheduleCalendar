@@ -16,10 +16,12 @@ import pl.edu.zut.mad.schedule.util.Animations
 
 internal class SearchResultsFragment : Fragment(), Dismissible {
 
+    var exitListener: (() -> Unit)? = null
+
     companion object {
         const val TAG = "search_results_fragment_tag"
         private const val LESSONS_KEY = "lessons_key"
-        private val ANIMATION_SETTINGS_KEY = "reveal_settings_key"
+        private val ANIMATION_SETTINGS_KEY = "reveal_settings_key" //TODO rename to enter
 
         fun newInstance(lessons: List<Lesson>, animationParams: AnimationParams): SearchResultsFragment {
             val searchResultsFragment = SearchResultsFragment()
@@ -39,13 +41,11 @@ internal class SearchResultsFragment : Fragment(), Dismissible {
         init(view)
     }
 
-    override fun dismiss(listener: () -> Unit) {
-        val animationParams = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
-        val exitAnimationSettings = with(animationParams) {
-            AnimationParams(centerX, centerY, width, height, endRadius, 0)
-        }
-        val revealExitAnimation = CircularRevealAnimation(exitAnimationSettings) {
+    override fun dismiss(listener: () -> Unit) { //TODO remove listener from parameter
+        val exitAnimationParams = getExitAnimationParams()
+        val revealExitAnimation = CircularRevealAnimation(exitAnimationParams) {
             listener.invoke()
+            exitListener?.invoke()
         }
         val startColorId = android.R.color.transparent
         val endColorId = R.color.scheduleColorPrimaryDark
@@ -63,6 +63,7 @@ internal class SearchResultsFragment : Fragment(), Dismissible {
         lessonsListView.adapter = LessonsSearchResultAdapter(lessons, context)
     }
 
+    //TODO change name of registration
     private fun registerAnimation(view: View) {
         val animationSettings = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
         val startColorId = R.color.scheduleColorPrimaryDark
@@ -70,5 +71,12 @@ internal class SearchResultsFragment : Fragment(), Dismissible {
         val revealEnterAnimation = CircularRevealAnimation(animationSettings)
         val colorAnimation = ColorAnimation(startColorId, endColorId)
         Animations.registerAnimation(view, revealEnterAnimation, colorAnimation)
+    }
+
+    private fun getExitAnimationParams(): AnimationParams {
+        val animationParams = arguments.getSerializable(ANIMATION_SETTINGS_KEY) as AnimationParams
+        return with(animationParams) { //TODO maybe method to switch startRadius and endRadius
+            AnimationParams(centerX, centerY, width, height, endRadius, startRadius)
+        }
     }
 }

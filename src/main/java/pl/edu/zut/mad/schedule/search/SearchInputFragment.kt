@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import io.reactivex.subjects.PublishSubject
@@ -16,12 +15,11 @@ import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
+import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
-import android.content.Context
-import pl.edu.zut.mad.schedule.animation.AnimationParams
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
@@ -40,9 +38,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     @Inject lateinit var presenter: SearchMvp.Presenter
     @Inject lateinit var lessonIndexer: LessonIndexer
 
-    private val searchInputSubject by lazy {
-        PublishSubject.create<SearchInput>()
-    }
+    private val searchInputSubject by lazy { PublishSubject.create<SearchInput>() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -55,10 +51,13 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun showLoading() {
         searchButtonView.startAnimation()
         searchInputScrollView.fullScroll(View.FOCUS_DOWN)
-        hideKeyboard()
+        setEnabledForInputViews(false)
     }
 
-    override fun hideLoading() = searchButtonView.revertAnimation()
+    override fun hideLoading() {
+        setEnabledForInputViews(true)
+        searchButtonView.revertAnimation()
+    }
 
     override fun showError(@StringRes errorRes: Int) {
         val contentView = activity.findViewById<View>(android.R.id.content)
@@ -66,16 +65,13 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     override fun setData(lessons: List<Lesson>) {
-        val animationParams = getAnimationParamsForResultView(searchButtonView)
-        val searchFragment = SearchResultsFragment.newInstance(lessons, animationParams)
+        val resultsFragment = getInitializedResultsFragment(lessons)
         activity.supportFragmentManager.beginTransaction()
-            .add(R.id.searchMainContainer, searchFragment, SearchResultsFragment.TAG)
+            .add(R.id.searchMainContainer, resultsFragment, SearchResultsFragment.TAG)
             .commit()
     }
 
-    override fun observeSearchInput(): PublishSubject<SearchInput> {
-        return searchInputSubject
-    }
+    override fun observeSearchInput(): PublishSubject<SearchInput> = searchInputSubject
 
     private fun init(savedInstanceState: Bundle?) {
         initInjections()
@@ -125,6 +121,20 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return ScheduleDate.UI_FORMATTER.print(date)
     }
 
+    private fun getSearchInput(): SearchInput {
+        return SearchInput(
+            teacherNameInputView.text.toString(),
+            teacherSurnameInputView.text.toString(),
+            facultyAbbreviationInputView.text.toString(),
+            subjectInputView.text.toString(),
+            fieldOfStudyInputView.text.toString(),
+            courseTypeSpinnerView.selectedItem?.toString() ?: "",
+            semesterSpinnerView.selectedItem?.toString() ?: "",
+            formSpinnerView.selectedItem?.toString() ?: "",
+            dateFromView.text.toString(),
+            dateToView.text.toString())
+    }
+
     private fun initInputViewsWithLessonArgument() {
         val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
         with(lesson) {
@@ -140,18 +150,19 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    private fun getSearchInput(): SearchInput {
-        return SearchInput(
-            teacherNameInputView.text.toString(),
-            teacherSurnameInputView.text.toString(),
-            facultyAbbreviationInputView.text.toString(),
-            subjectInputView.text.toString(),
-            fieldOfStudyInputView.text.toString(),
-            courseTypeSpinnerView.selectedItem?.toString() ?: "",
-            semesterSpinnerView.selectedItem?.toString() ?: "",
-            formSpinnerView.selectedItem?.toString() ?: "",
-            dateFromView.text.toString(),
-            dateToView.text.toString())
+    private fun setEnabledForInputViews(isEnabled: Boolean) {
+        for (i in 0 until searchInputContainer.childCount) {
+            searchInputContainer.getChildAt(i).isEnabled = isEnabled
+        }
+    }
+
+    private fun getInitializedResultsFragment(lessons: List<Lesson>): SearchResultsFragment {
+        val animationParams = getAnimationParamsForResultView(searchButtonView)
+        val resultsFragment = SearchResultsFragment.newInstance(lessons, animationParams)
+        resultsFragment.exitListener = {
+            hideLoading()
+        }
+        return resultsFragment
     }
 
     private fun getAnimationParamsForResultView(buttonView: View): AnimationParams {
@@ -163,12 +174,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         val height = view?.height ?: 0
         val startRadius = buttonView.height / 2
         return AnimationParams(centerX, centerY, width, height, startRadius, height)
-    }
-
-    private fun hideKeyboard() {
-        val view = activity.currentFocus ?: return
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onDestroyView() {
