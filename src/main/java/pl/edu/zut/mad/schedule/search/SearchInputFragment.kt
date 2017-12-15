@@ -1,6 +1,7 @@
 package pl.edu.zut.mad.schedule.search
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import io.reactivex.Observable
@@ -61,7 +63,11 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return Observable.just(searchInput)
     }
 
-    override fun showLoading() = searchButtonView.startAnimation()
+    override fun showLoading() {
+        searchButtonView.startAnimation()
+        searchInputScrollView.fullScroll(View.FOCUS_DOWN)
+        hideKeyboard()
+    }
 
     override fun hideLoading() = searchButtonView.revertAnimation()
 
@@ -71,7 +77,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     override fun setData(lessons: List<Lesson>) {
-        val animationParams = getAnimationParams(searchButtonView)
+        val animationParams = getAnimationParamsForResultView(searchButtonView)
         val searchFragment = SearchResultsFragment.newInstance(lessons, animationParams)
         activity.supportFragmentManager.beginTransaction()
             .add(R.id.searchMainContainer, searchFragment, SearchResultsFragment.TAG)
@@ -141,7 +147,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    private fun getAnimationParams(buttonView: View): AnimationParams {
+    private fun getAnimationParamsForResultView(buttonView: View): AnimationParams {
         val viewLocation = IntArray(2)
         buttonView.getLocationOnScreen(viewLocation)
         val centerX = buttonView.x.toInt() + buttonView.width / 2
@@ -150,6 +156,12 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         val height = view?.height ?: 0
         val startRadius = buttonView.height / 2
         return AnimationParams(centerX, centerY, width, height, startRadius, height)
+    }
+
+    private fun hideKeyboard() {
+        val view = activity.currentFocus ?: return
+        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onDestroyView() {
