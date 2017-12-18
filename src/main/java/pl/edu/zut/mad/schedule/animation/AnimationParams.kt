@@ -2,6 +2,11 @@ package pl.edu.zut.mad.schedule.animation
 
 import java.io.Serializable
 
-data class AnimationParams(val centerX: Int, val centerY: Int,
+class AnimationParams(val centerX: Int, val centerY: Int,
     val width: Int, val height: Int,
-    val startRadius: Int, val endRadius: Int) : Serializable
+    val startRadius: Int, val endRadius: Int) : Serializable {
+
+    fun transformToExitParams(): AnimationParams {
+        return AnimationParams(centerX, centerY, width, height, endRadius, startRadius)
+    }
+}

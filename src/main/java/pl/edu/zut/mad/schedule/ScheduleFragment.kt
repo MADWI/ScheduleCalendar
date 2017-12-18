@@ -123,6 +123,6 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         val endColorId = android.R.color.transparent
         val revealEnterAnimation = CircularRevealAnimation(params)
         val colorAnimation = ColorAnimation(startColorId, endColorId)
-        Animations.registerAnimation(view, revealEnterAnimation, colorAnimation)
+        Animations.registerStartAnimation(view, revealEnterAnimation, colorAnimation)
     }
 }

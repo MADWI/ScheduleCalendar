@@ -8,7 +8,7 @@ import pl.edu.zut.mad.schedule.animation.Animation
 internal class Animations {
 
     companion object {
-        fun registerAnimation(view: View, vararg animations: Animation) {
+        fun registerStartAnimation(view: View, vararg animations: Animation) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
 
             view.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
