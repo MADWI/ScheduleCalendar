@@ -12,7 +12,10 @@ import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
 import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
+import pl.edu.zut.mad.schedule.search.result.DaggerSearchResultComponent
 import pl.edu.zut.mad.schedule.util.Animations
+import javax.inject.Inject
+import javax.inject.Named
 
 internal class SearchResultsFragment : Fragment(), BackPressedListener {
 
@@ -31,6 +34,8 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
         }
     }
 
+    @Inject @field:[Named("enter")] lateinit var enterColorAnimation: ColorAnimation
+    @Inject @field:[Named("exit")] lateinit var exitColorAnimation: ColorAnimation
     var dismissListener: (() -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -38,22 +43,22 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        DaggerSearchResultComponent.builder() //TODO: extract to method
+            .build()
+            .inject(this)
         init(view, savedInstanceState)
     }
 
     //TODO cleanup
     override fun onBackPressed() {
-        val exitAnimationParams = getExitAnimationParams()
+        val exitAnimationParams = getExitAnimationParams() //TODO: move to module
         val revealExitAnimation = CircularRevealAnimation(exitAnimationParams) {
             activity.supportFragmentManager.beginTransaction()
                 .remove(this)
                 .commitNow()
             dismissListener?.invoke()
         }
-        val startColorId = android.R.color.transparent
-        val endColorId = R.color.scheduleColorPrimaryDark
-        val colorAnimation = ColorAnimation(startColorId, endColorId)
-        Animations.startAnimations(view!!, revealExitAnimation, colorAnimation) //TODO remove "!!"
+        Animations.startAnimations(view!!, revealExitAnimation, exitColorAnimation) //TODO remove "!!"
     }
 
     private fun init(view: View, savedInstanceState: Bundle?) {
@@ -69,12 +74,8 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
     }
 
     private fun registerStartAnimation(view: View) {
-        //TODO extract colors to finals
-        val startColorId = R.color.scheduleColorPrimaryDark
-        val endColorId = android.R.color.transparent
-        val revealEnterAnimation = CircularRevealAnimation(getEnterAnimationParams())
-        val colorAnimation = ColorAnimation(startColorId, endColorId)
-        Animations.registerStartAnimation(view, revealEnterAnimation, colorAnimation)
+        val revealEnterAnimation = CircularRevealAnimation(getEnterAnimationParams()) //TODO: move to module
+        Animations.registerStartAnimation(view, revealEnterAnimation, enterColorAnimation)
     }
 
     private fun getEnterAnimationParams() =

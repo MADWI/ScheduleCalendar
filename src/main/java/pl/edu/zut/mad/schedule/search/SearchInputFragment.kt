@@ -20,6 +20,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
+import kotlin.math.sqrt
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
@@ -158,22 +159,25 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun getInitializedResultsFragment(lessons: List<Lesson>): SearchResultsFragment {
-        val animationParams = getAnimationParamsForResultView(searchButtonView)
+        val animationParams = getAnimationParamsForResultView()
         val searchResultsFragment = SearchResultsFragment.newInstance(lessons, animationParams)
         searchResultsFragment.dismissListener = { hideLoading() }
         return searchResultsFragment
     }
 
-    private fun getAnimationParamsForResultView(buttonView: View): AnimationParams {
+    private fun getAnimationParamsForResultView(): AnimationParams {
         val viewLocation = IntArray(2)
-        buttonView.getLocationOnScreen(viewLocation)
-        val centerX = buttonView.x.toInt() + buttonView.width / 2
+        searchButtonView.getLocationOnScreen(viewLocation)
+        val centerX = searchButtonView.x.toInt() + searchButtonView.width / 2
         val centerY = viewLocation[1]
         val width = view?.width ?: 0
         val height = view?.height ?: 0
-        val startRadius = buttonView.height / 2
-        return AnimationParams(centerX, centerY, width, height, startRadius, height)
+        val startRadius = searchButtonView.height / 2
+        val endRadius = sqrt(getPow2(width / 2) + getPow2(height))
+        return AnimationParams(centerX, centerY, width, height, startRadius, endRadius.toInt())
     }
+
+    private fun getPow2(value: Int): Double = Math.pow(value.toDouble(), 2.toDouble())
 
     override fun onDestroyView() {
         super.onDestroyView()
