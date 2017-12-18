@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import pl.edu.zut.mad.schedule.R
 
-class CircularRevealAnimation(private val animationParams: AnimationParams,
-    private val listener: (() -> Unit)? = null) : Animation {
+class CircularRevealAnimation(private val animationParams: AnimationParams) : Animation {
+
+    var listener: (() -> Unit)? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun start(view: View) {

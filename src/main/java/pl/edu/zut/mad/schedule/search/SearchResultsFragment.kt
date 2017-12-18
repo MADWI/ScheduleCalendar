@@ -12,6 +12,11 @@ import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
 import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
+import pl.edu.zut.mad.schedule.search.result.AnimationModule
+import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.ENTER_COLOR_ANIMATION_NAME
+import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.ENTER_REVEAL_ANIMATION_NAME
+import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.EXIT_COLOR_ANIMATION_NAME
+import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.EXIT_REVEAL_ANIMATION_NAME
 import pl.edu.zut.mad.schedule.search.result.DaggerSearchResultComponent
 import pl.edu.zut.mad.schedule.util.Animations
 import javax.inject.Inject
@@ -34,8 +39,22 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
         }
     }
 
-    @Inject @field:[Named("enter")] lateinit var enterColorAnimation: ColorAnimation
-    @Inject @field:[Named("exit")] lateinit var exitColorAnimation: ColorAnimation
+    @Inject
+    @field:[Named(ENTER_COLOR_ANIMATION_NAME)]
+    lateinit var enterColorAnimation: ColorAnimation
+
+    @Inject
+    @field:[Named(EXIT_COLOR_ANIMATION_NAME)]
+    lateinit var exitColorAnimation: ColorAnimation
+
+    @Inject
+    @field:[Named(ENTER_REVEAL_ANIMATION_NAME)]
+    lateinit var enterRevealAnimation: CircularRevealAnimation
+
+    @Inject
+    @field:[Named(EXIT_REVEAL_ANIMATION_NAME)]
+    lateinit var exitRevealAnimation: CircularRevealAnimation
+
     var dismissListener: (() -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -43,46 +62,46 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        DaggerSearchResultComponent.builder() //TODO: extract to method
-            .build()
-            .inject(this)
         init(view, savedInstanceState)
     }
 
-    //TODO cleanup
     override fun onBackPressed() {
-        val exitAnimationParams = getExitAnimationParams() //TODO: move to module
-        val revealExitAnimation = CircularRevealAnimation(exitAnimationParams) {
-            activity.supportFragmentManager.beginTransaction()
-                .remove(this)
-                .commitNow()
-            dismissListener?.invoke()
+        val animationView = view
+        if (animationView != null) {
+            Animations.startAnimations(animationView, exitRevealAnimation, exitColorAnimation)
         }
-        Animations.startAnimations(view!!, revealExitAnimation, exitColorAnimation) //TODO remove "!!"
     }
 
     private fun init(view: View, savedInstanceState: Bundle?) {
+        initInjectionsWithEnterAnimationParams()
         initLessonsList()
+        initExitRevealAnimationEndListener()
         if (savedInstanceState == null) {
-            registerStartAnimation(view)
+            Animations.registerStartAnimation(view, enterRevealAnimation, enterColorAnimation)
         }
     }
+
+    private fun initInjectionsWithEnterAnimationParams() {
+        DaggerSearchResultComponent.builder()
+            .searchResultModule(AnimationModule(getEnterAnimationParams()))
+            .build()
+            .inject(this)
+    }
+
+    private fun getEnterAnimationParams() =
+        arguments.getSerializable(ANIMATION_ENTER_PARAMS_KEY) as AnimationParams
 
     private fun initLessonsList() {
         val lessons = arguments.getParcelableArrayList<Lesson>(LESSONS_KEY)
         lessonsListView.adapter = LessonsSearchResultAdapter(lessons, context)
     }
 
-    private fun registerStartAnimation(view: View) {
-        val revealEnterAnimation = CircularRevealAnimation(getEnterAnimationParams()) //TODO: move to module
-        Animations.registerStartAnimation(view, revealEnterAnimation, enterColorAnimation)
-    }
-
-    private fun getEnterAnimationParams() =
-        arguments.getSerializable(ANIMATION_ENTER_PARAMS_KEY) as AnimationParams
-
-    private fun getExitAnimationParams(): AnimationParams {
-        val animationParams = getEnterAnimationParams()
-        return animationParams.transformToExitParams()
+    private fun initExitRevealAnimationEndListener() {
+        exitRevealAnimation.listener = {
+            activity.supportFragmentManager.beginTransaction()
+                .remove(this)
+                .commitNow()
+            dismissListener?.invoke()
+        }
     }
 }
