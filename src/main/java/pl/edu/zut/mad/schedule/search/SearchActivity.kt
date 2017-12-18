@@ -25,11 +25,11 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         if (savedInstanceState == null) {
-            startSearchFragment()
+            startSearchInputFragment()
         }
     }
 
-    private fun startSearchFragment() {
+    private fun startSearchInputFragment() {
         val searchInputFragment = getSearchInputFragmentWithArguments()
         supportFragmentManager.beginTransaction()
             .replace(R.id.searchMainContainer, searchInputFragment)
@@ -45,15 +45,11 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val resultsFragment = supportFragmentManager.findFragmentByTag(SearchResultsFragment.TAG)
-        if (resultsFragment == null) {
+        val searchInputFragment = supportFragmentManager.findFragmentByTag(SearchInputFragment.TAG)
+        if (searchInputFragment != null) {
+            (searchInputFragment as SearchInputFragment).onBackPressed()
+        } else {
             super.onBackPressed()
-            return
-        }
-        (resultsFragment as SearchResultsFragment).dismiss {
-            supportFragmentManager.beginTransaction()
-                .remove(resultsFragment)
-                .commitNow()
         }
     }
 }

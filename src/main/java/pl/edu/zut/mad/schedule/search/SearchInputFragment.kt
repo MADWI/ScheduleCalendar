@@ -13,6 +13,7 @@ import android.widget.Toast
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.BackPressedListener
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.animation.AnimationParams
@@ -21,9 +22,10 @@ import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
-internal class SearchInputFragment : Fragment(), SearchMvp.View {
+internal class SearchInputFragment : Fragment(), SearchMvp.View, BackPressedListener {
 
     companion object {
+        const val TAG = "search_input_fragment_tag"
         private const val LESSON_KEY = "lesson_key"
 
         fun newInstance(lesson: Lesson): SearchInputFragment {
@@ -87,6 +89,18 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         searchButtonView.setOnClickListener { searchInputSubject.onNext(getSearchInput()) }
         if (savedInstanceState == null) {
             initInputViewsWithLessonArgument()
+        }
+    }
+
+    override fun onBackPressed() {
+        val resultsFragment = activity.supportFragmentManager
+            .findFragmentByTag(SearchResultsFragment.TAG) ?: return
+        //TODO move to presenter
+        (resultsFragment as SearchResultsFragment).dismiss {
+            activity.supportFragmentManager.beginTransaction()
+                .remove(resultsFragment)
+                .commitNow()
+            hideLoading()
         }
     }
 
@@ -158,11 +172,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun getInitializedResultsFragment(lessons: List<Lesson>): SearchResultsFragment {
         val animationParams = getAnimationParamsForResultView(searchButtonView)
-        val resultsFragment = SearchResultsFragment.newInstance(lessons, animationParams)
-        resultsFragment.exitListener = {
-            hideLoading()
-        }
-        return resultsFragment
+        return SearchResultsFragment.newInstance(lessons, animationParams)
     }
 
     private fun getAnimationParamsForResultView(buttonView: View): AnimationParams {
