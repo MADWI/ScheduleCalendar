@@ -26,6 +26,12 @@ internal open class LoginActivity : AppCompatActivity(),
         init()
     }
 
+    private fun init() {
+        initInjections()
+        initViews()
+        readArgument()
+    }
+
     override fun getAlbumNumberText() = albumNumberTextView.text.toString()
 
     override fun showError(@StringRes errorRes: Int) {
@@ -50,18 +56,9 @@ internal open class LoginActivity : AppCompatActivity(),
 
     override fun getComponent() = app.component.plus(LoginModule(this))
 
-    override fun onDestroy() {
-        super.onDestroy()
-        downloadButtonView.dispose()
+    private fun initInjections() {
+        getComponent().inject(this)
     }
-
-    private fun init() {
-        initInjections()
-        initViews()
-        readArgument()
-    }
-
-    private fun initInjections() = getComponent().inject(this)
 
     private fun initViews() =
         downloadButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
@@ -72,5 +69,10 @@ internal open class LoginActivity : AppCompatActivity(),
             albumNumberTextView.setText(albumNumber.toString())
             presenter.onDownloadScheduleClick()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        downloadButtonView.dispose()
     }
 }
