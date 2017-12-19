@@ -53,7 +53,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
     private fun initInjections() = getComponent().inject(this)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             presenter.onViewIsCreated()
         } else if (resultCode == Activity.RESULT_CANCELED) {
