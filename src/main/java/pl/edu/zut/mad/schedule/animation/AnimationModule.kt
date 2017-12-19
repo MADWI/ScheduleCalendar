@@ -1,13 +1,9 @@
-package pl.edu.zut.mad.schedule.search.result
+package pl.edu.zut.mad.schedule.animation
 
 import dagger.Module
 import dagger.Provides
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.animation.AnimationParams
-import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
-import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import javax.inject.Named
-import javax.inject.Singleton
 
 @Module
 internal class AnimationModule(private val enterAnimationParams: AnimationParams) {
@@ -25,22 +21,18 @@ internal class AnimationModule(private val enterAnimationParams: AnimationParams
     }
 
     @Provides
-    @Singleton
     @Named(ENTER_COLOR_ANIMATION_NAME)
     fun provideEnterColorAnimation() = ColorAnimation(ENTER_START_COLOR_ID, ENTER_END_COLOR_ID)
 
     @Provides
-    @Singleton
     @Named(EXIT_COLOR_ANIMATION_NAME)
     fun provideExitColorAnimation() = ColorAnimation(EXIT_START_COLOR_ID, EXIT_END_COLOR_ID)
 
     @Provides
-    @Singleton
     @Named(ENTER_REVEAL_ANIMATION_NAME)
     fun provideEnterCircularRevealAnimation() = CircularRevealAnimation(enterAnimationParams)
 
     @Provides
-    @Singleton
     @Named(EXIT_REVEAL_ANIMATION_NAME)
     fun provideExitCircularRevealAnimation() =
         CircularRevealAnimation(enterAnimationParams.transformToExitParams())

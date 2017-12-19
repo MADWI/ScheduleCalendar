@@ -8,17 +8,17 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_search_results.*
 import pl.edu.zut.mad.schedule.BackPressedListener
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.animation.AnimationModule
+import pl.edu.zut.mad.schedule.animation.AnimationModule.Companion.ENTER_COLOR_ANIMATION_NAME
+import pl.edu.zut.mad.schedule.animation.AnimationModule.Companion.ENTER_REVEAL_ANIMATION_NAME
+import pl.edu.zut.mad.schedule.animation.AnimationModule.Companion.EXIT_COLOR_ANIMATION_NAME
+import pl.edu.zut.mad.schedule.animation.AnimationModule.Companion.EXIT_REVEAL_ANIMATION_NAME
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.animation.CircularRevealAnimation
 import pl.edu.zut.mad.schedule.animation.ColorAnimation
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.search.result.AnimationModule
-import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.ENTER_COLOR_ANIMATION_NAME
-import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.ENTER_REVEAL_ANIMATION_NAME
-import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.EXIT_COLOR_ANIMATION_NAME
-import pl.edu.zut.mad.schedule.search.result.AnimationModule.Companion.EXIT_REVEAL_ANIMATION_NAME
-import pl.edu.zut.mad.schedule.search.result.DaggerSearchResultComponent
 import pl.edu.zut.mad.schedule.util.Animations
+import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -81,12 +81,10 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
         }
     }
 
-    private fun initInjectionsWithEnterAnimationParams() {
-        DaggerSearchResultComponent.builder()
-            .searchResultModule(AnimationModule(getEnterAnimationParams()))
-            .build()
+    private fun initInjectionsWithEnterAnimationParams() =
+        app.component
+            .plus(AnimationModule(getEnterAnimationParams()))
             .inject(this)
-    }
 
     private fun getEnterAnimationParams() =
         arguments.getSerializable(ANIMATION_ENTER_PARAMS_KEY) as AnimationParams

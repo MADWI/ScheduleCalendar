@@ -1,16 +1,13 @@
 package pl.edu.zut.mad.schedule.login
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedule.ComponentView
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.ScheduleFragment
 import pl.edu.zut.mad.schedule.User
-import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 
@@ -47,8 +44,7 @@ internal open class LoginActivity : AppCompatActivity(),
     }
 
     override fun onDataSaved() {
-        val resultData = getResultData()
-        setResult(Activity.RESULT_OK, resultData)
+        setResult(Activity.RESULT_OK)
         finish()
     }
 
@@ -65,9 +61,7 @@ internal open class LoginActivity : AppCompatActivity(),
         readArgument()
     }
 
-    private fun initInjections() {
-        getComponent().inject(this)
-    }
+    private fun initInjections() = getComponent().inject(this)
 
     private fun initViews() =
         downloadButtonView.setOnClickListener { presenter.onDownloadScheduleClick() }
@@ -78,18 +72,5 @@ internal open class LoginActivity : AppCompatActivity(),
             albumNumberTextView.setText(albumNumber.toString())
             presenter.onDownloadScheduleClick()
         }
-    }
-
-    private fun getResultData(): Intent {
-        val data = Intent()
-        val centerX = downloadButtonView.x.toInt() + downloadButtonView.width / 2
-        val centerY = downloadButtonView.y.toInt() + downloadButtonView.height / 2
-        val width = window.decorView.width
-        val height = window.decorView.height
-        val startRadius = 0
-        val endRadius = height / 2
-        val params = AnimationParams(centerX, centerY, width, height, startRadius, endRadius)
-        data.putExtra(ScheduleFragment.ANIMATION_PARAMS_KEY, params)
-        return data
     }
 }
