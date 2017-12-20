@@ -20,31 +20,43 @@ class CleanableTextInput : TextInputEditText,
         private val CLEAR_ICON_ID = R.drawable.abc_ic_clear_material
     }
 
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
+        init(attrs)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) :
         super(context, attrs, defStyleAttr) {
-        init()
+        init(attrs)
     }
 
     private lateinit var clearIcon: Drawable
+    private var alwaysShowClearIcon: Boolean = false
 
     private val widthMinusIcon: Int by lazy { width - paddingRight - clearIcon.intrinsicWidth }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun init() {
+    private fun init(attrs: AttributeSet) {
+        initAttributes(attrs)
+        initClearIcon()
+        initListeners()
+    }
+
+    private fun initAttributes(attrs: AttributeSet) {
+        val attributes = context.theme.obtainStyledAttributes(attrs, R.styleable.CleanableTextInput, 0, 0)
+        alwaysShowClearIcon = attributes.getBoolean(R.styleable.CleanableTextInput_alwaysShowClearIcon, false)
+        attributes.recycle()
+    }
+
+    private fun initClearIcon() {
         val icon = ContextCompat.getDrawable(context, CLEAR_ICON_ID)
         val wrappedIcon = DrawableCompat.wrap(icon)
         DrawableCompat.setTint(wrappedIcon, highlightColor)
         clearIcon = wrappedIcon
         clearIcon.setBounds(0, 0, clearIcon.intrinsicHeight, clearIcon.intrinsicHeight)
         setClearIconVisibility(false)
+    }
+
+    private fun initListeners() {
         super.setOnTouchListener(this)
         super.setOnFocusChangeListener(this)
         addTextChangedListener(this)
@@ -73,9 +85,9 @@ class CleanableTextInput : TextInputEditText,
         }
     }
 
-    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        if (isFocused) {
-            setClearIconVisibility(s.isNotEmpty())
+    override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+        if (alwaysShowClearIcon || isFocused ) {
+            setClearIconVisibility(text.isNotEmpty())
         }
     }
 

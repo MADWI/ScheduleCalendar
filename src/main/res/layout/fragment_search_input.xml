@@ -138,6 +138,7 @@
                 android:drawablePadding="@dimen/date_input_drawable_padding"
                 android:focusable="false"
                 android:hint="@string/date_from"
+                app:alwaysShowClearIcon="true"
                 tools:text="21-11-2017" />
 
         </android.support.design.widget.TextInputLayout>
@@ -154,6 +155,7 @@
                 android:drawablePadding="@dimen/date_input_drawable_padding"
                 android:focusable="false"
                 android:hint="@string/date_to"
+                app:alwaysShowClearIcon="true"
                 tools:text="28-11-2017" />
         </android.support.design.widget.TextInputLayout>
 
