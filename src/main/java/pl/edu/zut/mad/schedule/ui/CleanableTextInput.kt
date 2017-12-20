@@ -69,11 +69,11 @@ class CleanableTextInput : TextInputEditText,
     }
 
     override fun onTouch(view: View?, event: MotionEvent): Boolean {
-        if (clearIcon.isVisible && isOnIconTouch(event) && isActionUp(event)) {
+        val consumeIconTouch = clearIcon.isVisible && isOnIconTouch(event) && isActionUp(event)
+        if (consumeIconTouch) {
             setText("")
-            return true
         }
-        return false
+        return consumeIconTouch
     }
 
     override fun onFocusChange(v: View?, hasFocus: Boolean) {
@@ -85,15 +85,15 @@ class CleanableTextInput : TextInputEditText,
     }
 
     override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-        if (alwaysShowClearIcon || isFocused ) {
+        if (alwaysShowClearIcon || isFocused) {
             setClearIconVisibility(text.isNotEmpty())
         }
     }
 
-    override fun afterTextChanged(s: Editable?) {
+    override fun afterTextChanged(editable: Editable?) {
     }
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+    override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
     }
 
     private fun isActionUp(event: MotionEvent) = event.action == MotionEvent.ACTION_UP
