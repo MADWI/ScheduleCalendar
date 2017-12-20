@@ -13,7 +13,8 @@ import android.view.MotionEvent
 import android.view.View
 import pl.edu.zut.mad.schedule.R
 
-class CleanableTextInput : TextInputEditText, View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
+class CleanableTextInput : TextInputEditText,
+    View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
 
     companion object {
         private val CLEAR_ICON_ID = R.drawable.abc_ic_clear_material
@@ -34,11 +35,13 @@ class CleanableTextInput : TextInputEditText, View.OnTouchListener, View.OnFocus
 
     private lateinit var clearIcon: Drawable
 
+    private val widthMinusIcon: Int by lazy { width - paddingRight - clearIcon.intrinsicWidth }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun init() {
         val icon = ContextCompat.getDrawable(context, CLEAR_ICON_ID)
         val wrappedIcon = DrawableCompat.wrap(icon)
-        DrawableCompat.setTint(wrappedIcon, currentTextColor) //TODO only have effect on focus changed?
+        DrawableCompat.setTint(wrappedIcon, highlightColor)
         clearIcon = wrappedIcon
         clearIcon.setBounds(0, 0, clearIcon.intrinsicHeight, clearIcon.intrinsicHeight)
         setClearIconVisibility(false)
@@ -48,18 +51,15 @@ class CleanableTextInput : TextInputEditText, View.OnTouchListener, View.OnFocus
     }
 
     private fun setClearIconVisibility(isVisible: Boolean) {
-        val compoundDrawables = compoundDrawables
+        clearIcon.setVisible(isVisible, false)
         val endDrawable = if (isVisible) clearIcon else null
         setCompoundDrawables(compoundDrawables[0], compoundDrawables[1],
             endDrawable, compoundDrawables[3])
     }
 
     override fun onTouch(view: View?, event: MotionEvent): Boolean {
-        //TODO clean up
-        if (clearIcon.isVisible && event.x > width - paddingRight - clearIcon.intrinsicWidth) {
-            if (event.action == MotionEvent.ACTION_UP) {
-                setText("")
-            }
+        if (clearIcon.isVisible && isOnIconTouch(event) && isActionUp(event)) {
+            setText("")
             return true
         }
         return false
@@ -74,7 +74,9 @@ class CleanableTextInput : TextInputEditText, View.OnTouchListener, View.OnFocus
     }
 
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-        setClearIconVisibility(s.isNotEmpty())
+        if (isFocused) {
+            setClearIconVisibility(s.isNotEmpty())
+        }
     }
 
     override fun afterTextChanged(s: Editable?) {
@@ -82,4 +84,8 @@ class CleanableTextInput : TextInputEditText, View.OnTouchListener, View.OnFocus
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
     }
+
+    private fun isActionUp(event: MotionEvent) = event.action == MotionEvent.ACTION_UP
+
+    private fun isOnIconTouch(event: MotionEvent) = event.x > widthMinusIcon
 }
