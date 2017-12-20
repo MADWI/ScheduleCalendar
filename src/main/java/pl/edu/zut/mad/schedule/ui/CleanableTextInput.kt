@@ -34,7 +34,6 @@ class CleanableTextInput : TextInputEditText,
 
     private val widthMinusIcon: Int by lazy { width - paddingRight - clearIcon.intrinsicWidth }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun init(attrs: AttributeSet) {
         initAttributes(attrs)
         initClearIcon()
@@ -50,12 +49,13 @@ class CleanableTextInput : TextInputEditText,
     private fun initClearIcon() {
         val icon = ContextCompat.getDrawable(context, CLEAR_ICON_ID)
         val wrappedIcon = DrawableCompat.wrap(icon)
-        DrawableCompat.setTint(wrappedIcon, highlightColor)
+        DrawableCompat.setTint(wrappedIcon, currentHintTextColor)
         clearIcon = wrappedIcon
         clearIcon.setBounds(0, 0, clearIcon.intrinsicHeight, clearIcon.intrinsicHeight)
         setClearIconVisibility(false)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
         super.setOnTouchListener(this)
         super.setOnFocusChangeListener(this)
