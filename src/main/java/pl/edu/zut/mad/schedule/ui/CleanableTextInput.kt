@@ -31,7 +31,6 @@ class CleanableTextInput : TextInputEditText,
 
     private lateinit var clearIcon: Drawable
     private var alwaysShowClearIcon: Boolean = false
-
     private val widthMinusIcon: Int by lazy { width - paddingRight - clearIcon.intrinsicWidth }
 
     private fun init(attrs: AttributeSet) {
