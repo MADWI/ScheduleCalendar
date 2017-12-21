@@ -4,6 +4,7 @@ import io.realm.RealmList
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
+import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import pl.edu.zut.mad.schedule.search.SearchInput
 import java.util.Date
 import pl.edu.zut.mad.schedule.data.model.api.Day as DayApi
@@ -41,6 +42,28 @@ internal class ModelMapper {
         return DayUi(date, lessonsUi)
     }
 
+    fun toLessonsSearchQueryMap(searchInput: SearchInput): Map<String, String> {
+        val query = HashMap<String, String>()
+        query.put(QUERY_TEACHER_NAME, searchInput.teacherName)
+        query.put(QUERY_TEACHER_SURNAME, searchInput.teacherSurname)
+        query.put(QUERY_FACULTY_ABBREVIATION, searchInput.facultyAbbreviation)
+        query.put(QUERY_SUBJECT, searchInput.subject)
+        query.put(QUERY_FIELD_OF_STUDY, searchInput.fieldOfStudy)
+        query.put(QUERY_COURSE_TYPE, searchInput.courseType)
+        query.put(QUERY_SEMESTER, searchInput.semester)
+        query.put(QUERY_FORM, searchInput.form)
+        query.put(QUERY_DATE_FROM, searchInput.dateFrom)
+        query.put(QUERY_DATE_TO, searchInput.dateTo)
+        return query
+    }
+
+    fun toUiDate(date: Date?): LocalDate =
+        if (date != null) {
+            LocalDate.fromDateFields(date)
+        } else {
+            LocalDate.now()
+        }
+
     private fun toLessonsUiFromApi(lessons: RealmList<LessonApi>, date: LocalDate): List<LessonUi> =
         lessons.map {
             with(it) {
@@ -58,32 +81,17 @@ internal class ModelMapper {
     private fun toUiTeacher(teacherApi: TeacherApi) =
         with(teacherApi) { TeacherUi(academicTitle, name, surname) }
 
+    fun toLessonsEvents(optionalDay: OptionalDay): List<LessonEvent> {
+        return when (optionalDay) {
+            is DayUi -> toLessonsEventsFromDayUi(optionalDay)
+            is EmptyDay -> listOf(toLessonEventFromEmptyDay(optionalDay))
+        }
+    }
+
     fun toLessonsEventsFromDayUi(day: DayUi): List<LessonEvent> =
         day.lessons
             .map { LessonEvent(day.date, it) }
             .toList()
 
-    fun toUiDate(date: Date?): LocalDate =
-        if (date != null) {
-            LocalDate.fromDateFields(date)
-        } else {
-            LocalDate.now()
-        }
-
     fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
-
-    fun toLessonsSearchQueryMap(searchInput: SearchInput): Map<String, String> {
-        val query = HashMap<String, String>()
-        query.put(QUERY_TEACHER_NAME, searchInput.teacherName)
-        query.put(QUERY_TEACHER_SURNAME, searchInput.teacherSurname)
-        query.put(QUERY_FACULTY_ABBREVIATION, searchInput.facultyAbbreviation)
-        query.put(QUERY_SUBJECT, searchInput.subject)
-        query.put(QUERY_FIELD_OF_STUDY, searchInput.fieldOfStudy)
-        query.put(QUERY_COURSE_TYPE, searchInput.courseType)
-        query.put(QUERY_SEMESTER, searchInput.semester)
-        query.put(QUERY_FORM, searchInput.form)
-        query.put(QUERY_DATE_FROM, searchInput.dateFrom)
-        query.put(QUERY_DATE_TO, searchInput.dateTo)
-        return query
-    }
 }
