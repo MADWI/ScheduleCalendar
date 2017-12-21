@@ -27,6 +27,8 @@ internal class LoginPresenter(private val view: LoginMvp.View, private val repos
         fetchScheduleForAlbumNumber(Integer.valueOf(albumNumber))
     }
 
+    override fun cancelFetch() = compositeDisposable.clear()
+
     private fun validateAlbumNumber(albumNumber: String) =
         if (albumNumber.isEmpty()) {
             view.showError(R.string.error_field_cannot_be_empty)
@@ -58,6 +60,4 @@ internal class LoginPresenter(private val view: LoginMvp.View, private val repos
         view.showError(errorResId)
         view.hideLoading()
     }
-
-    override fun cancelFetch() = compositeDisposable.clear()
 }
