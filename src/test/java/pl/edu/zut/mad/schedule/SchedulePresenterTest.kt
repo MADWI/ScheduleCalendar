@@ -29,6 +29,10 @@ internal class SchedulePresenterTest {
     @JvmField
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
 
+    @Rule
+    @JvmField
+    val testSchedulerRule = RxImmediateSchedulerRule()
+
     val user = mock<User>()
     val mapper = mock<ModelMapper>()
     val view = mock<ScheduleMvp.View>()

@@ -64,6 +64,13 @@ internal class ModelMapper {
             LocalDate.now()
         }
 
+    fun toLessonsEvents(optionalDay: OptionalDay): List<LessonEvent> {
+        return when (optionalDay) {
+            is DayUi -> toLessonsEventsFromDayUi(optionalDay)
+            is EmptyDay -> listOf(toLessonEventFromEmptyDay(optionalDay))
+        }
+    }
+
     private fun toLessonsUiFromApi(lessons: RealmList<LessonApi>, date: LocalDate): List<LessonUi> =
         lessons.map {
             with(it) {
@@ -81,17 +88,10 @@ internal class ModelMapper {
     private fun toUiTeacher(teacherApi: TeacherApi) =
         with(teacherApi) { TeacherUi(academicTitle, name, surname) }
 
-    fun toLessonsEvents(optionalDay: OptionalDay): List<LessonEvent> {
-        return when (optionalDay) {
-            is DayUi -> toLessonsEventsFromDayUi(optionalDay)
-            is EmptyDay -> listOf(toLessonEventFromEmptyDay(optionalDay))
-        }
-    }
-
-    fun toLessonsEventsFromDayUi(day: DayUi): List<LessonEvent> =
+    private fun toLessonsEventsFromDayUi(day: DayUi): List<LessonEvent> =
         day.lessons
             .map { LessonEvent(day.date, it) }
             .toList()
 
-    fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
+    private fun toLessonEventFromEmptyDay(emptyDay: EmptyDay) = LessonEvent(emptyDay.date, null)
 }

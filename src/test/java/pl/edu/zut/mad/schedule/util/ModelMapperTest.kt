@@ -175,9 +175,9 @@ internal class ModelMapperTest {
     @Test
     @UseDataProvider("dayUi", location = [(MockData::class)])
     fun `lesson has event is true`(dayUi: DayUi) {
-        val lessonEvents = modelMapper.toLessonsEventsFromDayUi(dayUi)
+        val lessonEvent = modelMapper.toLessonsEvents(dayUi)[0]
 
-        assertThat(lessonEvents[0].hasEvent()).isTrue()
+        assertThat(lessonEvent.hasEvent()).isTrue()
     }
 
     @Test
@@ -185,7 +185,7 @@ internal class ModelMapperTest {
         val date = LocalDate.now()
         val emptyDay = EmptyDay(date)
 
-        val lessonEvent = modelMapper.toLessonEventFromEmptyDay(emptyDay)
+        val lessonEvent = modelMapper.toLessonsEvents(emptyDay)[0]
 
         assertThat(lessonEvent.event).isNull()
     }
@@ -195,7 +195,7 @@ internal class ModelMapperTest {
         val date = LocalDate.now()
         val emptyDay = EmptyDay(date)
 
-        val lessonEvent = modelMapper.toLessonEventFromEmptyDay(emptyDay)
+        val lessonEvent = modelMapper.toLessonsEvents(emptyDay)[0]
 
         assertThat(lessonEvent.hasEvent()).isFalse()
     }
