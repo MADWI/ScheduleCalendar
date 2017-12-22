@@ -2,9 +2,9 @@ package pl.edu.zut.mad.schedule
 
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
-import pl.edu.zut.mad.schedule.data.model.ui.Day
-import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
 import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
@@ -38,19 +38,16 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
         val maxDate = repository.getScheduleMaxDate()
         view.onDateIntervalCalculated(minDate, maxDate)
 
-        val events: MutableList<CalendarEvent> = ArrayList()
         val dates = datesProvider.getByInterval(minDate, maxDate)
         Observable.fromIterable(dates)
             .flatMap { repository.getDayByDate(it) }
+            .map { mapper.toLessonsEvents(it) }
+            .collect({ mutableListOf<CalendarEvent>() }, { allEvents, dayEvents -> allEvents.addAll(dayEvents) })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {
-                    when (it) {
-                        is Day -> events.addAll(mapper.toLessonsEventsFromDayUi(it))
-                        is EmptyDay -> events.add(mapper.toLessonEventFromEmptyDay(it))
-                    }
-                },
-                { },
-                { view.onLessonsEventsLoad(events) }
+                { view.onLessonsEventsLoad(it) },
+                {}
             )
     }
 }
