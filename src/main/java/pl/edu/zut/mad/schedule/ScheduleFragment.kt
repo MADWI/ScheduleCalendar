@@ -112,4 +112,9 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         }
         return lessonAdapter
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        calendarContentManager.clear()
+    }
 }
