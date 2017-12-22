@@ -17,7 +17,6 @@ import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
 import pl.edu.zut.mad.schedule.search.SearchActivity
 import pl.edu.zut.mad.schedule.util.app
-import java.lang.ref.WeakReference
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -30,11 +29,11 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     var dateListener: DateListener? = null
     @Inject internal lateinit var presenter: ScheduleMvp.Presenter
 
-    private val calendarContentManager: WeakReference<CalendarContentManager> by lazy {
+    private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
         val lessonAdapter = getLessonAdapter()
-        WeakReference(CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter))
+        CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -62,9 +61,8 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         }
     }
 
-    override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) {
-        calendarContentManager.get()?.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
-    }
+    override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) =
+        calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
 
     private fun dateToCalendar(date: LocalDate): Calendar {
         val calendar = Calendar.getInstance()
@@ -72,9 +70,8 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         return calendar
     }
 
-    override fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>) {
-        calendarContentManager.get()?.loadItemsFromStart(lessonsEvents)
-    }
+    override fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>) =
+        calendarContentManager.loadItemsFromStart(lessonsEvents)
 
     override fun showLoginView() {
         val intent = Intent(activity, LoginActivity::class.java)
@@ -96,13 +93,11 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
     fun logout() = presenter.logout()
 
-    fun moveToToday() {
-        calendarContentManager.get()
-            ?.agendaCalendarView
-            ?.agendaView
-            ?.agendaListView
-            ?.scrollToCurrentDate(Calendar.getInstance())
-    }
+    fun moveToToday() =
+        calendarContentManager.agendaCalendarView
+            .agendaView
+            .agendaListView
+            .scrollToCurrentDate(Calendar.getInstance())
 
     private fun getLessonAdapter(): CalendarLessonsAdapter {
         val lessonAdapter = CalendarLessonsAdapter(activity)
