@@ -98,7 +98,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
 
     implementation "com.github.MADWI:Kotlin-AgendaCalendarView:master-SNAPSHOT"
-
     implementation "com.github.ganfra:material-spinner:$material_spinner_version"
     implementation "br.com.simplepass:loading-button-android:$loading_button_version"
 
