@@ -7,6 +7,7 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.ScheduleService
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
+import pl.edu.zut.mad.schedule.util.log
 
 internal class SearchPresenter(private val view: SearchMvp.View,
     private val service: ScheduleService, private val modelMapper: ModelMapper,
@@ -51,8 +52,9 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         service.fetchSuggestions(filterField, query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                view.showSuggestions(it, filterField)
-            }
+            .subscribe(
+                { view.showSuggestions(it, filterField) },
+                { log(it.toString()) }
+            )
     }
 }

@@ -56,6 +56,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
         addListenerForView(teacherNameInputView, SearchInput::name.name)
         addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
+        addListenerForView(fieldOfStudyInputView, SearchInput::fieldOfStudy.name)
+        addListenerForView(roomInputView, SearchInput::room.name)
         addListenerForView(subjectInputView, SearchInput::subject.name)
     }
 
@@ -103,7 +105,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, suggestions)
         val suggestionView = view?.findViewWithTag<AutoCompleteTextView>(filterField) ?: return
         suggestionView.setAdapter(adapter)
-        suggestionView.threshold = 2
+        suggestionView.threshold = 3 //TODO extract
         suggestionView.showDropDown()
     }
 
@@ -186,6 +188,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             courseTypeSpinnerView.selectedItem?.toString() ?: "",
             semesterSpinnerView.selectedItem?.toString() ?: "",
             formSpinnerView.selectedItem?.toString() ?: "",
+            roomInputView.text.toString(),
             dateFromView.text.toString(),
             dateToView.text.toString())
     }

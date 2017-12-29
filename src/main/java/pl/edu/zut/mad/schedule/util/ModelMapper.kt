@@ -28,6 +28,7 @@ internal class ModelMapper {
         private const val QUERY_COURSE_TYPE = "courseType"
         private const val QUERY_SEMESTER = "semester"
         private const val QUERY_FORM = "form"
+        private const val QUERY_ROOM = "room"
         private const val QUERY_DATE_FROM = "dateFrom"
         private const val QUERY_DATE_TO = "dateTo"
     }
@@ -52,6 +53,7 @@ internal class ModelMapper {
         query.put(QUERY_COURSE_TYPE, searchInput.courseType)
         query.put(QUERY_SEMESTER, searchInput.semester)
         query.put(QUERY_FORM, searchInput.form)
+        query.put(QUERY_ROOM, searchInput.room)
         query.put(QUERY_DATE_FROM, searchInput.dateFrom)
         query.put(QUERY_DATE_TO, searchInput.dateTo)
         return query
