@@ -42,15 +42,17 @@ internal class SearchPresenter(private val view: SearchMvp.View,
 
     override fun onDetach() = compositeDisposable.clear()
 
-    override fun onSurnameChange(text: String, field: String) {
-        if (text.length != 2) {
+    //TODO rename
+    override fun onInputChange(text: String, filterField: String) {
+        if (text.length != 3) { //TODO extract number
             return
         }
-        service.fetchSurnames(field, text)
+        val query = hashMapOf(Pair(filterField, text))
+        service.fetchSuggestions(filterField, query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                view.showSurnameSuggestions(it)
+                view.showSuggestions(it, filterField)
             }
     }
 }

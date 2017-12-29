@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import io.reactivex.subjects.PublishSubject
@@ -23,6 +24,7 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
+import kotlin.reflect.KProperty0
 import kotlin.math.sqrt
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
@@ -52,7 +54,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
 
+        addListenerForView(teacherNameInputView, SearchInput::name.name)
         addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
+        addListenerForView(subjectInputView, SearchInput::subject.name)
     }
 
     private fun addListenerForView(textView: TextView, fieldName: String) {
@@ -64,7 +68,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             }
 
             override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                presenter.onSurnameChange(text.toString(), fieldName) //TODO create observable subject
+                presenter.onInputChange(text.toString(), fieldName) //TODO create observable subject
             }
         })
     }
@@ -95,11 +99,12 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun observeSearchInput(): PublishSubject<SearchInput> = searchInputSubject
 
     //TODO more common
-    override fun showSurnameSuggestions(surnames: List<String>) {
-        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, surnames)
-        teacherSurnameInputView.setAdapter(adapter)
-        teacherSurnameInputView.threshold = 2
-        teacherSurnameInputView.showDropDown()
+    override fun showSuggestions(suggestions: List<String>, filterField: String) {
+        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, suggestions)
+        val suggestionView = view?.findViewWithTag<AutoCompleteTextView>(filterField) ?: return
+        suggestionView.setAdapter(adapter)
+        suggestionView.threshold = 2
+        suggestionView.showDropDown()
     }
 
     private fun init(savedInstanceState: Bundle?) {
@@ -150,6 +155,27 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return ScheduleDate.UI_FORMATTER.print(date)
     }
 
+    private fun initInputViewsWithLessonArgument() {
+        val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
+        with(lesson) {
+            setupViewWithTextAndTag(teacherNameInputView, teacher::name)
+            setupViewWithTextAndTag(teacherSurnameInputView, teacher::surname)
+            setupViewWithTextAndTag(facultyAbbreviationInputView, ::facultyAbbreviation)
+            setupViewWithTextAndTag(roomInputView, ::room)
+            setupViewWithTextAndTag(subjectInputView, ::subject)
+            setupViewWithTextAndTag(fieldOfStudyInputView, ::fieldOfStudy)
+            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
+            courseTypeSpinnerView.setSelection(courseTypeSelection)
+            semesterSpinnerView.setSelection(semester)
+        }
+    }
+
+    private fun setupViewWithTextAndTag(textView: TextView, property: KProperty0<String>) =
+        with(textView) {
+            text = property.get()
+            tag = property.name
+        }
+
     private fun getSearchInput(): SearchInput {
         return SearchInput(
             teacherNameInputView.text.toString(),
@@ -162,21 +188,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             formSpinnerView.selectedItem?.toString() ?: "",
             dateFromView.text.toString(),
             dateToView.text.toString())
-    }
-
-    private fun initInputViewsWithLessonArgument() {
-        val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
-        with(lesson) {
-            teacherNameInputView.setText(teacher.name)
-            teacherSurnameInputView.setText(teacher.surname)
-            facultyAbbreviationInputView.setText(facultyAbbreviation)
-            roomInputView.setText(room)
-            subjectInputView.setText(subject)
-            fieldOfStudyInputView.setText(fieldOfStudy)
-            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
-            courseTypeSpinnerView.setSelection(courseTypeSelection)
-            semesterSpinnerView.setSelection(semester)
-        }
     }
 
     private fun setEnabledForInputViews(isEnabled: Boolean) {

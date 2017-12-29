@@ -17,13 +17,13 @@ internal interface SearchMvp {
 
         fun showError(@StringRes errorRes: Int)
 
-        fun showSurnameSuggestions(surnames: List<String>)
+        fun showSuggestions(suggestions: List<String>, filterField: String)
     }
 
     interface Presenter {
 
         fun onDetach()
 
-        fun onSurnameChange(text: String, field: String) {}
+        fun onInputChange(text: String, filterField: String) {}
     }
 }
