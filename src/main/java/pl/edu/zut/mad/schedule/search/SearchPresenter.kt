@@ -17,7 +17,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        val disposable = view.observeSearchInput()
+        val disposable = view.observeSearchInputModel()
             .doOnNext { view.showLoading() }
             .subscribe { fetchSchedule(it) }
         compositeDisposable.add(disposable)

@@ -45,7 +45,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     @Inject lateinit var presenter: SearchMvp.Presenter
     @Inject lateinit var lessonIndexer: LessonIndexer
 
-    private val searchInputSubject by lazy { PublishSubject.create<SearchInput>() }
+    private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -98,10 +98,10 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .commit()
     }
 
-    override fun observeSearchInput(): PublishSubject<SearchInput> = searchInputSubject
+    override fun observeSearchInputModel(): PublishSubject<SearchInput> = searchInputModelSubject
 
-    //TODO more common
     override fun showSuggestions(suggestions: List<String>, filterField: String) {
+        //TODO extract adapter
         val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, suggestions)
         val suggestionView = view?.findViewWithTag<AutoCompleteTextView>(filterField) ?: return
         suggestionView.setAdapter(adapter)
@@ -120,7 +120,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
-        searchButtonView.setOnClickListener { searchInputSubject.onNext(getSearchInput()) }
+        searchButtonView.setOnClickListener { searchInputModelSubject.onNext(getSearchInput()) }
         if (savedInstanceState == null) {
             initInputViewsWithLessonArgument()
         }

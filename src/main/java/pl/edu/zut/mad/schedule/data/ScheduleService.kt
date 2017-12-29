@@ -19,7 +19,7 @@ internal interface ScheduleService {
     @GET(".")
     fun fetchScheduleByQueries(@QueryMap queries: Map<String, String>): Observable<List<Day>>
 
-    @GET("dictionary?limit=1000&")//TODO rename second parameter
+    @GET("dictionary?limit=100&")//TODO rename second parameter
     fun fetchSuggestions(@Query("filter") filterField: String, @QueryMap query: Map<String, String>)
         : Observable<List<String>>
 }
