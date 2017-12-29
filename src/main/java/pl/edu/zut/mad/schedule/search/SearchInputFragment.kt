@@ -108,7 +108,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, suggestions)
         val suggestionView = view?.findViewWithTag<AutoCompleteTextView>(filterField) ?: return
         suggestionView.setAdapter(adapter)
-        suggestionView.threshold = 3 //TODO extract
         suggestionView.showDropDown()
     }
 

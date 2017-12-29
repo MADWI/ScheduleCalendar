@@ -23,7 +23,7 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 internal class SearchPresenterTest {
 
     companion object {
-        val searchInput = SearchInput("", "", "", "", "", "", "", "", "", "")
+        val searchInput = SearchInput("", "", "", "", "", "", "", "", "", "", "")
     }
 
     @Rule
@@ -35,7 +35,7 @@ internal class SearchPresenterTest {
     val rxSchedulerRule = RxImmediateSchedulerRule()
 
     val searchInputModelSubject = PublishSubject.create<SearchInput>()
-
+        //TODO missing tests
     val view: SearchMvp.View = mock {
         on { observeSearchInputModel() } doReturn searchInputModelSubject
     }
