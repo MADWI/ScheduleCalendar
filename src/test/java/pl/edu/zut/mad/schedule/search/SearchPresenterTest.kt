@@ -2,6 +2,7 @@ package pl.edu.zut.mad.schedule.search
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -36,7 +37,7 @@ internal class SearchPresenterTest {
 
     val searchInputModelSubject = PublishSubject.create<SearchInput>()
     val searchInputTextSubject = PublishSubject.create<Pair<String, String>>()
-        //TODO missing tests
+
     val view: SearchMvp.View = mock {
         on { observeSearchInputModel() } doReturn searchInputModelSubject
         on { observeSearchInputText() } doReturn searchInputTextSubject
@@ -69,7 +70,7 @@ internal class SearchPresenterTest {
 
     @Test
     fun `publish search model should call fetch schedule when connection is available`() {
-        prepareServiceMockToReturnObservable(Observable.just(emptyList()))
+        prepareServiceMockToReturnScheduleObservable(Observable.just(emptyList()))
 
         searchInputModelSubject.onNext(searchInputModel)
 
@@ -77,8 +78,17 @@ internal class SearchPresenterTest {
     }
 
     @Test
+    fun `publish search model should call hide loading when service return data`() {
+        prepareServiceMockToReturnScheduleObservable(Observable.just(emptyList()))
+
+        searchInputModelSubject.onNext(searchInputModel)
+
+        verify(view).hideLoading()
+    }
+
+    @Test
     fun `publish search model should call set data when schedule service return data`() {
-        prepareServiceMockToReturnObservable(Observable.just(emptyList()))
+        prepareServiceMockToReturnScheduleObservable(Observable.just(emptyList()))
 
         searchInputModelSubject.onNext(searchInputModel)
 
@@ -87,7 +97,7 @@ internal class SearchPresenterTest {
 
     @Test
     fun `publish search model should call hide loading when schedule service return error`() {
-        prepareServiceMockToReturnObservable(Observable.error(Throwable()))
+        prepareServiceMockToReturnScheduleObservable(Observable.error(Throwable()))
 
         searchInputModelSubject.onNext(searchInputModel)
 
@@ -96,15 +106,33 @@ internal class SearchPresenterTest {
 
     @Test
     fun `publish search model should call show error when schedule service return error`() {
-        prepareServiceMockToReturnObservable(Observable.error(Throwable()))
+        prepareServiceMockToReturnScheduleObservable(Observable.error(Throwable()))
 
         searchInputModelSubject.onNext(searchInputModel)
 
         verify(view).showError(any())
     }
 
-    private fun prepareServiceMockToReturnObservable(observable: Observable<List<Day>>) {
-        whenever(networkConnection.isAvailable()).thenReturn(true)
+    @Test
+    fun `publish search text should call show suggestion when schedule service return data`() {
+        prepareServiceMockToReturnSuggestionsObservable(Observable.just(emptyList()))
+        val filterField = "name"
+
+        searchInputTextSubject.onNext(Pair(filterField, ""))
+
+        verify(view).showSuggestions(any(), eq(filterField))
+    }
+
+    private fun prepareServiceMockToReturnScheduleObservable(observable: Observable<List<Day>>) {
+        prepareNetworkConnectionMockToReturnTrueForIsAvailable()
         whenever(service.fetchScheduleByQueries(any())).thenReturn(observable)
     }
+
+    private fun prepareServiceMockToReturnSuggestionsObservable(observable: Observable<List<String>>) {
+        prepareNetworkConnectionMockToReturnTrueForIsAvailable()
+        whenever(service.fetchSuggestions(any(), any())).thenReturn(observable)
+    }
+
+    private fun prepareNetworkConnectionMockToReturnTrueForIsAvailable() =
+        whenever(networkConnection.isAvailable()).thenReturn(true)
 }
