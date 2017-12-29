@@ -11,6 +11,7 @@ internal interface ScheduleService {
 
     companion object {
         const val BASE_URL = "http://uxplan.wi.zut.edu.pl/api/schedule/"
+        private const val SUGGESTIONS_LIMIT = 100
     }
 
     @GET("{albumNumber}")
@@ -19,7 +20,6 @@ internal interface ScheduleService {
     @GET(".")
     fun fetchScheduleByQueries(@QueryMap queries: Map<String, String>): Observable<List<Day>>
 
-    @GET("dictionary?limit=100&")//TODO rename second parameter
-    fun fetchSuggestions(@Query("filter") filterField: String, @QueryMap query: Map<String, String>)
-        : Observable<List<String>>
+    @GET("dictionary?limit=$SUGGESTIONS_LIMIT&")//TODO rename second parameter
+    fun fetchSuggestions(@Query("filter") filterField: String, @QueryMap query: Map<String, String>): Observable<List<String>>
 }

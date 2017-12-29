@@ -46,6 +46,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     @Inject lateinit var lessonIndexer: LessonIndexer
 
     private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
+    private val searchInputTextSubject by lazy { PublishSubject.create<Pair<String, String>>() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -54,6 +55,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
 
+        //TODO method
         addListenerForView(teacherNameInputView, SearchInput::name.name)
         addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
         addListenerForView(fieldOfStudyInputView, SearchInput::fieldOfStudy.name)
@@ -70,7 +72,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             }
 
             override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                presenter.onInputChange(text.toString(), fieldName) //TODO create observable subject
+                searchInputTextSubject.onNext(Pair(fieldName, text.toString()))
             }
         })
     }
@@ -100,8 +102,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun observeSearchInputModel(): PublishSubject<SearchInput> = searchInputModelSubject
 
+    override fun observeSearchInputText(): PublishSubject<Pair<String, String>> = searchInputTextSubject
+
     override fun showSuggestions(suggestions: List<String>, filterField: String) {
-        //TODO extract adapter
         val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, suggestions)
         val suggestionView = view?.findViewWithTag<AutoCompleteTextView>(filterField) ?: return
         suggestionView.setAdapter(adapter)

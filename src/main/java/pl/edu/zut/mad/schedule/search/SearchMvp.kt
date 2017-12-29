@@ -15,6 +15,8 @@ internal interface SearchMvp {
 
         fun observeSearchInputModel(): PublishSubject<SearchInput>
 
+        fun observeSearchInputText(): PublishSubject<Pair<String, String>>
+
         fun showError(@StringRes errorRes: Int)
 
         fun showSuggestions(suggestions: List<String>, filterField: String)
@@ -23,7 +25,5 @@ internal interface SearchMvp {
     interface Presenter {
 
         fun onDetach()
-
-        fun onInputChange(text: String, filterField: String) {}
     }
 }
