@@ -47,6 +47,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
     private val searchInputTextSubject by lazy { PublishSubject.create<Pair<String, String>>() }
+    private val inputSuggestionThreshold by lazy {
+        resources.getInteger(R.integer.search_input_text_threshold_default)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -54,27 +57,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
-
-        //TODO method
-        addListenerForView(teacherNameInputView, SearchInput::name.name)
-        addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
-        addListenerForView(fieldOfStudyInputView, SearchInput::fieldOfStudy.name)
-        addListenerForView(roomInputView, SearchInput::room.name)
-        addListenerForView(subjectInputView, SearchInput::subject.name)
-    }
-
-    private fun addListenerForView(textView: TextView, fieldName: String) {
-        textView.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(editable: Editable?) {
-            }
-
-            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                searchInputTextSubject.onNext(Pair(fieldName, text.toString()))
-            }
-        })
     }
 
     override fun showLoading() {
@@ -122,6 +104,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
+        initInputListeners()
         searchButtonView.setOnClickListener { searchInputModelSubject.onNext(getSearchInput()) }
         if (savedInstanceState == null) {
             initInputViewsWithLessonArgument()
@@ -157,6 +140,30 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .withMonthOfYear(month + 1)
             .withYear(year)
         return ScheduleDate.UI_FORMATTER.print(date)
+    }
+
+    private fun initInputListeners() {
+        addListenerForView(teacherNameInputView, SearchInput::name.name)
+        addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
+        addListenerForView(fieldOfStudyInputView, SearchInput::fieldOfStudy.name)
+        addListenerForView(roomInputView, SearchInput::room.name)
+        addListenerForView(subjectInputView, SearchInput::subject.name)
+    }
+
+    private fun addListenerForView(textView: TextView, fieldName: String) {
+        textView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+            }
+
+            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                if (text.length == inputSuggestionThreshold) {
+                    searchInputTextSubject.onNext(Pair(fieldName, text.toString()))
+                }
+            }
+        })
     }
 
     private fun initInputViewsWithLessonArgument() {

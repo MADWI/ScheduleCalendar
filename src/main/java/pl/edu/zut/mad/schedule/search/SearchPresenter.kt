@@ -48,9 +48,6 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     override fun onDetach() = compositeDisposable.clear()
 
     private fun fetchSuggestions(query: Pair<String, String>) {
-        if (query.second.length != 3) { //TODO extract number
-            return
-        }
         val filterField = query.first
         service.fetchSuggestions(filterField, hashMapOf(query))
             .subscribeOn(Schedulers.io())
