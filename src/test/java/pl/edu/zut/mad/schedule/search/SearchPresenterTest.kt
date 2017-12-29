@@ -23,7 +23,7 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 internal class SearchPresenterTest {
 
     companion object {
-        val searchInput = SearchInput("", "", "", "", "", "", "", "", "", "", "")
+        val searchInputModel = SearchInput("", "", "", "", "", "", "", "", "", "", "")
     }
 
     @Rule
@@ -35,9 +35,11 @@ internal class SearchPresenterTest {
     val rxSchedulerRule = RxImmediateSchedulerRule()
 
     val searchInputModelSubject = PublishSubject.create<SearchInput>()
+    val searchInputTextSubject = PublishSubject.create<Pair<String, String>>()
         //TODO missing tests
     val view: SearchMvp.View = mock {
         on { observeSearchInputModel() } doReturn searchInputModelSubject
+        on { observeSearchInputText() } doReturn searchInputTextSubject
     }
     val service: ScheduleService = mock()
     val modelMapper: ModelMapper = mock()
@@ -48,55 +50,55 @@ internal class SearchPresenterTest {
     lateinit var presenter: SearchPresenter
 
     @Test
-    fun `search should call hide loading when connection is not available`() {
+    fun `publish search model should call hide loading when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
-        searchInputModelSubject.onNext(searchInput)
+        searchInputModelSubject.onNext(searchInputModel)
 
         verify(view).hideLoading()
     }
 
     @Test
-    fun `search should call show error when connection is not available`() {
+    fun `publish search model should call show error when connection is not available`() {
         whenever(networkConnection.isAvailable()).thenReturn(false)
 
-        searchInputModelSubject.onNext(searchInput)
+        searchInputModelSubject.onNext(searchInputModel)
 
         verify(view).showError(R.string.error_no_internet)
     }
 
     @Test
-    fun `search should call fetch schedule when connection is available`() {
+    fun `publish search model should call fetch schedule when connection is available`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        searchInputModelSubject.onNext(searchInput)
+        searchInputModelSubject.onNext(searchInputModel)
 
         verify(service).fetchScheduleByQueries(any())
     }
 
     @Test
-    fun `search should call set data when schedule service return data`() {
+    fun `publish search model should call set data when schedule service return data`() {
         prepareServiceMockToReturnObservable(Observable.just(emptyList()))
 
-        searchInputModelSubject.onNext(searchInput)
+        searchInputModelSubject.onNext(searchInputModel)
 
         verify(view).setData(any())
     }
 
     @Test
-    fun `search should call hide loading when schedule service return error`() {
+    fun `publish search model should call hide loading when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
-        searchInputModelSubject.onNext(searchInput)
+        searchInputModelSubject.onNext(searchInputModel)
 
         verify(view).hideLoading()
     }
 
     @Test
-    fun `search should call show error when schedule service return error`() {
+    fun `publish search model should call show error when schedule service return error`() {
         prepareServiceMockToReturnObservable(Observable.error(Throwable()))
 
-        searchInputModelSubject.onNext(searchInput)
+        searchInputModelSubject.onNext(searchInputModel)
 
         verify(view).showError(any())
     }
