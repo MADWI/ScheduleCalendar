@@ -16,10 +16,14 @@ internal interface SearchMvp {
         fun observeSearchInput(): PublishSubject<SearchInput>
 
         fun showError(@StringRes errorRes: Int)
+
+        fun showSurnameSuggestions(surnames: List<String>)
     }
 
     interface Presenter {
 
         fun onDetach()
+
+        fun onSurnameChange(text: String, field: String) {}
     }
 }

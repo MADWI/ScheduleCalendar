@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import io.reactivex.subjects.PublishSubject
@@ -48,6 +51,22 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
+
+        addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
+    }
+
+    private fun addListenerForView(textView: TextView, fieldName: String) {
+        textView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+            }
+
+            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                presenter.onSurnameChange(text.toString(), fieldName) //TODO create observable subject
+            }
+        })
     }
 
     override fun showLoading() {
@@ -74,6 +93,14 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     override fun observeSearchInput(): PublishSubject<SearchInput> = searchInputSubject
+
+    //TODO more common
+    override fun showSurnameSuggestions(surnames: List<String>) {
+        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, surnames)
+        teacherSurnameInputView.setAdapter(adapter)
+        teacherSurnameInputView.threshold = 2
+        teacherSurnameInputView.showDropDown()
+    }
 
     private fun init(savedInstanceState: Bundle?) {
         initInjections()

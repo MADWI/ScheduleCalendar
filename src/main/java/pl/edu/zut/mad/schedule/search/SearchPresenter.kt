@@ -41,4 +41,16 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     }
 
     override fun onDetach() = compositeDisposable.clear()
+
+    override fun onSurnameChange(text: String, field: String) {
+        if (text.length != 2) {
+            return
+        }
+        service.fetchSurnames(field, text)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                view.showSurnameSuggestions(it)
+            }
+    }
 }
