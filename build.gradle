@@ -55,7 +55,7 @@ ext {
 
 buildscript {
     ext {
-        kotlin_version = '1.2.0'
+        kotlin_version = '1.2.10'
     }
     repositories {
         google()
@@ -97,7 +97,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rx_java_version"
 
-    implementation "com.ognev.kotlin.agendacalendarview:kotlin-agendacalendarview:$calendar_version"
+    implementation "com.github.MADWI:Kotlin-AgendaCalendarView:master-SNAPSHOT"
     implementation "com.github.ganfra:material-spinner:$material_spinner_version"
     implementation "br.com.simplepass:loading-button-android:$loading_button_version"
 
