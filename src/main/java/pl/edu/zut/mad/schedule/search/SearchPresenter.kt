@@ -32,7 +32,7 @@ internal class SearchPresenter(private val view: SearchMvp.View,
         val disposable = service.fetchScheduleByQueries(searchQueryMap)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnTerminate { view.hideLoading() }
+            .doOnError { view.hideLoading() }
             .subscribe(
                 { view.setData(modelMapper.toUiLessons(it)) },
                 { view.showError(messageProvider.getResIdByError(it)) }

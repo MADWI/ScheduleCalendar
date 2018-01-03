@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import pl.edu.zut.mad.schedule.BackPressedListener
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
@@ -25,14 +26,14 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         if (savedInstanceState == null) {
-            startSearchFragment()
+            startSearchInputFragment()
         }
     }
 
-    private fun startSearchFragment() {
+    private fun startSearchInputFragment() {
         val searchInputFragment = getSearchInputFragmentWithArguments()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.searchMainContainer, searchInputFragment)
+            .replace(R.id.searchMainContainer, searchInputFragment, SearchInputFragment.TAG)
             .commit()
     }
 
@@ -42,5 +43,14 @@ class SearchActivity : AppCompatActivity() {
         return if (lesson == null)
             SearchInputFragment()
         else SearchInputFragment.newInstance(lesson)
+    }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.fragments.lastOrNull { it is BackPressedListener }
+        if (fragment == null) {
+            super.onBackPressed()
+        } else {
+            (fragment as BackPressedListener).onBackPressed()
+        }
     }
 }

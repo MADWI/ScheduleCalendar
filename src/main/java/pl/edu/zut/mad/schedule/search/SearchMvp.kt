@@ -19,6 +19,7 @@ internal interface SearchMvp {
     }
 
     interface Presenter {
+
         fun onDetach()
     }
 }
