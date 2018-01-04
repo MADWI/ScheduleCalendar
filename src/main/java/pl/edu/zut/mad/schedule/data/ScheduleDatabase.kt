@@ -24,7 +24,7 @@ internal class ScheduleDatabase {
 
     fun findDayByDate(date: Date): Day? {
         val database = getDatabaseInstance()
-        var day: Day? = database.where(Day::class.java)
+        var day = database.where(Day::class.java)
             .equalTo(DATE_COLUMN, date)
             .findFirst() ?: return null
         day = database.copyFromRealm(day)
