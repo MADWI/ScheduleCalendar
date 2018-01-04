@@ -11,19 +11,19 @@ internal class ScheduleDatabase {
     }
 
     fun save(days: List<Day>) {
-        val database = getDatabase()
+        val database = getDatabaseInstance()
         database.executeTransaction { it.copyToRealm(days) }
         database.close()
     }
 
     fun delete() {
-        val database = getDatabase()
+        val database = getDatabaseInstance()
         database.executeTransactionAsync { it.deleteAll() }
         database.close()
     }
 
-    fun findDayWithDate(date: Date): Day? {
-        val database = getDatabase()
+    fun findDayByDate(date: Date): Day? {
+        val database = getDatabaseInstance()
         var day: Day? = database.where(Day::class.java)
             .equalTo(DATE_COLUMN, date)
             .findFirst() ?: return null
@@ -33,19 +33,18 @@ internal class ScheduleDatabase {
     }
 
     fun findMinimumDate(): Date? {
-        val database = getDatabase()
+        val database = getDatabaseInstance()
         val date = database.where(Day::class.java).minimumDate(DATE_COLUMN)
         database.close()
         return date
     }
 
     fun findMaximumDate(): Date? {
-        val database = getDatabase()
+        val database = getDatabaseInstance()
         val date = database.where(Day::class.java).maximumDate(DATE_COLUMN)
         database.close()
         return date
     }
 
-    // TODO inject configuration with migration
-    private fun getDatabase() = Realm.getDefaultInstance()
+    private fun getDatabaseInstance() = Realm.getDefaultInstance()
 }

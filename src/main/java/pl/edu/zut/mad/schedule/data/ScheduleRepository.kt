@@ -18,7 +18,7 @@ internal class ScheduleRepository(private val database: ScheduleDatabase, privat
     fun delete() = database.delete()
 
     fun getDayByDate(date: LocalDate): Observable<OptionalDay> {
-        val day = database.findDayWithDate(date.toDate())
+        val day = database.findDayByDate(date.toDate())
         val optionalDay: OptionalDay =
             if (day == null) EmptyDay(date) else mapper.toDayUiFromApi(day)
         return Observable.just(optionalDay)

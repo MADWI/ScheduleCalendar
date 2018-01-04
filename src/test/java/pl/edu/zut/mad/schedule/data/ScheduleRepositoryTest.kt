@@ -34,7 +34,7 @@ internal class ScheduleRepositoryTest {
 
     @Test
     fun `get day should return empty day when database result is null`() {
-        whenever(database.findDayWithDate(any())).thenReturn(null)
+        whenever(database.findDayByDate(any())).thenReturn(null)
 
         val day = repository.getDayByDate(date).blockingFirst()
 
@@ -44,7 +44,7 @@ internal class ScheduleRepositoryTest {
     @Test
     @UseDataProvider("dayApiAndUi", location = [(MockData::class)])
     fun `get day should return day when result is not null`(dayApi: DayApi, dayUi: DayUi) {
-        whenever(database.findDayWithDate(any())).thenReturn(dayApi)
+        whenever(database.findDayByDate(any())).thenReturn(dayApi)
         whenever(modelMapper.toDayUiFromApi(dayApi)).thenReturn(dayUi)
 
         val day = repository.getDayByDate(date).blockingFirst()
