@@ -16,14 +16,14 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        val disposableModel = view.observeSearchInputModel()
+        val disposableInputModel = view.observeSearchInputModel()
             .doOnNext { view.showLoading() }
             .subscribe { fetchSchedule(it) }
-        compositeDisposable.add(disposableModel)
+        compositeDisposable.add(disposableInputModel)
 
-        val disposableText = view.observeSearchInputText()
+        val disposableInputText = view.observeSearchInputText()
             .subscribe { fetchSuggestions(it) }
-        compositeDisposable.add(disposableText)
+        compositeDisposable.add(disposableInputText)
     }
 
     private fun fetchSchedule(searchInput: SearchInput) {
