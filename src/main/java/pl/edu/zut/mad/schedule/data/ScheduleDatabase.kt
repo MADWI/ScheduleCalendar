@@ -10,7 +10,6 @@ internal class ScheduleDatabase {
         const val DATE_COLUMN = "date"
     }
 
-    // TODO rename database variable
     fun save(days: List<Day>) {
         val database = getDatabase()
         database.executeTransaction { it.copyToRealm(days) }
