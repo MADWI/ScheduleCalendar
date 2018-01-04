@@ -46,9 +46,9 @@ internal class SearchPresenter(private val view: SearchMvp.View,
 
     override fun onDetach() = compositeDisposable.clear()
 
-    private fun fetchSuggestions(query: Pair<String, String>) {
-        val filterField = query.first
-        service.fetchSuggestions(filterField, hashMapOf(query))
+    private fun fetchSuggestions(params: Pair<String, String>) {
+        val filterField = params.first
+        service.fetchSuggestions(filterField, hashMapOf(params))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

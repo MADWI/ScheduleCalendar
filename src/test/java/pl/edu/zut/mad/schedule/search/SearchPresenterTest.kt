@@ -78,15 +78,6 @@ internal class SearchPresenterTest {
     }
 
     @Test
-    fun `publish search model should call hide loading when service return data`() {
-        prepareServiceMockToReturnScheduleObservable(Observable.just(emptyList()))
-
-        searchInputModelSubject.onNext(searchInputModel)
-
-        verify(view).hideLoading()
-    }
-
-    @Test
     fun `publish search model should call set data when schedule service return data`() {
         prepareServiceMockToReturnScheduleObservable(Observable.just(emptyList()))
 
