@@ -1,11 +1,10 @@
 package pl.edu.zut.mad.schedule.data
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import com.tngtech.java.junit.dataprovider.DataProviderRunner
 import com.tngtech.java.junit.dataprovider.UseDataProvider
-import io.realm.Realm
-import io.realm.RealmQuery
 import org.assertj.core.api.Assertions.assertThat
 import org.joda.time.LocalDate
 import org.junit.Before
@@ -24,25 +23,18 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day as DayUi
 internal class ScheduleRepositoryTest {
 
     val date: LocalDate = LocalDate.now()
-    val realm: Realm = mock()
     val modelMapper: ModelMapper = mock()
-    val dayRealmQuery: RealmQuery<DayApi> = mock()
-    val scheduledatabase: ScheduleDatabase = mock()
+    val database: ScheduleDatabase = mock()
 
     @InjectMocks
     lateinit var repository: ScheduleRepository
 
     @Before
-    fun setUp() {
-        MockitoAnnotations.initMocks(this)
-        whenever(scheduledatabase.instance).thenReturn(realm)
-        whenever(realm.where(DayApi::class.java)).thenReturn(dayRealmQuery)
-        whenever(dayRealmQuery.equalTo(ScheduleRepository.DATE_COLUMN, date.toDate())).thenReturn(dayRealmQuery)
-    }
+    fun setUp() = MockitoAnnotations.initMocks(this)
 
     @Test
     fun `get day should return empty day when database result is null`() {
-        whenever(dayRealmQuery.findFirst()).thenReturn(null)
+        whenever(database.findDayByDate(any())).thenReturn(null)
 
         val day = repository.getDayByDate(date).blockingFirst()
 
@@ -52,7 +44,7 @@ internal class ScheduleRepositoryTest {
     @Test
     @UseDataProvider("dayApiAndUi", location = [(MockData::class)])
     fun `get day should return day when result is not null`(dayApi: DayApi, dayUi: DayUi) {
-        whenever(dayRealmQuery.findFirst()).thenReturn(dayApi)
+        whenever(database.findDayByDate(any())).thenReturn(dayApi)
         whenever(modelMapper.toDayUiFromApi(dayApi)).thenReturn(dayUi)
 
         val day = repository.getDayByDate(date).blockingFirst()
