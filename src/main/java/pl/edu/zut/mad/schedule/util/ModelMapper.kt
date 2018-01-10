@@ -20,6 +20,7 @@ internal class ModelMapper {
 
     companion object {
         const val CANCELED_LESSON_TEXT = "odwołane"
+        const val EXAM_LESSON_TEXT = "egzamin"
         private const val QUERY_TEACHER_NAME = "name"
         private const val QUERY_TEACHER_SURNAME = "surname"
         private const val QUERY_FACULTY_ABBREVIATION = "facultyAbbreviation"
@@ -75,10 +76,11 @@ internal class ModelMapper {
         lessons.map {
             with(it) {
                 val isCancelled = reservationStatus.equals(CANCELED_LESSON_TEXT, true)
+                val isExam = reservationStatus.equals(EXAM_LESSON_TEXT, true)
                 val timeRangeUi = toUiTimeRange(timeRange ?: TimeRangeApi())
                 val teacherUi = toUiTeacher(teacher ?: TeacherApi())
                 LessonUi(subject, courseType, room, teacherUi, facultyAbbreviation,
-                    fieldOfStudy, semester, isCancelled, timeRangeUi, date)
+                    fieldOfStudy, semester, isCancelled, isExam, timeRangeUi, date)
             }
         }
 

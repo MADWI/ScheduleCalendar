@@ -53,13 +53,20 @@
     </RelativeLayout>
 
     <pl.edu.zut.mad.schedule.ui.VerticalTextView
-        android:id="@+id/criticalStatusTextView"
+        android:id="@+id/cancelledStatusTextView"
         style="@style/CancelledLessonView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
         android:text="@string/lesson_cancelled"
         android:visibility="gone"
         tools:visibility="visible" />
+
+    <pl.edu.zut.mad.schedule.ui.VerticalTextView
+        android:id="@+id/examStatusTextView"
+        style="@style/ExamLessonView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/lesson_exam"
+        android:visibility="gone" />
 
 </FrameLayout>

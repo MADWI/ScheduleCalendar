@@ -160,7 +160,7 @@ internal class ModelMapperTest {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.isCancelled).isFalse()
+        assertThat(lesson.reservationStatus).isFalse()
     }
 
     @Test
@@ -169,7 +169,7 @@ internal class ModelMapperTest {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.isCancelled).isTrue()
+        assertThat(lesson.reservationStatus).isTrue()
     }
 
     @Test
