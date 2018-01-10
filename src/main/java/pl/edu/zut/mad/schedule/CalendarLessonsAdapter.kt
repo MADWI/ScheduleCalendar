@@ -48,7 +48,7 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
             view.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
             view.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             if (isCancelled) {
-                view.cancelledTextView.visibility = View.VISIBLE
+                view.criticalStatusTextView.visibility = View.VISIBLE
             }
         }
 }
