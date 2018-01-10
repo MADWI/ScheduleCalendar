@@ -156,20 +156,38 @@ internal class ModelMapperTest {
 
     @Test
     @UseDataProvider("dayApi", location = [(MockData::class)])
-    fun `day ui lessons is cancelled is false`(dayApi: DayApi) {
+    fun `day ui lesson is cancelled is false`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.reservationStatus).isFalse()
+        assertThat(lesson.isCancelled).isFalse()
     }
 
     @Test
     @UseDataProvider("dayApiWithCancelledLesson", location = [(MockData::class)])
-    fun `lesson is cancelled is true`(dayApi: DayApi) {
+    fun `day ui lesson is cancelled is true`(dayApi: DayApi) {
         val dayUi = modelMapper.toDayUiFromApi(dayApi)
         val lesson = dayUi.lessons[0]
 
-        assertThat(lesson.reservationStatus).isTrue()
+        assertThat(lesson.isCancelled).isTrue()
+    }
+
+    @Test
+    @UseDataProvider("dayApi", location = [(MockData::class)])
+    fun `day ui lesson is exam is false`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.isExam).isFalse()
+    }
+
+    @Test
+    @UseDataProvider("dayApiWithExamLesson", location = [(MockData::class)])
+    fun `day ui lesson is exam is true`(dayApi: DayApi) {
+        val dayUi = modelMapper.toDayUiFromApi(dayApi)
+        val lesson = dayUi.lessons[0]
+
+        assertThat(lesson.isExam).isTrue()
     }
 
     @Test

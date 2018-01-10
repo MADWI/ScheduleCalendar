@@ -41,6 +41,7 @@ internal class MockData {
         private val TIME_RANGE_API = TimeRangeApi(TIME_START, TIME_END)
         private const val RESERVATION_STATUS_NOT_CANCELLED = "wykład"
         private const val RESERVATION_STATUS_CANCELLED = ModelMapper.CANCELED_LESSON_TEXT
+        private const val RESERVATION_STATUS_EXAM = ModelMapper.EXAM_LESSON_TEXT
 
         @JvmStatic
         @DataProvider
@@ -65,6 +66,15 @@ internal class MockData {
         fun dayApiWithCancelledLesson(): Array<Array<Any>> {
             val lessons = RealmList<LessonApi>()
             lessons.add(getLessonApiWithReservationStatus(RESERVATION_STATUS_CANCELLED))
+            val day = DayApi(getApiDate(), lessons)
+            return arrayOf(arrayOf<Any>(day))
+        }
+
+        @JvmStatic
+        @DataProvider
+        fun dayApiWithExamLesson(): Array<Array<Any>> {
+            val lessons = RealmList<LessonApi>()
+            lessons.add(getLessonApiWithReservationStatus(RESERVATION_STATUS_EXAM))
             val day = DayApi(getApiDate(), lessons)
             return arrayOf(arrayOf<Any>(day))
         }
@@ -106,7 +116,7 @@ internal class MockData {
         private fun getLessonUiWithCancellation(): LessonUi {
             val date = getUiDate()
             return LessonUi(SUBJECT, TYPE, ROOM, TEACHER_UI, FACULTY_ABBREVIATION, FIELD_OF_STUDY,
-                SEMESTER, false, TIME_RANGE_UI, date)
+                SEMESTER, false, false, TIME_RANGE_UI, date)
         }
     }
 }
