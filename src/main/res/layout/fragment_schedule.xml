@@ -8,4 +8,5 @@
     agendaCalendar:calendarSelectedDayTextColor="@android:color/white"
     agendaCalendar:calendarMonthTextColor="@color/azure"
     agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
-    agendaCalendar:circleBackgroundColor="@android:color/holo_red_dark" />
+    agendaCalendar:calendarPastDayTextColor="@android:color/primary_text_light"
+    agendaCalendar:circleBackgroundColor="@drawable/selected_day_background" />
