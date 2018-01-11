@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
-import pl.edu.zut.mad.schedule.animation.AnimationSettings
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
@@ -76,9 +75,10 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     }
 
     override fun hideLoadingView() {
+        val animationDuration = resources.getInteger(R.integer.animation_time).toLong()
         scheduleLoadingView.animate()
             .alpha(0F)
-            .setDuration(AnimationSettings.FADE_OUT_DURATION)
+            .setDuration(animationDuration)
             .withEndAction {
                 scheduleLoadingView.visibility = View.GONE
                 scheduleLoadingView.alpha = 1F
