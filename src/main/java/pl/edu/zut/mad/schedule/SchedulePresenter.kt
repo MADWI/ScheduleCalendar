@@ -3,7 +3,9 @@ package pl.edu.zut.mad.schedule
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
@@ -35,12 +37,11 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
         }
 
     private fun loadLessons() {
-        val minDate = repository.getScheduleMinDate()
-        val maxDate = repository.getScheduleMaxDate()
-        view.onDateIntervalCalculated(minDate, maxDate)
-
-        val dates = datesProvider.getByInterval(minDate, maxDate)
-        Observable.fromIterable(dates)
+        Observable.zip(repository.getScheduleMinDate(), repository.getScheduleMaxDate(), BiFunction<LocalDate, LocalDate, Observable<LocalDate>> { minDate, maxDate ->
+            view.onDateIntervalCalculated(minDate, maxDate)
+            Observable.fromIterable(datesProvider.getByInterval(minDate, maxDate))
+        })
+            .switchMap { it }
             .flatMap { repository.getDayByDate(it) }
             .map { mapper.toLessonsEvents(it) }
             .collect({ mutableListOf<CalendarEvent>() }, { allEvents, dayEvents -> allEvents.addAll(dayEvents) })
