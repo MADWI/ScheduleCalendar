@@ -90,6 +90,7 @@ internal class SchedulePresenterTest {
     @UseDataProvider("dayUi", location = [(MockData::class)])
     fun `mapping to lessons events should be called when user is saved and view is created`(day: Day) {
         prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(day)
+
         schedulePresenter.onViewIsCreated()
 
         verify(mapper).toLessonsEvents(day)
