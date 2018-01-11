@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -68,6 +70,26 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         val calendar = Calendar.getInstance()
         calendar.time = date.toDate()
         return calendar
+    }
+
+    override fun showLoadingView() {
+        scheduleLoadingView.visibility = View.VISIBLE
+    }
+
+    override fun hideLoadingView() {
+        val fadeOutAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out)
+        fadeOutAnimation.setAnimationListener(object : Animation.AnimationListener { //TODO: abstract class
+            override fun onAnimationRepeat(animation: Animation?) {
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                scheduleLoadingView.visibility = View.GONE
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+            }
+        })
+        scheduleLoadingView.startAnimation(fadeOutAnimation)
     }
 
     override fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>) =

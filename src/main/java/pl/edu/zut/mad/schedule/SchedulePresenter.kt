@@ -15,6 +15,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
 
     override fun onViewIsCreated() =
         if (user.isSaved()) {
+            view.showLoadingView() //TODO test
             loadLessons()
         } else {
             view.showLoginView()
@@ -46,7 +47,10 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { view.onLessonsEventsLoad(it) },
+                {
+                    view.hideLoadingView() //TODO test
+                    view.onLessonsEventsLoad(it) //TODO rename to setData
+                },
                 {}
             )
     }
