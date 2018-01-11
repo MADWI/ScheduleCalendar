@@ -37,10 +37,9 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
         }
 
     private fun loadLessons() {
-        Observable.zip(repository.getScheduleMinDate(), repository.getScheduleMaxDate(), BiFunction<LocalDate, LocalDate, Observable<LocalDate>> { minDate, maxDate ->
-            view.onDateIntervalCalculated(minDate, maxDate)
-            Observable.fromIterable(datesProvider.getByInterval(minDate, maxDate))
-        })
+        val minDateObservable = repository.getScheduleMinDate()
+        val maxDateObservable = repository.getScheduleMaxDate()
+        Observable.zip(minDateObservable, maxDateObservable, getDatesZipperFunction())
             .switchMap { it }
             .flatMap { repository.getDayByDate(it) }
             .map { mapper.toLessonsEvents(it) }
@@ -55,4 +54,11 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
                 {}
             )
     }
+
+    // https://youtrack.jetbrains.com/issue/KT-13609
+    private fun getDatesZipperFunction() =
+        BiFunction<LocalDate, LocalDate, Observable<LocalDate>> { minDate, maxDate ->
+            view.onDateIntervalCalculated(minDate, maxDate)
+            Observable.fromIterable(datesProvider.getByInterval(minDate, maxDate))
+        }
 }
