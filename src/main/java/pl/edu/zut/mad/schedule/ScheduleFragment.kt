@@ -92,7 +92,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         scheduleLoadingView.startAnimation(fadeOutAnimation)
     }
 
-    override fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>) =
+    override fun setData(lessonsEvents: MutableList<CalendarEvent>) =
         calendarContentManager.loadItemsFromStart(lessonsEvents)
 
     override fun showLoginView() {

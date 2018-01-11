@@ -103,7 +103,7 @@ internal class SchedulePresenterTest {
 
         schedulePresenter.onViewIsCreated()
 
-        verify(view).onLessonsEventsLoad(any())
+        verify(view).setData(any())
     }
 
     @Test
@@ -113,7 +113,17 @@ internal class SchedulePresenterTest {
 
         schedulePresenter.onViewIsCreated()
 
-        verify(view).onLessonsEventsLoad(any())
+        verify(view).setData(any())
+    }
+
+    @Test
+    @UseDataProvider("dayUi", location = [(MockData::class)])
+    fun `hide loading should be be called when repository return data`(day: Day) {
+        prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(day)
+
+        schedulePresenter.onViewIsCreated()
+
+        verify(view).hideLoadingView()
     }
 
     @Test

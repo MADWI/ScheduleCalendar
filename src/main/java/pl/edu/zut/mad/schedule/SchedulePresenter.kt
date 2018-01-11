@@ -48,8 +48,8 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    view.hideLoadingView() //TODO test
-                    view.onLessonsEventsLoad(it) //TODO rename to setData
+                    view.hideLoadingView()
+                    view.setData(it) //TODO rename to setData
                 },
                 {}
             )
