@@ -12,7 +12,7 @@ internal interface ScheduleMvp {
 
         fun hideLoadingView()
 
-        fun setData(lessonsEvents: MutableList<LessonEvent>)
+        fun setData(lessonsEvents: List<LessonEvent>)
 
         fun showLoginView()
 

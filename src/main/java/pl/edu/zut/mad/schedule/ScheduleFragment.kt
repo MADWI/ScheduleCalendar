@@ -85,7 +85,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
             }
     }
 
-    override fun setData(lessonsEvents: MutableList<LessonEvent>) =
+    override fun setData(lessonsEvents: List<LessonEvent>) =
         calendarContentManager.loadItemsFromStart(lessonsEvents.toMutableList())
 
     override fun showLoginView() {
