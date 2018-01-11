@@ -17,7 +17,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
 
     override fun onViewIsCreated() =
         if (user.isSaved()) {
-            view.showLoadingView() //TODO test
+            view.showLoadingView()
             loadLessons()
         } else {
             view.showLoginView()
@@ -39,7 +39,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
     private fun loadLessons() {
         val minDateObservable = repository.getScheduleMinDate()
         val maxDateObservable = repository.getScheduleMaxDate()
-        Observable.zip(minDateObservable, maxDateObservable, getDatesZipperFunction())
+        Observable.zip(minDateObservable, maxDateObservable, getDatesZipperFunction()) //TODO split for excluding #onDateIntervalCalculated
             .switchMap { it } //TODO check
             .flatMap { repository.getDayByDate(it) }
             .map { mapper.toLessonsEvents(it) }

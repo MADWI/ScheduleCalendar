@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoRule
 import pl.edu.zut.mad.schedule.data.ScheduleRepository
 import pl.edu.zut.mad.schedule.data.model.ui.Day
 import pl.edu.zut.mad.schedule.data.model.ui.EmptyDay
+import pl.edu.zut.mad.schedule.data.model.ui.OptionalDay
 import pl.edu.zut.mad.schedule.util.DatesProvider
 import pl.edu.zut.mad.schedule.util.ModelMapper
 import pl.edu.zut.mad.schedule.util.NetworkConnection
@@ -51,6 +52,8 @@ internal class SchedulePresenterTest {
 
     @Test
     fun `show loading view should be called when view is created`() {
+        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
+
         schedulePresenter.onViewIsCreated()
 
         verify(view).showLoadingView()
@@ -58,7 +61,7 @@ internal class SchedulePresenterTest {
 
     @Test
     fun `get min date should be called when user is saved and view is created`() {
-        whenever(user.isSaved()).thenReturn(true)
+        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
 
         schedulePresenter.onViewIsCreated()
 
@@ -67,20 +70,36 @@ internal class SchedulePresenterTest {
 
     @Test
     fun `get max date should be called when user is saved and view is created`() {
-        whenever(user.isSaved()).thenReturn(true)
+        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
 
         schedulePresenter.onViewIsCreated()
 
         verify(repository).getScheduleMaxDate()
     }
 
+    @Test
+    fun `get by date should be called when user is saved and view is created`() {
+        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
 
-//    TODO rename below methods
+        schedulePresenter.onViewIsCreated()
+
+        verify(repository).getDayByDate(any())
+    }
+
+    @Test
+    @UseDataProvider("dayUi", location = [(MockData::class)])
+    fun `mapping to lessons events should be called when user is saved and view is created`(day: Day) {
+        prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(day)
+        schedulePresenter.onViewIsCreated()
+
+        verify(mapper).toLessonsEvents(day)
+    }
+
+    //TODO rename onLessonsEventsLoad to setData
     @Test
     @UseDataProvider("dayUi", location = [(MockData::class)])
     fun `on lessons events should be called when repository return data`(day: Day) {
-        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
-        whenever(repository.getDayByDate(DATE)).thenReturn(Observable.just(day))
+        prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(day)
 
         schedulePresenter.onViewIsCreated()
 
@@ -90,8 +109,7 @@ internal class SchedulePresenterTest {
     @Test
     @UseDataProvider("emptyDay", location = [(MockData::class)])
     fun `on lessons events should be be called when repository return empty day`(emptyDay: EmptyDay) {
-        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
-        whenever(repository.getDayByDate(DATE)).thenReturn(Observable.just(emptyDay))
+        prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(emptyDay)
 
         schedulePresenter.onViewIsCreated()
 
@@ -100,10 +118,7 @@ internal class SchedulePresenterTest {
 
     @Test
     fun `on date interval calculated is called on view is created`() {
-        whenever(user.isSaved()).thenReturn(true)
-        //TODO consider replacing with method
-        whenever(repository.getScheduleMinDate()).thenReturn(Observable.just(MIN_DATE)) //TODO
-        whenever(repository.getScheduleMaxDate()).thenReturn(Observable.just(MAX_DATE)) //TODO
+        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
 
         schedulePresenter.onViewIsCreated()
 
@@ -172,5 +187,10 @@ internal class SchedulePresenterTest {
         whenever(repository.getScheduleMinDate()).thenReturn(Observable.just(MIN_DATE))
         whenever(repository.getScheduleMaxDate()).thenReturn(Observable.just(MAX_DATE))
         whenever(datesProvider.getByInterval(MIN_DATE, MAX_DATE)).thenReturn(mutableListOf(DATE))
+    }
+
+    private fun prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(day: OptionalDay) {
+        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
+        whenever(repository.getDayByDate(DATE)).thenReturn(Observable.just(day))
     }
 }
