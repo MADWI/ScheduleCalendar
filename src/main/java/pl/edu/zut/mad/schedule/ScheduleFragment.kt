@@ -8,12 +8,11 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
-import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.animation.AnimationSettings
+import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
@@ -77,23 +76,17 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     }
 
     override fun hideLoadingView() {
-        val fadeOutAnimation = AnimationUtils.loadAnimation(context, android.R.anim.fade_out)
-        fadeOutAnimation.setAnimationListener(object : Animation.AnimationListener { //TODO: abstract class
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
+        scheduleLoadingView.animate()
+            .alpha(0F)
+            .setDuration(AnimationSettings.FADE_OUT_DURATION)
+            .withEndAction {
                 scheduleLoadingView.visibility = View.GONE
+                scheduleLoadingView.alpha = 1F
             }
-
-            override fun onAnimationStart(animation: Animation?) {
-            }
-        })
-        scheduleLoadingView.startAnimation(fadeOutAnimation)
     }
 
-    override fun setData(lessonsEvents: MutableList<CalendarEvent>) =
-        calendarContentManager.loadItemsFromStart(lessonsEvents)
+    override fun setData(lessonsEvents: MutableList<LessonEvent>) =
+        calendarContentManager.loadItemsFromStart(lessonsEvents.toMutableList())
 
     override fun showLoginView() {
         val intent = Intent(activity, LoginActivity::class.java)

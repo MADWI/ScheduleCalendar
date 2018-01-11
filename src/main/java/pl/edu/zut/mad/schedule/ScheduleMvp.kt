@@ -1,7 +1,7 @@
 package pl.edu.zut.mad.schedule
 
-import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 
 internal interface ScheduleMvp {
 
@@ -12,7 +12,7 @@ internal interface ScheduleMvp {
 
         fun hideLoadingView()
 
-        fun setData(lessonsEvents: MutableList<CalendarEvent>)
+        fun setData(lessonsEvents: MutableList<LessonEvent>)
 
         fun showLoginView()
 
