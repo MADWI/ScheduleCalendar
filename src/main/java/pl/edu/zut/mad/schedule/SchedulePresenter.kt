@@ -49,7 +49,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
             .subscribe(
                 {
                     view.hideLoadingView()
-                    view.setData(it) //TODO rename to setData
+                    view.setData(it)
                 },
                 {}
             )

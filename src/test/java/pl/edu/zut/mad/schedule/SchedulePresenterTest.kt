@@ -95,10 +95,9 @@ internal class SchedulePresenterTest {
         verify(mapper).toLessonsEvents(day)
     }
 
-    //TODO rename onLessonsEventsLoad to setData
     @Test
     @UseDataProvider("dayUi", location = [(MockData::class)])
-    fun `on lessons events should be called when repository return data`(day: Day) {
+    fun `set data should be called when repository return data`(day: Day) {
         prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(day)
 
         schedulePresenter.onViewIsCreated()
@@ -108,7 +107,7 @@ internal class SchedulePresenterTest {
 
     @Test
     @UseDataProvider("emptyDay", location = [(MockData::class)])
-    fun `on lessons events should be be called when repository return empty day`(emptyDay: EmptyDay) {
+    fun `set data events should be be called when repository return empty day`(emptyDay: EmptyDay) {
         prepareMocksToReturnDatesFromRepositoryAndDatesProviderAndDay(emptyDay)
 
         schedulePresenter.onViewIsCreated()
