@@ -25,6 +25,12 @@ import pl.edu.zut.mad.schedule.util.NetworkConnection
 @RunWith(DataProviderRunner::class)
 internal class SchedulePresenterTest {
 
+    companion object {
+        private val DATE = LocalDate.now()
+        private val MIN_DATE = LocalDate.now()
+        private val MAX_DATE = MIN_DATE.plusMonths(1)
+    }
+
     @Rule
     @JvmField
     val mockitoRule: MockitoRule = MockitoJUnit.rule()
@@ -43,21 +49,33 @@ internal class SchedulePresenterTest {
     @InjectMocks
     private lateinit var schedulePresenter: SchedulePresenter
 
-    companion object {
-        private val DATE = LocalDate.now()
-        private val MIN_DATE = LocalDate.now()
-        private val MAX_DATE = MIN_DATE.plusMonths(1)
+    @Test
+    fun `show loading view should be called when view is created`() {
+        schedulePresenter.onViewIsCreated()
+
+        verify(view).showLoadingView()
     }
 
     @Test
-    fun `get day should be called when on view is created`() {
-        prepareMocksToReturnDatesFromRepositoryAndDatesProvider()
+    fun `get min date should be called when user is saved and view is created`() {
+        whenever(user.isSaved()).thenReturn(true)
 
         schedulePresenter.onViewIsCreated()
 
-        verify(repository).getDayByDate(DATE)
+        verify(repository).getScheduleMinDate()
     }
 
+    @Test
+    fun `get max date should be called when user is saved and view is created`() {
+        whenever(user.isSaved()).thenReturn(true)
+
+        schedulePresenter.onViewIsCreated()
+
+        verify(repository).getScheduleMaxDate()
+    }
+
+
+//    TODO rename below methods
     @Test
     @UseDataProvider("dayUi", location = [(MockData::class)])
     fun `on lessons events should be called when repository return data`(day: Day) {
@@ -83,8 +101,9 @@ internal class SchedulePresenterTest {
     @Test
     fun `on date interval calculated is called on view is created`() {
         whenever(user.isSaved()).thenReturn(true)
-        whenever(repository.getScheduleMinDate()).thenReturn(MIN_DATE)
-        whenever(repository.getScheduleMaxDate()).thenReturn(MAX_DATE)
+        //TODO consider replacing with method
+        whenever(repository.getScheduleMinDate()).thenReturn(Observable.just(MIN_DATE)) //TODO
+        whenever(repository.getScheduleMaxDate()).thenReturn(Observable.just(MAX_DATE)) //TODO
 
         schedulePresenter.onViewIsCreated()
 
@@ -107,6 +126,15 @@ internal class SchedulePresenterTest {
         schedulePresenter.refresh()
 
         verify(view).refreshSchedule(any())
+    }
+
+    @Test
+    fun `get album number should be called when connection is available`() {
+        whenever(connection.isAvailable()).thenReturn(true)
+
+        schedulePresenter.refresh()
+
+        verify(user).getAlbumNumber()
     }
 
     @Test
@@ -141,8 +169,8 @@ internal class SchedulePresenterTest {
 
     private fun prepareMocksToReturnDatesFromRepositoryAndDatesProvider() {
         whenever(user.isSaved()).thenReturn(true)
-        whenever(repository.getScheduleMinDate()).thenReturn(MIN_DATE)
-        whenever(repository.getScheduleMaxDate()).thenReturn(MAX_DATE)
+        whenever(repository.getScheduleMinDate()).thenReturn(Observable.just(MIN_DATE))
+        whenever(repository.getScheduleMaxDate()).thenReturn(Observable.just(MAX_DATE))
         whenever(datesProvider.getByInterval(MIN_DATE, MAX_DATE)).thenReturn(mutableListOf(DATE))
     }
 }

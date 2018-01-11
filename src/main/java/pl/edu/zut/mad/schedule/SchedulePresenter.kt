@@ -40,7 +40,7 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
         val minDateObservable = repository.getScheduleMinDate()
         val maxDateObservable = repository.getScheduleMaxDate()
         Observable.zip(minDateObservable, maxDateObservable, getDatesZipperFunction())
-            .switchMap { it }
+            .switchMap { it } //TODO check
             .flatMap { repository.getDayByDate(it) }
             .map { mapper.toLessonsEvents(it) }
             .collect({ mutableListOf<CalendarEvent>() }, { allEvents, dayEvents -> allEvents.addAll(dayEvents) })
@@ -55,7 +55,10 @@ internal class SchedulePresenter(private val repository: ScheduleRepository, pri
             )
     }
 
-    // https://youtrack.jetbrains.com/issue/KT-13609
+    /**
+     * This cannot be converted to lambda expression due to compile error
+     * @see <a href="https://youtrack.jetbrains.com/issue/KT-13609">Kotlin issue</a>
+     */
     private fun getDatesZipperFunction() =
         BiFunction<LocalDate, LocalDate, Observable<LocalDate>> { minDate, maxDate ->
             view.onDateIntervalCalculated(minDate, maxDate)
