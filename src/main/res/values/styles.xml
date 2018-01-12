@@ -3,7 +3,11 @@
 
     <style name="Login" parent="@style/Theme.AppCompat.Light.NoActionBar" />
 
-    <style name="Search" parent="@style/Theme.AppCompat.Light.NoActionBar" />
+    <style name="Search" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/scheduleColorPrimary</item>
+        <item name="colorPrimaryDark">@color/scheduleColorPrimaryDark</item>
+        <item name="colorAccent">@color/scheduleColorAccent</item>
+    </style>
 
     <style name="CancelledLessonView">
         <item name="android:padding">5dp</item>
