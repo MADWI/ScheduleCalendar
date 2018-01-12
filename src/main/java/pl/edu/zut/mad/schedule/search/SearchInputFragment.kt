@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -235,15 +236,20 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun getAnimationParamsForResultView(): AnimationParams {
-        val viewLocation = IntArray(2)
-        searchButtonView.getLocationOnScreen(viewLocation)
         val centerX = searchButtonView.x.toInt() + searchButtonView.width / 2
-        val centerY = viewLocation[1]
+        val centerY = getSearchButtonViewYCenter()
         val width = view?.width ?: 0
         val height = view?.height ?: 0
         val startRadius = searchButtonView.height / 2
         val endRadius = sqrt(getPow2(width / 2) + getPow2(height))
         return AnimationParams(centerX, centerY, width, height, startRadius, endRadius.toInt())
+    }
+
+    private fun getSearchButtonViewYCenter(): Int {
+        val viewLocation = IntArray(2)
+        searchButtonView.getLocationOnScreen(viewLocation)
+        val barHeight = (activity as AppCompatActivity).supportActionBar?.height ?: 0
+        return viewLocation[1] - barHeight
     }
 
     private fun getPow2(value: Int): Double = Math.pow(value.toDouble(), 2.toDouble())
