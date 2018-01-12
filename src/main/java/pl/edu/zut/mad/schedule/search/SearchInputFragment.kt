@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -94,6 +97,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun init(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         initInjections()
         initViews(savedInstanceState)
     }
@@ -101,6 +105,21 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     private fun initInjections() = app.component
         .plus(SearchModule(this))
         .inject(this)
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) =
+        inflater.inflate(R.menu.search_menu, menu)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.search_show_more) {
+            if (searchAdvancedView.isExpanded) {
+                searchAdvancedView.collapse()
+            } else {
+                searchAdvancedView.expand()
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
