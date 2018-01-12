@@ -6,6 +6,7 @@
     <string name="today">Dzisiaj</string>
     <string name="no_lessons">Brak zajęć</string>
     <string name="lesson_cancelled">Odwołane</string>
+    <string name="lesson_exam">Egzamin</string>
     <string name="error_no_internet">Brak połączenia z internetem</string>
     <string name="error_field_cannot_be_empty">Pole nie może być puste</string>
     <string name="error_album_number_not_found">Podany numer albumu nie istnieje</string>

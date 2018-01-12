@@ -6,6 +6,7 @@
     <string name="today">Today</string>
     <string name="no_lessons">No lessons</string>
     <string name="lesson_cancelled">Cancelled</string>
+    <string name="lesson_exam">Exam</string>
     <string name="error_no_internet">No Internet connection</string>
     <string name="error_field_cannot_be_empty">Field cannot be empty</string>
     <string name="error_album_number_not_found">Given album number not exists</string>

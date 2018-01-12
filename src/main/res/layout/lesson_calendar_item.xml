@@ -1,62 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:background="@android:color/white">
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/cancelledTextView"
-        style="@style/CancelledLessonView"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        tools:background="@android:color/white">
+
+        <LinearLayout
+            android:id="@+id/timeGroupView"
+            android:layout_width="@dimen/lesson_time_group_width"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/lessonTeacherAndSubject"
+            android:layout_alignTop="@id/lessonTeacherAndSubject"
+            android:background="@color/scheduleColorPrimary"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/timeStartView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/lesson_item_time_gap"
+                android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
+                android:drawableStart="@drawable/ic_class_start_white_18dp"
+                android:maxLength="5"
+                android:textColor="@android:color/white"
+                tools:text="12:15" />
+
+            <TextView
+                android:id="@+id/timeEndView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
+                android:drawableStart="@drawable/ic_class_end_white_18dp"
+                android:gravity="center"
+                android:maxLength="5"
+                android:textColor="@android:color/white"
+                tools:text="14:00" />
+        </LinearLayout>
+
+        <include
+            android:id="@+id/lessonTeacherAndSubject"
+            layout="@layout/lesson_teacher_and_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/timeGroupView" />
+
+    </RelativeLayout>
+
+    <pl.edu.zut.mad.schedule.ui.VerticalTextView
+        android:id="@+id/cancelledStatusTextView"
+        style="@style/CancelledLessonView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/lesson_cancelled"
-        android:textColor="@android:color/holo_red_light"
         android:visibility="gone"
         tools:visibility="visible" />
 
-    <LinearLayout
-        android:id="@+id/timeGroupView"
-        android:layout_width="@dimen/lesson_time_group_width"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/lessonTeacherAndSubject"
-        android:layout_alignTop="@id/lessonTeacherAndSubject"
-        android:layout_below="@id/cancelledTextView"
-        android:background="@color/scheduleColorPrimary"
-        android:gravity="center"
-        android:orientation="vertical">
+    <pl.edu.zut.mad.schedule.ui.VerticalTextView
+        android:id="@+id/examStatusTextView"
+        style="@style/ExamLessonView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/lesson_exam"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/timeStartView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/lesson_item_time_gap"
-            android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:drawableStart="@drawable/ic_class_start_white_18dp"
-            android:maxLength="5"
-            android:textColor="@android:color/white"
-            tools:text="12:15" />
-
-        <TextView
-            android:id="@+id/timeEndView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:drawableStart="@drawable/ic_class_end_white_18dp"
-            android:gravity="center"
-            android:maxLength="5"
-            android:textColor="@android:color/white"
-            tools:text="14:00" />
-    </LinearLayout>
-
-    <include
-        android:id="@+id/lessonTeacherAndSubject"
-        layout="@layout/lesson_teacher_and_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/cancelledTextView"
-        android:layout_toEndOf="@id/timeGroupView" />
-
-</RelativeLayout>
+</FrameLayout>

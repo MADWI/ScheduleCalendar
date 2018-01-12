@@ -5,24 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/cancelledTextView"
-        style="@style/CancelledLessonView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/lesson_cancelled"
-        android:textColor="@android:color/holo_red_light"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
     <LinearLayout
         android:id="@+id/timeGroupView"
         android:layout_width="@dimen/lesson_time_group_width"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/lessonTeacherAndSubject"
         android:layout_alignTop="@id/lessonTeacherAndSubject"
-        android:layout_below="@id/cancelledTextView"
         android:background="@color/scheduleColorPrimary"
         android:gravity="center"
         android:orientation="vertical">
@@ -54,7 +42,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/cancelledTextView"
         android:layout_toEndOf="@id/timeGroupView" />
 
 </RelativeLayout>
