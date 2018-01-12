@@ -77,8 +77,8 @@ internal class ModelMapper {
             with(it) {
                 val isCancelled = reservationStatus.equals(CANCELED_LESSON_TEXT, true)
                 val isExam = reservationStatus.equals(EXAM_LESSON_TEXT, true)
-                val timeRangeUi = toUiTimeRange(timeRange)
-                val teacherUi = toUiTeacher(teacher)
+                val timeRangeUi = toUiTimeRange(timeRange ?: TimeRangeApi())
+                val teacherUi = toUiTeacher(teacher ?: TeacherApi())
                 LessonUi(subject, courseType, room, teacherUi, facultyAbbreviation,
                     fieldOfStudy, semester, isCancelled, isExam, timeRangeUi, date)
             }
