@@ -8,12 +8,17 @@ import android.widget.TextView
 
 class VerticalTextView(context: Context, attrs: AttributeSet) : TextView(context, attrs) {
 
-    private val topDown: Boolean =
-        if (Gravity.isVertical(gravity) && (gravity and Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
+    companion object {
+        private const val ROTATE_CLOCKWISE_90 = 90F
+    }
+
+    private val gravityIsVerticalAndBottom = Gravity.isVertical(gravity) && gravityIsBottom()
+
+    init {
+        if (gravityIsVerticalAndBottom) {
             gravity = gravity and Gravity.HORIZONTAL_GRAVITY_MASK or Gravity.TOP
-            false
-        } else
-            true
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(heightMeasureSpec, widthMeasureSpec)
@@ -24,19 +29,23 @@ class VerticalTextView(context: Context, attrs: AttributeSet) : TextView(context
         val textPaint = paint
         textPaint.color = currentTextColor
         textPaint.drawableState = drawableState
-
         canvas.save()
-
-        if (topDown) {
-            canvas.translate(width.toFloat(), 0F)
-            canvas.rotate(90F)
-        } else {
-            canvas.translate(0F, height.toFloat())
-            canvas.rotate(-90F)
-        }
-
+        rotateCanvas(canvas)
         canvas.translate(compoundPaddingLeft.toFloat(), extendedPaddingTop.toFloat())
         layout.draw(canvas)
         canvas.restore()
+    }
+
+    private fun gravityIsBottom() =
+        (gravity and Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM
+
+    private fun rotateCanvas(canvas: Canvas) {
+        if (gravityIsVerticalAndBottom) {
+            canvas.translate(0F, height.toFloat())
+            canvas.rotate(-ROTATE_CLOCKWISE_90)
+        } else {
+            canvas.translate(width.toFloat(), 0F)
+            canvas.rotate(ROTATE_CLOCKWISE_90)
+        }
     }
 }
