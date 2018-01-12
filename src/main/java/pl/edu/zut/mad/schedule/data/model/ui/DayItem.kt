@@ -7,7 +7,7 @@ import java.util.Date
 internal class DayItem(date: LocalDate, override var isSelected: Boolean) : IDayItem {
 
     override var date: Date = date.toDate()
-    override var dayOftheWeek = date.dayOfWeek
+    override var eventsCount = 0
     override var isFirstDayOfTheMonth = false
     override var isToday = date.isEqual(LocalDate.now())
     override var month: String = date.monthOfYear().asShortText

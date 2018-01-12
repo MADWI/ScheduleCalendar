@@ -24,13 +24,13 @@ internal class ScheduleRepository(private val database: ScheduleDatabase, privat
         return Observable.just(optionalDay)
     }
 
-    fun getScheduleMinDate(): LocalDate {
+    fun getScheduleMinDate(): Observable<LocalDate> {
         val date = database.findMinimumDate()
-        return mapper.toUiDate(date)
+        return Observable.fromCallable { mapper.toUiDate(date) }
     }
 
-    fun getScheduleMaxDate(): LocalDate {
+    fun getScheduleMaxDate(): Observable<LocalDate> {
         val date = database.findMaximumDate()
-        return mapper.toUiDate(date)
+        return Observable.fromCallable { mapper.toUiDate(date) }
     }
 }
