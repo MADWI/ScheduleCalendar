@@ -13,14 +13,14 @@
         <item>language course</item>
     </string-array>
     <string-array name="faculty_type_entries">
-        <item>Wydział Budownictwa i Architektury</item>
-        <item>Wydział Biotechnologii i Hodowli Zwierząt</item>
-        <item>Wydział Ekonomiczny</item>
-        <item>Wydział Elektryczny</item>
-        <item>Wydział Informatyki</item>
-        <item>Wydział Inżynierii Mechanicznej i Mechatroniki</item>
-        <item>Wydział Kształtowania Środowiska i Rolnictwa</item>
-        <item>Wydział Nauk o Żywności i Rybactwa</item>
-        <item>Wydział Technologii i Inżynierii Chemicznej</item>
+        <item>Faculty Civil Engineering and Architecture</item>
+        <item>Faculty of Biotechnology and Animal Husbandry</item>
+        <item>Faculty of economics</item>
+        <item>Faculty of Electrical Engineering</item>
+        <item>Faculty of Computer Science and Information Technology</item>
+        <item>Faculty of Mechanical Engineering and Mechatronics</item>
+        <item>Faculty of Environmental Management and Agriculture</item>
+        <item>Faculty of Food Sciences and Fisheries</item>
+        <item>Faculty of Chemical Technology and Engineering</item>
     </string-array>
 </resources>

@@ -67,11 +67,9 @@ internal class ModelMapper {
             LocalDate.now()
         }
 
-    fun toLessonsEvents(optionalDay: OptionalDay): List<LessonEvent> {
-        return when (optionalDay) {
-            is DayUi -> toLessonsEventsFromDayUi(optionalDay)
-            is EmptyDay -> listOf(toLessonEventFromEmptyDay(optionalDay))
-        }
+    fun toLessonsEvents(optionalDay: OptionalDay): List<LessonEvent> = when (optionalDay) {
+        is DayUi -> toLessonsEventsFromDayUi(optionalDay)
+        is EmptyDay -> listOf(toLessonEventFromEmptyDay(optionalDay))
     }
 
     private fun toLessonsUiFromApi(lessons: RealmList<LessonApi>, date: LocalDate): List<LessonUi> =
