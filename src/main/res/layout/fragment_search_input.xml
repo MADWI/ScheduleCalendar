@@ -43,35 +43,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/facultyLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/search_input_padding">
-
-            <pl.edu.zut.mad.schedule.ui.CleanableTextInput
-                android:id="@+id/facultyAbbreviationInputView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/faculty"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/roomLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/search_input_padding">
-
-            <pl.edu.zut.mad.schedule.ui.CleanableTextInput
-                android:id="@+id/roomInputView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:completionThreshold="@integer/search_input_text_threshold_default"
-                android:hint="@string/room"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
             android:id="@+id/subjectLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,6 +82,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/facultySpinnerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/search_input_spinner_horizontal_margin"
+                    android:layout_marginStart="@dimen/search_input_spinner_horizontal_margin"
+                    android:entries="@array/faculty_type_entries"
+                    android:paddingTop="@dimen/search_input_padding"
+                    app:ms_alignLabels="true"
+                    app:ms_hint="@string/faculty" />
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/courseTypeSpinnerView"

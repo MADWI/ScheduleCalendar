@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="form_entries">
+        <item>stacjonarne</item>
+        <item>niestacjonarne</item>
+    </string-array>
+    <string-array name="course_type_entries">
+        <item>wykład</item>
+        <item>audytoryjne</item>
+        <item>laboratorium</item>
+        <item>projekt</item>
+        <item>lektorat</item>
+    </string-array>
+    <string-array name="faculty_type_entries" />
+</resources>

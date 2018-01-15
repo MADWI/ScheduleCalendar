@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -28,8 +28,8 @@ import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
-import kotlin.reflect.KProperty0
 import kotlin.math.sqrt
+import kotlin.reflect.KProperty0
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
@@ -112,14 +112,16 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.search_show_more) {
-            if (searchAdvancedView.isExpanded) {
-                searchAdvancedView.collapse()
-            } else {
-                searchAdvancedView.expand()
-            }
+            showOrHideAdvancedViewAndSetCheckedMenuItem(item)
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchButtonView.dispose()
+        presenter.onDetach()
     }
 
     private fun initViews(savedInstanceState: Bundle?) {
@@ -191,7 +193,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         with(lesson) {
             setupViewWithTextAndTag(teacherNameInputView, teacher::name)
             setupViewWithTextAndTag(teacherSurnameInputView, teacher::surname)
-            setupViewWithTextAndTag(facultyAbbreviationInputView, ::facultyAbbreviation)
+//            setupViewWithTextAndTag(facultyAbbreviationInputView, ::facultyAbbreviation)
             setupViewWithTextAndTag(roomInputView, ::room)
             setupViewWithTextAndTag(subjectInputView, ::subject)
             setupViewWithTextAndTag(fieldOfStudyInputView, ::fieldOfStudy)
@@ -211,7 +213,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return SearchInput(
             teacherNameInputView.text.toString(),
             teacherSurnameInputView.text.toString(),
-            facultyAbbreviationInputView.text.toString(),
+//            facultyAbbreviationInputView.text.toString(),
+            "",
             subjectInputView.text.toString(),
             fieldOfStudyInputView.text.toString(),
             courseTypeSpinnerView.selectedItem?.toString() ?: "",
@@ -254,9 +257,13 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     private fun getPow2(value: Int): Double = Math.pow(value.toDouble(), 2.toDouble())
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        searchButtonView.dispose()
-        presenter.onDetach()
+    private fun showOrHideAdvancedViewAndSetCheckedMenuItem(item: MenuItem) {
+        if (searchAdvancedView.isExpanded) {
+            searchAdvancedView.collapse()
+            item.isChecked = false
+        } else {
+            searchAdvancedView.expand()
+            item.isChecked = true
+        }
     }
 }

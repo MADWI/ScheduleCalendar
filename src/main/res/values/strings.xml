@@ -26,17 +26,7 @@
     <string name="date_from">Date from</string>
     <string name="date_to">Date to</string>
     <string name="activity_search_label">Search schedule</string>
-    <string-array name="form_entries">
-        <item>part-time</item>
-        <item>full-time</item>
-    </string-array>
-    <string-array name="course_type_entries">
-        <item>lecture</item>
-        <item>auditorium</item>
-        <item>laboratory</item>
-        <item>project</item>
-        <item>language course</item>
-    </string-array>
+    <string name="advanced_search">Advanced mode</string>
     <string-array name="semester_entries" translatable="false">
         <item>1</item>
         <item>2</item>
