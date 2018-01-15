@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -21,11 +25,10 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
-import kotlin.reflect.KProperty0
 import kotlin.math.sqrt
+import kotlin.reflect.KProperty0
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
@@ -43,7 +46,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     @Inject lateinit var presenter: SearchMvp.Presenter
-    @Inject lateinit var lessonIndexer: LessonIndexer
 
     private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
     private val searchInputTextSubject by lazy { PublishSubject.create<Pair<String, String>>() }
@@ -94,6 +96,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun init(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         initInjections()
         initViews(savedInstanceState)
     }
@@ -101,6 +104,23 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     private fun initInjections() = app.component
         .plus(SearchModule(this))
         .inject(this)
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) =
+        inflater.inflate(R.menu.search_menu, menu)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.search_show_more) {
+            showOrHideAdvancedViewAndSetCheckedMenuItem(item)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchButtonView.dispose()
+        presenter.onDetach()
+    }
 
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
@@ -171,13 +191,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         with(lesson) {
             setupViewWithTextAndTag(teacherNameInputView, teacher::name)
             setupViewWithTextAndTag(teacherSurnameInputView, teacher::surname)
-            setupViewWithTextAndTag(facultyAbbreviationInputView, ::facultyAbbreviation)
-            setupViewWithTextAndTag(roomInputView, ::room)
             setupViewWithTextAndTag(subjectInputView, ::subject)
             setupViewWithTextAndTag(fieldOfStudyInputView, ::fieldOfStudy)
-            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
-            courseTypeSpinnerView.setSelection(courseTypeSelection)
-            semesterSpinnerView.setSelection(semester)
         }
     }
 
@@ -191,7 +206,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return SearchInput(
             teacherNameInputView.text.toString(),
             teacherSurnameInputView.text.toString(),
-            facultyAbbreviationInputView.text.toString(),
+            facultySpinnerView.selectedItem?.toString() ?: "",
             subjectInputView.text.toString(),
             fieldOfStudyInputView.text.toString(),
             courseTypeSpinnerView.selectedItem?.toString() ?: "",
@@ -216,10 +231,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun getAnimationParamsForResultView(): AnimationParams {
-        val viewLocation = IntArray(2)
-        searchButtonView.getLocationOnScreen(viewLocation)
         val centerX = searchButtonView.x.toInt() + searchButtonView.width / 2
-        val centerY = viewLocation[1]
+        val centerY = getSearchButtonViewYCenter()
         val width = view?.width ?: 0
         val height = view?.height ?: 0
         val startRadius = searchButtonView.height / 2
@@ -227,11 +240,22 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return AnimationParams(centerX, centerY, width, height, startRadius, endRadius.toInt())
     }
 
+    private fun getSearchButtonViewYCenter(): Int {
+        val viewLocation = IntArray(2)
+        searchButtonView.getLocationOnScreen(viewLocation)
+        val barHeight = (activity as AppCompatActivity).supportActionBar?.height ?: 0
+        return viewLocation[1] - barHeight
+    }
+
     private fun getPow2(value: Int): Double = Math.pow(value.toDouble(), 2.toDouble())
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        searchButtonView.dispose()
-        presenter.onDetach()
+    private fun showOrHideAdvancedViewAndSetCheckedMenuItem(item: MenuItem) {
+        if (searchAdvancedView.isExpanded) {
+            searchAdvancedView.collapse()
+            item.isChecked = false
+        } else {
+            searchAdvancedView.expand()
+            item.isChecked = true
+        }
     }
 }
