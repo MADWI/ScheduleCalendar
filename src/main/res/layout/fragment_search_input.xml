@@ -22,6 +22,7 @@
                 android:id="@+id/teacherNameInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:completionThreshold="@integer/search_input_text_threshold_default"
                 android:hint="@string/teacher_name"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
@@ -36,6 +37,7 @@
                 android:id="@+id/teacherSurnameInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:completionThreshold="@integer/search_input_text_threshold_default"
                 android:hint="@string/teacher_surname"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
@@ -64,6 +66,7 @@
                 android:id="@+id/roomInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:completionThreshold="@integer/search_input_text_threshold_default"
                 android:hint="@string/room"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
@@ -78,6 +81,7 @@
                 android:id="@+id/subjectInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:completionThreshold="@integer/search_input_text_threshold_default"
                 android:hint="@string/subject"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
@@ -92,6 +96,7 @@
                 android:id="@+id/fieldOfStudyInputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:completionThreshold="@integer/search_input_text_threshold_default"
                 android:hint="@string/field_of_study"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>

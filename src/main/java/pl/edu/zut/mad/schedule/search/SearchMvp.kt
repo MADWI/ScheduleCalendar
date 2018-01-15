@@ -13,9 +13,13 @@ internal interface SearchMvp {
 
         fun hideLoading()
 
-        fun observeSearchInput(): PublishSubject<SearchInput>
+        fun observeSearchInputModel(): PublishSubject<SearchInput>
+
+        fun observeSearchInputText(): PublishSubject<Pair<String, String>>
 
         fun showError(@StringRes errorRes: Int)
+
+        fun showSuggestions(suggestions: List<String>, filterField: String)
     }
 
     interface Presenter {

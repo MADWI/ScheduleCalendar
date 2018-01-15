@@ -3,7 +3,6 @@ package pl.edu.zut.mad.schedule.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.support.design.widget.TextInputEditText
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.Editable
@@ -11,9 +10,10 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.widget.AutoCompleteTextView
 import pl.edu.zut.mad.schedule.R
 
-class CleanableTextInput : TextInputEditText,
+class CleanableTextInput : AutoCompleteTextView,
     View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
 
     companion object {
