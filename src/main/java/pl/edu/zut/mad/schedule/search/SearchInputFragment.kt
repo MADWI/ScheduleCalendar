@@ -25,7 +25,6 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 import kotlin.math.sqrt
@@ -47,7 +46,6 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     @Inject lateinit var presenter: SearchMvp.Presenter
-    @Inject lateinit var lessonIndexer: LessonIndexer
 
     private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
     private val searchInputTextSubject by lazy { PublishSubject.create<Pair<String, String>>() }
@@ -193,13 +191,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         with(lesson) {
             setupViewWithTextAndTag(teacherNameInputView, teacher::name)
             setupViewWithTextAndTag(teacherSurnameInputView, teacher::surname)
-//            setupViewWithTextAndTag(facultyAbbreviationInputView, ::facultyAbbreviation)
-            setupViewWithTextAndTag(roomInputView, ::room)
             setupViewWithTextAndTag(subjectInputView, ::subject)
             setupViewWithTextAndTag(fieldOfStudyInputView, ::fieldOfStudy)
-            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
-            courseTypeSpinnerView.setSelection(courseTypeSelection)
-            semesterSpinnerView.setSelection(semester)
         }
     }
 
@@ -213,8 +206,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return SearchInput(
             teacherNameInputView.text.toString(),
             teacherSurnameInputView.text.toString(),
-//            facultyAbbreviationInputView.text.toString(),
-            "",
+            facultySpinnerView.selectedItem?.toString() ?: "",
             subjectInputView.text.toString(),
             fieldOfStudyInputView.text.toString(),
             courseTypeSpinnerView.selectedItem?.toString() ?: "",
