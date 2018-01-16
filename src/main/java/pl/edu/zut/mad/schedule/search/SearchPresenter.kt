@@ -16,10 +16,14 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        val disposable = view.observeSearchInput()
+        val disposableInputModel = view.observeSearchInputModel()
             .doOnNext { view.showLoading() }
             .subscribe { fetchSchedule(it) }
-        compositeDisposable.add(disposable)
+        compositeDisposable.add(disposableInputModel)
+
+        val disposableInputText = view.observeSearchInputText()
+            .subscribe { fetchSuggestions(it) }
+        compositeDisposable.add(disposableInputText)
     }
 
     private fun fetchSchedule(searchInput: SearchInput) {
@@ -41,4 +45,15 @@ internal class SearchPresenter(private val view: SearchMvp.View,
     }
 
     override fun onDetach() = compositeDisposable.clear()
+
+    private fun fetchSuggestions(params: Pair<String, String>) {
+        val filterField = params.first
+        service.fetchSuggestions(filterField, hashMapOf(params))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { view.showSuggestions(it, filterField) },
+                { }
+            )
+    }
 }

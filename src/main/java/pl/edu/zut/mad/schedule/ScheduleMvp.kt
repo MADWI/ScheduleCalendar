@@ -1,14 +1,18 @@
 package pl.edu.zut.mad.schedule
 
-import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 
 internal interface ScheduleMvp {
 
     interface View {
         fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate)
 
-        fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>)
+        fun showLoadingView()
+
+        fun hideLoadingView()
+
+        fun setData(lessonsEvents: List<LessonEvent>)
 
         fun showLoginView()
 

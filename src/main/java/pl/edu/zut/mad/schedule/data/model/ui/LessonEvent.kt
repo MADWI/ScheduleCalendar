@@ -4,9 +4,9 @@ import com.ognev.kotlin.agendacalendarview.models.BaseCalendarEvent
 import org.joda.time.LocalDate
 import java.util.Locale
 
-internal class LessonEvent : BaseCalendarEvent {
+class LessonEvent : BaseCalendarEvent {
 
-    constructor(date: LocalDate, lesson: Lesson?) {
+    internal constructor(date: LocalDate, lesson: Lesson?) {
         val day = date.toDateTimeAtStartOfDay().toCalendar(Locale.getDefault())
         this.startTime = day
         this.endTime = day

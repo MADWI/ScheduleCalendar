@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import pl.edu.zut.mad.schedule.BackPressedListener
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
@@ -25,6 +26,27 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+        init(savedInstanceState)
+    }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.fragments.lastOrNull { it is BackPressedListener }
+        if (fragment == null) {
+            super.onBackPressed()
+        } else {
+            (fragment as BackPressedListener).onBackPressed()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun init(savedInstanceState: Bundle?) {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (savedInstanceState == null) {
             startSearchInputFragment()
         }
@@ -43,14 +65,5 @@ class SearchActivity : AppCompatActivity() {
         return if (lesson == null)
             SearchInputFragment()
         else SearchInputFragment.newInstance(lesson)
-    }
-
-    override fun onBackPressed() {
-        val fragment = supportFragmentManager.fragments.lastOrNull { it is BackPressedListener }
-        if (fragment == null) {
-            super.onBackPressed()
-        } else {
-            (fragment as BackPressedListener).onBackPressed()
-        }
     }
 }

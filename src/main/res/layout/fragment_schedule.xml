@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ognev.kotlin.agendacalendarview.AgendaCalendarView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:agendaCalendar="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scheduleCalendarView"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    agendaCalendar:calendarCurrentDayTextColor="@android:color/holo_red_dark"
-    agendaCalendar:calendarSelectedDayTextColor="@android:color/white"
-    agendaCalendar:calendarMonthTextColor="@color/azure"
-    agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
-    agendaCalendar:calendarPastDayTextColor="@android:color/primary_text_light"
-    agendaCalendar:circleBackgroundColor="@drawable/selected_day_background" />
+    android:orientation="vertical">
+
+    <com.ognev.kotlin.agendacalendarview.AgendaCalendarView
+        android:id="@+id/scheduleCalendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        agendaCalendar:calendarCurrentDayTextColor="@android:color/holo_red_dark"
+        agendaCalendar:calendarSelectedDayTextColor="@android:color/white"
+        agendaCalendar:calendarMonthTextColor="@color/azure"
+        agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
+        agendaCalendar:calendarPastDayTextColor="@android:color/primary_text_light"
+        agendaCalendar:circleBackgroundColor="@drawable/selected_day_background"
+        tools:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/scheduleLoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:gravity="center">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</FrameLayout>

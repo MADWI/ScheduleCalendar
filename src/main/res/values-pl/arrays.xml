@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="form_entries">
+        <item>stacjonarne</item>
+        <item>niestacjonarne</item>
+    </string-array>
+    <string-array name="course_type_entries">
+        <item>wykład</item>
+        <item>audytoryjne</item>
+        <item>laboratorium</item>
+        <item>projekt</item>
+        <item>lektorat</item>
+    </string-array>
+    <string-array name="faculty_type_entries">
+        <item>Wydział Budownictwa i Architektury</item>
+        <item>Wydział Biotechnologii i Hodowli Zwierząt</item>
+        <item>Wydział Ekonomiczny</item>
+        <item>Wydział Elektryczny</item>
+        <item>Wydział Informatyki</item>
+        <item>Wydział Inżynierii Mechanicznej i Mechatroniki</item>
+        <item>Wydział Kształtowania Środowiska i Rolnictwa</item>
+        <item>Wydział Nauk o Żywności i Rybactwa</item>
+        <item>Wydział Technologii i Inżynierii Chemicznej</item>
+    </string-array>
+</resources>

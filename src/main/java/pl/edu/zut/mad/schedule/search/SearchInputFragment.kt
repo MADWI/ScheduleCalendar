@@ -5,9 +5,17 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import io.reactivex.subjects.PublishSubject
@@ -17,10 +25,10 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.animation.AnimationParams
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
-import pl.edu.zut.mad.schedule.util.LessonIndexer
 import pl.edu.zut.mad.schedule.util.app
 import javax.inject.Inject
 import kotlin.math.sqrt
+import kotlin.reflect.KProperty0
 
 internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
@@ -38,9 +46,12 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     @Inject lateinit var presenter: SearchMvp.Presenter
-    @Inject lateinit var lessonIndexer: LessonIndexer
 
-    private val searchInputSubject by lazy { PublishSubject.create<SearchInput>() }
+    private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
+    private val searchInputTextSubject by lazy { PublishSubject.create<Pair<String, String>>() }
+    private val inputSuggestionThreshold by lazy {
+        resources.getInteger(R.integer.search_input_text_threshold_default)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
@@ -73,9 +84,19 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             .commit()
     }
 
-    override fun observeSearchInput(): PublishSubject<SearchInput> = searchInputSubject
+    override fun observeSearchInputModel(): PublishSubject<SearchInput> = searchInputModelSubject
+
+    override fun observeSearchInputText(): PublishSubject<Pair<String, String>> = searchInputTextSubject
+
+    override fun showSuggestions(suggestions: List<String>, filterField: String) {
+        val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, suggestions)
+        val suggestionView = view?.findViewWithTag<AutoCompleteTextView>(filterField) ?: return
+        suggestionView.setAdapter(adapter)
+        suggestionView.showDropDown()
+    }
 
     private fun init(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         initInjections()
         initViews(savedInstanceState)
     }
@@ -84,9 +105,27 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         .plus(SearchModule(this))
         .inject(this)
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) =
+        inflater.inflate(R.menu.search_menu, menu)
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.search_show_more) {
+            showOrHideAdvancedViewAndSetCheckedMenuItem(item)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        searchButtonView.dispose()
+        presenter.onDetach()
+    }
+
     private fun initViews(savedInstanceState: Bundle?) {
         initDatePickers()
-        searchButtonView.setOnClickListener { searchInputSubject.onNext(getSearchInput()) }
+        initInputListeners()
+        searchButtonView.setOnClickListener { searchInputModelSubject.onNext(getSearchInput()) }
         if (savedInstanceState == null) {
             initInputViewsWithLessonArgument()
         }
@@ -123,33 +162,59 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return ScheduleDate.UI_FORMATTER.print(date)
     }
 
-    private fun getSearchInput(): SearchInput {
-        return SearchInput(
-            teacherNameInputView.text.toString(),
-            teacherSurnameInputView.text.toString(),
-            facultyAbbreviationInputView.text.toString(),
-            subjectInputView.text.toString(),
-            fieldOfStudyInputView.text.toString(),
-            courseTypeSpinnerView.selectedItem?.toString() ?: "",
-            semesterSpinnerView.selectedItem?.toString() ?: "",
-            formSpinnerView.selectedItem?.toString() ?: "",
-            dateFromView.text.toString(),
-            dateToView.text.toString())
+    private fun initInputListeners() {
+        addListenerForView(teacherNameInputView, SearchInput::name.name)
+        addListenerForView(teacherSurnameInputView, SearchInput::surname.name)
+        addListenerForView(fieldOfStudyInputView, SearchInput::fieldOfStudy.name)
+        addListenerForView(roomInputView, SearchInput::room.name)
+        addListenerForView(subjectInputView, SearchInput::subject.name)
+    }
+
+    private fun addListenerForView(textView: TextView, fieldName: String) {
+        textView.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(editable: Editable?) {
+            }
+
+            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
+                if (text.length == inputSuggestionThreshold) {
+                    searchInputTextSubject.onNext(Pair(fieldName, text.toString()))
+                }
+            }
+        })
     }
 
     private fun initInputViewsWithLessonArgument() {
         val lesson = arguments?.getParcelable<Lesson>(LESSON_KEY) ?: return
         with(lesson) {
-            teacherNameInputView.setText(teacher.name)
-            teacherSurnameInputView.setText(teacher.surname)
-            facultyAbbreviationInputView.setText(facultyAbbreviation)
-            roomInputView.setText(room)
-            subjectInputView.setText(subject)
-            fieldOfStudyInputView.setText(fieldOfStudy)
-            val courseTypeSelection = lessonIndexer.getCourseTypeIndex(type)
-            courseTypeSpinnerView.setSelection(courseTypeSelection)
-            semesterSpinnerView.setSelection(semester)
+            setupViewWithTextAndTag(teacherNameInputView, teacher::name)
+            setupViewWithTextAndTag(teacherSurnameInputView, teacher::surname)
+            setupViewWithTextAndTag(subjectInputView, ::subject)
+            setupViewWithTextAndTag(fieldOfStudyInputView, ::fieldOfStudy)
         }
+    }
+
+    private fun setupViewWithTextAndTag(textView: TextView, property: KProperty0<String>) =
+        with(textView) {
+            text = property.get()
+            tag = property.name
+        }
+
+    private fun getSearchInput(): SearchInput {
+        return SearchInput(
+            teacherNameInputView.text.toString(),
+            teacherSurnameInputView.text.toString(),
+            facultySpinnerView.selectedItem?.toString() ?: "",
+            subjectInputView.text.toString(),
+            fieldOfStudyInputView.text.toString(),
+            courseTypeSpinnerView.selectedItem?.toString() ?: "",
+            semesterSpinnerView.selectedItem?.toString() ?: "",
+            formSpinnerView.selectedItem?.toString() ?: "",
+            roomInputView.text.toString(),
+            dateFromView.text.toString(),
+            dateToView.text.toString())
     }
 
     private fun setEnabledForInputViews(isEnabled: Boolean) {
@@ -166,10 +231,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     private fun getAnimationParamsForResultView(): AnimationParams {
-        val viewLocation = IntArray(2)
-        searchButtonView.getLocationOnScreen(viewLocation)
         val centerX = searchButtonView.x.toInt() + searchButtonView.width / 2
-        val centerY = viewLocation[1]
+        val centerY = getSearchButtonViewYCenter()
         val width = view?.width ?: 0
         val height = view?.height ?: 0
         val startRadius = searchButtonView.height / 2
@@ -177,11 +240,22 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return AnimationParams(centerX, centerY, width, height, startRadius, endRadius.toInt())
     }
 
+    private fun getSearchButtonViewYCenter(): Int {
+        val viewLocation = IntArray(2)
+        searchButtonView.getLocationOnScreen(viewLocation)
+        val barHeight = (activity as AppCompatActivity).supportActionBar?.height ?: 0
+        return viewLocation[1] - barHeight
+    }
+
     private fun getPow2(value: Int): Double = Math.pow(value.toDouble(), 2.toDouble())
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        searchButtonView.dispose()
-        presenter.onDetach()
+    private fun showOrHideAdvancedViewAndSetCheckedMenuItem(item: MenuItem) {
+        if (searchAdvancedView.isExpanded) {
+            searchAdvancedView.collapse()
+            item.isChecked = false
+        } else {
+            searchAdvancedView.expand()
+            item.isChecked = true
+        }
     }
 }

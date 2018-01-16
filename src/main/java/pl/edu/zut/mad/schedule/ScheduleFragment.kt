@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
-import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
 import pl.edu.zut.mad.schedule.module.ScheduleModule
@@ -70,8 +70,23 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         return calendar
     }
 
-    override fun onLessonsEventsLoad(lessonsEvents: MutableList<CalendarEvent>) =
-        calendarContentManager.loadItemsFromStart(lessonsEvents)
+    override fun showLoadingView() {
+        scheduleLoadingView.visibility = View.VISIBLE
+    }
+
+    override fun hideLoadingView() {
+        val animationDuration = resources.getInteger(R.integer.animation_time).toLong()
+        scheduleLoadingView.animate()
+            .alpha(0F)
+            .setDuration(animationDuration)
+            .withEndAction {
+                scheduleLoadingView.visibility = View.GONE
+                scheduleLoadingView.alpha = 1F
+            }
+    }
+
+    override fun setData(lessonsEvents: List<LessonEvent>) =
+        calendarContentManager.loadItemsFromStart(lessonsEvents.toMutableList())
 
     override fun showLoginView() {
         val intent = Intent(activity, LoginActivity::class.java)

@@ -51,6 +51,7 @@ ext {
     espresso_version = '3.0.1'
     material_spinner_version = '2.0.0'
     loading_button_version = '1.8.4'
+    expandable_layout_version = '2.9.1'
 }
 
 buildscript {
@@ -101,6 +102,7 @@ dependencies {
     implementation "com.github.MADWI:Kotlin-AgendaCalendarView:master-SNAPSHOT"
     implementation "com.github.ganfra:material-spinner:$material_spinner_version"
     implementation "br.com.simplepass:loading-button-android:$loading_button_version"
+    implementation "net.cachapa.expandablelayout:expandablelayout:$expandable_layout_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"

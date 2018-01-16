@@ -12,6 +12,7 @@ internal class DayItem(date: LocalDate, override var isSelected: Boolean) : IDay
     override var isToday = date.isEqual(LocalDate.now())
     override var month: String = date.monthOfYear().asShortText
     override var value = 0
+    override var eventsCount = 0
     private var hasEvents: Boolean = false
 
     override fun hasEvents() = hasEvents
