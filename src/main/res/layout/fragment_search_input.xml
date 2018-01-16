@@ -91,8 +91,9 @@
                     android:layout_marginStart="@dimen/search_input_spinner_horizontal_margin"
                     android:entries="@array/faculty_type_entries"
                     android:paddingTop="@dimen/search_input_padding"
-                    app:ms_alignLabels="true"
-                    app:ms_hint="@string/faculty" />
+                    app:ms_alignLabels="false"
+                    app:ms_hint="@string/faculty"
+                    app:ms_hintView="@layout/spinner_hint_item" />
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/courseTypeSpinnerView"
@@ -102,7 +103,7 @@
                     android:layout_marginStart="@dimen/search_input_spinner_horizontal_margin"
                     android:entries="@array/course_type_entries"
                     android:paddingTop="@dimen/search_input_padding"
-                    app:ms_alignLabels="true"
+                    app:ms_alignLabels="false"
                     app:ms_hint="@string/course_type" />
 
                 <fr.ganfra.materialspinner.MaterialSpinner
@@ -113,6 +114,7 @@
                     android:layout_marginStart="@dimen/search_input_spinner_horizontal_margin"
                     android:entries="@array/semester_entries"
                     android:paddingTop="@dimen/search_input_padding"
+                    app:ms_alignLabels="false"
                     app:ms_hint="@string/semester" />
 
                 <fr.ganfra.materialspinner.MaterialSpinner
@@ -123,7 +125,6 @@
                     android:layout_marginStart="@dimen/search_input_spinner_horizontal_margin"
                     android:entries="@array/form_entries"
                     android:paddingTop="@dimen/search_input_padding"
-                    app:ms_alignLabels="true"
                     app:ms_hint="@string/form" />
 
                 <android.support.design.widget.TextInputLayout
