@@ -8,6 +8,9 @@
     <color name="calendar_cell_classes_day">@color/scheduleColorPrimary</color>
     <color name="textScheduleTask">#424242</color>
     <color name="scheduleLightGray">#EEEEEE</color>
-    <color name="today_date_border">#ff4545</color>
+    <color name="red">#EF534E</color>
+    <color name="red_transparent">#19EF534E</color>
+    <color name="blue">#2196F3</color>
+    <color name="blue_transparent">#192196F3</color>
     <color name="cancelled_lesson_background">#19ff0000</color>
 </resources>

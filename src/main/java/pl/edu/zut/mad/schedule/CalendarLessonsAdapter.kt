@@ -1,10 +1,14 @@
 package pl.edu.zut.mad.schedule
 
 import android.content.Context
+import android.graphics.Typeface
+import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StrikethroughSpan
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
@@ -57,23 +61,34 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
             view.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
             view.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             if (isCancelled) {
-                view.lessonCalendarItemLayout.foreground =
-                    ContextCompat.getDrawable(view.context, R.drawable.red_border)
-                modifyViewsToCancelled(view)
+                colorViewForeground(view, R.drawable.red_border)
+                setStrikeThroughForTextView(view.subjectWithTypeView)
+                setStrikeThroughForTextView(view.teacherWithRoomView)
             } else if (isExam) {
-                view.examStatusTextView.visibility = View.VISIBLE
+                colorViewForeground(view, R.drawable.blue_border)
+                addExamPrefixToTextView(view.subjectWithTypeView)
             }
         }
 
-    private fun modifyViewsToCancelled(view: View) {
-        modifyToCancelled(view.subjectWithTypeView)
-        modifyToCancelled(view.teacherWithRoomView)
-    }
-
-    private fun modifyToCancelled(textView: TextView) {
+    private fun setStrikeThroughForTextView(textView: TextView) {
         val text = textView.text
         textView.setText(text, TextView.BufferType.SPANNABLE)
         val spannable = textView.text as Spannable
         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
+    private fun colorViewForeground(view: View, @DrawableRes resId: Int) {
+        view.lessonCalendarItemLayout.foreground = ContextCompat.getDrawable(view.context, resId)
+    }
+
+    private fun addExamPrefixToTextView(textView: TextView) {
+        val examText = textView.context.getText(R.string.exam)
+        val textWithExam = "$examText  ${textView.text}"
+        textView.text = textWithExam
+
+        //TODO cleanup!
+        val s = SpannableStringBuilder(textView.text)
+        s.setSpan(StyleSpan(Typeface.BOLD), 0, examText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textView.text = s
     }
 }
