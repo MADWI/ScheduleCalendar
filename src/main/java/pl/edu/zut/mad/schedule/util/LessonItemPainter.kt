@@ -30,10 +30,10 @@ internal class LessonItemPainter(private val context: Context) {
 
     fun colorBackgroundToGrayIfShould(view: View, position: Int) {
         if (position.rem(GRAY_ITEM_POSITION_INTERVAL) == 0) {
-            view.timeGroupView.setBackgroundColor(timeViewColorGray)
+            view.timeContainerView.setBackgroundColor(timeViewColorGray)
             view.setBackgroundColor(itemViewColorGray)
         } else {
-            view.timeGroupView.setBackgroundColor(timeViewColor)
+            view.timeContainerView.setBackgroundColor(timeViewColor)
             view.setBackgroundColor(itemViewColor)
         }
     }

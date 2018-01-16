@@ -25,4 +25,5 @@
     <dimen name="search_input_layout_padding">10dp</dimen>
     <dimen name="search_input_spinner_horizontal_margin">4dp</dimen>
     <dimen name="critical_background_stroke_width">2dp</dimen>
+    <dimen name="search_results_padding_top">8dp</dimen>
 </resources>
