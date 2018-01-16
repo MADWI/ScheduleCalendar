@@ -1,6 +1,5 @@
 package pl.edu.zut.mad.schedule
 
-import android.content.Context
 import android.graphics.Typeface
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
@@ -19,18 +18,14 @@ import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.util.LessonFormatter
-import pl.edu.zut.mad.schedule.util.LessonItemPainter
 import java.util.Calendar
 
-internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() {
+internal class CalendarLessonsAdapter(private val lessonClickListener: (Lesson) -> Unit)
+    : DefaultEventAdapter() {
 
     companion object {
         private val STRIKE_THROUGH_SPAN = StrikethroughSpan()
     }
-
-    private val lessonItemPainter = LessonItemPainter(context)
-
-    lateinit var lessonClickListener: (Lesson) -> Unit?
 
     override fun getHeaderLayout() = R.layout.lesson_header
 
@@ -49,7 +44,6 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
         }
         val lesson = lessonEvent.event as Lesson
         bindLesson(lesson, view)
-        lessonItemPainter.colorBackgroundToGrayIfShould(view, position)
         view.setOnClickListener { lessonClickListener.invoke(lessonEvent.event as Lesson) }
     }
 

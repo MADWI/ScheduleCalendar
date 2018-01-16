@@ -32,7 +32,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
-        val lessonAdapter = getLessonAdapter()
+        val lessonAdapter = CalendarLessonsAdapter { startActivity(SearchActivity.getIntentWithLesson(context, it)) }
         CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
     }
 
@@ -113,13 +113,4 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
             .agendaView
             .agendaListView
             .scrollToCurrentDate(Calendar.getInstance())
-
-    private fun getLessonAdapter(): CalendarLessonsAdapter {
-        val lessonAdapter = CalendarLessonsAdapter(activity)
-        lessonAdapter.lessonClickListener = {
-            val intent = SearchActivity.getIntentWithLesson(context, it)
-            startActivity(intent)
-        }
-        return lessonAdapter
-    }
 }
