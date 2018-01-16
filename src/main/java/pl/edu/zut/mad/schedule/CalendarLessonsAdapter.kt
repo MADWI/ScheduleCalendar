@@ -82,13 +82,11 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
     }
 
     private fun addExamPrefixToTextView(textView: TextView) {
-        val examText = textView.context.getText(R.string.exam)
-        val textWithExam = "$examText  ${textView.text}"
-        textView.text = textWithExam
-
-        //TODO cleanup!
-        val s = SpannableStringBuilder(textView.text)
-        s.setSpan(StyleSpan(Typeface.BOLD), 0, examText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textView.text = s
+        val examText = "${textView.context.getText(R.string.exam)} "
+        val spannableStringBuilder = SpannableStringBuilder(examText)
+        spannableStringBuilder.setSpan(StyleSpan(Typeface.BOLD), 0,
+            examText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableStringBuilder.append(textView.text)
+        textView.text = spannableStringBuilder
     }
 }
