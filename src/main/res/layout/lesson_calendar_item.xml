@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lessonCalendarItemLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:foreground="@drawable/red_border">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,22 +53,5 @@
             android:layout_toEndOf="@id/timeGroupView" />
 
     </RelativeLayout>
-
-    <pl.edu.zut.mad.schedule.ui.VerticalTextView
-        android:id="@+id/cancelledStatusTextView"
-        style="@style/CancelledLessonView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/lesson_cancelled"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <pl.edu.zut.mad.schedule.ui.VerticalTextView
-        android:id="@+id/examStatusTextView"
-        style="@style/ExamLessonView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/lesson_exam"
-        android:visibility="gone" />
 
 </FrameLayout>

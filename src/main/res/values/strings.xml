@@ -27,6 +27,7 @@
     <string name="date_to">Date to</string>
     <string name="activity_search_label">Search schedule</string>
     <string name="advanced_search">Advanced mode</string>
+    <string name="exam">Exam</string>
     <string-array name="semester_entries" translatable="false">
         <item>1</item>
         <item>2</item>
