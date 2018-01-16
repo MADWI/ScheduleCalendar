@@ -5,6 +5,7 @@
     android:id="@+id/lessonsListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:colorBackground"
     android:clipToPadding="false"
     android:paddingTop="@dimen/search_results_padding_top"
     android:scrollbars="vertical"

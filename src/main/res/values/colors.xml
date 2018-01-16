@@ -7,7 +7,6 @@
     <color name="calendar_cell_selected">@color/scheduleColorAccent</color>
     <color name="calendar_cell_classes_day">@color/scheduleColorPrimary</color>
     <color name="textScheduleTask">#424242</color>
-    <color name="scheduleLightGray">#EEEEEE</color>
     <color name="red">#EF534E</color>
     <color name="red_transparent">#19EF534E</color>
     <color name="blue">#2196F3</color>
