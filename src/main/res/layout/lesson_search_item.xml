@@ -1,47 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lessonItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/timeGroupView"
-        android:layout_width="@dimen/lesson_time_group_width"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/lessonTeacherAndSubject"
-        android:layout_alignTop="@id/lessonTeacherAndSubject"
-        android:background="@color/scheduleColorPrimary"
-        android:gravity="center"
-        android:orientation="vertical">
+        app:cardUseCompatPadding="true">
 
-        <TextView
-            android:id="@+id/dateView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/lesson_item_time_gap"
-            android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:maxLength="@integer/lesson_search_date_view_max_length"
-            android:textColor="@android:color/white"
-            tools:text="29-11-2017" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/timeView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/lesson_item_time_gap"
-            android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
-            android:maxLength="@integer/lesson_search_time_view_max_length"
-            android:textColor="@android:color/white"
-            tools:text="12:15-14:00" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/timeGroupView"
+                android:layout_width="@dimen/lesson_time_group_width"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/lessonTeacherAndSubject"
+                android:layout_alignTop="@id/lessonTeacherAndSubject"
+                android:background="@color/scheduleColorPrimary"
+                android:gravity="center"
+                android:orientation="vertical">
 
-    <include
-        android:id="@+id/lessonTeacherAndSubject"
-        layout="@layout/lesson_teacher_and_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/timeGroupView" />
+                <TextView
+                    android:id="@+id/dateView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/lesson_item_time_gap"
+                    android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
+                    android:maxLength="@integer/lesson_search_date_view_max_length"
+                    android:textColor="@android:color/white"
+                    tools:text="29-11-2017" />
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/timeView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/lesson_item_time_gap"
+                    android:drawablePadding="@dimen/lesson_item_time_drawable_padding"
+                    android:maxLength="@integer/lesson_search_time_view_max_length"
+                    android:textColor="@android:color/white"
+                    tools:text="12:15-14:00" />
+            </LinearLayout>
+
+            <include
+                android:id="@+id/lessonTeacherAndSubject"
+                layout="@layout/lesson_teacher_and_subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/timeGroupView" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
