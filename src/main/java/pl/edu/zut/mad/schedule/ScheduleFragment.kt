@@ -29,11 +29,14 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     var dateListener: DateListener? = null
     @Inject internal lateinit var presenter: ScheduleMvp.Presenter
 
+    @Suppress("DEPRECATION")
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
         val lessonAdapter = CalendarLessonsAdapter { startActivity(SearchActivity.getIntentWithLesson(context, it)) }
-        CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
+        val manager = CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
+        manager.locale = resources.configuration.locale
+        manager
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =

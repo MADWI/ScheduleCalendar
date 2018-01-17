@@ -16,6 +16,7 @@
         agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
         agendaCalendar:calendarPastDayTextColor="@android:color/primary_text_light"
         agendaCalendar:circleBackgroundColor="@drawable/selected_day_background"
+        agendaCalendar:cellEventPlusShowThreshold="3"
         tools:visibility="gone" />
 
     <LinearLayout
