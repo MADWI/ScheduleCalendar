@@ -15,7 +15,8 @@
         <activity
             android:name=".search.SearchActivity"
             android:label="@string/activity_search_label"
-            android:theme="@style/Search" />
+            android:theme="@style/Search"
+            android:windowSoftInputMode="stateHidden" />
 
         <receiver android:name=".widget.ScheduleWidgetProvider">
             <intent-filter>
