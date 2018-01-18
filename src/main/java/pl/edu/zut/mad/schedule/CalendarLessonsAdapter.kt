@@ -12,8 +12,8 @@ import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
+import kotlinx.android.synthetic.main.day_header.view.*
 import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
-import kotlinx.android.synthetic.main.lesson_header.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
@@ -27,7 +27,7 @@ internal class CalendarLessonsAdapter(private val lessonClickListener: (Lesson) 
         private val STRIKE_THROUGH_SPAN = StrikethroughSpan()
     }
 
-    override fun getHeaderLayout() = R.layout.lesson_header
+    override fun getHeaderLayout() = R.layout.day_header
 
     override fun getHeaderItemView(view: View, day: Calendar) {
         val headerText = ScheduleDate.UI_LESSON_HEADER_FORMATTER.print(day.time.time)
