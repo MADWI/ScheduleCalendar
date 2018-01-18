@@ -67,7 +67,6 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     override fun onDateIntervalCalculated(minDate: LocalDate, maxDate: LocalDate) =
         calendarContentManager.setDateRange(dateToCalendar(minDate), dateToCalendar(maxDate))
 
-    //TODO move to mapper
     private fun dateToCalendar(date: LocalDate): Calendar {
         val calendar = Calendar.getInstance()
         calendar.time = date.toDate()
