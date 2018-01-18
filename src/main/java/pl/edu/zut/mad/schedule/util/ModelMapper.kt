@@ -46,17 +46,17 @@ internal class ModelMapper {
 
     fun toLessonsSearchQueryMap(searchInput: SearchInput): Map<String, String> {
         val query = HashMap<String, String>()
-        query.put(QUERY_TEACHER_NAME, searchInput.name)
-        query.put(QUERY_TEACHER_SURNAME, searchInput.surname)
-        query.put(QUERY_FACULTY, searchInput.faculty)
-        query.put(QUERY_SUBJECT, searchInput.subject)
-        query.put(QUERY_FIELD_OF_STUDY, searchInput.fieldOfStudy)
-        query.put(QUERY_COURSE_TYPE, searchInput.courseType)
-        query.put(QUERY_SEMESTER, searchInput.semester)
-        query.put(QUERY_FORM, searchInput.form)
-        query.put(QUERY_ROOM, searchInput.room)
-        query.put(QUERY_DATE_FROM, searchInput.dateFrom)
-        query.put(QUERY_DATE_TO, searchInput.dateTo)
+        query[QUERY_TEACHER_NAME] = searchInput.name
+        query[QUERY_TEACHER_SURNAME] = searchInput.surname
+        query[QUERY_FACULTY] = searchInput.faculty
+        query[QUERY_SUBJECT] = searchInput.subject
+        query[QUERY_FIELD_OF_STUDY] = searchInput.fieldOfStudy
+        query[QUERY_COURSE_TYPE] = searchInput.courseType
+        query[QUERY_SEMESTER] = searchInput.semester
+        query[QUERY_FORM] = searchInput.form
+        query[QUERY_ROOM] = searchInput.room
+        query[QUERY_DATE_FROM] = searchInput.dateFrom
+        query[QUERY_DATE_TO] = searchInput.dateTo
         return query
     }
 

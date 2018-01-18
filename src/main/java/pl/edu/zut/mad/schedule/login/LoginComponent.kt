@@ -5,11 +5,11 @@ import pl.edu.zut.mad.schedule.module.RepositoryModule
 import pl.edu.zut.mad.schedule.module.ServiceModule
 
 @Login
-@Subcomponent(modules = arrayOf(
+@Subcomponent(modules = [
         LoginModule::class,
         ServiceModule::class,
-        RepositoryModule::class)
-)
+        RepositoryModule::class
+])
 internal interface LoginComponent {
 
     fun inject(loginActivity: LoginActivity)

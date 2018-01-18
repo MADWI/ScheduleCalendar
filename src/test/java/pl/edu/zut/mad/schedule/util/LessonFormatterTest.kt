@@ -14,25 +14,25 @@ import pl.edu.zut.mad.schedule.data.model.ui.Day
 @RunWith(DataProviderRunner::class)
 internal class LessonFormatterTest {
 
-    lateinit var lessonFromatter: LessonFormatter
+    lateinit var lessonFormatter: LessonFormatter
 
     @Before
     fun setUp() {
         val day = MockData.dayUi()[0][0] as Day
         val lesson = day.lessons[0]
-        lessonFromatter = LessonFormatter(lesson)
+        lessonFormatter = LessonFormatter(lesson)
     }
 
     @Test
     fun `get subject with type should return proper text`() {
-        val subjectWithType = lessonFromatter.getSubjectWithType()
+        val subjectWithType = lessonFormatter.getSubjectWithType()
 
         assertThat(subjectWithType).isEqualTo(SUBJECT_WITH_TYPE)
     }
 
     @Test
     fun `get teacher with room should return proper text`() {
-        val teacherWithRoom = lessonFromatter.getTeacherWithRoom()
+        val teacherWithRoom = lessonFormatter.getTeacherWithRoom()
 
         assertThat(teacherWithRoom).isEqualTo(TEACHER_WITH_ROOM)
     }

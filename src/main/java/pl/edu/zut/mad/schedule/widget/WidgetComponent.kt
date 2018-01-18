@@ -6,10 +6,10 @@ import pl.edu.zut.mad.schedule.module.UtilsModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(
+@Component(modules = [
     RepositoryModule::class,
     UtilsModule::class
-))
+])
 internal interface WidgetComponent {
 
     fun inject(lessonsRemoteViewsFactory: LessonsRemoteViewsFactory)
