@@ -1,7 +1,8 @@
 package pl.edu.zut.mad.schedule
 
 import android.graphics.Typeface
-import android.support.annotation.DrawableRes
+import android.graphics.drawable.ColorDrawable
+import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -55,11 +56,11 @@ internal class CalendarLessonsAdapter(private val lessonClickListener: (Lesson) 
             view.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
             view.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             if (isCancelled) {
-                colorViewForeground(view, R.drawable.red_border)
+                colorViewForeground(view, R.color.red_transparent)
                 setStrikeThroughForTextView(view.subjectWithTypeView)
                 setStrikeThroughForTextView(view.teacherWithRoomView)
             } else if (isExam) {
-                colorViewForeground(view, R.drawable.blue_border)
+                colorViewForeground(view, R.color.blue_transparent)
                 addExamPrefixToTextView(view.subjectWithTypeView)
             }
         }
@@ -71,8 +72,9 @@ internal class CalendarLessonsAdapter(private val lessonClickListener: (Lesson) 
         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
-    private fun colorViewForeground(view: View, @DrawableRes resId: Int) {
-        view.lessonCalendarItemLayout.foreground = ContextCompat.getDrawable(view.context, resId)
+    private fun colorViewForeground(view: View, @ColorRes colorResId: Int) {
+        val colorDrawable = ColorDrawable(ContextCompat.getColor(view.context, colorResId))
+        view.lessonCalendarItemLayout.foreground = colorDrawable
     }
 
     private fun addExamPrefixToTextView(textView: TextView) {

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
-        tools:foreground="@drawable/red_border">
+        tools:foreground="@color/red_transparent">
 
         <RelativeLayout
             android:layout_width="match_parent"
