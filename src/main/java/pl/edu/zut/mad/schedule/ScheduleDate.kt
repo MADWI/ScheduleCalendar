@@ -11,6 +11,6 @@ internal class ScheduleDate {
         @JvmStatic val UI_FORMATTER: DateTimeFormatter =
             DateTimeFormat.forPattern("dd-MM-yyyy")
         @JvmStatic val UI_LESSON_HEADER_FORMATTER: DateTimeFormatter =
-            DateTimeFormat.forPattern("EEEE, d MMMM")
+            DateTimeFormat.forPattern("EEEE, d MMMM y")
     }
 }

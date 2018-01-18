@@ -11,10 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         agendaCalendar:calendarCurrentDayTextColor="@android:color/holo_red_dark"
-        agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
-        agendaCalendar:calendarMonthTextColor="@color/azure"
         agendaCalendar:calendarSelectedDayTextColor="@android:color/white"
-        agendaCalendar:circleBackgroundColor="@android:color/holo_red_dark"
+        agendaCalendar:calendarMonthTextColor="@color/azure"
+        agendaCalendar:calendarHeaderColor="@color/scheduleColorAccent"
+        agendaCalendar:calendarPastDayTextColor="@android:color/primary_text_light"
+        agendaCalendar:circleBackgroundColor="@drawable/selected_day_background"
+        agendaCalendar:cellEventPlusShowThreshold="3"
         tools:visibility="gone" />
 
     <LinearLayout

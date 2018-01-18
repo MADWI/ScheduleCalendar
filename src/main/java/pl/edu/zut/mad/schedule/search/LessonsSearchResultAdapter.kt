@@ -1,6 +1,5 @@
 package pl.edu.zut.mad.schedule.search
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +10,17 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.ScheduleDate
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonFormatter
-import pl.edu.zut.mad.schedule.util.LessonItemPainter
 
-internal class LessonsSearchResultAdapter(private var lessons: List<Lesson>, context: Context) :
+internal class LessonsSearchResultAdapter(private var lessons: List<Lesson>) :
     RecyclerView.Adapter<LessonsSearchResultAdapter.LessonViewHolder>() {
-
-    private val lessonPainter = LessonItemPainter(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.lesson_search_item, parent, false)
         return LessonViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
-        lessonPainter.colorBackgroundToGrayIfShould(holder.itemView, position)
+    override fun onBindViewHolder(holder: LessonViewHolder, position: Int) =
         holder.bindLesson(lessons[position])
-    }
 
     override fun getItemCount() = lessons.size
 

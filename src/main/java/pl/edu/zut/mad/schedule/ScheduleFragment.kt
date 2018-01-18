@@ -29,11 +29,14 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     var dateListener: DateListener? = null
     @Inject internal lateinit var presenter: ScheduleMvp.Presenter
 
+    @Suppress("DEPRECATION")
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
-        val lessonAdapter = getLessonAdapter()
-        CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
+        val lessonAdapter = CalendarLessonsAdapter { startActivity(SearchActivity.getIntentWithLesson(context, it)) }
+        val manager = CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
+        manager.locale = resources.configuration.locale
+        manager
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
@@ -109,17 +112,6 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     fun logout() = presenter.logout()
 
     fun moveToToday() =
-        calendarContentManager.agendaCalendarView
-            .agendaView
-            .agendaListView
+        calendarContentManager.agendaCalendarView.agendaView.agendaListView
             .scrollToCurrentDate(Calendar.getInstance())
-
-    private fun getLessonAdapter(): CalendarLessonsAdapter {
-        val lessonAdapter = CalendarLessonsAdapter(activity)
-        lessonAdapter.lessonClickListener = {
-            val intent = SearchActivity.getIntentWithLesson(context, it)
-            startActivity(intent)
-        }
-        return lessonAdapter
-    }
 }

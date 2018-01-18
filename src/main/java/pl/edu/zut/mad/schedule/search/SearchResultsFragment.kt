@@ -91,7 +91,7 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
 
     private fun initLessonsList() {
         val lessons = arguments.getParcelableArrayList<Lesson>(LESSONS_KEY)
-        lessonsListView.adapter = LessonsSearchResultAdapter(lessons, context)
+        lessonsListView.adapter = LessonsSearchResultAdapter(lessons)
     }
 
     private fun initExitRevealAnimationEndListener() {

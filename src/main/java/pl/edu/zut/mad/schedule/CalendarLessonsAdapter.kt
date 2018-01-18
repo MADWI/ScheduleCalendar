@@ -1,8 +1,8 @@
 package pl.edu.zut.mad.schedule
 
-import android.content.Context
 import android.graphics.Typeface
-import android.support.annotation.DrawableRes
+import android.graphics.drawable.ColorDrawable
+import android.support.annotation.ColorRes
 import android.support.v4.content.ContextCompat
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -13,26 +13,22 @@ import android.view.View
 import android.widget.TextView
 import com.ognev.kotlin.agendacalendarview.models.CalendarEvent
 import com.ognev.kotlin.agendacalendarview.render.DefaultEventAdapter
+import kotlinx.android.synthetic.main.day_header.view.*
 import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
-import kotlinx.android.synthetic.main.lesson_header.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.util.LessonFormatter
-import pl.edu.zut.mad.schedule.util.LessonItemPainter
 import java.util.Calendar
 
-internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() {
+internal class CalendarLessonsAdapter(private val lessonClickListener: (Lesson) -> Unit)
+    : DefaultEventAdapter() {
 
     companion object {
         private val STRIKE_THROUGH_SPAN = StrikethroughSpan()
     }
 
-    private val lessonItemPainter = LessonItemPainter(context)
-
-    lateinit var lessonClickListener: (Lesson) -> Unit?
-
-    override fun getHeaderLayout() = R.layout.lesson_header
+    override fun getHeaderLayout() = R.layout.day_header
 
     override fun getHeaderItemView(view: View, day: Calendar) {
         val headerText = ScheduleDate.UI_LESSON_HEADER_FORMATTER.print(day.time.time)
@@ -49,7 +45,6 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
         }
         val lesson = lessonEvent.event as Lesson
         bindLesson(lesson, view)
-        lessonItemPainter.colorBackgroundToGrayIfShould(view, position)
         view.setOnClickListener { lessonClickListener.invoke(lessonEvent.event as Lesson) }
     }
 
@@ -61,11 +56,11 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
             view.subjectWithTypeView.text = lessonFormatter.getSubjectWithType()
             view.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
             if (isCancelled) {
-                colorViewForeground(view, R.drawable.red_border)
+                colorViewForeground(view, R.color.red_transparent)
                 setStrikeThroughForTextView(view.subjectWithTypeView)
                 setStrikeThroughForTextView(view.teacherWithRoomView)
             } else if (isExam) {
-                colorViewForeground(view, R.drawable.blue_border)
+                colorViewForeground(view, R.color.blue_transparent)
                 addExamPrefixToTextView(view.subjectWithTypeView)
             }
         }
@@ -77,8 +72,9 @@ internal class CalendarLessonsAdapter(context: Context) : DefaultEventAdapter() 
         spannable.setSpan(STRIKE_THROUGH_SPAN, 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
-    private fun colorViewForeground(view: View, @DrawableRes resId: Int) {
-        view.lessonCalendarItemLayout.foreground = ContextCompat.getDrawable(view.context, resId)
+    private fun colorViewForeground(view: View, @ColorRes colorResId: Int) {
+        val colorDrawable = ColorDrawable(ContextCompat.getColor(view.context, colorResId))
+        view.lessonCalendarItemLayout.foreground = colorDrawable
     }
 
     private fun addExamPrefixToTextView(textView: TextView) {
