@@ -17,7 +17,7 @@ class CleanableTextInput : AppCompatAutoCompleteTextView,
     View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
 
     companion object {
-        private val CLEAR_ICON_ID = R.drawable.abc_ic_clear_material
+        private val CLEAR_ICON_ID = R.drawable.ic_clear_white_24dp
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
