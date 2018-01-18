@@ -5,15 +5,15 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v7.widget.AppCompatAutoCompleteTextView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.AutoCompleteTextView
 import pl.edu.zut.mad.schedule.R
 
-class CleanableTextInput : AutoCompleteTextView,
+class CleanableTextInput : AppCompatAutoCompleteTextView,
     View.OnTouchListener, View.OnFocusChangeListener, TextWatcher {
 
     companion object {

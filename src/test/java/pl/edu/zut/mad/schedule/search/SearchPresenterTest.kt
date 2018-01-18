@@ -35,8 +35,8 @@ internal class SearchPresenterTest {
     @JvmField
     val rxSchedulerRule = RxImmediateSchedulerRule()
 
-    val searchInputModelSubject = PublishSubject.create<SearchInput>()
-    val searchInputTextSubject = PublishSubject.create<Pair<String, String>>()
+    val searchInputModelSubject: PublishSubject<SearchInput> = PublishSubject.create<SearchInput>()
+    val searchInputTextSubject: PublishSubject<Pair<String, String>> = PublishSubject.create<Pair<String, String>>()
 
     val view: SearchMvp.View = mock {
         on { observeSearchInputModel() } doReturn searchInputModelSubject
