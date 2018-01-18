@@ -4,7 +4,7 @@
 
     <item
         android:checkable="true"
-        android:id="@+id/search_show_more"
+        android:id="@+id/menu_search_advanced_mode"
         android:title="@string/advanced_search"
         app:showAsAction="never" />
 

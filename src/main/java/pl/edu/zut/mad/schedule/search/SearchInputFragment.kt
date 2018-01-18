@@ -109,7 +109,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         inflater.inflate(R.menu.search_menu, menu)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.search_show_more) {
+        if (item.itemId == R.id.menu_search_advanced_mode) {
             showOrHideAdvancedViewAndSetCheckedMenuItem(item)
             return true
         }

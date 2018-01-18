@@ -3,6 +3,8 @@ package pl.edu.zut.mad.schedule.search
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_search_results.*
@@ -65,6 +67,10 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
         init(view, savedInstanceState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater?) {
+        menu.findItem(R.id.menu_search_advanced_mode)?.isVisible = false
+    }
+
     override fun onBackPressed() {
         val animationView = view
         if (animationView != null) {
@@ -73,6 +79,7 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
     }
 
     private fun init(view: View, savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         initInjectionsWithEnterAnimationParams()
         initLessonsList()
         initExitRevealAnimationEndListener()
