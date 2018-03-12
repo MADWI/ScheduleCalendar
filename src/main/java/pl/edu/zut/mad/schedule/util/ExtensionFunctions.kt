@@ -9,7 +9,7 @@ val Activity.app: ScheduleApp
     get() = application as ScheduleApp
 
 val Fragment.app: ScheduleApp
-    get() = activity.app
+    get() = requireActivity().app
 
 fun Any.log(text: String) {
     Log.d(javaClass.simpleName, text)

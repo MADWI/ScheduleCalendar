@@ -94,16 +94,16 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
             .inject(this)
 
     private fun getEnterAnimationParams() =
-        arguments.getSerializable(ANIMATION_ENTER_PARAMS_KEY) as AnimationParams
+        arguments?.getSerializable(ANIMATION_ENTER_PARAMS_KEY) as AnimationParams
 
     private fun initLessonsList() {
-        val lessons = arguments.getParcelableArrayList<Lesson>(LESSONS_KEY)
+        val lessons = arguments?.getParcelableArrayList(LESSONS_KEY) ?: listOf<Lesson>()
         lessonsListView.adapter = LessonsSearchResultAdapter(lessons)
     }
 
     private fun initExitRevealAnimationEndListener() {
         exitRevealAnimation.listener = {
-            activity.supportFragmentManager.beginTransaction()
+            requireActivity().supportFragmentManager.beginTransaction()
                 .remove(this)
                 .commitNow()
             dismissListener?.invoke()

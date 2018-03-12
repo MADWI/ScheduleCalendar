@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewPropertyAnimator
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
@@ -27,13 +28,17 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     }
 
     var dateListener: DateListener? = null
-    @Inject internal lateinit var presenter: ScheduleMvp.Presenter
+
+    @Inject
+    internal lateinit var presenter: ScheduleMvp.Presenter
+
+    private var viewPropertyAnimator: ViewPropertyAnimator? = null
 
     @Suppress("DEPRECATION")
     private val calendarContentManager: CalendarContentManager by lazy {
         val calendarController = CalendarController()
         calendarController.dateListener = dateListener
-        val lessonAdapter = CalendarLessonsAdapter { startActivity(SearchActivity.getIntentWithLesson(context, it)) }
+        val lessonAdapter = CalendarLessonsAdapter { startActivity(SearchActivity.getIntentWithLesson(requireContext(), it)) }
         val manager = CalendarContentManager(calendarController, scheduleCalendarView, lessonAdapter)
         manager.locale = resources.configuration.locale
         manager
@@ -42,7 +47,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_schedule, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
@@ -60,7 +65,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             presenter.onViewIsCreated()
         } else if (resultCode == Activity.RESULT_CANCELED) {
-            activity.finish()
+            requireActivity().finish()
         }
     }
 
@@ -79,7 +84,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
 
     override fun hideLoadingView() {
         val animationDuration = resources.getInteger(R.integer.animation_time).toLong()
-        scheduleLoadingView.animate()
+        viewPropertyAnimator = scheduleLoadingView.animate()
             .alpha(0F)
             .setDuration(animationDuration)
             .withEndAction {
@@ -103,7 +108,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     }
 
     override fun showInternetError() {
-        val contentView = activity.findViewById<View>(android.R.id.content)
+        val contentView = requireActivity().findViewById<View>(android.R.id.content)
         Snackbar.make(contentView, R.string.error_no_internet, Snackbar.LENGTH_SHORT).show()
     }
 
@@ -114,4 +119,9 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     fun moveToToday() =
         calendarContentManager.agendaCalendarView.agendaView.agendaListView
             .scrollToCurrentDate(Calendar.getInstance())
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewPropertyAnimator?.cancel()
+    }
 }
