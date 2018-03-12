@@ -8,11 +8,11 @@ apply plugin: 'jacoco-android'
 apply from: 'ktlint.gradle'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -34,7 +34,7 @@ androidExtensions {
 }
 
 ext {
-    support_version = '26.1.0'
+    support_version = '27.1.0'
     retrofit_version = '2.3.0'
     dagger_version = '2.12'
     joda_version = '2.9.9'
@@ -56,7 +56,7 @@ ext {
 
 buildscript {
     ext {
-        kotlin_version = '1.2.20'
+        kotlin_version = '1.2.30'
         realm_version = '4.3.1'
     }
     repositories {

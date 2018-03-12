@@ -46,7 +46,7 @@ class CleanableTextInput : AppCompatAutoCompleteTextView,
     }
 
     private fun initClearIcon() {
-        val icon = ContextCompat.getDrawable(context, CLEAR_ICON_ID)
+        val icon = ContextCompat.getDrawable(context, CLEAR_ICON_ID) ?: return
         val wrappedIcon = DrawableCompat.wrap(icon)
         DrawableCompat.setTint(wrappedIcon, currentHintTextColor)
         clearIcon = wrappedIcon

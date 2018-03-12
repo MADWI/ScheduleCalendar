@@ -45,7 +45,8 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         }
     }
 
-    @Inject lateinit var presenter: SearchMvp.Presenter
+    @Inject
+    lateinit var presenter: SearchMvp.Presenter
 
     private val searchInputModelSubject by lazy { PublishSubject.create<SearchInput>() }
     private val searchInputTextSubject by lazy { PublishSubject.create<Pair<String, String>>() }
@@ -56,7 +57,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         inflater.inflate(R.layout.fragment_search_input, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init(savedInstanceState)
     }
@@ -73,13 +74,13 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
     }
 
     override fun showError(@StringRes errorRes: Int) {
-        val contentView = activity.findViewById<View>(android.R.id.content)
+        val contentView = requireActivity().findViewById<View>(android.R.id.content)
         Snackbar.make(contentView, errorRes, Toast.LENGTH_SHORT).show()
     }
 
     override fun setData(lessons: List<Lesson>) {
         val resultsFragment = getInitializedResultsFragment(lessons)
-        activity.supportFragmentManager.beginTransaction()
+        requireActivity().supportFragmentManager.beginTransaction()
             .add(R.id.searchMainContainer, resultsFragment, SearchResultsFragment.TAG)
             .commit()
     }
@@ -147,12 +148,11 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             date.year, date.monthOfYear - 1, date.dayOfMonth)
     }
 
-    private fun getOnDateSetListenerForView(textView: TextView): DatePickerDialog.OnDateSetListener {
-        return DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+    private fun getOnDateSetListenerForView(textView: TextView) =
+        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val dateText = parseDate(dayOfMonth, month, year)
             textView.text = dateText
         }
-    }
 
     private fun parseDate(dayOfMonth: Int, month: Int, year: Int): String {
         val date = LocalDate()
@@ -247,9 +247,9 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         return viewLocation[1] - barHeight
     }
 
-    private fun getPow2(value: Int): Double = Math.pow(value.toDouble(), 2.toDouble())
+    private fun getPow2(value: Int) = Math.pow(value.toDouble(), 2.toDouble())
 
-    private fun showOrHideAdvancedViewAndSetCheckedMenuItem(item: MenuItem) {
+    private fun showOrHideAdvancedViewAndSetCheckedMenuItem(item: MenuItem) =
         if (searchAdvancedView.isExpanded) {
             searchAdvancedView.collapse()
             item.isChecked = false
@@ -257,5 +257,4 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
             searchAdvancedView.expand()
             item.isChecked = true
         }
-    }
 }
