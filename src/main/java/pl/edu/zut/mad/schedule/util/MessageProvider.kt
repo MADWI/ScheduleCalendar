@@ -1,6 +1,6 @@
 package pl.edu.zut.mad.schedule.util
 
-import android.support.annotation.IdRes
+import android.support.annotation.StringRes
 import pl.edu.zut.mad.schedule.R
 import retrofit2.HttpException
 import java.net.HttpURLConnection
@@ -18,5 +18,5 @@ internal abstract class MessageProvider {
         return R.string.error_service_unrecognized
     }
 
-    @IdRes abstract fun getNotFoundMessageId(): Int
+    @StringRes abstract fun getNotFoundMessageId(): Int
 }
