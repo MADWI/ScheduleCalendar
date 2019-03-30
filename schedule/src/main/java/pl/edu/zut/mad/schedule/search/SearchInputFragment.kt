@@ -2,10 +2,6 @@ package pl.edu.zut.mad.schedule.search
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import androidx.annotation.StringRes
-import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -17,7 +13,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search_input.*
 import org.joda.time.LocalDate
@@ -75,7 +74,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
 
     override fun showError(@StringRes errorRes: Int) {
         val contentView = requireActivity().findViewById<View>(android.R.id.content)
-        Snackbar.make(contentView, errorRes, Toast.LENGTH_SHORT).show()
+        Snackbar.make(contentView, errorRes, Snackbar.LENGTH_SHORT).show()
     }
 
     override fun setData(lessons: List<Lesson>) {
