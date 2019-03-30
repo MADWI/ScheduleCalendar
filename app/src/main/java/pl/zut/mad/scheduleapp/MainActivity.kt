@@ -1,7 +1,7 @@
 package pl.zut.mad.scheduleapp
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import pl.edu.zut.mad.schedule.ScheduleFragment
 
 class MainActivity : AppCompatActivity() {
