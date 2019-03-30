@@ -1,6 +1,6 @@
 package pl.edu.zut.mad.schedule.login
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 internal interface LoginMvp {
 

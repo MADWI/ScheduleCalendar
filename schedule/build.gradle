@@ -16,7 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -38,17 +38,17 @@ ext {
     retrofit_version = '2.3.0'
     dagger_version = '2.12'
     joda_version = '2.9.9'
-    leak_canary_version = '1.6.2'
+    leak_canary_version = '1.6.3'
     calendar_version = '1.0'
     constraint_layout_version = '1.1.3'
-    rx_java_version = '2.0.1'
+    rx_java_version = '2.1.1'
     junit_version = '4.12'
     mockito_kotlin_version = '1.5.0'
     mockito_android_version = '2.8.9'
     dagger_mock_version = '0.8.2'
     assertj_version = '3.8.0'
     data_provider_version = '1.10.0'
-    espresso_version = '3.0.1'
+    espresso_version = '3.1.1'
     material_spinner_version = '2.0.0'
     loading_button_version = '1.8.4'
     expandable_layout_version = '2.9.1'
@@ -56,7 +56,6 @@ ext {
 
 buildscript {
     ext {
-        kotlin_version = '1.3.20'
         realm_version = '4.3.1'
     }
     repositories {
@@ -65,7 +64,7 @@ buildscript {
     }
     dependencies {
         classpath "io.realm:realm-gradle-plugin:$realm_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.21'
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
     }
 }
@@ -75,8 +74,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
     androidTestImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
@@ -85,10 +84,9 @@ dependencies {
     testImplementation "com.tngtech.java:junit-dataprovider:$data_provider_version"
 
     api "net.danlew:android.joda:$joda_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support:design:$support_version"
-    implementation "com.android.support:cardview-v7:$support_version"
+    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 

@@ -1,6 +1,6 @@
 package pl.edu.zut.mad.schedule.util
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import pl.edu.zut.mad.schedule.R
 import retrofit2.HttpException
 import java.net.HttpURLConnection

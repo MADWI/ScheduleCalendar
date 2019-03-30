@@ -4,9 +4,9 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.support.annotation.ColorRes
-import android.support.annotation.RequiresApi
-import android.support.v4.content.ContextCompat
+import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import android.view.View
 import pl.edu.zut.mad.schedule.R
 
