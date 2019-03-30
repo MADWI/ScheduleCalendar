@@ -3,8 +3,8 @@ package pl.edu.zut.mad.schedule.animation
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.v4.view.animation.FastOutSlowInInterpolator
+import androidx.annotation.RequiresApi
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import android.view.View
 import android.view.ViewAnimationUtils
 import pl.edu.zut.mad.schedule.R

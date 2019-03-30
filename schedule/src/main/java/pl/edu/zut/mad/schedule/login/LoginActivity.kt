@@ -2,8 +2,8 @@ package pl.edu.zut.mad.schedule.login
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import pl.edu.zut.mad.schedule.ComponentView
 import pl.edu.zut.mad.schedule.R

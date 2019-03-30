@@ -1,6 +1,6 @@
 package pl.edu.zut.mad.schedule.search
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import io.reactivex.subjects.PublishSubject
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 
