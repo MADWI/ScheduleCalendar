@@ -1,8 +1,8 @@
 package pl.edu.zut.mad.schedule
 
-import android.support.test.espresso.IdlingResource
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.test.espresso.IdlingResource
 import kotlin.reflect.KClass
 
 internal class FragmentStartsIdlingResource(private val activity: AppCompatActivity,
