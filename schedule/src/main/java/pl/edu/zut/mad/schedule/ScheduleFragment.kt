@@ -12,6 +12,7 @@ import android.view.ViewPropertyAnimator
 import com.ognev.kotlin.agendacalendarview.builder.CalendarContentManager
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import org.joda.time.LocalDate
+import pl.edu.zut.mad.schedule.calendar.CalendarActivity
 import pl.edu.zut.mad.schedule.data.model.ui.LessonEvent
 import pl.edu.zut.mad.schedule.login.LoginActivity
 import pl.edu.zut.mad.schedule.module.ScheduleComponent
@@ -50,6 +51,7 @@ open class ScheduleFragment : Fragment(), ComponentView<ScheduleComponent>, Sche
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        startActivity(Intent(context, CalendarActivity::class.java))
     }
 
     override fun getComponent() = app.component.plus(ScheduleModule(this))

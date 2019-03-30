@@ -3,12 +3,12 @@
     package="pl.edu.zut.mad.schedule">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:usesCleartextTraffic="true"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".login.LoginActivity"
@@ -19,6 +19,8 @@
             android:label="@string/activity_search_label"
             android:theme="@style/Search"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".calendar.CalendarActivity" />
 
         <receiver android:name=".widget.ScheduleWidgetProvider">
             <intent-filter>
