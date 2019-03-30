@@ -48,7 +48,7 @@ ext {
     dagger_mock_version = '0.8.2'
     assertj_version = '3.8.0'
     data_provider_version = '1.10.0'
-    espresso_version = '3.0.1'
+    espresso_version = '3.1.1'
     material_spinner_version = '2.0.0'
     loading_button_version = '1.8.4'
     expandable_layout_version = '2.9.1'
@@ -74,8 +74,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation "org.mockito:mockito-android:$mockito_android_version"
     androidTestImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-    androidTestImplementation "androidx.test.espresso:espresso-intents:3.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espresso_version"
 
     testImplementation "junit:junit:$junit_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_kotlin_version"
