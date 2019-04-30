@@ -6,16 +6,16 @@
     tools:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <include layout="@layout/calendar_week" />
+    <include layout="@layout/calendar_week_numbers" />
 
-    <include layout="@layout/calendar_week" />
+    <include layout="@layout/calendar_week_numbers" />
 
-    <include layout="@layout/calendar_week" />
+    <include layout="@layout/calendar_week_numbers" />
 
-    <include layout="@layout/calendar_week" />
+    <include layout="@layout/calendar_week_numbers" />
 
-    <include layout="@layout/calendar_week" />
+    <include layout="@layout/calendar_week_numbers" />
 
-    <include layout="@layout/calendar_week" />
+    <include layout="@layout/calendar_week_numbers" />
 
 </merge>
