@@ -9,7 +9,7 @@ import android.widget.TextView
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
 
-class CalendarMonthView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
+class CalendarMonthNumbersView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
     init {
         View.inflate(context, R.layout.calendar_month, this)
@@ -17,10 +17,6 @@ class CalendarMonthView(context: Context, attributeSet: AttributeSet) : LinearLa
     }
 
     fun setMonth(date: LocalDate) {
-        setupMonthForDate(date)
-    }
-
-    private fun setupMonthForDate(date: LocalDate) {
         val firstDayOfMonth = LocalDate(date.year, date.monthOfYear, 1)
         var currentDate = firstDayOfMonth.minusDays(firstDayOfMonth.dayOfWeek - 1)
         iterateOverDays {
