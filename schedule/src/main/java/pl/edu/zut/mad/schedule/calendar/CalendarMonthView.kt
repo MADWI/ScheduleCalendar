@@ -2,7 +2,7 @@ package pl.edu.zut.mad.schedule.calendar
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,9 +12,12 @@ import pl.edu.zut.mad.schedule.R
 class CalendarMonthView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.calendar_month, this, true)
-        orientation = LinearLayout.VERTICAL
-        setupMonthForDate(LocalDate.now())
+        View.inflate(context, R.layout.calendar_month, this)
+        orientation = VERTICAL
+    }
+
+    fun setMonth(date: LocalDate) {
+        setupMonthForDate(date)
     }
 
     private fun setupMonthForDate(date: LocalDate) {
