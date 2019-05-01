@@ -6,6 +6,7 @@
     <color name="calendar_cell_default">@android:color/white</color>
     <color name="calendar_cell_selected">@color/scheduleColorAccent</color>
     <color name="calendar_cell_classes_day">@color/scheduleColorPrimary</color>
+    <color name="calendar_week_name_text_color">#8B8B8B</color>
     <color name="textScheduleTask">#424242</color>
     <color name="red_transparent">#50EF5350</color>
     <color name="blue_transparent">#3C42A5F5</color>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="@layout/calendar_week_numbers">
+    tools:showIn="@layout/calendar_week_names">
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="@dimen/calendar_day_name_height"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@android:color/black"
+        android:textColor="@color/calendar_week_name_text_color"
         android:textSize="@dimen/calendar_day_name_text_size"
         tools:layout_width="40dp"
         tools:text="M" />

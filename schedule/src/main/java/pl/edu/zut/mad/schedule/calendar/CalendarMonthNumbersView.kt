@@ -17,8 +17,8 @@ class CalendarMonthNumbersView(context: Context, attributeSet: AttributeSet) : L
         orientation = VERTICAL
     }
 
-    fun setMonth(date: LocalDate) {
-        val firstDayOfMonthWeek = date.withDayOfMonth(1)
+    fun setMonth(monthDate: LocalDate) {
+        val firstDayOfMonthWeek = monthDate.withDayOfMonth(1)
         var date = firstDayOfMonthWeek.minusDays(firstDayOfMonthWeek.dayOfWeek - 1)
         forEachChild<ViewGroup> { weekView, _ ->
             weekView.forEachChild<TextView> { dayView, _ ->
