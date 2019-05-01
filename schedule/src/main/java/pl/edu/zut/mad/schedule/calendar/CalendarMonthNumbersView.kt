@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.util.forEachChild
 
 class CalendarMonthNumbersView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
@@ -17,20 +18,12 @@ class CalendarMonthNumbersView(context: Context, attributeSet: AttributeSet) : L
     }
 
     fun setMonth(date: LocalDate) {
-        val firstDayOfMonth = LocalDate(date.year, date.monthOfYear, 1)
-        var currentDate = firstDayOfMonth.minusDays(firstDayOfMonth.dayOfWeek - 1)
-        iterateOverDays {
-            it.text = currentDate.dayOfMonth.toString()
-            currentDate = currentDate.plusDays(1)
-        }
-    }
-
-    private fun iterateOverDays(onDay: (TextView) -> Unit) {
-        repeat(childCount) { weekIndex ->
-            val weekView = getChildAt(weekIndex) as ViewGroup
-            repeat(weekView.childCount) { dayIndex ->
-                val dayView = weekView.getChildAt(dayIndex) as TextView
-                onDay(dayView)
+        val firstDayOfMonthWeek = date.withDayOfMonth(1)
+        var date = firstDayOfMonthWeek.minusDays(firstDayOfMonthWeek.dayOfWeek - 1)
+        forEachChild<ViewGroup> { weekView, _ ->
+            weekView.forEachChild<TextView> { dayView, _ ->
+                dayView.text = date.dayOfMonth.toString()
+                date = date.plusDays(1)
             }
         }
     }
