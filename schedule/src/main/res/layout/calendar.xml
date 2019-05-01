@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/calendar_month_vertical_padding"
+    android:paddingEnd="@dimen/calendar_month_vertical_padding">
+
+    <TextView
+        android:id="@+id/monthNameView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="@dimen/calendar_month_name_horizontal_padding"
+        android:paddingBottom="@dimen/calendar_month_name_horizontal_padding"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="January" />
+
+    <pl.edu.zut.mad.schedule.calendar.CalendarWeekNamesView
+        android:id="@+id/daysNames"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/monthNameView" />
+
+    <pl.edu.zut.mad.schedule.calendar.CalendarMonthNumbersView
+        android:id="@+id/calendarMonthNumbersView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/daysNames" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

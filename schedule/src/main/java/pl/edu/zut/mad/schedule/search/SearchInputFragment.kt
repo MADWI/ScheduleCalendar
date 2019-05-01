@@ -105,7 +105,7 @@ internal class SearchInputFragment : Fragment(), SearchMvp.View {
         .plus(SearchModule(this))
         .inject(this)
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) =
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) =
         inflater.inflate(R.menu.search_menu, menu)
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

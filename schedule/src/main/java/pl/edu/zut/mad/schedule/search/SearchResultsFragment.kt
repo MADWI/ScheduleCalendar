@@ -67,7 +67,7 @@ internal class SearchResultsFragment : Fragment(), BackPressedListener {
         init(view, savedInstanceState)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.findItem(R.id.menu_search_advanced_mode)?.isVisible = false
     }
 
