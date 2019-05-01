@@ -19,7 +19,7 @@ class CalendarWeekNamesView(context: Context, attributeSet: AttributeSet) : Line
     }
 
     private fun setupNames() {
-        val formatter = DateTimeFormat.forPattern("E")
+        val formatter = DateTimeFormat.forPattern(Format.DAY_NAME)
         val date = LocalDate()
         forEachChild<TextView> { dayView, index ->
             dayView.text = date.withDayOfWeek(index + 1).toString(formatter)
