@@ -29,7 +29,7 @@ class CalendarMonthFragment : Fragment() {
     }
 
     companion object {
-        private const val DATE_KEY = "DATE_KEY"
+        private const val DATE_KEY = "date_key"
 
         fun newInstance(date: LocalDate) =
             CalendarMonthFragment().apply {
