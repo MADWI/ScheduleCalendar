@@ -13,7 +13,7 @@ import pl.edu.zut.mad.schedule.util.forEachChild
 class CalendarMonthNumbersView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
     init {
-        View.inflate(context, R.layout.calendar_month, this)
+        View.inflate(context, R.layout.calendar_month_numbers, this)
         orientation = VERTICAL
     }
 
