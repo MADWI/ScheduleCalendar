@@ -18,6 +18,10 @@ internal class CalendarPagerAdapter(monthDays: List<List<Day>>) : PagerAdapter<L
 internal class LessonsPagerAdapter(lessons: List<Day>) : PagerAdapter<Day>(lessons, R.layout.lessons_day) {
 
     override fun onBind(itemView: View, item: Day) {
-        itemView.lessonsDayListView.adapter = LessonsAdapter(itemView.context, item.lessons)
+        itemView.lessonsDayListView.apply {
+            setHasFixedSize(true)
+            setItemViewCacheSize(itemCount)
+            adapter = LessonsAdapter(item.lessons)
+        }
     }
 }
