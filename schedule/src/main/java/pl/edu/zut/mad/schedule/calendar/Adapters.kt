@@ -21,7 +21,7 @@ internal class LessonsPagerAdapter(lessons: List<Day>) : PagerAdapter<Day>(lesso
         itemView.lessonsDayListView.apply {
             setHasFixedSize(true)
             setItemViewCacheSize(itemCount)
-            adapter = LessonsAdapter(item.lessons)
+            adapter = LessonsDayAdapter(item.lessons)
         }
     }
 }

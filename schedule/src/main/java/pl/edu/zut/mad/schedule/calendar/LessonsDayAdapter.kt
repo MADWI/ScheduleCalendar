@@ -18,7 +18,7 @@ import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonFormatter
 
-internal class LessonsAdapter(lessons: List<Lesson>) : PagerAdapter<Lesson>(lessons, R.layout.lesson_calendar_item) {
+internal class LessonsDayAdapter(lessons: List<Lesson>) : PagerAdapter<Lesson>(lessons, R.layout.lesson_calendar_item) {
 
     override fun onBind(itemView: View, item: Lesson) {
         val lessonFormatter = LessonFormatter(item)
