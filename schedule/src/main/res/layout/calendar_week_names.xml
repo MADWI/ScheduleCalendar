@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="android.widget.LinearLayout">
+    tools:parentTag="android.widget.LinearLayout"
+    tools:showIn="@layout/calendar_month">
 
     <include layout="@layout/calendar_day_name" />
 
