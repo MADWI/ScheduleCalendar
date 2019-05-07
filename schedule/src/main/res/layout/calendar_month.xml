@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/scheduleColorSecondary"
     android:paddingStart="@dimen/calendar_month_vertical_padding"
+    android:paddingBottom="@dimen/calendar_month_bottom_padding"
     android:paddingEnd="@dimen/calendar_month_vertical_padding">
 
     <TextView
