@@ -7,10 +7,10 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/calendar_day_name_height"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="center|bottom"
         android:textColor="@color/calendar_week_name_text_color"
         android:textSize="@dimen/calendar_day_name_text_size"
         tools:layout_width="40dp"
-        tools:text="M" />
+        tools:text="Mon" />
 
 </merge>
