@@ -1,11 +1,10 @@
 package pl.edu.zut.mad.schedule.calendar
 
+import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
 import android.view.View
 import android.widget.FrameLayout
@@ -28,8 +27,8 @@ internal class LessonsDayAdapter(lessons: List<Lesson>) : PagerAdapter<Lesson>(l
         itemView.teacherWithRoomView.text = lessonFormatter.getTeacherWithRoom()
         if (item.isCancelled) {
             itemView.lessonCalendarItemLayout.setForegroundColor(R.color.red_transparent)
-            setStrikeThroughForTextView(itemView.subjectWithTypeView)
-            setStrikeThroughForTextView(itemView.teacherWithRoomView)
+            itemView.subjectWithTypeView.setStrikeThrough()
+            itemView.teacherWithRoomView.setStrikeThrough()
         } else if (item.isExam) {
             itemView.lessonCalendarItemLayout.setForegroundColor(R.color.blue_transparent)
             addExamPrefixToTextView(itemView.subjectWithTypeView)
@@ -40,11 +39,8 @@ internal class LessonsDayAdapter(lessons: List<Lesson>) : PagerAdapter<Lesson>(l
         foreground = ColorDrawable(ContextCompat.getColor(context, id))
     }
 
-    private fun setStrikeThroughForTextView(textView: TextView) {
-        val text = textView.text
-        textView.setText(text, TextView.BufferType.SPANNABLE)
-        val spannable = textView.text as Spannable
-        spannable.setSpan(StrikethroughSpan(), 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    private fun TextView.setStrikeThrough() {
+        paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
     }
 
     private fun addExamPrefixToTextView(textView: TextView) {
