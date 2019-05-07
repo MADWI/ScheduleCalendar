@@ -13,29 +13,18 @@ import pl.edu.zut.mad.schedule.util.forEachChild
 
 internal class CalendarMonthNumbersView(context: Context, attributeSet: AttributeSet) : LinearLayout(context, attributeSet) {
 
-    lateinit var onDateClick: (LocalDate) -> Unit
-
     init {
         View.inflate(context, R.layout.calendar_month_numbers, this)
         orientation = VERTICAL
     }
 
-    fun setMonth(lessonDays: List<LocalDate>) {
-        var date = lessonDays[0].withDayOfMonth(1).withDayOfWeek(DateTimeConstants.MONDAY)
+    fun setup(monthFirstDate: LocalDate, onDay: (TextView, LocalDate) -> Unit) {
+        var date = monthFirstDate.withDayOfWeek(DateTimeConstants.MONDAY)
         forEachChild<ViewGroup> { weekView, _ ->
             weekView.forEachChild<TextView> { dayView, _ ->
-                setupDayView(dayView, date, lessonDays)
+                onDay(dayView, date)
                 date = date.plusDays(1)
             }
-        }
-    }
-
-    private fun setupDayView(dayView: TextView, date: LocalDate, lessonDays: List<LocalDate>) {
-        dayView.text = date.dayOfMonth.toString()
-        dayView.tag = date
-        dayView.setOnClickListener { onDateClick(it.tag as LocalDate) }
-        if (date in lessonDays) {
-            dayView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.calendar_day_lessons_indicator)
         }
     }
 }
