@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import pl.edu.zut.mad.schedule.R
 import pl.edu.zut.mad.schedule.util.forEachChild
 
@@ -19,10 +18,9 @@ class CalendarWeekNamesView(context: Context, attributeSet: AttributeSet) : Line
     }
 
     private fun setupNames() {
-        val formatter = DateTimeFormat.forPattern(Format.DAY_NAME)
-        val date = LocalDate()
+        val date = LocalDate.now()
         forEachChild<TextView> { dayView, index ->
-            dayView.text = date.withDayOfWeek(index + 1).toString(formatter)
+            dayView.text = date.withDayOfWeek(index + 1).toString(Format.DAY_NAME)
         }
     }
 }

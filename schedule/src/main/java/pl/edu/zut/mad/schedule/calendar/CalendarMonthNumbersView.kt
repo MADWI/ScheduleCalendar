@@ -1,7 +1,6 @@
 package pl.edu.zut.mad.schedule.calendar
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -21,22 +20,22 @@ internal class CalendarMonthNumbersView(context: Context, attributeSet: Attribut
         orientation = VERTICAL
     }
 
-    fun setMonth(days: List<LocalDate>) {
-        var date = days[0].withDayOfMonth(1).withDayOfWeek(DateTimeConstants.MONDAY)
+    fun setMonth(lessonDays: List<LocalDate>) {
+        var date = lessonDays[0].withDayOfMonth(1).withDayOfWeek(DateTimeConstants.MONDAY)
         forEachChild<ViewGroup> { weekView, _ ->
             weekView.forEachChild<TextView> { dayView, _ ->
-                setupDayView(dayView, date, days)
+                setupDayView(dayView, date, lessonDays)
                 date = date.plusDays(1)
             }
         }
     }
 
-    private fun setupDayView(dayView: TextView, date: LocalDate, days: List<LocalDate>) {
+    private fun setupDayView(dayView: TextView, date: LocalDate, lessonDays: List<LocalDate>) {
         dayView.text = date.dayOfMonth.toString()
         dayView.tag = date
-        if (date in days) {
-            dayView.setTextColor(Color.RED)
-        }
         dayView.setOnClickListener { onDateClick(it.tag as LocalDate) }
+        if (date in lessonDays) {
+            dayView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.calendar_day_lessons_indicator)
+        }
     }
 }
