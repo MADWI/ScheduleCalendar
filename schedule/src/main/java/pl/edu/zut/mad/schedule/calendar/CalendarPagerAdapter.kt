@@ -9,6 +9,8 @@ import pl.edu.zut.mad.schedule.R
 internal class CalendarPagerAdapter(monthDays: List<List<LocalDate>>, private val onDateClick: (LocalDate) -> Unit) :
     PagerAdapter<List<LocalDate>>(monthDays, R.layout.calendar_month) {
 
+    private var selectedDateView: View? = null
+
     override fun onBind(itemView: View, dates: List<LocalDate>) {
         val monthFirstDay = dates[0].withDayOfMonth(1)
         itemView.monthNameView.text = monthFirstDay.toString(Format.MONTH_NAME)
@@ -19,7 +21,12 @@ internal class CalendarPagerAdapter(monthDays: List<List<LocalDate>>, private va
 
     private fun setupDayView(dayView: TextView, date: LocalDate, lessonDays: List<LocalDate>) {
         dayView.text = date.dayOfMonth.toString()
-        dayView.setOnClickListener { onDateClick(date) }
+        dayView.setOnClickListener {
+            selectedDateView?.setBackgroundResource(0)
+            selectedDateView = it
+            dayView.setBackgroundResource(R.drawable.calendar_day_selected_background)
+            onDateClick(date)
+        }
         if (date in lessonDays) {
             dayView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, R.drawable.calendar_day_lessons_indicator)
         }

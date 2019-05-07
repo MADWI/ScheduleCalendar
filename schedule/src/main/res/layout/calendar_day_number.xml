@@ -7,13 +7,13 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/calendar_day_number_height"
         android:layout_weight="1"
-        android:drawablePadding="-10dp"
-        android:gravity="center"
+        android:gravity="center|top"
+        android:paddingTop="8dp"
+        android:paddingBottom="6dp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/calendar_day_number_text_size"
-        tools:background="@color/scheduleColorSecondary"
+        tools:background="@drawable/calendar_day_selected_background"
         tools:drawableBottom="@drawable/calendar_day_lessons_indicator"
-        tools:layout_width="40dp"
         tools:text="20" />
 
 </merge>
