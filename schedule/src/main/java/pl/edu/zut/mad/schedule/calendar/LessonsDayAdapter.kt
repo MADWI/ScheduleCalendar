@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.lesson_calendar_item.view.*
 import kotlinx.android.synthetic.main.lesson_teacher_and_subject.view.*
 import pl.edu.zut.mad.schedule.R
+import pl.edu.zut.mad.schedule.calendar.adapter.PagerAdapter
 import pl.edu.zut.mad.schedule.data.model.ui.Lesson
 import pl.edu.zut.mad.schedule.util.LessonFormatter
 
