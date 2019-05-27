@@ -1,4 +1,4 @@
-package pl.edu.zut.mad.schedule.calendar
+package pl.edu.zut.mad.schedule.calendar.adapter
 
 import android.view.LayoutInflater
 import android.view.View

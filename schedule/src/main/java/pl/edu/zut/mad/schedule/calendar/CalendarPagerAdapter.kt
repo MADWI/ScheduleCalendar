@@ -4,12 +4,12 @@ import android.view.View
 import kotlinx.android.synthetic.main.calendar_month.view.*
 import org.joda.time.LocalDate
 import pl.edu.zut.mad.schedule.R
-import pl.edu.zut.mad.schedule.calendar.adapter.PagerAdapterPayLoad
+import pl.edu.zut.mad.schedule.calendar.adapter.PagerAdapterPayload
 
 internal class CalendarPagerAdapter(
     monthDays: List<List<LocalDate>>,
     private val onDateClick: (LocalDate) -> Unit
-) : PagerAdapterPayLoad<List<LocalDate>, LocalDate>(
+) : PagerAdapterPayload<List<LocalDate>, LocalDate>(
     monthDays,
     R.layout.calendar_month
 ) {

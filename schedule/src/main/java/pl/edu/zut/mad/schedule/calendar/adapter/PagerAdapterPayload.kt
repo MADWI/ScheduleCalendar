@@ -2,10 +2,8 @@ package pl.edu.zut.mad.schedule.calendar.adapter
 
 import android.view.View
 import androidx.annotation.LayoutRes
-import pl.edu.zut.mad.schedule.calendar.PagerAdapter
-import pl.edu.zut.mad.schedule.calendar.ViewHolder
 
-internal abstract class PagerAdapterPayLoad<in T, in U>(
+internal abstract class PagerAdapterPayload<in T, in U>(
     items: List<T>,
     @LayoutRes layoutResource: Int
 ) : PagerAdapter<T>(items, layoutResource) {
